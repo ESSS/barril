@@ -1,0 +1,15 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+.*cache
+*.egg-info
+.installed.cfg
+*.egg
+.~*
+*.py[cod]
+*$py.class
+build/
+dist/
+
+# Project settings
+.idea/
+.settings/
