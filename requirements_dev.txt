@@ -1,0 +1,10 @@
+wheel
+flake8
+tox
+codecov
+coverage
+Sphinx
+pytest
+pytest-cov
+pytest-mock
+pytest-runner

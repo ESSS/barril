@@ -1,0 +1,23 @@
+language: python
+python:
+- 3.6
+- 3.5
+- 2.7
+install: pip install -U tox-travis codecov
+script: tox
+
+deploy:
+  provider: pypi
+  distributions: sdist bdist_wheel
+  user: lincrosenbach
+  password:
+    secure: 38AIvFySwPqPTs5AGx1lKcNGmP1jmON1YFlsOnwNO1PuZUG3EpnivlyXEPta3c8WfVWTMdVUrzDfZJoTAoou1F9+yUtEKLrFkFFaTiUtwd05yUH6PiH0ZM8+nZIXx5dqLsoErjw8RhEorQHV/YIbKurfZ+qhLJF0brj4ybN9ahazn4IJCAbHlG7OniWd7EngLMh9oOPosjdKfwg/YPtBrOO8RQV8SsqNd4FSuj20udwDamelJ0OySCx8uiZykNAbU0FeE8hAwkySgB5K+Eis3GJdUekbB7HwWzc6m9eXmWwEH3+wvyumIk82/3F6cwTrG4Q5AbQ3DyRogZPpp2bIFM8LeZnOw94Gbb7hqexVd0Y53d/gZJvVVFNVc4KYgO9Fw1AeDSwQmkCoOZZWNiZwvU0PBOvbq4Tsva7KNGIMXqqanS5hA0d+xOMIUS3+7wXWxEbjmX26vvGDotYYcRFaLxzFkwb1lOx7I5Y51ONoZ97UpmjkRQQz2X02hzeoanaXDDe5GgEaXoOHTRN9BUY1HAZ+Pyg8PbSe7W1HYFpEOuB3EITQAxTQXzkq6+1rICZyDexugzN/63hWCo1Iw35fjdZI+Hy/WXFZqShdAdf06RUaGG5ADf/UJPZKw3hiYRbnUQg7chuQ6XYWPY971tL9iqn+5XrFSpQL7UFw5G89XzU=
+  on:
+    tags: true
+    repo: ESSS/barril
+    python: 3.6
+
+branches:
+  only:
+  - master
+  - "/v(\\d+\\.)*\\d/"
