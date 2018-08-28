@@ -30,18 +30,6 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     if db is None:
         db = UnitDatabase()
 
-    # [[[cog
-    # import cog
-    # import sys
-    # from _posc_generation import GenerateDatabaseCodeCOG
-    # import resource_posc_units_22
-    # import resource_additional_units
-    # posc_data = resource_posc_units_22.GetData()
-    # additional_data = resource_additional_units.GetData()
-    # posc_data = posc_data.decode('ascii')
-    # additional_data = additional_data.decode('ascii')
-    # GenerateDatabaseCodeCOG(cog, [posc_data, additional_data])
-    # ]]]
     db.AddUnitBase('reluctance', 'inverse henry', '1/H')
     db.AddUnitBase('volumetric thermal expansion', 'per Kelvin', '1/K')
     db.AddUnitBase('per mass', 'per kilogram', '1/kg')
@@ -4386,7 +4374,6 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         db.AddCategory('force per angle', 'force per angle', override=override_categories, valid_units=['N/rad'])
         db.AddCategory('force per angular velocity', 'force per angular velocity', override=override_categories, valid_units=['Ns/rad'])
 
-    # [[[end]]] (checksum: 58f0a400f2e49524311efa7976e0e276)
     return db
 
 
