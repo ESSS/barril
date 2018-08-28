@@ -1,0 +1,2083 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../stylesheet/Units.xsl"?>
+
+<UnitOfMeasureDictionary version="1.0"
+    xmlns="http://www.posc.org/schemas"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.posc.org/schemas
+           http://www.posc.org/messages/units20/Units.xsd">
+
+  <UnitsDefinition>
+
+    <UnitOfMeasure id="datetime" annotation="datetime">
+      <Name>datetime</Name>
+      <QuantityType>datetime</QuantityType>
+      <DimensionalClass>Datetime</DimensionalClass>
+      <SameUnit uom="datetime" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">datetime</CatalogSymbol>
+      <BaseUnit/>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="&lt;unknown&gt;" annotation="&lt;unknown&gt;">
+      <Name>&lt;unknown&gt;</Name>
+      <QuantityType>Unknown</QuantityType>
+      <CatalogSymbol isExplicit="true">&lt;unknown&gt;</CatalogSymbol>
+      <DimensionalClass>&lt;unknown&gt;</DimensionalClass>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="cmPd" annotation="cm/d">
+      <Name>centimeter per day</Name>
+      <QuantityType>velocity</QuantityType>
+      <DimensionalClass>L/T</DimensionalClass>
+      <SameUnit uom="cm/d" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">cm/d</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="m/s">
+        <Fraction>
+          <Numerator>0.01</Numerator>
+          <Denominator>86400</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="-" annotation="-">
+      <Name>-</Name>
+      <QuantityType>category</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogSymbol isExplicit="true">-</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="-" annotation="-">
+      <Name>-</Name>
+      <QuantityType>count</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogSymbol isExplicit="true">-</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="-" annotation="-">
+      <Name>-</Name>
+      <QuantityType>percentage</QuantityType>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">-</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="-" annotation="-">
+      <Name>-</Name>
+      <QuantityType>bare number</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogSymbol isExplicit="true">-</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="cp.m3/day/bar" annotation="cp.m3/day/bar">
+      <Name>cp.m3/day/bar</Name>
+      <QuantityType>transmissibility</QuantityType>
+      <DimensionalClass>M/LT/T/M/LT2</DimensionalClass>
+      <CatalogSymbol isExplicit="true">cp.m3/day/bar</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="cp.bbl/day/psi" annotation="cp.bbl/day/psi">
+      <Name>cp.bbl/day/psi</Name>
+      <QuantityType>transmissibility</QuantityType>
+      <DimensionalClass>M/LT/T/M/LT2</DimensionalClass>
+      <CatalogSymbol isExplicit="true">cp.bbl/day/psi</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="cp.m3/day/bar">
+        <Factor was="%s * 14.50377 / 6.289811">2.3059150743957171368106291270119</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="cp.ft3/day/psi" annotation="cp.ft3/day/psi">
+      <Name>cp.ft3/day/psi</Name>
+      <QuantityType>transmissibility</QuantityType>
+      <DimensionalClass>M/LT/T/M/LT2</DimensionalClass>
+      <CatalogSymbol isExplicit="true">cp.ft3/day/psi</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="cp.m3/day/bar">
+        <Fraction>
+          <Numerator>0.028316846592</Numerator>
+          <Denominator>0.0689475729</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="cp.cm3/h/psi" annotation="cp.cm3/h/psi">
+      <Name>cp.cm3/h/psi</Name>
+      <QuantityType>transmissibility</QuantityType>
+      <DimensionalClass>M/LT/T/M/LT2</DimensionalClass>
+      <CatalogSymbol isExplicit="true">cp.cm3/h/psi</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="cp.m3/day/bar">
+        <Fraction>
+          <Numerator>0.01</Numerator>
+          <Denominator>0.0028728155375</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="cp.m3/day/kPa" annotation="cp.m3/day/kPa">
+      <Name>cp.m3/day/kPa</Name>
+      <QuantityType>transmissibility</QuantityType>
+      <DimensionalClass>M/LT/T/M/LT2</DimensionalClass>
+      <CatalogSymbol isExplicit="true">cp.m3/day/kPa</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="cp.m3/day/bar">
+        <Fraction>
+          <Numerator>1</Numerator>
+          <Denominator>0.01</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="cp.m3/day/kgf/cm2" annotation="cp.m3/day/kgf/cm2">
+      <Name>cp.m3/day/kgf/cm2</Name>
+      <QuantityType>transmissibility</QuantityType>
+      <DimensionalClass>M/LT/T/M/LT2</DimensionalClass>
+      <CatalogSymbol isExplicit="true">cp.m3/day/kgf/cm2</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="cp.m3/day/bar">
+        <Fraction>
+          <Numerator>1</Numerator>
+          <Denominator>0.980665</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="cp.cm3/h/Atm" annotation="cp.cm3/h/Atm">
+      <Name>cp.cm3/h/Atm</Name>
+      <QuantityType>transmissibility</QuantityType>
+      <DimensionalClass>M/LT/T/M/LT2</DimensionalClass>
+      <CatalogSymbol isExplicit="true">cp.cm3/h/Atm</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="cp.m3/day/bar">
+        <Factor was="%s * 24.0 * 0.986923 * 1e-6">0.000023686152</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="m3PM(ft3)" annotation="m3/M(ft3)">
+      <Name>cubic meter per million cubic feet</Name>
+      <QuantityType>volume per volume</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">m3/M(ft3)</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Factor>3.53146667115e-5</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="M(ft3)Pbbl" annotation="M(ft3)/bbl">
+      <Name>million cubic feet per barrel</Name>
+      <QuantityType>volume per volume</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">M(ft3)/bbl</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Fraction>
+          <Numerator>28316.85</Numerator>
+          <Denominator>0.1589873</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="1Patm" annotation="1/atm">
+      <Name>per atmospheres</Name>
+      <QuantityType>bulk compressibility</QuantityType>
+      <QuantityType>compressibility</QuantityType>
+      <QuantityType>viscosibility</QuantityType>
+      <DimensionalClass>LT2/M</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">1/atm</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="1/Pa">
+        <Fraction>
+          <Numerator>1</Numerator>
+          <Denominator>101325</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="kPaTd" annotation="kPa.d">
+      <Name>kilopascal day</Name>
+      <QuantityType>dynamic viscosity</QuantityType>
+      <DimensionalClass>M/LT</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kPa.d</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Pa.s">
+        <Factor>86400000</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="kPaTs" annotation="kPa.s">
+      <Name>kilopascal second</Name>
+      <QuantityType>dynamic viscosity</QuantityType>
+      <DimensionalClass>M/LT</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kPa.s</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Pa.s">
+        <Fraction>
+          <Numerator>1000</Numerator>
+          <Denominator>1</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="m3Psm3" annotation="m3/sm3">
+      <Name>cubic metres/std cubic metres</Name>
+      <QuantityType>volume per standard volume</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">m3/sm3</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="m3/scm(15C)">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="sm3Pm3" annotation="sm3/m3">
+      <Name>std cubic metres/cubic metre</Name>
+      <QuantityType>standard volume per volume</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">sm3/m3</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="scm(15C)/m3">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="m3Psm3" annotation="cm3/scm3">
+      <Name>cubic centimetres/std cubic centimetres</Name>
+      <QuantityType>volume per standard volume</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">cm3/scm3</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="m3/scm(15C)">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="scm3Pcm3" annotation="scm3/cm3">
+      <Name>std cubic centimetres/cubic centimetre</Name>
+      <QuantityType>standard volume per volume</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">scm3/cm3</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="scm(15C)/m3">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="bblPstb" annotation="bbl/stb">
+      <Name>barrels/stock tank barrel</Name>
+      <QuantityType>volume per standard volume</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">bbl/stb</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="m3/scm(15C)">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="bblPMscf" annotation="bbl/Mscf">
+      <Name>barrels/thousand std cubic feet</Name>
+      <QuantityType>volume per standard volume</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">bbl/Mscf</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="m3/scm(15C)">
+        <Fraction>
+          <Numerator>0.1589873</Numerator>
+          <Denominator>28.262357</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="stbPbbl" annotation="stb/bbl">
+      <Name>stock tank barrels/barrel</Name>
+      <QuantityType>standard volume per volume</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">stb/bbl</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="scm(15C)/m3">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="stbPd" annotation="stb/d">
+      <Name>stock tank barrels, 60 deg F/day</Name>
+      <QuantityType>standard volume per time</QuantityType>
+      <DimensionalClass>M3/T</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">stb/d</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="scm(15C)/s">
+        <Fraction>
+          <Numerator>0.1589873</Numerator>
+          <Denominator>86400</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="scfPd" annotation="scf/d">
+      <Name>standard cubic feet/day</Name>
+      <QuantityType>standard volume per time</QuantityType>
+      <DimensionalClass>M3/T</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">scf/d</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="scm(15C)/s">
+        <Fraction>
+          <Numerator>0.028262357</Numerator>
+          <Denominator>86400</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="MscfPbbl" annotation="Mscf/bbl">
+      <Name>thousand std cubic feet/barrel</Name>
+      <QuantityType>standard volume per volume</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">Mscf/bbl</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="scm(15C)/m3">
+        <Fraction>
+          <Numerator>28.262357</Numerator>
+          <Denominator>0.1589873</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="scfPbbl" annotation="scf/bbl">
+      <Name>std cubic feet/barrel</Name>
+      <QuantityType>standard volume per volume</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">scf/bbl</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="scm(15C)/m3">
+        <Fraction>
+          <Numerator>0.028262357</Numerator>
+          <Denominator>0.1589873</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="McfPd" annotation="Mcf/d">
+      <Name>thousand cubic feet per day</Name>
+      <QuantityType>volume flow rate</QuantityType>
+      <DimensionalClass>L3/T</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">Mcf/d</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="m3/s">
+        <Fraction>
+          <Numerator>28.31685</Numerator>
+          <Denominator>86400</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="McfPbbl" annotation="Mcf/bbl">
+      <Name>thousand cubic feet per barrel</Name>
+      <QuantityType>volume per volume</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">Mcf/bbl</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Fraction>
+          <Numerator>28.316846592</Numerator>
+          <Denominator>0.1589873</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="bblPMcf" annotation="bbl/Mcf">
+      <Name>barrel per thousand cubic feet</Name>
+      <QuantityType>volume per volume</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">bbl/Mcf</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Fraction>
+          <Numerator>0.1589873</Numerator>
+          <Denominator>28.31685</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="bblPMMcf" annotation="bbl/MMcf">
+      <Name>barrel per million cubic feet</Name>
+      <QuantityType>volume per volume</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">bbl/MMcf</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Fraction>
+          <Numerator>0.1589873</Numerator>
+          <Denominator>28316.85</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="1Pcm2" annotation="1/cm2">
+      <Name>per square centimetre</Name>
+      <QuantityType>per area</QuantityType>
+      <DimensionalClass>1/L2</DimensionalClass>
+      <SameUnit uom="1/cm2" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">1/cm2</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="1/m2">
+        <Fraction>
+          <Numerator>1</Numerator>
+          <Denominator>0.0001</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="stb" annotation="stb">
+      <Name>stock tank barrel</Name>
+      <QuantityType>standard volume</QuantityType>
+      <DimensionalClass>M3</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">stb</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="scm(15C)">
+        <Factor>0.1589873</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="scf" annotation="scf">
+      <Name>std cubic feet</Name>
+      <QuantityType>standard volume</QuantityType>
+      <DimensionalClass>M3</DimensionalClass>
+      <SameUnit uom="scf(60F)" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">scf</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="scm(15C)">
+        <Factor>0.028262357</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="kgmole" annotation="kgmole">
+      <Name>mole (kilogram)</Name>
+      <QuantityType>amount of substance</QuantityType>
+      <DimensionalClass>N</DimensionalClass>
+      <SameUnit uom="mol" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kgmol</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="mol">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="gmole" annotation="gmole">
+      <Name>gram mole</Name>
+      <QuantityType>molar mass</QuantityType>
+      <DimensionalClass>N</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">gmole</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="mol">
+        <Factor>0.001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="gmole/m3" annotation="gmole/m3">
+      <Name>moles (gram)/cubic metre</Name>
+      <QuantityType>amount of a substance</QuantityType>
+      <QuantityType>concentration of B</QuantityType>
+      <DimensionalClass>N/L3</DimensionalClass>
+      <CatalogSymbol isExplicit="true">gmole/m3</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="mol/m3">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="molPh" annotation="mol/h">
+      <Name>moles/hour</Name>
+      <QuantityType>mole per time</QuantityType>
+      <DimensionalClass>N/T</DimensionalClass>
+      <SameUnit uom="mol/h" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">mol/h</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="mol/s">
+        <Fraction>
+          <Numerator>1</Numerator>
+          <Denominator>3600</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="kmolPd" annotation="kmol/d">
+      <Name>moles (kilogram)/day</Name>
+      <QuantityType>mole per time</QuantityType>
+      <DimensionalClass>N/T</DimensionalClass>
+      <SameUnit uom="mol/h" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kmol/d</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="mol/s">
+        <Fraction>
+          <Numerator>1000</Numerator>
+          <Denominator>86400</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="molPd" annotation="mol/d">
+      <Name>moles/day</Name>
+      <QuantityType>mole per time</QuantityType>
+      <DimensionalClass>N/T</DimensionalClass>
+      <SameUnit uom="mol/d" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">mol/d</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="mol/s">
+        <Fraction>
+          <Numerator>1</Numerator>
+          <Denominator>86400</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="lbmolePd" annotation="lbmole/d">
+      <Name>moles (pounds mass)/day</Name>
+      <QuantityType>mole per time</QuantityType>
+      <DimensionalClass>N/T</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">lbmole/d</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="mol/s">
+        <Fraction>
+          <Numerator>453.5924</Numerator>
+          <Denominator>86400</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="molPL" annotation="mol/L">
+      <Name>moles/litre</Name>
+      <QuantityType>concentration of B</QuantityType>
+      <QuantityType>amount of a substance</QuantityType>
+      <DimensionalClass>N/L3</DimensionalClass>
+      <SameUnit uom="mol/L" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">mol/L</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="mol/m3">
+        <Factor>1000</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="molPcm3" annotation="mol/cm3">
+      <Name>moles/cubic centimetre</Name>
+      <QuantityType>concentration of B</QuantityType>
+      <QuantityType>amount of a substance</QuantityType>
+      <DimensionalClass>N/L3</DimensionalClass>
+      <SameUnit uom="mol/cm3" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">mol/cm3</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="mol/m3">
+        <Fraction>
+          <Numerator>1</Numerator>
+          <Denominator>0.000001</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="lbmolePbbl" annotation="lbmole/bbl">
+      <Name>moles (pounds mass)/barrel</Name>
+      <QuantityType>concentration of B</QuantityType>
+      <QuantityType>amount of a substance</QuantityType>
+      <DimensionalClass>N/L3</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">lbmole/bbl</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="mol/m3">
+        <Factor>3804.01</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="(molPm3)^2" annotation="(mol/m3)^2">
+      <Name>squared mol/m3</Name>
+      <QuantityType>solubility product</QuantityType>
+      <DimensionalClass>N2/L6</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">(mol/m3)^2</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="(molPL)^2" annotation="(mol/L)^2">
+      <Name>squared moles/litre</Name>
+      <QuantityType>solubility product</QuantityType>
+      <DimensionalClass>N2/L6</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">(mol/L)^2</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="(mol/m3)^2">
+        <Factor>1e6</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="molPmol" annotation="mol/mol">
+      <Name>moles/moles</Name>
+      <QuantityType>mole per mole</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">mol/mol</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="kmolPkmol" annotation="kmol/kmol">
+      <Name>kilogram moles/kilogram moles</Name>
+      <QuantityType>mole per mole</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kmol/kmol</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="lbmolePlbmole" annotation="lbmole/lbmole">
+      <Name>pound mass mol/pound mass mol</Name>
+      <QuantityType>mole per mole</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">lbmole/lbmole</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="gPg" annotation="g/g">
+      <Name>grams/gram</Name>
+      <QuantityType>mass concentration</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <SameUnit uom="g/g" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">g/g</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="mgPg" annotation="mg/g">
+      <Name>miligrams/gram</Name>
+      <QuantityType>mass concentration</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogSymbol isExplicit="true">mg/g</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Factor>0.001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="gP100g" annotation="g/100g">
+      <Name>grams per hundred gram</Name>
+      <QuantityType>mass concentration</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <SameUnit uom="g/100g" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">g/100g</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Factor>0.01</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="lbmPlbm" annotation="lbm/lbm">
+      <Name>pounds mass/pounds mass</Name>
+      <QuantityType>mass concentration</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <SameUnit uom="lbm/lbm" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">lbm/lbm</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="kPaPd" annotation="kPa/d">
+      <Name>kilopascal per day</Name>
+      <QuantityType>pressure per time</QuantityType>
+      <DimensionalClass>M/LT3</DimensionalClass>
+      <SameUnit uom="kPa/d" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kPa/d</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Pa/s">
+        <Fraction>
+          <Numerator>1000</Numerator>
+          <Denominator>86400</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="psiPd" annotation="psi/d">
+      <Name>pound per square inch per day</Name>
+      <QuantityType>pressure per time</QuantityType>
+      <DimensionalClass>M/LT3</DimensionalClass>
+      <SameUnit uom="psi/d" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">psi/d</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Pa/s">
+        <Fraction>
+          <Numerator>6894.757</Numerator>
+          <Denominator>86400</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="&lt;ind&gt;" annotation="&lt;ind&gt;">
+      <Name>&lt;ind&gt;</Name>
+      <QuantityType>index</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <SameUnit uom="Euc" namingSystem="POSC"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">&lt;ind&gt;</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="&lt;mult&gt;" annotation="&lt;mult&gt;">
+      <Name>&lt;mult&gt;</Name>
+      <QuantityType>multiplier</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <SameUnit uom="Euc" namingSystem="POSC"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">&lt;mult&gt;</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="&lt;stat&gt;" annotation="&lt;stat&gt;">
+      <Name>&lt;stat&gt;</Name>
+      <QuantityType>status</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <SameUnit uom="Euc" namingSystem="POSC"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">&lt;stat&gt;</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="&lt;fraction&gt;" annotation="-">
+      <Name>fraction</Name>
+      <QuantityType>fraction</QuantityType>
+      <QuantityType>porosity</QuantityType>
+      <QuantityType>relative permeability</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <SameUnit uom="Euc" namingSystem="POSC"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">&lt;fraction&gt;</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="%">
+        <Factor>100.0</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="ppmv" annotation="ppmv">
+      <Name>parts per million by volume</Name>
+      <QuantityType>relative proportion</QuantityType>
+      <QuantityType>dimensionless</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <SameUnit uom="ppmv" namingSystem="POSC"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">ppmv</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Factor>0.000001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="1/d^2" annotation="1/d^2">
+      <Name>Per days squared</Name>
+      <QuantityType>per time squared</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">1/d^2</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="sm3" annotation="sm3">
+      <Name>standard cubic metres</Name>
+      <QuantityType>standard volume</QuantityType>
+      <DimensionalClass>M3</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">sm3</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="scm(15C)">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="MPaTs" annotation="MPa.s">
+      <Name>megapascal seconds</Name>
+      <QuantityType>dynamic viscosity</QuantityType>
+      <DimensionalClass>M/LT</DimensionalClass>
+      <SameUnit uom="MPa.s" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">MPa.s</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Pa.s">
+        <Factor>1000000.0</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="meqPmL" annotation="meq/mL">
+      <Name>milliequivalents/milliliter</Name>
+      <QuantityType>equivalent per volume</QuantityType>
+      <DimensionalClass>CT/L3N</DimensionalClass>
+      <SameUnit uom="meq/mL" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">meq/mL</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="eq/m3">
+        <Factor>1000</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="mgPkgPd" annotation="mg/kg/d">
+      <Name>mgrams per kg per day</Name>
+      <QuantityType>adsorption rate</QuantityType>
+      <DimensionalClass>adsorption rate</DimensionalClass>
+      <CatalogSymbol isExplicit="true">mg/kg/d</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="kgPkgPd" annotation="kg/kg/d">
+      <Name>kilograms per kg per day</Name>
+      <QuantityType>adsorption rate</QuantityType>
+      <DimensionalClass>adsorption rate</DimensionalClass>
+      <CatalogSymbol isExplicit="true">kg/kg/d</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="mg/kg/d">
+        <Factor>1000000.0</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="mgPLPmgPL" annotation="mg/l/mg/l">
+      <Name>mgrams per liters per mgrams per liters</Name>
+      <QuantityType>mass consumption efficiency</QuantityType>
+      <DimensionalClass>mass consumption efficiency</DimensionalClass>
+      <CatalogSymbol isExplicit="true">mg/l/mg/l</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="kgPm3PkgPm3" annotation="kg/m3/kg/m3">
+      <Name>mgrams per liters per mgrams per liters</Name>
+      <QuantityType>mass consumption efficiency</QuantityType>
+      <DimensionalClass>mass consumption efficiency</DimensionalClass>
+      <CatalogSymbol isExplicit="true">kg/m3/kg/m3</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="mg/l/mg/l">
+        <Factor>1.0</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="kgPm3Pd" annotation="kg/m3/d">
+      <Name>kgram for cubic meter per day</Name>
+      <QuantityType>density generation</QuantityType>
+      <DimensionalClass>density generation</DimensionalClass>
+      <CatalogSymbol isExplicit="true">kg/m3/d</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="mgPLPd" annotation="mg/l/d">
+      <Name>mgrams per liter per day</Name>
+      <QuantityType>density generation</QuantityType>
+      <DimensionalClass>density generation</DimensionalClass>
+      <CatalogSymbol isExplicit="true">mg/l/d</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="kg/m3/d">
+        <Factor>0.001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="-" annotation="-">
+      <Name>-</Name>
+      <QuantityType>dimensionless</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogSymbol isExplicit="true">-</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="ppmPkgPm3" annotation="ppm/kg/m3">
+      <Name>concentration by kg by m3</Name>
+      <QuantityType>volumetric concentration</QuantityType>
+      <DimensionalClass>volumetric concentration</DimensionalClass>
+      <CatalogSymbol isExplicit="true">ppm/kg/m3</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="kgPm3PdPkgPm3" annotation="kg/m3/d/kg/m3">
+      <Name>kilogram/cubic metre/days/kilogram/cubic metre</Name>
+      <QuantityType>efficiency of nutrient consumption for biomass building</QuantityType>
+      <DimensionalClass>efficiency of nutrient consumption for biomass building</DimensionalClass>
+      <CatalogSymbol isExplicit="true">kg/m3/d/kg/m3</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="ppmvPmgPl" annotation="ppmv/mg/l">
+      <Name>parts per million by volume per milligram per litre</Name>
+      <QuantityType>parts per million by volume per concentration</QuantityType>
+      <DimensionalClass>parts per million by volume per concentration</DimensionalClass>
+      <CatalogSymbol isExplicit="true">ppmv/mg/l</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="ppmvPkgPm3" annotation="ppmv/kg/m3">
+      <Name>parts per million by volume per kilograms per cubic metre</Name>
+      <QuantityType>parts per million by volume per concentration</QuantityType>
+      <DimensionalClass>parts per million by volume per concentration</DimensionalClass>
+      <CatalogSymbol isExplicit="true">ppmv/kg/m3</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="ppmv/mg/l">
+        <Factor>0.001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="PaTsEn" annotation="Pa.s^n">
+      <Name>pascal seconds to the power of n</Name>
+      <QuantityType>fluid consistency</QuantityType>
+      <DimensionalClass>fluid consistency</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">Pa.s^n</CatalogSymbol>
+      <BaseUnit/>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="lbfTsEnPftE2" annotation="lbf.s^n/ft2">
+      <Name>pound force to seconds to the power of n per feet squared</Name>
+      <QuantityType>fluid consistency</QuantityType>
+      <DimensionalClass>fluid consistency</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">lbf.s^n/ft2</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Pa.s^n">
+        <Factor>47.88026</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="lbfTsEnP100ftE2" annotation="lbf.s^n/100ft2">
+      <Name>pound force to seconds to the power of n per hundred feet squared</Name>
+      <QuantityType>fluid consistency</QuantityType>
+      <DimensionalClass>fluid consistency</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">lbf.s^n/100ft2</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Pa.s^n">
+        <Factor>0.4788026</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="eqTcp" annotation="eq.cp">
+      <Name>equivalent to centipoise</Name>
+      <QuantityType>fluid consistency</QuantityType>
+      <DimensionalClass>fluid consistency</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">eq.cp</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Pa.s^n">
+        <Factor>0.0010055063442902922275386711091103</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+	<UnitOfMeasure id="bblPm" annotation="bbl/m">
+      <Name>barrel/meter</Name>
+      <QuantityType>volume per length</QuantityType>
+      <DimensionalClass>L2</DimensionalClass>
+      <SameUnit uom="bbl/m" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">bbl/m</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="m2">
+        <Factor>0.1589873</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+	<UnitOfMeasure id="m3Pm3PC" annotation="(m3/m3)/degC">
+      <Name>(volume/volume)/temperature</Name>
+      <QuantityType>volume fraction per temperature</QuantityType>
+      <DimensionalClass>L2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">(m3/m3)/degC</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="(m3/m3)/K">
+        <Factor>1</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+	<UnitOfMeasure id="m3Pm3PF" annotation="(m3/m3)/degF">
+      <Name>(volume/volume)/temperature</Name>
+      <QuantityType>volume fraction per temperature</QuantityType>
+      <DimensionalClass>L2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">(m3/m3)/degF</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="(m3/m3)/K">
+        <Fraction>
+          <Numerator>9</Numerator>
+          <Denominator>5</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="m3Pm3PK" annotation="(m3/m3)/K">
+      <Name>(volume/volume)/temperature</Name>
+      <QuantityType>volume fraction per temperature</QuantityType>
+      <DimensionalClass>L2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">(m3/m3)/K</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="perwtpercent" annotation="perwtpercent">
+      <Name>per weight percent</Name>
+      <QuantityType>per weight percent</QuantityType>
+      <DimensionalClass>L2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">1/wtpercent</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="persquarewtpercent" annotation="persquarewtpercent">
+      <Name>per square weight percent</Name>
+      <QuantityType>per square weight percent</QuantityType>
+      <DimensionalClass>L2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">1/wtpercent*wtpercent</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="percubicwtpercent" annotation="percubicwtpercent">
+      <Name>per cubic weight percent</Name>
+      <QuantityType>per cubic weight percent</QuantityType>
+      <DimensionalClass>L2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">1/wtpercent*wtpercent*wtpercent</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="mLPmeq" annotation="mL/meq">
+      <Name>milliliter/milliequivalents</Name>
+      <QuantityType>volume per equivalent</QuantityType>
+      <DimensionalClass>L2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">mL/meq</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="m2Pd" annotation="m2/d">
+      <Name>square metres/day</Name>
+      <QuantityType>kinematic viscosity</QuantityType>
+      <QuantityType>thermal diffusivity</QuantityType>
+      <QuantityType>area per time</QuantityType>
+      <DimensionalClass>L2/T</DimensionalClass>
+      <SameUnit uom="m2/d" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">m2/d</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="m2/s">
+        <Fraction>
+          <Numerator>1</Numerator>
+          <Denominator>86400</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="ft2Pd" annotation="ft2/d">
+      <Name>square feet/day</Name>
+      <QuantityType>kinematic viscosity</QuantityType>
+      <QuantityType>thermal diffusivity</QuantityType>
+      <QuantityType>area per time</QuantityType>
+      <DimensionalClass>L2/T</DimensionalClass>
+      <SameUnit uom="ft2/d" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">ft2/d</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="m2/s">
+        <Fraction>
+          <Numerator>0.09290304</Numerator>
+          <Denominator>86400</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="ft3Pwtpercent" annotation="ft3/wtpercent">
+      <Name>ft3/wtpercent</Name>
+      <QuantityType>volume per wtpercent</QuantityType>
+      <DimensionalClass>L2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">ft3/wtpercent</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="m3/wtpercent">
+        <Factor>0.02831685</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="m3Pwtpercent" annotation="m3/wtpercent">
+      <Name>m3/wtpercent</Name>
+      <QuantityType>volume per wtpercent</QuantityType>
+      <DimensionalClass>L2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">m3/wtpercent</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="gPmol" annotation="g/mol">
+      <Name>g/mol</Name>
+      <QuantityType>mass per mol</QuantityType>
+      <DimensionalClass>L2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">g/mol</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="kg/mol">
+        <Factor>0.001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="lbPlbmol" annotation="lb/lbmole">
+      <Name>lb/lbmole</Name>
+      <QuantityType>mass per mol</QuantityType>
+      <DimensionalClass>L2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">lb/lbmole</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="kg/mol">
+        <Factor>0.001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+     <UnitOfMeasure id="kgPmol" annotation="kg/mol">
+      <Name>kg/mol</Name>
+      <QuantityType>mass per mol</QuantityType>
+      <DimensionalClass>L2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kg/mol</CatalogSymbol>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="BtuPdayTftTdegF" annotation="Btu/d.ft.degF">
+      <Name>British thermal units/day foot deg F</Name>
+      <QuantityType>thermal conductivity</QuantityType>
+      <DimensionalClass>LM/KT3</DimensionalClass>
+      <SameUnit uom="Btu/d.ft.degF" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">Btu/d.ft.degF</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="W/m.K">
+        <Factor>0.07211</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="kJPdayTmTK" annotation="kJ/d.m.K">
+      <Name>kilojoules/day metre kelvin</Name>
+      <QuantityType>thermal conductivity</QuantityType>
+      <DimensionalClass>LM/KT3</DimensionalClass>
+      <SameUnit uom="kJ/d.m.K" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kJ/d.m.K</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="W/m.K">
+        <Factor>0.01157</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="degCP30m" annotation="degC/30m">
+      <Name>degrees Celsius per thirty metre</Name>
+      <QuantityType>temperature per length</QuantityType>
+      <DimensionalClass>K/L</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">degC/30m</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="K/m">
+        <Fraction>
+          <Numerator>1.0</Numerator>
+          <Denominator>30.0</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="JPs" annotation="J/s">
+      <Name>joules/second</Name>
+      <QuantityType>heat flow rate</QuantityType>
+      <DimensionalClass>L2M/T3</DimensionalClass>
+      <SameUnit uom="J/s" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">J/s</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="W">
+        <Factor>1.0</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="kJPd" annotation="kJ/d">
+      <Name>kilojoules/day</Name>
+      <QuantityType>heat flow rate</QuantityType>
+      <DimensionalClass>L2M/T3</DimensionalClass>
+      <SameUnit uom="kJ/d" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kJ/d</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="W">
+        <Factor>0.01157407</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="JPd" annotation="J/d">
+      <Name>joules/day</Name>
+      <QuantityType>heat flow rate</QuantityType>
+      <DimensionalClass>L2M/T3</DimensionalClass>
+      <SameUnit uom="J/d" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">J/d</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="W">
+        <Fraction>
+          <Numerator>1</Numerator>
+          <Denominator>86400</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="BtuPd" annotation="Btu/d">
+      <Name>British thermal unit/day</Name>
+      <QuantityType>heat flow rate</QuantityType>
+      <DimensionalClass>L2M/T3</DimensionalClass>
+      <SameUnit uom="Btu/d" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">Btu/d</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="W">
+        <Factor>0.01221</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="dPMscf" annotation="d/Mscf">
+      <Name>day per thousand cubic feet</Name>
+      <QuantityType>time per volume</QuantityType>
+      <DimensionalClass>T/L3</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">d/Mscf</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="s/m3">
+        <Fraction>
+          <Numerator>86400</Numerator>
+          <Denominator>28.316846592</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="kgPm2Td" annotation="kg/m2.d">
+      <Name>kilograms/square metre days</Name>
+      <QuantityType>mass per time per area</QuantityType>
+      <DimensionalClass>M/L2T</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kg/m2.d</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="kg/m2.s">
+        <Fraction>
+          <Numerator>1.0</Numerator>
+          <Denominator>86400.0</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="1PkgfPcm2" annotation="1/kgf/cm2">
+      <Name>per kilogram per square centimeter</Name>
+      <QuantityType>bulk compressibility</QuantityType>
+      <QuantityType>compressibility</QuantityType>
+      <QuantityType>viscosibility</QuantityType>
+      <DimensionalClass>M/LT2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">1/kgf/cm2</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="1/Pa">
+        <Fraction>
+          <Numerator>0.0001</Numerator>
+          <Denominator>9.80665</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="psiPcm" annotation="psi/cm">
+      <Name>pound per square inch per centimeter</Name>
+      <QuantityType>pressure per length</QuantityType>
+      <DimensionalClass>M/L2T2</DimensionalClass>
+      <SameUnit uom="psi/cm" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">psi/cm</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Pa/m">
+        <Fraction>
+          <Numerator>6894.757</Numerator>
+          <Denominator>0.01</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="kgfPcm2m" annotation="kgf/cm2/m">
+      <Name>kilogram per square centimeter per meter</Name>
+      <QuantityType>pressure per length</QuantityType>
+      <DimensionalClass>M/L2T2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kgf/cm2/m</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Pa/m">
+        <Fraction>
+          <Numerator>9.80665</Numerator>
+          <Denominator>0.0001</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="1000m3" annotation="1000m3">
+      <Name>thousand cubic meters</Name>
+      <QuantityType>volume</QuantityType>
+      <DimensionalClass>L3</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">1000m3</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="m3">
+        <Factor>1000</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="mPmin2" annotation="m/min2">
+      <Name>metres/minutes squared</Name>
+      <QuantityType>acceleration linear</QuantityType>
+      <DimensionalClass>L/T2</DimensionalClass>
+      <SameUnit uom="m/min2" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">m/min2</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="m/s2">
+        <Fraction>
+          <Numerator>1</Numerator>
+          <Denominator>3600</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="ftPmin2" annotation="ft/min2">
+      <Name>feet/minutes squared</Name>
+      <QuantityType>acceleration linear</QuantityType>
+      <DimensionalClass>L/T2</DimensionalClass>
+      <SameUnit uom="ft/min2" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">ft/min2</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="m/s2">
+        <Fraction>
+          <Numerator>0.3048</Numerator>
+          <Denominator>3600</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="LPmg" annotation="l/mg">
+      <Name>liters/miligram</Name>
+      <QuantityType>specific volume</QuantityType>
+      <QuantityType>massic volume</QuantityType>
+      <DimensionalClass>L3/M</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">l/mg</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="m3/kg">
+        <Factor>1000.0</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="gPmin" annotation="g/min">
+      <Name>gram per min</Name>
+      <QuantityType>mass flow rate</QuantityType>
+      <DimensionalClass>M/T</DimensionalClass>
+      <SameUnit uom="g/min" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">g/min</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="kg/s">
+        <Fraction>
+          <Numerator>0.001</Numerator>
+          <Denominator>60</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="gPh" annotation="g/h">
+      <Name>grams per hour</Name>
+      <QuantityType>mass flow rate</QuantityType>
+      <DimensionalClass>M/T</DimensionalClass>
+      <SameUnit uom="g/h" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">g/h</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="kg/s">
+        <Fraction>
+          <Numerator>0.001</Numerator>
+          <Denominator>3600</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="PaTsPPa" annotation="Pa.s/Pa">
+      <Name>pascal seconds per pascal</Name>
+      <QuantityType>viscosity per pressure</QuantityType>
+      <DimensionalClass>T</DimensionalClass>
+      <SameUnit uom="Pa.s/Pa" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">Pa.s/Pa</CatalogSymbol>
+      <BaseUnit/>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="cPPkPa" annotation="cP/kPa">
+      <Name>centipoise per kilopascal</Name>
+      <QuantityType>viscosity per pressure</QuantityType>
+      <DimensionalClass>T</DimensionalClass>
+      <SameUnit uom="cP/kPa" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">cP/kPa</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Pa.s/Pa">
+        <Factor>0.000001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="cPPpsi" annotation="cP/psi">
+      <Name>centipoise per psi</Name>
+      <QuantityType>viscosity per pressure</QuantityType>
+      <DimensionalClass>T</DimensionalClass>
+      <SameUnit uom="cP/psi" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">cP/psi</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Pa.s/Pa">
+        <Factor>0.0000001450377377302092151542410280</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="cPPkgfPcm2" annotation="cP/(kgf/cm2)">
+      <Name>centipoise per kilogram force per squared centimeter</Name>
+      <QuantityType>viscosity per pressure</QuantityType>
+      <DimensionalClass>T</DimensionalClass>
+      <SameUnit uom="cP/(kgf/cm2)" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">cP/(kgf/cm2)</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Pa.s/Pa">
+        <Factor>0.00000001019716212977928242570092743</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="kgfm" annotation="kgf/m">
+      <Name>kilogram force per meter</Name>
+      <QuantityType>force per length</QuantityType>
+      <DimensionalClass>T</DimensionalClass>
+      <SameUnit uom="kgf/m" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kgf/m</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="N/m">
+        <Factor>9.80665</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="mPsPm" annotation="(m/s)/m">
+      <Name>meters per second per meter</Name>
+      <QuantityType>shear rate</QuantityType>
+      <DimensionalClass>1/s</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">(m/s)/m</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="1/s">
+        <Factor>1.0</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="gPbbl" annotation="g/bbl">
+      <Name>gram/barrel</Name>
+      <QuantityType>concentration</QuantityType>
+      <DimensionalClass>M/L3</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">g/bbl</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="kg/m3">
+        <Fraction>
+          <Numerator>0.001</Numerator>
+          <Denominator>0.1589873</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="KVmm" annotation="KV/mm">
+      <Name>kilovolt per millimetre</Name>
+      <QuantityType>electric field strength</QuantityType>
+      <DimensionalClass>LM/CT3</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">KV/mm</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="V/m">
+        <Factor>0.000001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="uSPm" annotation="uS/m">
+      <Name>microsiemens/metre</Name>
+      <QuantityType>conductivity</QuantityType>
+      <DimensionalClass>C2T3/L3M</DimensionalClass>
+      <SameUnit uom="uS/m" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">uS/m</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="S/m">
+        <Factor>0.000001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="cSPm" annotation="cS/m">
+      <Name>centisiemens/metre</Name>
+      <QuantityType>conductivity</QuantityType>
+      <DimensionalClass>C2T3/L3M</DimensionalClass>
+      <SameUnit uom="cS/m" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">cS/m</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="S/m">
+        <Factor>100</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="kSPm" annotation="kS/m">
+      <Name>kilosiemens/metre</Name>
+      <QuantityType>conductivity</QuantityType>
+      <DimensionalClass>C2T3/L3M</DimensionalClass>
+      <SameUnit uom="kS/m" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kS/m</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="S/m">
+        <Factor>1000</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+
+    <UnitOfMeasure id="fF" annotation="fF">
+      <Name>femtofarads</Name>
+      <QuantityType>capacitance</QuantityType>
+      <DimensionalClass>C2T4/L2M</DimensionalClass>
+      <SameUnit uom="fF" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">fF</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="F">
+        <Factor>0.000000000000001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="mF" annotation="mF">
+      <Name>millifarads</Name>
+      <QuantityType>capacitance</QuantityType>
+      <DimensionalClass>C2T4/L2M</DimensionalClass>
+      <SameUnit uom="mF" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">mF</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="F">
+        <Factor>0.001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="nF" annotation="nF">
+      <Name>nanofarads</Name>
+      <QuantityType>capacitance</QuantityType>
+      <DimensionalClass>C2T4/L2M</DimensionalClass>
+      <SameUnit uom="nF" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">nF</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="F">
+        <Factor>0.000000001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="fH" annotation="fH">
+      <Name>femtohenry</Name>
+      <QuantityType>self inductance</QuantityType>
+      <QuantityType>permeance</QuantityType>
+      <DimensionalClass>L2M/C2T2</DimensionalClass>
+      <SameUnit uom="fH" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">fH</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="H">
+        <Factor>0.000000000000001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="picoH" annotation="picoH">
+      <Name>picohenry</Name>
+      <QuantityType>self inductance</QuantityType>
+      <QuantityType>permeance</QuantityType>
+      <DimensionalClass>L2M/C2T2</DimensionalClass>
+      <SameUnit uom="picoH" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">picoH</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="H">
+        <Factor>0.000000000001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="H/km" annotation="H/km">
+      <Name>henry per kilometer</Name>
+      <QuantityType>self inductance per length</QuantityType>
+      <SameUnit uom="H/km" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">H/km</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="H/m">
+        <Factor>0.001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="mH/m" annotation="mH/m">
+      <Name>milihenry per meter</Name>
+      <QuantityType>self inductance per length</QuantityType>
+      <SameUnit uom="mH/m" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">mH/m</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="H/m">
+        <Factor>0.001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="nH/m" annotation="nH/m">
+      <Name>nanohenry per meter</Name>
+      <QuantityType>self inductance per length</QuantityType>
+      <SameUnit uom="nH/m" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">nH/m</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="H/m">
+        <Factor>0.000000001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="mH/km" annotation="mH/km">
+      <Name>milihenry per kilometer</Name>
+      <QuantityType>self inductance per length</QuantityType>
+      <SameUnit uom="mH/km" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">mH/km</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="H/m">
+        <Factor>0.000001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="uH/km" annotation="uH/km">
+      <Name>microhenry per kilometer</Name>
+      <QuantityType>self inductance per length</QuantityType>
+      <SameUnit uom="uH/km" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">uH/km</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="H/m">
+        <Factor>0.000000001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="nH/km" annotation="nH/km">
+      <Name>nanohenry per kilometer</Name>
+      <QuantityType>self inductance per length</QuantityType>
+      <SameUnit uom="nH/km" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">nH/km</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="H/m">
+        <Factor>0.000000000001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="MVA" annotation="MVA">
+      <Name>mega volt ampere</Name>
+      <QuantityType>volt ampere</QuantityType>
+      <SameUnit uom="MVA" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">MVA</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="VA">
+        <Factor>1000000</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="kVA" annotation="kVA">
+      <Name>kilo volt ampere</Name>
+      <QuantityType>volt ampere</QuantityType>
+      <SameUnit uom="kVA" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kVA</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="VA">
+        <Factor>1000</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="MVAr" annotation="MVAr">
+      <Name>mega volt ampere reactive</Name>
+      <QuantityType>volt ampere reactive</QuantityType>
+      <SameUnit uom="MVAr" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">MVAr</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="VAr">
+        <Factor>1000000</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="kVAr" annotation="kVAr">
+      <Name>kilo volt ampere reactive</Name>
+      <QuantityType>volt ampere reactive</QuantityType>
+      <SameUnit uom="kVAr" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kVAr</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="VAr">
+        <Factor>1000</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="ohmPkm" annotation="ohm/km">
+      <Name>ohm per kilometer</Name>
+      <QuantityType>resistivity per length</QuantityType>
+      <DimensionalClass>LM/C2T3</DimensionalClass>
+      <SameUnit uom="ohm/km" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">ohm/km</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="ohm/m">
+        <Factor>0.001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="strokesPminute" annotation="strokesPminute">
+      <Name>strokes per minute</Name>
+      <QuantityType>stroke frequency</QuantityType>
+      <DimensionalClass>stroke per time</DimensionalClass>
+      <CatalogSymbol isExplicit="true">spm</CatalogSymbol>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="strokesPsecond" annotation="strokesPsecond">
+      <Name>strokes per second</Name>
+      <QuantityType>stroke frequency</QuantityType>
+      <DimensionalClass>stroke per time</DimensionalClass>
+      <CatalogSymbol isExplicit="true">sps</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="spm">
+        <Factor>60</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="WPkg" annotation="W/kg">
+      <Name>watts/kilogram</Name>
+      <QuantityType>power per mass</QuantityType>
+      <QuantityType>power per weight</QuantityType>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">W/kg</CatalogSymbol>
+      <BaseUnit/>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="kWPkg" annotation="kW/kg">
+      <Name>kilowatts/kilogram</Name>
+      <QuantityType>power per mass</QuantityType>
+      <QuantityType>power per weight</QuantityType>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kW/kg</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="W/kg">
+        <Factor>1000</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="kg/m3/d2" annotation="kg/m3/d2">
+      <Name>concentration per square time</Name>
+      <QuantityType>concentration per square time</QuantityType>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kg/m3/d2</CatalogSymbol>
+      <BaseUnit/>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="mg/l/d2" annotation="mg/l/d2">
+      <Name>concentration per square time</Name>
+      <QuantityType>concentration per square time</QuantityType>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">mg/l/d2</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="kg/m3/d2">
+        <Factor>0.001</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="W/m" annotation="W/m">
+      <Name>watt per metre</Name>
+      <QuantityType>power per length</QuantityType>
+      <DimensionalClass>L2M/T3/T</DimensionalClass>
+      <SameUnit uom="W" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">W/m</CatalogSymbol>
+      <BaseUnit>
+        <Description>Power per length.</Description>
+        <BasicAuthority>SI</BasicAuthority>
+      </BaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="VAr" annotation="VAr">
+      <Name>volt ampere reactive</Name>
+      <QuantityType>volt ampere reactive</QuantityType>
+      <DimensionalClass>VAr</DimensionalClass>
+      <SameUnit uom="VAr" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">VAr</CatalogSymbol>
+      <BaseUnit>
+        <Description>Volt Ampere Reactive</Description>
+        <BasicAuthority>SI</BasicAuthority>
+      </BaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="VA" annotation="VA">
+      <Name>volt ampere</Name>
+      <QuantityType>volt ampere</QuantityType>
+      <DimensionalClass>VA</DimensionalClass>
+      <SameUnit uom="VA" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">VA</CatalogSymbol>
+      <BaseUnit>
+        <Description>Volt Ampere</Description>
+        <BasicAuthority>SI</BasicAuthority>
+      </BaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="dega/s2" annotation="dega/s2">
+      <Name>degrees of an angle/second squared</Name>
+      <QuantityType>angular acceleration</QuantityType>
+      <DimensionalClass>A/T2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">dega/s2</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="rad/s2">
+        <Fraction>
+          <Numerator>1</Numerator>
+          <Denominator>57.29578778556937</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="dega/min2" annotation="dega/min2">
+      <Name>degrees of an angle/minute squared</Name>
+      <QuantityType>angular acceleration</QuantityType>
+      <DimensionalClass>A/T2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">dega/min2</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="rad/s2">
+        <Fraction>
+          <Numerator>1</Numerator>
+          <Denominator>206264.83602804973</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="rev/s2" annotation="rev/s2">
+      <Name>revolutions/second squared</Name>
+      <QuantityType>angular acceleration</QuantityType>
+      <DimensionalClass>A/T2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">rev/s2</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="rad/s2">
+        <Factor>6.283185307</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="rev/min2" annotation="rev/min2">
+      <Name>revolutions/minute squared</Name>
+      <QuantityType>angular acceleration</QuantityType>
+      <DimensionalClass>A/T2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">rev/min2</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="rad/s2">
+        <Fraction>
+          <Numerator>1</Numerator>
+          <Denominator>572.957795130823</Denominator>
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="mgPcm3" annotation="mg/cm3">
+      <Name>milligrams/cubic centimetre</Name>
+      <QuantityType>density</QuantityType>
+      <QuantityType>mass density</QuantityType>
+      <QuantityType>volumic mass</QuantityType>
+      <DimensionalClass>M/L3</DimensionalClass>
+      <SameUnit uom="mg/cm3" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">mg/cm3</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="kg/m3">
+        <Factor>1.0</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="kWThPt" annotation="kW.h/t">
+      <Name>kilowatt hours/tonne</Name>
+      <QuantityType>specific energy</QuantityType>
+      <DimensionalClass>L2/T2</DimensionalClass>
+      <SameUnit uom="kW.h/t" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kW.h/t</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="J/kg">
+        <Factor>3.6e3</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="kWThPtonUS" annotation="kW.h/tonUS">
+      <Name>kilowatt hours/U.S. ton</Name>
+      <QuantityType>specific energy</QuantityType>
+      <DimensionalClass>L2/T2</DimensionalClass>
+      <SameUnit uom="kW.h/tonUS" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kW.h/tonUS</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="J/kg">
+        <Factor>3265864920</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="kWThPtonUK" annotation="kW.h/tonUK">
+      <Name>kilowatt hours/U.S. ton</Name>
+      <QuantityType>specific energy</QuantityType>
+      <DimensionalClass>L2/T2</DimensionalClass>
+      <SameUnit uom="kW.h/tonUK" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kW.h/tonUK</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="J/kg">
+        <Factor>3657769200</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="lbmPBtu" annotation="lbm/Btu">
+      <Name>pounds mass/British thermal units</Name>
+      <QuantityType>mass per energy</QuantityType>
+      <DimensionalClass>T2/L2</DimensionalClass>
+      <SameUnit uom="lbm/Btu" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">lbm/Btu</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="kg/J">
+        <Factor>0.0004299226139295</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="lbmPftTlbf" annotation="lbm/ft.lbf">
+      <Name>pounds mass/Foot pounds force</Name>
+      <QuantityType>mass per energy</QuantityType>
+      <DimensionalClass>T2/L2</DimensionalClass>
+      <SameUnit uom="lbm/ft.lbf" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">lbm/ft.lbf</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="kg/J">
+        <Factor>0.334552563</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="um3" annotation="um3">
+      <Name>cubic micrometres</Name>
+      <QuantityType>volume</QuantityType>
+      <DimensionalClass>L3</DimensionalClass>
+      <SameUnit uom="um3" namingSystem="RP66"/>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">um3</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="m3">
+          <Factor>1e-18</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="um3/s" annotation="um3/s">
+      <Name>cubic micrometres/second</Name>
+      <QuantityType>volume flow rate</QuantityType>
+      <DimensionalClass>L3/T</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">um3/s</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="m3/s">
+          <Factor>1e-18</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="JPkgTdegC" annotation="J/kg.degC">
+      <Name>joules/kilogram degrees Celsius</Name>
+      <QuantityType>specific heat capacity</QuantityType>
+      <DimensionalClass>L2/T2K</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">J/kg.degC</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="J/kg.K">
+          <Factor>1.0</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="WPmTdegC" annotation="W/m.degC">
+      <Name>watts/meter degrees Celsius</Name>
+      <QuantityType>thermal conductivity</QuantityType>
+      <DimensionalClass>ML/T3K</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">W/m.degC</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="W/m.K">
+          <Factor>1.0</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="kgPm3TPa" annotation="kg/m3.Pa">
+      <Name>kilogram per cubic meter Pascal</Name>
+      <QuantityType>density derivative in respect to pressure</QuantityType>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kg/m3.Pa</CatalogSymbol>
+      <BaseUnit/>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="kgPm3TdegC" annotation="kg/m3.degC">
+      <Name>kilogram per cubic meter degrees Celsius</Name>
+      <QuantityType>density derivative in respect to temperature</QuantityType>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kg/m3.degC</CatalogSymbol>
+      <BaseUnit/>
+    </UnitOfMeasure>
+
+    <Comment>
+        Considerable confusion exists about the meanings of the SI (or metric) prefixes used with the unit byte, especially concerning the prefixes kilo (k or K), mega (M), and giga (G).
+        Out bytes unit will consider the more common use of bytes and it's multiples, k, M, G.
+
+        To avoid confusion with already existing unti 'B' (level of power intensity) we will use Bytes as the unit name
+    </Comment>
+
+    <UnitOfMeasure id="Byte" annotation="Byte">
+      <Name>Byte</Name>
+      <QuantityType>computer binary memory</QuantityType>
+      <DimensionalClass>CM</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">Byte</CatalogSymbol>
+      <BaseUnit/>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="kByte" annotation="kByte">
+      <Name>kiloByte</Name>
+      <QuantityType>computer binary memory</QuantityType>
+      <DimensionalClass>CM</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">kByte</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Byte">
+        <Factor>1024</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="MByte" annotation="MByte">
+      <Name>megaByte</Name>
+      <QuantityType>computer binary memory</QuantityType>
+      <DimensionalClass>CM</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">MByte</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Byte">
+        <Factor>1024 * 1024</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="GByte" annotation="GByte">
+      <Name>gigaByte</Name>
+      <QuantityType>computer binary memory</QuantityType>
+      <DimensionalClass>CM</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">GByte</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Byte">
+        <Factor>1024 * 1024 * 1024</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+    <UnitOfMeasure id="TByte" annotation="TByte">
+      <Name>teraByte</Name>
+      <QuantityType>computer binary memory</QuantityType>
+      <DimensionalClass>CM</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">TByte</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Byte">
+        <Factor>1024 * 1024 * 1024 * 1024</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="m3PsPPa^0.5" annotation="(m3/s)/(Pa^0.5)">
+      <Name>flow rate per pressure power of 0.5 </Name>
+      <QuantityType>flow coefficient</QuantityType>
+      <DimensionalClass>FP</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">(m3/s)/(Pa^0.5)</CatalogSymbol>
+      <BaseUnit/>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="m3PhPbar^0.5" annotation="(m3/h)/(bar^0.5)">
+      <Name>flow rate per pressure power of 0.5 </Name>
+      <QuantityType>flow coefficient</QuantityType>
+      <DimensionalClass>FP</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">(m3/h)/(bar^0.5)</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="(m3/s)/(Pa^0.5)">
+        <Fraction>
+          <Numerator>1</Numerator>
+          <Denominator>1138419.9576606166</Denominator><!-- 3600 * math.pow(100000, 0.5) -->
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="galUsPminPpsi^0.5" annotation="(galUS/min)/(psi^0.5)">
+      <Name>galUs per pressure power of 0.5 </Name>
+      <QuantityType>flow coefficient</QuantityType>
+      <DimensionalClass>FP</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">(galUS/min)/(psi^0.5)</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="(m3/s)/(Pa^0.5)">
+        <Fraction>
+          <Numerator>0.0000630901964</Numerator>
+          <Denominator>83.03467524575719</Denominator> <!--math.pow(6894.757293168361336722673445, 0.5) -->
+        </Fraction>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="HzPs" annotation="Hz/s">
+      <Name>hertz per second</Name>
+      <QuantityType>angular acceleration</QuantityType>
+      <DimensionalClass>A/T2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">Hz/s</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="rad/s2">
+        <Factor>6.283185307</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="degCPm2" annotation="degC/m2">
+      <Name>degrees Celsius per square meter</Name>
+      <QuantityType>temperature per area</QuantityType>
+      <DimensionalClass>K/L2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">degC/m2</CatalogSymbol>
+      <BaseUnit/>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="tgu" annotation="tgu">
+      <Name>total gas unit</Name>
+      <QuantityType>fluid gas concentration</QuantityType>
+      <DimensionalClass>1</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">tgu</CatalogSymbol>
+      <ConversionToBaseUnit baseUnit="Euc">
+        <Factor>0.00033333</Factor>
+      </ConversionToBaseUnit>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="Nsm" annotation="Ns/m">
+      <Name>Newton second per meter</Name>
+      <QuantityType>force per velocity</QuantityType>
+      <DimensionalClass>M/T</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">Ns/m</CatalogSymbol>
+      <BaseUnit/>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="Nrad" annotation="N/rad">
+      <Name>Newton per angle</Name>
+      <QuantityType>force per angle</QuantityType>
+      <DimensionalClass>ML/AT2</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">N/rad</CatalogSymbol>
+      <BaseUnit/>
+    </UnitOfMeasure>
+
+    <UnitOfMeasure id="Nsrad" annotation="Ns/rad">
+      <Name>Newton second per angle</Name>
+      <QuantityType>force per angular velocity</QuantityType>
+      <DimensionalClass>ML/AT</DimensionalClass>
+      <CatalogName>POSC</CatalogName>
+      <CatalogSymbol isExplicit="true">Ns/rad</CatalogSymbol>
+      <BaseUnit/>
+    </UnitOfMeasure>
+    
+
+  </UnitsDefinition>
+</UnitOfMeasureDictionary>
