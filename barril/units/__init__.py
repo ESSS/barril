@@ -24,8 +24,8 @@ following B{requisites}:
 
 Usage:
 
-    >>> from coilib50 import units
-    >>> from coilib50.units import scalar
+    >>> from barril import units
+    >>> from barril.units import scalar
     >>>
     >>> unit_manager = units.UnitDatabase()
     >>> unit_manager.AddUnitBase('length', 'meters', 'm')
@@ -73,16 +73,13 @@ import six
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._array import Array
-from ._definitions import IArray, IObjectWithQuantity, IQuantity, IQuantity2, IQuantity3, IScalar
 from ._fixedarray import FixedArray
 from ._fraction_scalar import FractionScalar
 from ._quantity import ObtainQuantity, Quantity, ReadOnlyError
 from ._scalar import Scalar
 from ._scalar_factory import ScalarFactory
-from ._scalar_info import IScalarInfo
 from ._unit_constants import (
     LENGTH_QUANTITY_TYPE, UNKNOWN_QUANTITY_TYPE, UNKNOWN_UNIT, CreateUnknwonwReadOnlyQuantity)
-from ._unittable import UnitTable
 from .unit_database import (
     InvalidOperationError, InvalidQuantityTypeError, InvalidUnitError, UnitDatabase, UnitInfo,
     UnitsError)
@@ -91,9 +88,6 @@ __all__ = [
     "Array",
     "FixedArray",
     "FractionScalar",
-    "IQuantity",
-    "IReadOnlyScalar",
-    "IScalar",
     "InvalidQuantityTypeError",
     "InvalidUnitError",
     "Quantity",

@@ -7,8 +7,8 @@ import six
 from six.moves import range, zip
 
 from ben10.foundation.odict import odict
-from coilib50 import units
-from coilib50.units import Array, InvalidUnitError, ObtainQuantity, Quantity
+from barril import units
+from barril.units import Array, InvalidUnitError, ObtainQuantity, Quantity
 
 
 def testEmptyArray():

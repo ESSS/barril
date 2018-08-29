@@ -2,10 +2,8 @@ from __future__ import absolute_import, unicode_literals
 
 import six
 
-from ben10.foundation.decorators import Abstract, Implements
-from ben10.interface import ImplementsInterface
-from coilib50.units._quantity import _Quantity
-from coilib50.units.unit_database import UnitDatabase
+from barril.units._quantity import _Quantity
+from barril.units.unit_database import UnitDatabase
 
 from ._definitions import IObjectWithQuantity, IQuantity
 from ._quantity import ObtainQuantity
@@ -13,7 +11,6 @@ from ._quantity import ObtainQuantity
 __all__ = ["AbstractValueWithQuantity"]
 
 
-@ImplementsInterface(IObjectWithQuantity, IQuantity)
 class AbstractValueWithQuantityObject(object):
     '''
     This is an abstract class that provides a default implementation for having a class
@@ -64,27 +61,6 @@ class AbstractValueWithQuantityObject(object):
 
         self._InternalCreateWithQuantity(quantity, value, unit_database)
 
-    @Abstract
-    def _GetDefaultValue(self, category_info, unit=None):
-        '''
-
-        :param category_info:
-        :param unit:
-        '''
-
-    @Abstract
-    def GetAbstractValue(self, unit=None):
-        '''
-
-        :param unit:
-        '''
-
-    @Abstract
-    def CheckValidity(self):
-        '''
-        :raises ValueError: when current value is wrong somehow (out of limits, for example).
-        '''
-
     def IsValid(self):
         '''
         :rtype: bool
@@ -111,7 +87,6 @@ class AbstractValueWithQuantityObject(object):
         return len(self._quantity.GetComposingCategories()) > 0
 
     # UnitDatabase ---------------------------------------------------------------------------------
-
     def GetUnitDatabase(self):
         '''
         :rtype: UnitDatabase
@@ -129,20 +104,19 @@ class AbstractValueWithQuantityObject(object):
         '''
         return self._quantity
 
-    # IQuantity Shortcuts --------------------------------------------------------------------------
-    @Implements(IQuantity.GetCategory)
+    # Category -------------------------------------------------------------------------------------
     def GetCategory(self):
         return self._quantity.GetCategory()
 
     category = property(GetCategory)
 
-    @Implements(IQuantity.GetQuantityType)
+    # QuantityType ---------------------------------------------------------------------------------
     def GetQuantityType(self):
         return self._quantity.GetQuantityType()
 
     quantity_type = property(GetQuantityType)
 
-    @Implements(IQuantity.GetUnit)
+    # Unit -----------------------------------------------------------------------------------------
     def GetUnit(self):
         return self._quantity.GetUnit()
 
@@ -195,10 +169,6 @@ class AbstractValueWithQuantityObject(object):
         stub.__class__ = cls
         stub._InternalCreateWithQuantity(quantity, *args, **kwargs)
         return stub
-
-    @Abstract
-    def _InternalCreateWithQuantity(self, *args, **kwargs):
-        pass
 
     # Copy -----------------------------------------------------------------------------------------
     def Copy(self):
@@ -266,29 +236,9 @@ class AbstractValueWithQuantityObject(object):
                             (self.__class__.__name__, e, self.__class__.__name__))
 
     # Others ---------------------------------------------------------------------------------------
-
-    @Abstract
-    def __repr__(self):
-        pass
-
-    @Abstract
-    def __str__(self):
-        '''
-        Should return a user-friendly representation of this object. Make sure to honor the
-        C{FORMATTED_SUFFIX_FORMAT} class variable.
-
-        :rtype: unicode
-        :returns:
-            The formatted string
-        '''
-
     if six.PY2:
         __unicode__ = __str__
         del __str__
-
-    @Abstract
-    def __eq__(self, other):
-        pass
 
     def __ne__(self, other):
         return not self == other
@@ -338,8 +288,7 @@ class AbstractValueWithQuantityObject(object):
         '''
         if unit is None:
             unit = self.GetUnit()
-        translated_unit = tr(unit, 'unit_translation_table')
-        return self.FORMATTED_SUFFIX_FORMAT % translated_unit
+        return self.FORMATTED_SUFFIX_FORMAT % unit
 
     # : sentinel used to change the category of the object (see ChangeCategory in subclasses)
     DEFAULT_CATEGORY_VALUE = object()

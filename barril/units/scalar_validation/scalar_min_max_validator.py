@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 import six
 
-from coilib50.units import ObtainQuantity
+from barril.units import ObtainQuantity
 
 
 #===================================================================================================
@@ -29,7 +29,7 @@ class ScalarMinMaxValidator(object):
         predicate = cls._ScalarCheckMsgPredicate(scalar)
 
         if predicate is not None:
-            return tr('Warning in %s. %s') % (name, predicate)
+            return 'Warning in %s. %s' % (name, predicate)
 
         return None
 
@@ -47,7 +47,7 @@ class ScalarMinMaxValidator(object):
         predicate = cls._ScalarCheckMsgPredicate(scalar)
 
         if predicate is not None:
-            return tr('Error in %s. %s') % (name, predicate)
+            return 'Error in %s. %s' % (name, predicate)
 
         return None
 

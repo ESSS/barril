@@ -1,17 +1,64 @@
 from __future__ import absolute_import, unicode_literals
 
-from coilib50.units.unit_database import UnitDatabase
-
-from ._posc_generation import MakeBaseToCustomary, MakeCustomaryToBase
+from barril.units.unit_database import UnitDatabase
 from ._quantity import ObtainQuantity
 
+#===================================================================================================
+# MakeCustomaryToBase
+#===================================================================================================
+def MakeCustomaryToBase(a, b, c, d):
+    '''
+    Formula to convert some value from Customary Unit to Base Unit
+    (A + BX) / (C + DX)
+    X can be any single numeric value or a numpy array
+    Integer values are correctly handled, once a, b, c and d parameters
+    are always floats
+
+    :rtype: callable
+    :returns:
+        Returns a callable with the conversion to the base.
+    '''
+    ret = lambda x:(a + b * x) / (c + d * x)
+    ret.__a__ = a
+    ret.__b__ = b
+    ret.__c__ = c
+    ret.__d__ = d
+    ret.__has_conversion__ = True
+
+    return ret
+
+
+#===================================================================================================
+# MakeBaseToCustomary
+#===================================================================================================
+def MakeBaseToCustomary(a, b, c, d):
+    '''
+    Formula to convert some value from Derivate Unit to Base Unit
+   (A - CY) / (DY - B)
+   Y can be any single numeric value or a numpy array
+   Integer values are correctly handled, once a, b, c and d parameters
+   are always floats
+
+    :rtype: callable
+    :returns:
+        Returns a callable with the conversion from the base to a unit (depending on the
+        coefficients).
+    '''
+    ret = lambda y:(a - c * y) / (d * y - b)
+    ret.__a__ = a
+    ret.__b__ = b
+    ret.__c__ = c
+    ret.__d__ = d
+    ret.__has_conversion__ = True
+
+    return ret
 
 #===================================================================================================
 # FillUnitDatabaseWithPosc
 #===================================================================================================
 def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=False):
     '''
-    Fills the given database with the posc units and the additional units defined in coilib50.
+    Fills the given database with the posc units and the additional units defined in barril.
 
     :type db: UnitDatabase or None
     :param db:

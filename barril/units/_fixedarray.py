@@ -1,7 +1,5 @@
 from __future__ import absolute_import, unicode_literals
 
-from ben10.foundation.decorators import Override
-
 from ._array import Array
 from ._quantity import Quantity
 
@@ -45,7 +43,6 @@ class FixedArray(Array):
 
         Array.__init__(self, category, values, unit)
 
-    @Override(Array._InternalCreateWithQuantity)
     def _InternalCreateWithQuantity(
         self,
         quantity,
@@ -71,11 +68,10 @@ class FixedArray(Array):
 
         elif hasattr(self, '_dimension'):
             if self._dimension is not None and dimension != self._dimension:
-                raise ValueError(
-                    tr('Dimension re-definition mismatch: %s != %s' % (self._dimension, dimension)))
+                raise ValueError('Dimension re-definition mismatch: %s != %s' % (self._dimension, dimension))
 
         if dimension < 2:
-            raise ValueError(tr('Dimension MUST be 2 or more'))
+            raise ValueError('Dimension MUST be 2 or more')
         self._dimension = dimension
 
         if values is None:
@@ -95,7 +91,6 @@ class FixedArray(Array):
         )
 
     # Values ---------------------------------------------------------------------------------------
-    @Override(Array._GetDefaultValue)
     def _GetDefaultValue(self, category_info, unit=None):
         return [0.0] * self._dimension
 
@@ -106,7 +101,7 @@ class FixedArray(Array):
             dimension = self.dimension
 
         if len(values) != dimension:
-            msg = tr('Values must have %d elements, but has %d')
+            msg = 'Values must have %d elements, but has %d'
             raise ValueError(msg % (dimension, len(values)))
 
     @classmethod
@@ -167,8 +162,8 @@ class FixedArray(Array):
         :return FixedArray:
             The created FixedArray.
         '''
-        from coilib50.units import Scalar
-        from coilib50.units import FixedArray
+        from barril.units import Scalar
+        from barril.units import FixedArray
 
         if isinstance(value, tuple):
             scalar = Scalar(self.GetValues()[index], self.GetUnit()).CreateCopy(*value)
@@ -200,7 +195,7 @@ class FixedArray(Array):
         :return Scalar:
             A Scalar representation of the given index.
         '''
-        from coilib50.units import Scalar
+        from barril.units import Scalar
         if quantity is None:
             quantity = self.GetQuantity()
         return Scalar(quantity, self.GetValues(unit=quantity.GetUnit())[index])

@@ -1,6 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
-from coilib50.units import Scalar
+from barril.units import Scalar
 
 
 def testEmptyScalar():

@@ -3,10 +3,10 @@ from __future__ import absolute_import, unicode_literals
 import pickle
 
 from ben10.foundation.odict import odict
-from coilib50.units import (
+from barril.units import (
     UNKNOWN_QUANTITY, UNKNOWN_QUANTITY_TYPE, UNKNOWN_UNIT, GetUnknownQuantity, ObtainQuantity,
     Quantity)
-from coilib50.units.unit_database import InvalidUnitError, UnitDatabase
+from barril.units.unit_database import InvalidUnitError, UnitDatabase
 
 import pytest
 

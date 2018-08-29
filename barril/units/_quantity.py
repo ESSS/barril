@@ -8,12 +8,9 @@ import six
 from six import next
 from six.moves import range, zip  # @UnresolvedImport
 
-from ben10.foundation.decorators import Implements, Override
 from ben10.foundation.odict import odict
-from ben10.interface import ImplementsInterface
 from ben10.property_ import Create
-from coilib50.units.unit_database import UnitsError
-from coilib50.units.unit_translation_table import TranslateUnit
+from barril.units.unit_database import UnitsError
 
 from ._definitions import IQuantity, IQuantity2, IQuantity3, IQuantity6
 from ._unit_constants import UNKNOWN_UNIT
@@ -246,13 +243,6 @@ class Quantity(object):
 #===================================================================================================
 # Quantity
 #===================================================================================================
-@ImplementsInterface(
-    IQuantity,
-    IQuantity2,
-    IQuantity3,
-    IQuantity6,
-    no_check=True
-)
 class _Quantity(Quantity):
     '''
     The quantity is an object that has its associated category, quantity type and unit.
@@ -287,7 +277,6 @@ class _Quantity(Quantity):
 
     Create(unit=None, category_to_unit_and_exps=None)
 
-    @Override(Quantity.__new__)
     def __new__(cls, category, unit, unknown_unit_caption=None):
         '''
         Overridden because we don't want to call the Quantity.__new__ (which would result
@@ -456,29 +445,20 @@ class _Quantity(Quantity):
 
         return 'Quantity(%r, %r)' % (self.GetCategory(), self._unit,)
 
-    # IQuantity6 -----------------------------------------------------------------------------------
-
-    @Implements(IQuantity6.SetUnknownCaption)
     def SetUnknownCaption(self, caption):
         raise ReadOnlyError('Quantity is now read-only.')
 
-    @Implements(IQuantity6.GetUnknownCaption)
     def GetUnknownCaption(self):
         return self._unknown_unit_caption
 
-    @Implements(IQuantity6.GetUnitCaption)
     def GetUnitCaption(self):
         unit = self._unit
         if unit == UNKNOWN_UNIT and self._unknown_unit_caption:
             # For now let's leave both (may need further discussions)
-            unit = self._unknown_unit_caption + ' ' + TranslateUnit(UNKNOWN_UNIT)
+            unit = self._unknown_unit_caption + ' ' + UNKNOWN_UNIT
 
-        translated = TranslateUnit(unit)
-        return translated
+        return unit
 
-    # End IQuantity6 -------------------------------------------------------------------------------
-
-    @Implements(IQuantity.GetCategory)
     def GetCategory(self):
         return self._category
 
@@ -526,7 +506,6 @@ class _Quantity(Quantity):
 
         return ret
 
-    @Implements(IQuantity.GetQuantityType)
     def GetQuantityType(self):
         return self._quantity_type
 
@@ -568,7 +547,6 @@ class _Quantity(Quantity):
 
         return ret
 
-    @Implements(IQuantity.GetUnit)
     def GetUnit(self):
         return self._unit
 
@@ -684,10 +662,10 @@ class _Quantity(Quantity):
         '''
         OPERATOR_COMPARISON = {'>':'>', '<':'<', '>=':'>=', '<=':'<='}
         LITERALS_COMPARISON = {
-            '>':tr('greater than'),
-            '<':tr('less than'),
-            '>=':tr('greater or equal to'),
-            '<=':tr('less or equal to')
+            '>':'greater than',
+            '<':'less than',
+            '>=':'greater or equal to',
+            '<=':'less or equal to'
         }
         if use_literals:
             return LITERALS_COMPARISON[operator]
@@ -711,7 +689,7 @@ class _Quantity(Quantity):
         :param Boolean use_literals:
             If literals are to be used in the error message.
         '''
-        invalid_value_message = tr('Invalid value for %s: %g. Must be %s %r.')
+        invalid_value_message = 'Invalid value for %s: %g. Must be %s %r.'
         raise ValueError(invalid_value_message % (
                 self._category_info.caption,
                 value,
@@ -765,19 +743,15 @@ class _Quantity(Quantity):
     def SetCategoryToUnitAndExps(self, category_to_unit_and_exps):
         raise ReadOnlyError('Quantity is now read-only.')
 
-    @Implements(IQuantity3.GetUnitDatabase)
     def GetUnitDatabase(self):
         return self._unit_database
 
-    @Implements(IQuantity2.GetComposingCategories)
     def GetComposingCategories(self):
         return self._composing_categories
 
-    @Implements(IQuantity2.GetComposingUnits)
     def GetComposingUnits(self):
         return self._composing_units
 
-    @Implements(IQuantity2.GetComposingUnitsJoiningExponents)
     def GetComposingUnitsJoiningExponents(self):
         try:
             return self._composing_units_joining_exponents

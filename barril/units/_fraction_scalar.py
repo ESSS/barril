@@ -5,10 +5,8 @@ from functools import total_ordering
 
 import six
 
-from ben10.foundation.decorators import Implements, Override
 from ben10.foundation.types_ import CheckType
-from ben10.interface import ImplementsInterface
-from coilib50.basic.fraction import FractionValue
+from barril.basic.fraction import FractionValue
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._definitions import IScalar
@@ -17,7 +15,6 @@ from .unit_database import UnitDatabase
 
 
 @total_ordering
-@ImplementsInterface(IScalar)
 class FractionScalar(AbstractValueWithQuantityObject):
     '''
     Base class for objects similar to scalars, but that represent its value as L{FractionValue}
@@ -52,12 +49,10 @@ class FractionScalar(AbstractValueWithQuantityObject):
         self._quantity = quantity
         self._unit_database = unit_database or UnitDatabase.GetSingleton()
 
-    @Override(AbstractValueWithQuantityObject.CheckValidity)
     def CheckValidity(self):
         self._quantity.CheckValue(float(self._value))
 
     # Value ----------------------------------------------------------------------------------------
-    @Override(AbstractValueWithQuantityObject.GetAbstractValue)
     def GetAbstractValue(self, unit=None):
         if unit is None:
             return self._value
@@ -72,7 +67,6 @@ class FractionScalar(AbstractValueWithQuantityObject):
     GetValue = GetAbstractValue
     value = property(GetAbstractValue)
 
-    @Override(AbstractValueWithQuantityObject._GetDefaultValue)
     def _GetDefaultValue(self, category_info, unit=None):
         value = category_info.default_value
         if unit is not None:
@@ -82,7 +76,6 @@ class FractionScalar(AbstractValueWithQuantityObject):
 
         return value
 
-    @Implements(IScalar.GetValueAndUnit)
     def GetValueAndUnit(self):
         return (self.GetValue(), self.GetUnit())
 

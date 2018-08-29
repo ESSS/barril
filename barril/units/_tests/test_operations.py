@@ -5,8 +5,8 @@ import operator
 import six
 import pytest
 
-from coilib50.units import ObtainQuantity
-from coilib50.units.unit_database import UnitDatabase
+from barril.units import ObtainQuantity
+from barril.units.unit_database import UnitDatabase
 
 
 def testOperation():

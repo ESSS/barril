@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 import six
 
-from coilib50.units.unit_database import InvalidUnitError, UnitDatabase
+from barril.units.unit_database import InvalidUnitError, UnitDatabase
 
 
 #===================================================================================================

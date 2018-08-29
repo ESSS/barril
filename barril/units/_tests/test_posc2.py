@@ -6,9 +6,9 @@ import pytest
 from pytest import approx
 
 from ben10.foundation.reraise import Reraise
-from coilib50 import units
-from coilib50.units import UnitsError
-from coilib50.units.unit_database import UnitDatabase
+from barril import units
+from barril.units import UnitsError
+from barril.units.unit_database import UnitDatabase
 
 
 def testPoscWithoutFillCategories(unit_database_posc_len_no_category):

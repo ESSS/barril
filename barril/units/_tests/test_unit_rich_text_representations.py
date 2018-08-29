@@ -1,6 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
-from coilib50.units.unit_rich_text_representations import UnitRichTextRepresentations
+from barril.units.unit_rich_text_representations import UnitRichTextRepresentations
 
 
 def AssertRTFCaption(received_representation, expected_caption):

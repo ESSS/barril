@@ -9,11 +9,9 @@ import six
 from six import next
 from six.moves import range  # @UnresolvedImport
 
-from ben10.foundation.decorators import Implements, Override
 from ben10.foundation.reraise import Reraise
 from ben10.foundation.types_ import IsNumber
-from ben10.interface import ImplementsInterface
-from coilib50.units.unit_system_manager import UnitSystemManager
+from barril.units.unit_system_manager import UnitSystemManager
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._definitions import IQuantity, IScalar
@@ -24,7 +22,6 @@ __all__ = ["Scalar"]
 
 
 @total_ordering
-@ImplementsInterface(IScalar, IQuantity)
 class Scalar(AbstractValueWithQuantityObject):
     '''
     This object represents a scalar (a value that has an associated quantity).
@@ -77,7 +74,6 @@ class Scalar(AbstractValueWithQuantityObject):
         else:
             AbstractValueWithQuantityObject.__init__(self, category=category, value=value, unit=unit)
 
-    @Override(AbstractValueWithQuantityObject._InternalCreateWithQuantity)
     def _InternalCreateWithQuantity(self, quantity, value=None, unit_database=None):
         '''
         For internal use only. Is used to initialize the actual quantity.
@@ -103,7 +99,6 @@ class Scalar(AbstractValueWithQuantityObject):
         self._quantity = quantity
 
     # Value ----------------------------------------------------------------------------------------
-    @Override(AbstractValueWithQuantityObject.GetAbstractValue)
     def GetAbstractValue(self, unit=None):
         if unit is None:
             return self._value
@@ -113,7 +108,6 @@ class Scalar(AbstractValueWithQuantityObject):
     GetValue = GetAbstractValue
     value = property(GetAbstractValue)
 
-    @Override(AbstractValueWithQuantityObject._GetDefaultValue)
     def _GetDefaultValue(self, category_info, unit=None):
         try:
             value = category_info.default_value
@@ -127,11 +121,9 @@ class Scalar(AbstractValueWithQuantityObject):
 
         return value
 
-    @Implements(IScalar.GetValueAndUnit)
     def GetValueAndUnit(self):
         return (self._value, self.GetUnit())
 
-    @Override(AbstractValueWithQuantityObject.CheckValidity)
     def CheckValidity(self):
         self._quantity.CheckValue(self._value)
 
@@ -202,14 +194,14 @@ class Scalar(AbstractValueWithQuantityObject):
         :returns:
             A string with the value of this scalar formatted.
         '''
-        from coilib50.basic.format_float import FormatFloat
+        from barril.basic.format_float import FormatFloat
         if value_format is None:
             value_format = self.FORMATTED_VALUE_FORMAT
         return FormatFloat(value_format, self.GetValue(unit))
 
     def GetFormatted(self, unit=None, value_format=None):
         '''
-        Returns this scalar in a formatted format (i.e.: formatted value + translated unit).
+        Returns this scalar in a formatted format (i.e.: formatted value + unit).
 
         :param unit:
             The unit in which the value should be gotten.
@@ -263,9 +255,8 @@ class Scalar(AbstractValueWithQuantityObject):
                     unit = unit_and_exps[0]
 
                 # We build it manually because we have an exponent...
-                translated_unit = tr(unit, 'unit_translation_table')
-                translated_unit += six.text_type(exp)
-                unit_part = self.FORMATTED_SUFFIX_FORMAT % translated_unit
+                unit += six.text_type(exp)
+                unit_part = self.FORMATTED_SUFFIX_FORMAT % unit
                 unit_and_exp = (unit, exp)
 
                 return '%s%s' % (self.GetFormattedValue((unit_and_exp,)), unit_part)

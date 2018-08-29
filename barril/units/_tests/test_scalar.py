@@ -12,9 +12,9 @@ import six
 from six.moves import range
 
 from ben10.foundation.odict import odict
-from coilib50 import units
-from coilib50.units import InvalidOperationError, InvalidUnitError, ObtainQuantity, Quantity, Scalar
-from coilib50.units.unit_database import UnitDatabase
+from barril import units
+from barril.units import InvalidOperationError, InvalidUnitError, ObtainQuantity, Quantity, Scalar
+from barril.units.unit_database import UnitDatabase
 
 def testScalarInterface(unit_database_well_length):
     s = Scalar('well-length')
@@ -379,28 +379,6 @@ def testCopyPropertiesAndValidation(unit_database_well_length):
     another = scalar_source.CreateCopy()
     assert not another.IsValid()
 
-def testTranslation(unit_database_empty):
-    '''
-        Unit DataBase Translation
-    '''
-    def MyTr(text, context=None):
-        return 'TR(%s)' % text
-
-    import six.moves.builtins
-
-    old_tr = six.moves.builtins.tr
-    six.moves.builtins.tr = MyTr
-    try:
-        unit_database = unit_database_empty
-        
-        unit_database.AddUnitBase('length', 'meters', 'm')
-        unit_database.AddCategory(category='length', quantity_type='length')
-
-        scalar = Scalar('length', 10.0, 'm')
-        assert scalar.GetFormatted() == '10 [TR(m)]'
-    finally:
-        six.moves.builtins.tr = old_tr
-
 def testDefaultValue(unit_database_len_pressure):
     '''
         Scalar constructor considers the minimum and maximum values
@@ -468,91 +446,6 @@ def testDefaultValue(unit_database_len_pressure):
     with pytest.raises(RuntimeError):
         db.AddCategory(category='my pressure 2',
         quantity_type='pressure', min_value=100.0, max_value=200.0, is_max_exclusive=True)
-
-def testProfileScalar():
-    '''
-    Start of profile: (Name / calls / time)
-
-    'CheckConvertToBaseCommom' : (290002, 290003), # 0.567175309892
-    'CheckConvertToBaseComposite' : (290002, 290003), # 0.571209882794
-    'CheckConvertToOtherCommom' : (280002, 290003), # 0.567705774027
-    'CheckConvertToOtherComposite' : (280002, 290003), # 0.561195548054
-    'CheckNoParam' : (40002, 40003), # 0.0772360843882
-    'CheckSameAsEntryComposite' : (10002, 10003), # 0.0251885457103
-
-
-    Changes to GetValue 'fixed' the common case:
-    'CheckSameAsEntry' : (10002, 10003), # 0.0261356361932
-    '''
-    return  # TODO: Reenable this test!
-    unit_database = UnitDatabase.GetSingleton()
-    unit_database.AddCategory(category='length', quantity_type='length')
-
-    s = Scalar('length', 1.5, 'in')
-
-    # There is a little difference in number of calls beteewn dist-0902 and dist-0703 because of
-    # an additional call in profile.py. So, lets check both values: (dist-0902, dist-0703).
-    expected_calls = {
-        # 1 order of magnitude slower (conversion needed)
-        'CheckConvertToBaseCommom' : (280002, 280003),  # 0.567175309892
-        'CheckConvertToBaseComposite' : (280002, 280003),  # 0.571209882794
-        'CheckConvertToOtherCommom' : (270002, 280003),  # 0.567705774027
-        'CheckConvertToOtherComposite' : (270002, 280003),  # 0.561195548054
-
-        # These are the fastest
-        'CheckSameAsEntry' : (10002, 10003),  # 0.0261356361932
-        'CheckSameAsEntryComposite' : (10002, 10003),  # 0.0251885457103
-
-        # It's a bit slower because we have to calculate the actual internal unit could use
-        # caches to hold that if this really becomes a bottleneck.
-        'CheckNoParam' : (40002, 40003),  # 0.0772360843882
-    }
-
-    def CheckNoParam():
-        for _i in range(10000):
-            s.GetValue()
-
-    def CheckSameAsEntry():
-        for _i in range(10000):
-            s.GetValue('in')
-
-    def CheckSameAsEntryComposite():
-        for _i in range(10000):
-            s.GetValue([('in', 1)])
-
-    def CheckConvertToBaseCommom():
-        for _i in range(10000):
-            s.GetValue('m')
-
-    def CheckConvertToOtherCommom():
-        for _i in range(10000):
-            s.GetValue('km')
-
-    def CheckConvertToBaseComposite():
-        for _i in range(10000):
-            s.GetValue([('m', 1)])
-
-    def CheckConvertToOtherComposite():
-        for _i in range(10000):
-            s.GetValue([('km', 1)])
-
-    from ben10.debug.profiling import ObtainStats
-    result = odict()
-    for key, val in sorted(six.iteritems(locals())):
-        if key.startswith('Check'):
-            stats = ObtainStats(val)
-            result[key] = (stats.total_calls, stats.total_tt)
-            # Uncomment for more info
-            # print '\n\n\n', key, ':', stats.total_calls, stats.total_tt
-            # print stats.strip_dirs().sort_stats('time', 'calls').print_stats()
-            if stats.total_calls not in expected_calls[key]:
-                raise RuntimeError(
-                    'Expecting one of these values: %s. Obtained: %s\n\tFor function: "%s"' % \
-                    (expected_calls[key], stats.total_calls, key)
-                )
-
-    # Same number of calls!
-    assert result['CheckSameAsEntry'][0] == result['CheckSameAsEntryComposite'][0]
 
 def testScalarInvalidValue(unit_database_len_time):
     db = unit_database_len_time

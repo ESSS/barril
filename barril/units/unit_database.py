@@ -8,7 +8,6 @@ import traceback
 import six
 from six.moves import zip  # @UnresolvedImport
 
-from ben10.foundation.decorators import Override
 from ben10.foundation.is_frozen import IsDevelopment
 from ben10.foundation.singleton import Singleton
 from ben10.foundation.types_ import CheckType
@@ -214,7 +213,6 @@ class UnitDatabase(Singleton):
     PREPOSITIONS_IN_CATEGORY_NAME = ['per', 'of']
 
     @classmethod
-    @Override(Singleton.CreateDefaultSingleton)
     def CreateDefaultSingleton(cls):
         result = cls(default_singleton=True)
         cls.FillUnitDatabaseWithPosc(result)
@@ -473,7 +471,7 @@ class UnitDatabase(Singleton):
         #   3) zero
         if default_value is None:
             if is_min_exclusive or is_max_exclusive:
-                raise RuntimeError(tr('default_value must be supplied'))
+                raise RuntimeError('default_value must be supplied')
             elif min_value is not None:
                 default_value = min_value
             elif max_value is not None:
@@ -483,7 +481,7 @@ class UnitDatabase(Singleton):
 
         else:  # the default_value is defined
 
-            msg = tr('Error while adding category %s: default_value %f %s %f')
+            msg = 'Error while adding category %s: default_value %f %s %f'
 
             if min_value is not None:
                 if is_min_exclusive:
@@ -726,7 +724,7 @@ class UnitDatabase(Singleton):
 
         if IsDevelopment():
             if unit in [q.unit for q in quantity_type_list]:
-                raise RuntimeError(tr('Unit already registered: %s (%s)') % (name, unit))
+                raise RuntimeError('Unit already registered: %s (%s)') % (name, unit)
 
         quantity_type_list.append(info)
 

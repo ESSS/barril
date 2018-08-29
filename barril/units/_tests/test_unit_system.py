@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 import pytest
 
-from coilib50.units.unit_system import UnitSystem
+from barril.units.unit_system import UnitSystem
 
 @pytest.fixture
 def units_mapping_1():
@@ -41,7 +41,7 @@ def testEquality(units_mapping_1, units_mapping_2):
 
 def testSetDefaultUnitCallback(units_mapping_1):
     '''
-        Implements on_default_unit on unit system, called when the default unit changes.
+    Implements on_default_unit on unit system, called when the default unit changes.
     '''
     class MockClass(object):
         callback_params = None

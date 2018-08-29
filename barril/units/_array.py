@@ -3,11 +3,9 @@ from __future__ import absolute_import, unicode_literals
 import six
 from six import next
 
-from ben10.foundation.decorators import Override
 from ben10.foundation.types_ import IsNumber
-from ben10.interface import ImplementsInterface
-from coilib50.basic.format_float import FormatFloat
-from coilib50.units.unit_database import UnitDatabase
+from barril.basic.format_float import FormatFloat
+from barril.units.unit_database import UnitDatabase
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._definitions import IArray
@@ -16,7 +14,6 @@ from ._quantity import Quantity
 __all__ = ["Array"]
 
 
-@ImplementsInterface(IArray)
 class Array(AbstractValueWithQuantityObject):
     '''
     Array represents a sequence of values that also have an unit associated.
@@ -47,7 +44,6 @@ class Array(AbstractValueWithQuantityObject):
         self._is_valid = None
         self._validity_exception = None
 
-    @Override(AbstractValueWithQuantityObject.CheckValidity)
     def CheckValidity(self):
         self.ValidateValues(self._value, self._quantity)
 
@@ -56,7 +52,6 @@ class Array(AbstractValueWithQuantityObject):
             self, value=values, unit=unit, category=category, **kwargs)
 
     # Values ---------------------------------------------------------------------------------------
-    @Override(AbstractValueWithQuantityObject.GetAbstractValue)
     def GetAbstractValue(self, unit=None):
         '''@param unit: this is the unit in which we want the values
         :rtype: list(number)
@@ -86,7 +81,6 @@ class Array(AbstractValueWithQuantityObject):
     GetValues = GetAbstractValue
     values = property(GetAbstractValue)
 
-    @Override(AbstractValueWithQuantityObject._GetDefaultValue)
     def _GetDefaultValue(self, category_info, unit=None):
         return []
 

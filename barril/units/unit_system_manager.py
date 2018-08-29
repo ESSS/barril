@@ -6,16 +6,13 @@ from copy import deepcopy
 import six
 
 from ben10.foundation import callback
-from ben10.foundation.decorators import Override
 from ben10.foundation.odict import odict
 from ben10.foundation.singleton import Singleton
-from ben10.interface import AssertImplements
 from ben10.property_ import Property
-from coilib50.basic.naming import GetUnusedName
+from barril.basic.naming import GetUnusedName
 
 from .unit_database import UnitDatabase
 from .unit_system import UnitSystem
-from .unit_system_interface import IUnitSystem
 
 
 #===================================================================================================
@@ -27,7 +24,7 @@ class NoTemplateError(RuntimeError):
     '''
 
     def __init__(self):
-        msg = tr('Error creating unit system. There is no template defined.')
+        msg = 'Error creating unit system. There is no template defined.'
         RuntimeError.__init__(self, msg)
 
 
@@ -46,9 +43,9 @@ class InvalidTemplateError(RuntimeError):
             The ids of the unit system that do not match a given template
         '''
         if invalid_unit_system_ids:
-            msg = tr('The unit systems %s do not match the given template' % six.text_type(invalid_unit_system_ids))
+            msg = 'The unit systems %s do not match the given template' % six.text_type(invalid_unit_system_ids)
         else:
-            msg = tr('At least one of the current unit systems does not match the given template')
+            msg = 'At least one of the current unit systems does not match the given template'
         RuntimeError.__init__(self, msg)
 
 
@@ -62,9 +59,7 @@ class UnitSystemCategoriesError(KeyError):
     '''
 
     def __init__(self, default_categories, current_categories):
-        msg = tr(
-            'Error creating new unit system. The default categories are %s but %s were defined.'
-        )
+        msg = 'Error creating new unit system. The default categories are %s but %s were defined.'
         KeyError.__init__(self, msg % (default_categories, current_categories))
 
 
@@ -77,9 +72,7 @@ class UnitSystemIDError(KeyError):
     '''
 
     def __init__(self, id):
-        msg = tr(
-            'Error creating new unit system. The ID %s is already in use.'
-        )
+        msg = 'Error creating new unit system. The ID %s is already in use.'
         KeyError.__init__(self, msg % (id))
 
 
@@ -94,7 +87,7 @@ class UnitSystemManager(Singleton):
     :ivar list _object_refs:
         List of weakref for all objects which represents a value+unit.
 
-    :type current: IUnitSystem instance
+    :type current: UnitSystem instance
     :ivar current:
         The current unit system.
 
@@ -105,7 +98,7 @@ class UnitSystemManager(Singleton):
         Callback called when the the unit of a category changes (the category and unit is given as
         parameter).
 
-    :type _unit_systems: dict(unicode, IUnitSystem instance)
+    :type _unit_systems: dict(unicode, UnitSystem instance)
     :ivar _unit_systems:
         A dict that holds the available unit systems.
     '''
@@ -136,7 +129,6 @@ class UnitSystemManager(Singleton):
         self.__null_unit_system = UnitSystem(
             id=None, caption='Null', units_mapping={}, read_only=True)
 
-    @Override(Singleton.ResetInstance)
     def ResetInstance(self):
         self.on_current.UnregisterAll()
         self.on_unit_changed.UnregisterAll()
@@ -145,11 +137,10 @@ class UnitSystemManager(Singleton):
         '''
         Set the default unit system class.
 
-        :type class_: IUnitSystem class
+        :type class_: UnitSystem class
         :param class_:
             The unit system class that wiil be used when creating new unit systems.
         '''
-        AssertImplements(class_, IUnitSystem)
         self._default_unit_system_class = class_
 
     def SetTemplateUnitSystemByUnitsMapping(self, units_mapping):
@@ -161,7 +152,7 @@ class UnitSystemManager(Singleton):
         :type units_mapping: dict( unicode, unicode )
         :param units_mapping:
             A dict that maps each category to a related unit (which will be set as default).
-            The valid categories are defined by the coilib50.units.UnitDatabase.
+            The valid categories are defined by the barril.units.UnitDatabase.
 
         @raise: TemplateDefinedAfterUnitSystemError
             See TemplateDefinedAfterUnitSystemError documentation.
@@ -183,12 +174,12 @@ class UnitSystemManager(Singleton):
             raise InvalidTemplateError(invalid_unit_systems)
 
         self._unit_system_template = self._default_unit_system_class(
-            'template', tr('Unit system template'), units_mapping, True
+            'template', 'Unit system template', units_mapping, True
         )
 
     def GetUnitSystemTemplate(self):
         '''
-        :rtype: IUnitSystem instance
+        :rtype: UnitSystem instance
         :returns:
             Return the template unit system.
         '''
@@ -232,7 +223,7 @@ class UnitSystemManager(Singleton):
         :type units_mapping: dict( unicode, unicode ) or None
         :param units_mapping:
             A dict that maps each category to a related unit (which will be set as default).
-            The valid categories are defined by the coilib50.units.UnitDatabase.
+            The valid categories are defined by the barril.units.UnitDatabase.
             If None is given the units mapping from the template will be taken.
 
         :param bool read_only:
@@ -247,7 +238,7 @@ class UnitSystemManager(Singleton):
         :raises UnitSystemCategoriesError:
             See UnitSystemCategoriesError documentation.
 
-        :rtype: IUnitSystem instance
+        :rtype: UnitSystem instance
         :returns:
             The created unit system.
         '''
@@ -316,7 +307,7 @@ class UnitSystemManager(Singleton):
 
     def GetUnitSystems(self):
         '''
-        :rtype: dict{unicode, IUnitSystem instance)
+        :rtype: dict{unicode, UnitSystem instance)
         :returns:
             The dict containing all the registered unit systems indexed by their ids.
         '''
@@ -328,7 +319,7 @@ class UnitSystemManager(Singleton):
         '''
         Sets a new current unit system, updating all registered objects. If None, no object is changed.
 
-        :type unit_system: IUnitSystem instance
+        :type unit_system: UnitSystem instance
         :param unit_system:
             The new current unit system.
         '''
@@ -350,7 +341,7 @@ class UnitSystemManager(Singleton):
         '''
         Retrieves the unit system currently in use.
 
-        :rtype: IUnitSystem instance
+        :rtype: UnitSystem instance
         :returns:
             The currently used unit system.
         '''
@@ -442,7 +433,7 @@ class UnitSystemManager(Singleton):
         :param unicode id:
             The wished unit system id.
 
-        :rtype: IUnitSystem instance
+        :rtype: UnitSystem instance
         :returns:
             The unit system with the given id.
 
@@ -560,6 +551,6 @@ class UnitSystemManager(Singleton):
             if there is no current unit system, the returned value and unit are the same as
             the input.
         '''
-        from coilib50.units import Scalar
+        from barril.units import Scalar
         ret_tuple = self.ConvertToCurrent(scalar.GetCategory(), scalar.GetUnit(), scalar.GetValue(), unit_database)
         return Scalar(*ret_tuple)

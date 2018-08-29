@@ -5,8 +5,8 @@ import pytest
 from pytest import approx
 
 from ben10.foundation.odict import odict
-from coilib50 import units
-from coilib50.units import InvalidUnitError, ObtainQuantity, Quantity
+from barril import units
+from barril.units import InvalidUnitError, ObtainQuantity, Quantity
 
 
 def testFormatting(unit_database_start_units):
@@ -157,7 +157,7 @@ def testFixedArrayChangingIndex():
 
 
 def testFixedArrayIndexAsScalar():
-    from coilib50.units import Scalar
+    from barril.units import Scalar
     fixed_array = units.FixedArray(3, 'length of path', [1, 2, 3], 'm')
     assert fixed_array.IndexAsScalar(0).GetCategory() == 'length of path'
     assert fixed_array.IndexAsScalar(0) == Scalar('length of path', 1, 'm')

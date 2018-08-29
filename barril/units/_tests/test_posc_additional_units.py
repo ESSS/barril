@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, unicode_literals
 import pytest
 from pytest import approx
 
-from coilib50 import units
+from barril import units
 
 @pytest.fixture
 def db():
@@ -270,14 +270,14 @@ def testFlowCoefficient(db):
     assert approx(obtained, rel=1e-12) == expected
 
 def testHertzPerSecond():
-    from coilib50.units import Scalar
+    from barril.units import Scalar
     assert approx(Scalar(1, 'rpm').GetValue('Hz')) == 1 / 60.
     assert approx(Scalar(1, 'Hz').GetValue('rpm')) == 60.
     assert approx(Scalar(1, 'Hz/s').GetValue('rpm/s')) == 60.
     assert approx(Scalar(1, 'rpm/s').GetValue('Hz/s')) == 1 / 60.
 
 def testFluidGasConcentration():
-    from coilib50.units import Scalar
+    from barril.units import Scalar
     assert approx(Scalar(1, 'tgu').GetValue('ppm')) == 333.33
     assert approx(Scalar(1, 'tgu').GetValue('%')) == 0.033333
 

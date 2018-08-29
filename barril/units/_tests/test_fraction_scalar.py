@@ -4,9 +4,9 @@ import copy
 
 import pytest
 
-from coilib50 import units
-from coilib50.basic.fraction import FractionValue
-from coilib50.unittest_tools.locale_memento import LocaleMemento
+from barril import units
+from barril.basic.fraction import FractionValue
+from barril.unittest_tools.locale_memento import LocaleMemento
 
 def testFractionScalar():
     # create our scalar

@@ -1,6 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
-from coilib50.units import ObtainQuantity, Quantity, ReadOnlyError, UnitDatabase
+from barril.units import ObtainQuantity, Quantity, ReadOnlyError, UnitDatabase
 import pytest
 
 

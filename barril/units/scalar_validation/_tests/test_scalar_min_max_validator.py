@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
-from coilib50.units import Scalar
-from coilib50.units.scalar_validation.scalar_min_max_validator import ScalarMinMaxValidator
+from barril.units import Scalar
+from barril.units.scalar_validation.scalar_min_max_validator import ScalarMinMaxValidator
 
 
 def _CreateTestCategories(db):

@@ -1,12 +1,11 @@
 from __future__ import absolute_import, unicode_literals
 
-from ben10.foundation.weak_ref import GetWeakRef
-from coilib50.units import Array, FixedArray, FractionScalar, ObtainQuantity, Scalar
-from coilib50.units.unit_system import UnitSystem
-from coilib50.units.unit_system_manager import (
+from barril.units import Array, FixedArray, FractionScalar, ObtainQuantity, Scalar
+from barril.units.unit_system import UnitSystem
+from barril.units.unit_system_manager import (
     InvalidTemplateError, UnitSystemCategoriesError, UnitSystemIDError, UnitSystemManager)
 
-from coilib50.time.time_set import TimeSet  # isort:skip @UnusedImport
+from barril.time.time_set import TimeSet  # isort:skip @UnusedImport
 
 import pytest
 
@@ -61,22 +60,6 @@ def testUnitSystemManager(unit_manager, units_mapping_1, units_mapping_2, units_
     unit_manager.current = system1
     assert unit_manager.GetUnitSystemById('system1') is system1
     assert unit_manager.GetUnitSystemById('system2') is system2
-
-    # make sure the unit system manager is not holding a strong ref to its objects
-    scalar_ref = GetWeakRef(scalar)
-    array_ref = GetWeakRef(array)
-    fixed_array_ref = GetWeakRef(fixed_array)
-    fraction_scalar_ref = GetWeakRef(fraction_scalar)
-
-    del scalar
-    del array
-    del fixed_array
-    del fraction_scalar
-
-    assert scalar_ref() is None
-    assert array_ref() is None
-    assert fixed_array_ref() is None
-    assert fraction_scalar_ref() is None
 
 def testGetNewId(unit_manager, units_mapping_1):
     CreateUnitSystemTemplate(unit_manager)

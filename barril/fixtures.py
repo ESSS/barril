@@ -3,8 +3,8 @@ from __future__ import absolute_import, unicode_literals
 
 import pytest
 
-from coilib50 import units
-from coilib50.units.unit_system_manager import UnitSystemManager
+from barril import units
+from barril.units.unit_system_manager import UnitSystemManager
 
 def CreateUnitDatabaseLenTime():
     '''
@@ -118,7 +118,7 @@ def CreateUnitDatabaseLenPressure():
     return unit_database
 
 def CreateUnitDatabaseCustomConversion():
-    from coilib50.units import (UNKNOWN_QUANTITY_TYPE, UNKNOWN_UNIT)
+    from barril.units import (UNKNOWN_QUANTITY_TYPE, UNKNOWN_UNIT)
 
     unit_database = units.UnitDatabase()
     # add some units for testing

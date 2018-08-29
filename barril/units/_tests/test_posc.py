@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, unicode_literals
 
-from coilib50 import units
-from coilib50.units import ObtainQuantity
-from coilib50.units.posc import (
+from barril import units
+from barril.units import ObtainQuantity
+from barril.units.posc import (
     CreateAreaQuantityFromLengthQuantity, CreateVolumeQuantityFromLengthQuantity)
-from coilib50.units.unit_database import UnitDatabase
+from barril.units.unit_database import UnitDatabase
 
 from pytest import approx
 

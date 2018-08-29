@@ -6,14 +6,13 @@ from pytest import approx
 
 from six.moves import range
 
-from coilib50 import units
-from coilib50.basic.format_float import FormatFloat
-from coilib50.basic.fraction import FractionValue
-from coilib50.units import (
+from barril import units
+from barril.basic.format_float import FormatFloat
+from barril.basic.fraction import FractionValue
+from barril.units import (
     UNKNOWN_QUANTITY_TYPE, UNKNOWN_UNIT, Array, FixedArray, InvalidQuantityTypeError,
     InvalidUnitError, ObtainQuantity, Quantity, UnitsError)
-from coilib50.units._posc_generation import MakeBaseToCustomary, MakeCustomaryToBase
-from coilib50.units.unit_database import UnitDatabase
+from barril.units.unit_database import UnitDatabase
 
 
 def testNotDefaultUnitDatabase():
@@ -371,7 +370,7 @@ def testInvalidUnitCategoryDoesntGenerateError(unit_database_custom_conversion):
         ValueError):
         unit_database.AddCategory('my invalid length',
         'length',
-        caption=tr('Invalid length'),
+        caption='Invalid length',
 
         # This is not a valid unit
         default_unit='Mm',

@@ -1,8 +1,8 @@
 from __future__ import absolute_import, division, unicode_literals
 
-from coilib50.units import Scalar
-from coilib50.units.unit_system import UnitSystem
-from coilib50.units.unit_system_manager import UnitSystemManager
+from barril.units import Scalar
+from barril.units.unit_system import UnitSystem
+from barril.units.unit_system_manager import UnitSystemManager
 
 
 def testGetFormattedValue(unit_system_manager):
