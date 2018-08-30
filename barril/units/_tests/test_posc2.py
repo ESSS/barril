@@ -5,7 +5,7 @@ import six
 import pytest
 from pytest import approx
 
-from ben10.foundation.reraise import Reraise
+from barril.foundation.reraise import Reraise
 from barril import units
 from barril.units import UnitsError
 from barril.units.unit_database import UnitDatabase

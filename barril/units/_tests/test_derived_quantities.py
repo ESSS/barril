@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 import pytest
 
-from ben10.foundation.odict import odict
+from barril.foundation.odict import odict
 from barril.units import InvalidOperationError, InvalidUnitError, ObtainQuantity, Quantity
 
 

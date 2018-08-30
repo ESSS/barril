@@ -8,10 +8,7 @@ import collections
 
 import six
 
-from ben10.foundation.compat import FixUnicodeStrInClassScope
-from ben10.foundation.is_frozen import IsDevelopment
-from ben10.foundation.klass import IsInstance
-from ben10.foundation.weak_ref import WeakList
+from barril.foundation.klass import IsInstance
 
 _TRUE_VALUES = ['TRUE', 'YES', '1']
 _FALSE_VALUES = ['FALSE', 'NO', '0']
@@ -57,22 +54,6 @@ def Boolean(text):
             % (text, _TRUE_FALSE_VALUES)
         )
     return text_upper in _TRUE_VALUES
-
-
-#===================================================================================================
-# MakeTuple
-#===================================================================================================
-def MakeTuple(object_):
-    '''
-    Returns the given object as a tuple, if it is not, creates one with it inside.
-
-    @param: Any object or tuple
-        The object to tupleIZE
-    '''
-    if isinstance(object_, tuple):
-        return object_
-    else:
-        return (object_,)
 
 
 #===================================================================================================
@@ -122,42 +103,6 @@ def CheckType(object_, type_, message=None):
         raise TypeError(exception_message)
 
     return result
-
-# Either testit or removeit
-# #===================================================================================================
-# # Used for debugging who is calling CheckType too much.
-# #===================================================================================================
-# DEBUG_CALLS = False
-# if DEBUG_CALLS:
-#     _OriginalCheckType = CheckType
-#     _called_from = {}
-#
-#     def CheckType(*args, **kwargs):  # @DuplicatedSignature
-#         import sys
-#         frame = sys._getframe()
-#         code = frame.f_back.f_code
-#         key = (code.co_filename, code.co_name)
-#         v = _called_from.setdefault(key, 0)
-#         _called_from[key] = v + 1
-#         return _OriginalCheckType(*args, **kwargs)
-#
-#     def PrintCheckTypeStatistics():
-#         for value, key in sorted((value, key) for key, value in _called_from.iteritems()):
-#             print '%s: %s' % (value, key)
-
-
-#===================================================================================================
-# DevelopmentCheckType
-# CheckType only in development mode.
-#===================================================================================================
-def CreateDevelopmentCheckType():
-    if not IsDevelopment():
-        return lambda *args, **kwargs: None  # it's a no-op if we're not in dev mode!
-    else:
-        return CheckType
-
-
-DevelopmentCheckType = CreateDevelopmentCheckType()
 
 
 #===================================================================================================
@@ -368,9 +313,6 @@ def AsList(arg):
     '''Returns the given argument as a list; if already a list, return it unchanged, otherwise
     return a list with the arg as only element.
     '''
-    if isinstance(arg, (list, WeakList)):
-        return arg
-
     if isinstance(arg, (tuple, set)):
         return list(arg)
 
@@ -559,226 +501,6 @@ def RemoveDuplicatesById(iterable):
             seen_add(x_id)
             result_append(x)
     return result
-
-
-#===================================================================================================
-# Method
-#===================================================================================================
-class Method(object):
-    '''
-    This class is an 'organization' class, so that subclasses are considered as methods
-    (and its __call__ method is checked for the parameters)
-    '''
-
-
-#===================================================================================================
-# Null
-#===================================================================================================
-class Null(object):
-    '''
-    This is a sample implementation of the 'Null Object' design pattern.
-
-    Roughly, the goal with Null objects is to provide an 'intelligent'
-    replacement for the often used primitive data type None in Python or
-    Null (or Null pointers) in other languages. These are used for many
-    purposes including the important case where one member of some group
-    of otherwise similar elements is special for whatever reason. Most
-    often this results in conditional statements to distinguish between
-    ordinary elements and the primitive Null value.
-
-    Among the advantages of using Null objects are the following:
-
-      - Superfluous conditional statements can be avoided
-        by providing a first class object alternative for
-        the primitive value None.
-
-      - Code readability is improved.
-
-      - Null objects can act as a placeholder for objects
-        with behaviour that is not yet implemented.
-
-      - Null objects can be replaced for any other class.
-
-      - Null objects are very predictable at what they do.
-
-    To cope with the disadvantage of creating large numbers of passive
-    objects that do nothing but occupy memory space Null objects are
-    often combined with the Singleton pattern.
-
-    For more information use any internet search engine and look for
-    combinations of these words: Null, object, design and pattern.
-
-    Dinu C. Gherman,
-    August 2001
-
-    ---
-
-    A class for implementing Null objects.
-
-    This class ignores all parameters passed when constructing or
-    calling instances and traps all attribute and method requests.
-    Instances of it always (and reliably) do 'nothing'.
-
-    The code might benefit from implementing some further special
-    Python methods depending on the context in which its instances
-    are used. Especially when comparing and coercing Null objects
-    the respective methods' implementation will depend very much
-    on the environment and, hence, these special methods are not
-    provided here.
-    '''
-
-    # object constructing
-
-    def __init__(self, *_args, **_kwargs):
-        "Ignore parameters."
-        # Setting the name of what's gotten (so that __name__ is properly preserved).
-        self.__dict__['_Null__name__'] = 'Null'
-        return None
-
-    # object calling
-
-    def __call__(self, *_args, **_kwargs):
-        "Ignore method calls."
-        return self
-
-    # attribute handling
-
-    def __getattr__(self, mname):
-        "Ignore attribute requests."
-        if mname == '__getnewargs__':
-            raise AttributeError('No support for that (pickle causes error if it returns self in this case.)')
-
-        if mname == '__name__':
-            return self.__dict__['_Null__name__']
-
-        return self
-
-    def __setattr__(self, _name, _value):
-        "Ignore attribute setting."
-        return self
-
-    def __delattr__(self, _name):
-        "Ignore deleting attributes."
-        return self
-
-    # context manager
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, *args, **kwargs):
-        return self
-
-    # misc.
-
-    def __repr__(self):
-        "Return a string representation."
-        return "<Null>"
-
-    def __str__(self):
-        "Convert to a string and return it."
-        return "Null"
-
-    FixUnicodeStrInClassScope()
-
-    def __bool__(self):
-        "Null objects are always false"
-        return False
-
-    def __nonzero__(self):
-        # Py 2 compatibility
-        return self.__bool__()
-
-    # iter
-
-    def __iter__(self):
-        "I will stop it in the first iteration"
-        return self
-
-    def __next__(self):
-        "Stop the iteration right now"
-        raise StopIteration()
-
-    def next(self):
-        # Py 2 compatibility
-        return self.__next__()
-
-    def __eq__(self, o):
-        "It is just equal to another Null object."
-        return self.__class__ == o.__class__
-
-
-NULL = Null()  # Create a default instance to be used.
-
-
-#===================================================================================================
-# StringDictIO
-#===================================================================================================
-class StringDictIO(object):
-    '''
-    Saves dictionaries into plain text files.
-
-    Assumes all keys and values are strings.
-
-    e.g.:
-        my_dict = {'Ak':'Av', 'Bk':'Bv'}
-
-        would save as:
-
-        Ak = Av
-        Bk = Bv
-    '''
-
-    @classmethod
-    def Save(cls, dictionary, target_filename, sort_items=False):
-        '''
-        Writes a dictionary into a file.
-
-        :param str filename:
-            Path and filename for target file.
-
-        :param bool sort_items:
-            If True, saved dict will be sorted alphabetically
-        '''
-        items = list(six.iteritems(dictionary))
-        if sort_items:
-            items = sorted(items)
-
-        contents = '\n'.join(['%s = %s' % i for i in items]) + '\n'
-
-        from ben10.filesystem import CreateFile
-        CreateFile(target_filename, contents)
-
-    @classmethod
-    def Load(cls, filename, inverted=False):
-        '''
-        Loads a dictionary from a file.
-
-        :param str filename:
-            Path and filename for source file.
-
-        :param bool inverted:
-            If True inverts the key/value order.
-
-        :returns dict:
-            Dictionary that was loaded
-        '''
-        from ben10.filesystem import GetFileContents
-        contents = GetFileContents(filename)
-
-        contents_dict = dict()
-        import re
-
-        for line in contents.split('\n'):
-            search_result = re.search('(.*?)\s*=\s*(.*)', line)
-            if search_result is not None:
-                key, value = search_result.groups()
-                if inverted:
-                    contents_dict[value] = key
-                else:
-                    contents_dict[key] = value
-
-        return contents_dict
 
 
 #===================================================================================================

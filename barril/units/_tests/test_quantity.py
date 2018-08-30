@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 import pickle
 
-from ben10.foundation.odict import odict
+from barril.foundation.odict import odict
 from barril.units import (
     UNKNOWN_QUANTITY, UNKNOWN_QUANTITY_TYPE, UNKNOWN_UNIT, GetUnknownQuantity, ObtainQuantity,
     Quantity)

@@ -45,7 +45,7 @@ class Fraction(object):
         self.x = tuple(x)  # tuple not presently neccessary, but I'm playing it safe
 
     def __str__(self):
-        from coilib50.basic.format_float import FormatFloat
+        from barril.basic.format_float import FormatFloat
         return FormatFloat('%g', self[0]) + '/' + FormatFloat('%g', self[1])
 
     if six.PY2:

@@ -5,7 +5,6 @@ import six
 from barril.units._quantity import _Quantity
 from barril.units.unit_database import UnitDatabase
 
-from ._definitions import IObjectWithQuantity, IQuantity
 from ._quantity import ObtainQuantity
 
 __all__ = ["AbstractValueWithQuantity"]
@@ -98,9 +97,9 @@ class AbstractValueWithQuantityObject(object):
     # Quantity -------------------------------------------------------------------------------------
     def GetQuantity(self):
         '''
-        :rtype: IQuantity
+        :rtype: Quantity
         :returns:
-            The IQuantity that is associated with this object.
+            The Quantity that is associated with this object.
         '''
         return self._quantity
 
@@ -158,7 +157,7 @@ class AbstractValueWithQuantityObject(object):
         '''
         This is a secondary interface for creating the object with an existing quantity.
 
-        :param IQuantity quantity:
+        :param Quantity quantity:
             The quantity for this object
 
         @param args and kwargs: Those are dependent on the actual class -- this parameters
@@ -274,7 +273,7 @@ class AbstractValueWithQuantityObject(object):
         try:
             format % 'unit'
         except TypeError as e:
-            from ben10.foundation.reraise import Reraise
+            from barril.foundation.reraise import Reraise
             Reraise(e, 'Incompatible format for Scalar suffix. Expected a format for a unicode value.')
         cls.FORMATTED_SUFFIX_FORMAT = format
 

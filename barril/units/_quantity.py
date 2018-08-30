@@ -1,5 +1,5 @@
 '''
-This module provides the implementation of an IQuantity object.
+This module provides the implementation of an Quantity object.
 '''
 # NoQuantityReplacement
 from __future__ import absolute_import, unicode_literals
@@ -8,11 +8,8 @@ import six
 from six import next
 from six.moves import range, zip  # @UnresolvedImport
 
-from ben10.foundation.odict import odict
-from ben10.property_ import Create
+from barril.foundation.odict import odict
 from barril.units.unit_database import UnitsError
-
-from ._definitions import IQuantity, IQuantity2, IQuantity3, IQuantity6
 from ._unit_constants import UNKNOWN_UNIT
 from .unit_database import UnitDatabase
 
@@ -48,7 +45,7 @@ def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
     :param unicode unknown_unit_caption:
         The caption for the unit (used if unknown).
 
-    :rtype IQuantity:
+    :rtype Quantity:
     '''
     unit_database = UnitDatabase.GetSingleton()
     quantities_cache = unit_database.quantities_cache
@@ -131,7 +128,7 @@ class ReadOnlyError(NotImplementedError):
 #===================================================================================================
 class Quantity(object):
     '''
-    .. note:: This class has nothing but factory methods. The real IQuantity implementation is at
+    .. note:: This class has nothing but factory methods. The real Quantity implementation is at
     _Quantity (which is what's returned from ObtainQuantity).
 
     .. note:: The preferred way to get a Quantity is through ObtainQuantity, although
@@ -274,8 +271,6 @@ class _Quantity(Quantity):
         '_category_info',
         '_configured',
     ]
-
-    Create(unit=None, category_to_unit_and_exps=None)
 
     def __new__(cls, category, unit, unknown_unit_caption=None):
         '''
@@ -737,14 +732,11 @@ class _Quantity(Quantity):
                     if not value <= category_info.max_value:
                         self._RaiseValueError(value, '<=', category_info.max_value, use_literals)
 
-    def SetUnit(self, unit):
-        raise ReadOnlyError('Quantity is now read-only.')
-
-    def SetCategoryToUnitAndExps(self, category_to_unit_and_exps):
-        raise ReadOnlyError('Quantity is now read-only.')
-
     def GetUnitDatabase(self):
         return self._unit_database
+
+    def GetCategoryToUnitAndExps(self):
+        return self._category_to_unit_and_exps
 
     def GetComposingCategories(self):
         return self._composing_categories
@@ -765,10 +757,10 @@ class _Quantity(Quantity):
 
     def GetCategoryToUnitAndExpsCopy(self, unit_and_exps=None):
         '''
-        Same as IQuantity2.GetCategoryToUnitAndExps but returns a copy instead of the internal
+        Same as Quantity.GetCategoryToUnitAndExps but returns a copy instead of the internal
         instance.
 
-        .. see:: IQuantity2.GetCategoryToUnitAndExps
+        .. see:: Quantity.GetCategoryToUnitAndExps
         '''
         if unit_and_exps is None:
             unit_and_exps = self._category_to_unit_and_exps
@@ -867,16 +859,16 @@ class _Quantity(Quantity):
         '''
         Performs the given operation on the quantities returning the result
 
-        :param IQuantity q1:
+        :param Quantity q1:
             The left side operation quantity
 
-        :param IQuantity q2:
+        :param Quantity q2:
             The right side operation quantity
 
         :param OPERATION_* operation:
             The operation to be performed
 
-        :rtype: IQuantity
+        :rtype: Quantity
         :returns:
             The resulting quantity from the operation with the proper type and unit
             e.g. ('length', 'm') * ('length', 'm') = ('length **2', 'm2')

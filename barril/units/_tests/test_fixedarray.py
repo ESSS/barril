@@ -4,7 +4,7 @@ import six
 import pytest
 from pytest import approx
 
-from ben10.foundation.odict import odict
+from barril.foundation.odict import odict
 from barril import units
 from barril.units import InvalidUnitError, ObtainQuantity, Quantity
 

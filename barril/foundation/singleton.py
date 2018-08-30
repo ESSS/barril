@@ -230,12 +230,6 @@ class Singleton(object):
             instance = cls.CreateDefaultSingleton()
         stack = cls._ObtainStack()
 
-# DEBUG CODE
-#         print '%s.PushSingleton' % cls.__name__, map(id, stack)
-#         if len(stack) > 1:
-#             from coilib50.debug import PrintTrace
-#             PrintTrace(count=5)
-
         stack.append(instance)
         return instance
 
@@ -249,12 +243,6 @@ class Singleton(object):
             Return the removed singleton.
         '''
         stack = cls._ObtainStack()
-
-# DEBUG CODE
-#         print '%s.PopSingleton' % cls.__name__, map(id, stack)
-#         if len(stack) > 1:
-#             from coilib50.debug import PrintTrace
-#             PrintTrace(count=5)
 
         if len(stack) == cls.__singleton_stack_start_index:
             raise PushPopSingletonError('PopSingleton called without a pair PushSingleton call')

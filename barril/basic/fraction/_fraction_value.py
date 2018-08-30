@@ -6,9 +6,8 @@ import re
 
 import six
 
-from ben10.foundation.types_ import CheckType
-from ben10.property_ import Property
-from coilib50.basic.format_float import FloatFromString
+from barril.foundation.types_ import CheckType
+from barril.basic.format_float import FloatFromString
 
 from ._fraction import Fraction
 
@@ -74,8 +73,6 @@ class FractionValue(object):
         '''
         return self._number
 
-    number = Property(GetNumber, SetNumber)
-
     # Fraction -------------------------------------------------------------------------------------
 
     def SetFraction(self, fraction):
@@ -107,8 +104,6 @@ class FractionValue(object):
         '''
         return self._fraction
 
-    fraction = Property(GetFraction, SetFraction)
-
     # Str/Repr -------------------------------------------------------------------------------------
 
     def GetLocalizedString(self):
@@ -117,7 +112,7 @@ class FractionValue(object):
         :returns:
             Returns a locale-dependent and user-friendly string representation.
         '''
-        from coilib50.basic.format_float import FormatFloat
+        from barril.basic.format_float import FormatFloat
         return self.__FormatToString(FormatFloat)
 
     def GetLocalizedFraction(self):
@@ -127,7 +122,7 @@ class FractionValue(object):
             Returns a locale-dependent and user-friendly string representation only of fraction
             part.
         '''
-        from coilib50.basic.format_float import FormatFloat
+        from barril.basic.format_float import FormatFloat
         return self.__FormatFractionToString(FormatFloat)
 
     def __str__(self):

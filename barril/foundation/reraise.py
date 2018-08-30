@@ -42,7 +42,7 @@ if six.PY2:
             >>> RuntimeError:
             >>> [message] original message
         '''
-        from ben10.foundation.exceptions import ExceptionToUnicode
+        from barril.foundation.exceptions import ExceptionToUnicode
         import sys
 
         # IMPORTANT: Do NOT use try/except mechanisms in this method or the sys.exc_info()[-1] will be invalid
@@ -78,40 +78,6 @@ if six.PY2:
     #===================================================================================================
     # SPECIAL_EXCEPTIONS
     #===================================================================================================
-    # [[[cog
-    # SPECIAL_EXCEPTIONS = (
-    #     KeyError,
-    #     OSError,
-    #     SyntaxError,
-    #     UnicodeDecodeError,
-    #     UnicodeEncodeError,
-    # )
-    # from ben10.foundation.string import Dedent
-    # exception_map = []
-    # for exception_class in SPECIAL_EXCEPTIONS:
-    #     superclass_name = exception_class.__name__
-    #     exception_map.append('\n        ' + superclass_name + ' : Reraised' + superclass_name + ',')
-    #     cog.out(Dedent(
-    #         '''
-    #         class Reraised%(superclass_name)s(%(superclass_name)s):
-    #
-    #             def __init__(self, *args):
-    #                 %(superclass_name)s.__init__(self, *args)
-    #                 self.message = None
-    #
-    #             def __str__(self):
-    #                 return self.message
-    #
-    #
-    #         '''% locals()
-    #     ))
-    # cog.out(Dedent(
-    #     '''
-    #     _SPECIAL_EXCEPTION_MAP = {%s
-    #     }
-    #     ''' % ''.join(exception_map)
-    # ))
-    # ]]]
     class ReraisedKeyError(KeyError):
 
         def __init__(self, *args):

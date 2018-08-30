@@ -11,7 +11,7 @@ from pytest import approx
 import six
 from six.moves import range
 
-from ben10.foundation.odict import odict
+from barril.foundation.odict import odict
 from barril import units
 from barril.units import InvalidOperationError, InvalidUnitError, ObtainQuantity, Quantity, Scalar
 from barril.units.unit_database import UnitDatabase

@@ -13,139 +13,15 @@ from six import unichr as chr
 #===================================================================================================
 # Constants
 #===================================================================================================
+
+PLUS_INFINITY = float('inf')
 PLUS_INFINITY_STR = "+INF"
+
+MINUS_INFINITY = float('-inf')
 MINUS_INFINITY_STR = "-INF"
+
+NAN = float('nan')
 NAN_STR = "-1.#IND"
-
-_C_DOUBLE_DIGITS = 53
-
-_C_DOUBLE_MANTISSA = 2 ** _C_DOUBLE_DIGITS
-
-_C_2POWERS_MINIMUM = (-1074 - _C_DOUBLE_DIGITS)
-_C_2POWERS_MAXIMUM = 1023
-
-_C_10POWERS_OFFSET = 50
-_C_10POWERS = None
-
-
-#===================================================================================================
-# ToDecimal
-#===================================================================================================
-def ToDecimal(x):
-    '''
-    Converts a floating point number to Decimal format. Note: will convert to the TRUE value
-    that this floating point number is representing (rounded to the current Decimal precision).
-
-    @note This is still SLOW when used for conversion of many numbers, essentially because
-          python Decimal is SLOW.
-
-    Examples:
-        ToDecimal(    0.1   ) -> Decimal("0.1000000000000000055511151231")
-        ToDecimal(-7147.5355) -> Decimal("-7147.535499999999956344254315")
-        ToDecimal(    1.0e23) -> Decimal("99999999999999991611392")
-
-    :param float x:
-        Floating point number to be converted to Decimal.
-
-    :rtype: Decimal
-    :returns:
-        The number as a decimal.
-    '''
-    from coilib50.basic.format_float._format_float_data import _C_2POWERS_MANTISSA_AND_EXP
-
-    m, e = math.frexp(x)  # mantissa, exponent
-    sign = 0
-    if m < 0:
-        m = -m
-        sign = 1
-
-    result = int(m * _C_DOUBLE_MANTISSA)
-
-    m2, e2 = _C_2POWERS_MANTISSA_AND_EXP[(e - _C_DOUBLE_DIGITS) - _C_2POWERS_MINIMUM]
-
-    digits = tuple(ord(i) - ord('0') for i in format(result * m2, 'd'))
-    result = Decimal((sign, digits, e2))
-
-    return result
-
-
-#===================================================================================================
-# ToFixed
-#===================================================================================================
-def ToFixed(x, num_digits, after_decimal):
-    '''
-    Equivalent of '%*.*f' % (num_digits, after_decimal, x), but in a way that should give the
-    same result on different platforms.
-
-    Example:
-        ToFixed(-7147.5355, 10, 3) -> " -7147.535"
-                                       ^^^^^^^^^^ (num_digits=10)
-                                              ^^^ (after_decimal=3)
-                                       ^          (space padding before)
-
-    :param float x:
-        Floating point number to be converted to fixed precision
-
-    :param int num_digits:
-        Total number of characters (including sign and decimal separator!). Will left pad with
-        spaces in case the generated is string have less characters.
-
-    :param int after_decimal:
-        Fixed number of decimal digits after the decimal separator.
-
-    :rtype: unicode
-    :returns:
-        A string with the number formatted with "fixed precision".
-
-    .. note:: The bug was fixed but this is slow now ;(
-    @todo: Improve performance. All this formatting code should probably be moved to C++...
-    '''
-    d = ToDecimal(x)
-
-    ################################################################################################
-    # _rescale does not suffer from "quantize result has too many digits for current context"
-    # (but currently does not work for some values as well...)
-    #
-    # if _C_10POWERS is None:
-    #    _C_10POWERS = [_C_DECIMAL_10 ** i for i in xrange(-_C_10POWERS_OFFSET, _C_10POWERS_OFFSET + 1)]
-    # d = d.quantize(_C_10POWERS[-after_decimal + _C_10POWERS_OFFSET])
-    #
-    # The commented code could be important in case we find some problem with _rescale...
-    # (it took some time to dig into that)
-    ################################################################################################
-
-    if six.PY2:
-        d = d._rescale(-after_decimal, rounding=ROUND_HALF_EVEN)
-    else:
-        global _C_10POWERS
-        if _C_10POWERS is None:
-            _C_10POWERS = [Decimal(10) ** i for i in range(-_C_10POWERS_OFFSET, _C_10POWERS_OFFSET + 1)]
-        d = d.quantize(_C_10POWERS[-after_decimal + _C_10POWERS_OFFSET], rounding=ROUND_HALF_EVEN)
-
-    sign, digits, exponent = d.as_tuple()
-
-    if sign == 0:
-        sign_str = ' '
-    else:
-        sign_str = '-'
-
-    ord_0 = ord('0')
-    digits_str = ''.join(chr(ord_0 + n) for n in digits)
-
-    decimal_separator_pos = len(digits_str) + exponent
-
-    if decimal_separator_pos > 0 and decimal_separator_pos <= len(digits):
-        result = (
-            sign_str + digits_str[0:decimal_separator_pos]
-            +'.' + digits_str[decimal_separator_pos:]
-        )
-    elif decimal_separator_pos <= 0:
-        result = sign_str + '0.' + '0' * (-decimal_separator_pos) + digits_str
-    else:
-        result = sign_str + digits_str + '0' * (exponent) + '.'
-
-    result = result.rjust(num_digits)
-    return result
 
 
 #===================================================================================================
@@ -184,7 +60,6 @@ def FormatFloat(format, value, grouping=False, use_locale=True):
     # Handling INFINITY
     # - locale.format tries to round the infinity value:
     #   ( ".3g", 9e999 ) ==> +1.#J
-    from coilib50.basic.constants import MINUS_INFINITY, PLUS_INFINITY
     import locale
 
     if value == PLUS_INFINITY:
@@ -203,8 +78,6 @@ def FormatFloat(format, value, grouping=False, use_locale=True):
     if use_locale:
         try:
             result = locale.format(format, value, grouping)
-
-        # TODO: Mantis 0021011
         except TypeError:
             # Python has a limitation to convert large float numbers to integer format.
             # To avoid this the values will be forced to int when requesting for the integer format.
@@ -234,11 +107,10 @@ def FloatFromString(str_value, use_locale=True):
     :raises ValueError:
         If given string is not a valid float literal in the current locale
     '''
-    from coilib50.basic.constants import MINUS_INFINITY, NAN, PLUS_INFINITY
     import locale
 
     if str_value.__class__ != six.text_type:
-        from ben10.foundation.types_ import CheckType
+        from barril.foundation.types_ import CheckType
         CheckType(str_value, six.text_type)
 
     if str_value == PLUS_INFINITY_STR:
@@ -255,51 +127,3 @@ def FloatFromString(str_value, use_locale=True):
     else:
         return float(str_value)
 
-
-#===================================================================================================
-# PlatformIndependentFormat
-#===================================================================================================
-def PlatformIndependentFormat(format, value):
-    '''
-    Formats the given float value in a manner that results in the same string in all platforms.
-    Useful mostly to write numbers using COG that provides the same results in all platforms.
-
-    :param unicode format:
-        The string formatting to use, for instance "%s" or "%0.3g".
-
-    :param float value:
-        The value to format
-
-    :rtype: unicode
-    :returns:
-        The string formatted as requested.
-    '''
-    result = format % value
-
-    # fix exponential differences between platforms:
-    # windows: "1.0e016"
-    # linux: "1.0e16"
-    # fix: "1.0e16"
-    # docs for fprintf:
-    # "The exponent always contains at least two digits, and only as many more
-    #  digits as necessary to represent the exponent."
-    fields = result.split('e')
-    if len(fields) == 2:
-        exp_str = fields[1]
-        exp_value = int(exp_str)
-        if -10 < exp_value < 0:
-            # if we have a single negative digit, use 03d to format the exponent because 02d would
-            # generate "-8" for instance
-            exp_str = '%03d' % exp_value
-        else:
-            exp_str = '%02d' % exp_value
-        result = fields[0] + 'e' + exp_str
-
-    return result
-
-
-def FormatFloatLocalizedRepr(value, decimal):
-    as_string = '%r' % (value,)
-    if decimal == '.':
-        return as_string
-    return as_string.replace('.', decimal)

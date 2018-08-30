@@ -8,9 +8,8 @@ import traceback
 import six
 from six.moves import zip  # @UnresolvedImport
 
-from ben10.foundation.is_frozen import IsDevelopment
-from ben10.foundation.singleton import Singleton
-from ben10.foundation.types_ import CheckType
+from barril.foundation.singleton import Singleton
+from barril.foundation.types_ import CheckType
 
 '''
 Contains the registry for all the avaiable unit types.
@@ -185,8 +184,8 @@ class CategoryInfo(object):
     '''
     category = attr.ib(default='')
     quantity_type = attr.ib(default='')
-    valid_units = attr.ib(default=attr.Factory(list))
-    valid_units_set = attr.ib(default=attr.Factory(set))
+    valid_units = attr.ib(factory=list)
+    valid_units_set = attr.ib(factory=set)
     default_unit = attr.ib(default='')
     default_value = attr.ib(default=0.0)
     min_value = attr.ib(default=None)

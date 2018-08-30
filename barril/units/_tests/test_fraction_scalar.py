@@ -6,7 +6,6 @@ import pytest
 
 from barril import units
 from barril.basic.fraction import FractionValue
-from barril.unittest_tools.locale_memento import LocaleMemento
 
 def testFractionScalar():
     # create our scalar
@@ -76,14 +75,6 @@ def testRepr():
 def testFormatValue():
     f = units.FractionScalar('length', value=FractionValue(250.0, (3, 4)), unit='m')
     assert f.GetFormattedValue() == "250 3/4"
-
-    locale_memento = LocaleMemento()
-    locale_memento.SetBrazilianLocale()
-    try:
-        f = units.FractionScalar('length', value=FractionValue(1.2, (3, 4)), unit='m')
-        assert f.GetFormattedValue() == "1,2 3/4"
-    finally:
-        locale_memento.Restore()
 
 def testComparison():
 

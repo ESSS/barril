@@ -1,5 +1,5 @@
 '''
-This module provides the implementation of an IScalar object.
+This module provides the implementation of an Scalar object.
 '''
 from __future__ import absolute_import, division, unicode_literals
 
@@ -9,12 +9,11 @@ import six
 from six import next
 from six.moves import range  # @UnresolvedImport
 
-from ben10.foundation.reraise import Reraise
-from ben10.foundation.types_ import IsNumber
+from barril.foundation.reraise import Reraise
+from barril.foundation.types_ import IsNumber
 from barril.units.unit_system_manager import UnitSystemManager
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
-from ._definitions import IQuantity, IScalar
 from ._quantity import ObtainQuantity, Quantity
 from .unit_database import UnitDatabase
 

@@ -3,12 +3,11 @@ from __future__ import absolute_import, unicode_literals
 import six
 from six import next
 
-from ben10.foundation.types_ import IsNumber
+from barril.foundation.types_ import IsNumber
 from barril.basic.format_float import FormatFloat
 from barril.units.unit_database import UnitDatabase
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
-from ._definitions import IArray
 from ._quantity import Quantity
 
 __all__ = ["Array"]

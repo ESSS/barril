@@ -5,11 +5,10 @@ from functools import total_ordering
 
 import six
 
-from ben10.foundation.types_ import CheckType
+from barril.foundation.types_ import CheckType
 from barril.basic.fraction import FractionValue
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
-from ._definitions import IScalar
 from ._quantity import ObtainQuantity
 from .unit_database import UnitDatabase
 
