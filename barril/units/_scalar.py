@@ -98,6 +98,10 @@ class Scalar(AbstractValueWithQuantityObject):
 
     # Value ----------------------------------------------------------------------------------------
     def GetAbstractValue(self, unit=None):
+        '''
+
+        :param unit:
+        '''
         if unit is None:
             return self._value
         else:
@@ -107,6 +111,11 @@ class Scalar(AbstractValueWithQuantityObject):
     value = property(GetAbstractValue)
 
     def _GetDefaultValue(self, category_info, unit=None):
+        '''
+
+        :param category_info:
+        :param unit:
+        '''
         try:
             value = category_info.default_value
         except AttributeError:
@@ -123,6 +132,9 @@ class Scalar(AbstractValueWithQuantityObject):
         return (self._value, self.GetUnit())
 
     def CheckValidity(self):
+        '''
+        :raises ValueError: when current value is wrong somehow (out of limits, for example).
+        '''
         self._quantity.CheckValue(self._value)
 
     # Handling 'empty' scalar ----------------------------------------------------------------------
@@ -147,6 +159,13 @@ class Scalar(AbstractValueWithQuantityObject):
             self.__class__.__name__, self._value, self.GetUnit(), self.GetCategory())
 
     def __str__(self):
+        '''
+        Should return a user-friendly representation of this object.
+
+        :rtype: unicode
+        :returns:
+            The formatted string
+        '''
         return self.GetFormatted()
 
     if six.PY2:

@@ -92,6 +92,11 @@ class FixedArray(Array):
 
     # Values ---------------------------------------------------------------------------------------
     def _GetDefaultValue(self, category_info, unit=None):
+        '''
+
+        :param category_info:
+        :param unit:
+        '''
         return [0.0] * self._dimension
 
     def CheckValues(self, values, dimension=None):

@@ -44,6 +44,9 @@ class Array(AbstractValueWithQuantityObject):
         self._validity_exception = None
 
     def CheckValidity(self):
+        '''
+        :raises ValueError: when current value is wrong somehow (out of limits, for example).
+        '''
         self.ValidateValues(self._value, self._quantity)
 
     def CreateCopy(self, values=None, unit=None, category=None, **kwargs):
@@ -81,6 +84,11 @@ class Array(AbstractValueWithQuantityObject):
     values = property(GetAbstractValue)
 
     def _GetDefaultValue(self, category_info, unit=None):
+        '''
+
+        :param category_info:
+        :param unit:
+        '''
         return []
 
     def ValidateValues(self, values, quantity):
@@ -195,6 +203,13 @@ class Array(AbstractValueWithQuantityObject):
         return '%s(%s, %s, %s)' % (self.__class__.__name__, self.GetQuantityType(), values_str, self.GetUnit())
 
     def __str__(self):
+        '''
+        Should return a user-friendly representation of this object.
+
+        :rtype: unicode
+        :returns:
+            The formatted string
+        '''
         if len(self.values) > 0 and isinstance(self.values[0], tuple):
             values_str = ' '.join(six.text_type(v) for v in self.values)
         else:

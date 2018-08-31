@@ -49,10 +49,17 @@ class FractionScalar(AbstractValueWithQuantityObject):
         self._unit_database = unit_database or UnitDatabase.GetSingleton()
 
     def CheckValidity(self):
+        '''
+        :raises ValueError: when current value is wrong somehow (out of limits, for example).
+        '''
         self._quantity.CheckValue(float(self._value))
 
     # Value ----------------------------------------------------------------------------------------
     def GetAbstractValue(self, unit=None):
+        '''
+
+        :param unit:
+        '''
         if unit is None:
             return self._value
 
@@ -67,6 +74,11 @@ class FractionScalar(AbstractValueWithQuantityObject):
     value = property(GetAbstractValue)
 
     def _GetDefaultValue(self, category_info, unit=None):
+        '''
+
+        :param category_info:
+        :param unit:
+        '''
         value = category_info.default_value
         if unit is not None:
             # needs to convert value to default unit
