@@ -9,8 +9,7 @@ from decimal import Decimal
 import pytest
 import six
 
-from barril.basic.constants import MINUS_INFINITY, NAN, PLUS_INFINITY
-from barril.basic.format_float import FormatFloat
+from barril.basic.format_float import FormatFloat, MINUS_INFINITY, NAN, PLUS_INFINITY
 from barril.units import Scalar
 
 

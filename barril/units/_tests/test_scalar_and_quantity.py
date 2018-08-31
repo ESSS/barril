@@ -1,5 +1,6 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+from barril.units import Scalar
 from barril.units.unit_database import UnitDatabase
 import pytest
 

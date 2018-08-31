@@ -285,6 +285,8 @@ def testRegisterTwoFunctionsForTheSameClass(unit_database_custom_conversion):
 
 def testNumpyConversion(unit_database_custom_conversion):
     unit_database = unit_database_custom_conversion
+    
+    from barril.units.posc import MakeBaseToCustomary, MakeCustomaryToBase
     f_unit_to_base = MakeCustomaryToBase(273.15, 1, 1, 0)
     f_base_to_unit = MakeBaseToCustomary(273.15, 1, 1, 0)
     unit_database.AddUnit('My Temperature', 'degrees Celsius', 'degC', f_base_to_unit, f_unit_to_base, default_category=None)

@@ -112,17 +112,18 @@ class FractionScalar(AbstractValueWithQuantityObject):
             quantity = ObtainQuantity(from_unit)
 
         convert_to_quantity = ObtainQuantity(from_unit, quantity.GetComposingCategories())
-        converted_number = convert_to_quantity.ConvertScalarValue(fraction_value.number, to_unit)
+        converted_number = convert_to_quantity.ConvertScalarValue(fraction_value.GetNumber(), to_unit)
 
         # convert the number
         result = FractionValue(number=converted_number)
         # convert fraction's numerator
-        if fraction_value.fraction is not None:
+        if fraction_value.GetFraction() is not None:
             converted_numerator = convert_to_quantity.ConvertScalarValue(
-                fraction_value.fraction.numerator, to_unit)
+                fraction_value.GetFraction().numerator, to_unit)
 
-            result.fraction = copy.copy(fraction_value.fraction)
-            result.fraction.numerator = converted_numerator
+            converted_fraction = copy.copy(fraction_value.GetFraction())
+            converted_fraction.numerator = converted_numerator
+            result.SetFraction(converted_fraction)
         return result
 
     # GetFormatted ------------------------------------------------------------------------------------

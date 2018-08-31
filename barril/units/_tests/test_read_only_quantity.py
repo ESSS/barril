@@ -12,7 +12,7 @@ def testReadOnlyQuantity(unit_database_empty):
     unit_database.AddCategory('length', 'length')
 
     read_only_quantity = ObtainQuantity('m', 'length')
-    with pytest.raises(ReadOnlyError):
+    with pytest.raises(AttributeError):
         read_only_quantity.SetUnit('cm')
 
     # When creating a copy of a read only quantity we'll make it not read only anymore!

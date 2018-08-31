@@ -38,7 +38,7 @@ class FixedArray(Array):
             Unit (not used if a quantity is passed).
         '''
         if dimension < 2:
-            raise ValueError(tr('Dimension MUST be 2 or more'))
+            raise ValueError('Dimension MUST be 2 or more')
         self._dimension = dimension
 
         Array.__init__(self, category, values, unit)

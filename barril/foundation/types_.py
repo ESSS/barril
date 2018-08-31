@@ -57,6 +57,22 @@ def Boolean(text):
 
 
 #===================================================================================================
+# MakeTuple
+#===================================================================================================
+def MakeTuple(object_):
+    '''
+    Returns the given object as a tuple, if it is not, creates one with it inside.
+
+    @param: Any object or tuple
+        The object to tupleIZE
+    '''
+    if isinstance(object_, tuple):
+        return object_
+    else:
+        return (object_,)
+
+
+#===================================================================================================
 # CheckType
 #===================================================================================================
 def CheckType(object_, type_, message=None):
@@ -121,7 +137,7 @@ def CheckFormatString(format, *arguments):
     try:
         format % arguments
     except (TypeError, ValueError):
-        raise ValueError(tr('%r is not a valid format string.') % format)
+        raise ValueError('%r is not a valid format string.' % format)
 
 
 #===================================================================================================
@@ -313,6 +329,9 @@ def AsList(arg):
     '''Returns the given argument as a list; if already a list, return it unchanged, otherwise
     return a list with the arg as only element.
     '''
+    if isinstance(arg, (list)):
+        return arg
+    
     if isinstance(arg, (tuple, set)):
         return list(arg)
 

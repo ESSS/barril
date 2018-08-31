@@ -9,9 +9,8 @@ from six.moves import range  # @UnresolvedImport
 from barril.foundation.odict import odict
 from barril.foundation.types_ import (
     AsList, Boolean, CheckBasicType, CheckEnum, CheckFormatString, CheckIsNumber, CheckType,
-    Flatten, FlattenDictValues, Intersection, IsBasicType, IsNumber,
-    MergeDictsRecursively, Null, OrderedIntersection, RemoveDuplicates, RemoveDuplicatesById,
-    StructMap, _GetKnownNumberTypes)
+    Flatten, FlattenDictValues, Intersection, IsBasicType, IsNumber, MergeDictsRecursively,
+    OrderedIntersection, RemoveDuplicates, RemoveDuplicatesById, StructMap, _GetKnownNumberTypes)
 
 
 def testBoolean():
@@ -334,71 +333,6 @@ def testOrderedIntersection():
     alpha = [1, 2, 3]
     bravo = [4, 5, 6]
     assert OrderedIntersection(alpha, bravo) == []
-
-
-def testNull():
-    # constructing and calling
-
-    dummy = Null()
-    dummy = Null('value')
-    n = Null('value', param='value')
-
-    n()
-    n('value')
-    n('value', param='value')
-
-    # attribute handling
-    n.attr1
-    n.attr1.attr2
-    n.method1()
-    n.method1().method2()
-    n.method('value')
-    n.method(param='value')
-    n.method('value', param='value')
-    n.attr1.method1()
-    n.method1().attr1
-
-    n.attr1 = 'value'
-    n.attr1.attr2 = 'value'
-
-    del n.attr1
-    del n.attr1.attr2.attr3
-
-    # Iteration
-    for i in n:
-        'Not executed'
-
-    # representation and conversion to a string
-    assert repr(n) == '<Null>'
-    assert six.text_type(n) == 'Null'
-
-    # truth value
-    assert bool(n) == False
-    assert bool(n.foo()) == False
-
-    dummy = Null()
-    # context manager
-    with dummy:
-        assert dummy.__name__ == 'Null'  # Name should return a six.text_type
-
-    # Null objects are always equal to other null object
-    assert n != 1
-    assert n == dummy
-
-
-def testNullCopy():
-    n = Null()
-    n1 = copy.copy(n)
-    assert six.text_type(n) == six.text_type(n1)
-
-
-def testStringDictIODictWithSpaces(embed_data):
-    filename = embed_data.GetDataFilename('dict_with_spaces.txt')
-
-    dict_with_spaces = {'key with spaces' : 'value with spaces'}
-
-    StringDictIO.Save(dict_with_spaces, filename)
-    assert StringDictIO.Load(filename) == dict_with_spaces
 
 
 def testStructMap():

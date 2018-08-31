@@ -11,7 +11,6 @@ from six.moves import range  # @UnresolvedImport
 
 from barril.foundation.reraise import Reraise
 from barril.foundation.types_ import IsNumber
-from barril.units.unit_system_manager import UnitSystemManager
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._quantity import ObtainQuantity, Quantity
@@ -212,57 +211,6 @@ class Scalar(AbstractValueWithQuantityObject):
         '''
         return self.GetFormattedValue(unit, value_format) + self.GetFormattedSuffix(unit)
 
-    def GetUnitSystemFormatted(self, unit=None, value_format=None):
-        '''
-        Gets a value formatted using the unit that the the unit-system specifies (if None is passed).
-
-        Note that it will also deal with derived units if they have a single category (where there's
-        a single unit with an exponent != 1).
-
-        :type unit: unicode or list(tuple(unicode, int)) for derived units.
-
-        :param value_format:
-            @see Scalar.GetFormattedValue
-
-        :return unicode:
-            Returns a the scalar formatted with the unit-system unit (if None is passed).
-        '''
-        unit_system = UnitSystemManager.GetSingleton().current
-        if not unit_system:
-            return self.GetFormatted(unit=unit, value_format=value_format)
-
-        quantity = self.GetQuantity()
-
-        if not quantity.IsDerived():
-            # Simple case (just update the unit if it wasn't passed).
-            if unit is None:
-                unit = unit_system.GetDefaultUnit(self.GetCategory())
-            return self.GetFormatted(unit=unit, value_format=value_format)
-
-        # In this case, we've a derived unit, so, let's check if we have a single category with
-        # an exponent > 1 -- and convert it if we have (i.e.: handle for squared statistics).
-        category_to_unit_and_exps = quantity.GetCategoryToUnitAndExps()
-        if len(category_to_unit_and_exps) == 1:
-            # Handle a squared value conversion.
-            category, unit_and_exps = next(six.iteritems(category_to_unit_and_exps))
-            exp = unit_and_exps[1]
-            if exp > 1:
-                if unit is None:
-                    unit = unit_system.GetDefaultUnit(category)
-
-                if unit is None:
-                    unit = unit_and_exps[0]
-
-                # We build it manually because we have an exponent...
-                unit += six.text_type(exp)
-                unit_part = self.FORMATTED_SUFFIX_FORMAT % unit
-                unit_and_exp = (unit, exp)
-
-                return '%s%s' % (self.GetFormattedValue((unit_and_exp,)), unit_part)
-
-        # Can't convert value to another unit in this case, just return with the regular case
-        # without consider the unit-system units.
-        return self.GetFormatted(unit, value_format=value_format)
 
     # Compare --------------------------------------------------------------------------------------
 

@@ -721,9 +721,8 @@ class UnitDatabase(Singleton):
             self.unit_to_unit_info[unit] = info
         quantity_type_list = self.quantity_types.setdefault(quantity_type, [])
 
-        if IsDevelopment():
-            if unit in [q.unit for q in quantity_type_list]:
-                raise RuntimeError('Unit already registered: %s (%s)') % (name, unit)
+        if unit in [q.unit for q in quantity_type_list]:
+            raise RuntimeError('Unit already registered: %s (%s)') % (name, unit)
 
         quantity_type_list.append(info)
 

@@ -4,7 +4,6 @@ from __future__ import absolute_import, unicode_literals
 import pytest
 
 from barril import units
-from barril.units.unit_system_manager import UnitSystemManager
 
 def CreateUnitDatabaseLenTime():
     '''
@@ -152,6 +151,32 @@ def CreateUnitDatabaseCustomConversion():
     return unit_database
 
 
+@pytest.yield_fixture
+def unit_database():
+    '''
+    Fixture to be used whenever a test needs a clean UnitDatabase. When using this fixture, it's
+    safe to call UnitDatabase.GetSingleton().
+    '''
+    from barril.units.unit_database import UnitDatabase
+    yield UnitDatabase.PushSingleton()
+    UnitDatabase.PopSingleton()
+
+
+@pytest.yield_fixture
+def unit_database_posc():
+    '''
+    Fixture to be used whenever a test needs a clean UnitDatabase. When using this fixture, it's
+    safe to call UnitDatabase.GetSingleton().
+    '''
+    unit_database = units.UnitDatabase()
+    unit_database.FillUnitDatabaseWithPosc(unit_database)
+    units.UnitDatabase.PushSingleton(unit_database)
+
+    yield unit_database
+
+    units.UnitDatabase.PopSingleton()
+
+
 @pytest.fixture
 def unit_database_empty():
     database = units.UnitDatabase()
@@ -257,12 +282,3 @@ def unit_database_posc_len():
 
     units.UnitDatabase.PopSingleton()
 
-    
-@pytest.fixture
-def unit_manager():
-    manager = UnitSystemManager()
-    UnitSystemManager.PushSingleton(manager)
-    
-    yield manager
-    
-    UnitSystemManager.PopSingleton()

@@ -147,8 +147,8 @@ class FractionValue(object):
         :returns:
             Fraction values follow format "%(number)g %(fraction)s".
         '''
-        formatted = formatter('%g', self.number)
-        if float(self.fraction) != 0.0:
+        formatted = formatter('%g', self._number)
+        if float(self._fraction) != 0.0:
             formatted = '%s %s' % (formatted, self.__FormatFractionToString(formatter))
         return formatted
 
@@ -164,8 +164,8 @@ class FractionValue(object):
             zero it is omitted from string to be more user-friendly.
         '''
         formatted = ''
-        if float(self.fraction) != 0.0:
-            formatted = formatter('%s', self.fraction)
+        if float(self._fraction) != 0.0:
+            formatted = formatter('%s', self._fraction)
         return formatted
 
     def __repr__(self):
@@ -174,7 +174,7 @@ class FractionValue(object):
         :returns:
             Returns the programmer-friendly string representation.
         '''
-        return 'FractionValue(%g, %s)' % (self.number, self.fraction)
+        return 'FractionValue(%g, %s)' % (self._number, self._fraction)
 
     # Equality -------------------------------------------------------------------------------------
 
@@ -187,7 +187,7 @@ class FractionValue(object):
         '''
         if type(self) is not type(other):
             return False
-        return self.number == other.number and self.fraction == other.fraction
+        return self._number == other._number and self._fraction == other._fraction
 
     def __ne__(self, other):
         '''
@@ -246,7 +246,7 @@ class FractionValue(object):
         :returns:
             The float value of this FractionValue
         '''
-        return self.number + float(self.fraction)
+        return self._number + float(self._fraction)
 
     # Copy -----------------------------------------------------------------------------------------
 
@@ -258,7 +258,7 @@ class FractionValue(object):
         :returns:
             The copy.
         '''
-        return self.__class__(self.number, (self.fraction.numerator, self.fraction.denominator))
+        return self.__class__(self._number, (self._fraction.numerator, self._fraction.denominator))
 
     # FromString -----------------------------------------------------------------------------------
 
@@ -360,7 +360,7 @@ class FractionValue(object):
         text = six.text_type(text).strip()
         m = cls._FRACTION_PARTIAL_RE.match(text)
         if m is None:
-            raise ValueError(tr('Please enter a text in the form: "3/4"'))
+            raise ValueError('Please enter a text in the form: "3/4"')
 
     @classmethod
     def CreateFromFloat(cls, value):

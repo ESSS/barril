@@ -10,13 +10,13 @@ import pytest
 
 def testBasicUsage():
     f = FractionValue(3, Fraction(5, 3))
-    assert f.number == 3
-    assert f.fraction == Fraction(5, 3)
+    assert f._number == 3
+    assert f._fraction == Fraction(5, 3)
 
-    f.number = 5.5
-    f.fraction = Fraction(6, 5)
-    assert f.number == 5.5
-    assert f.fraction == Fraction(6, 5)
+    f._number = 5.5
+    f._fraction = Fraction(6, 5)
+    assert f._number == 5.5
+    assert f._fraction == Fraction(6, 5)
 
     with pytest.raises(TypeError):
         f.SetNumber('hello')
@@ -25,12 +25,12 @@ def testBasicUsage():
     with pytest.raises(ValueError):
         f.SetFraction((1, 2, 3))
 
-    assert FractionValue(3).fraction == Fraction(0, 1)
+    assert FractionValue(3).GetFraction() == Fraction(0, 1)
 
 def testDefault():
     f = FractionValue()
-    assert f.number == 0.0
-    assert f.fraction == Fraction(0, 1)
+    assert f._number == 0.0
+    assert f._fraction == Fraction(0, 1)
 
 def testPartsArentNone():
     '''
@@ -86,8 +86,8 @@ def testCopy():
     assert f == cf
     assert f is not cf
 
-    cf.fraction.numerator = 10
-    cf.fraction.denominator = 4
+    cf._fraction.numerator = 10
+    cf._fraction.denominator = 4
     assert f == FractionValue(3, (5, 3))
 
 def testComparison():
