@@ -37,5 +37,9 @@ Credits
 
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _`GitHub page` :                   https://github.com/ESSS/barril
+.. _`read the docs to learn more!` :  https://barril.readthedocs.io.
+.. _Cookiecutter:                     https://github.com/audreyr/cookiecutter
+.. _pytest:                           https://github.com/pytest-dev/pytest
+.. _tox:                              https://github.com/tox-dev/tox
