@@ -234,11 +234,7 @@ class AbstractValueWithQuantityObject(object):
                             "(Should be overridden in '%s' class if it takes parameters in __init__)" %
                             (self.__class__.__name__, e, self.__class__.__name__))
 
-    # Others ---------------------------------------------------------------------------------------
-    if six.PY2:
-        __unicode__ = __str__
-        del __str__
-
+    
     def __ne__(self, other):
         return not self == other
 

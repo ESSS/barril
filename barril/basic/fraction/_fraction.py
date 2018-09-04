@@ -45,6 +45,13 @@ class Fraction(object):
         self.x = tuple(x)  # tuple not presently neccessary, but I'm playing it safe
 
     def __str__(self):
+        '''
+        Should return a user-friendly representation of this object.
+
+        :rtype: unicode
+        :returns:
+            The formatted string
+        '''
         from barril.basic.format_float import FormatFloat
         return FormatFloat('%g', self[0]) + '/' + FormatFloat('%g', self[1])
 
