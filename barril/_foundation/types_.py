@@ -8,7 +8,7 @@ import collections
 
 import six
 
-from barril.foundation.klass import IsInstance
+from barril._foundation.klass import IsInstance
 
 _TRUE_VALUES = ['TRUE', 'YES', '1']
 _FALSE_VALUES = ['FALSE', 'NO', '0']

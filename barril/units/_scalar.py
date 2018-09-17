@@ -8,8 +8,8 @@ from functools import total_ordering
 import six
 from six.moves import range  # @UnresolvedImport
 
-from barril.foundation.reraise import Reraise
-from barril.foundation.types_ import IsNumber
+from barril._foundation.reraise import Reraise
+from barril._foundation.types_ import IsNumber
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._quantity import ObtainQuantity, Quantity

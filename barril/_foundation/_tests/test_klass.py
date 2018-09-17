@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from barril.foundation.klass import AllBasesNames, IsInstance, IsSubclass
+from barril._foundation.klass import AllBasesNames, IsInstance, IsSubclass
 
 
 class _A(object):

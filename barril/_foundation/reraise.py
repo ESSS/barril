@@ -41,7 +41,7 @@ if six.PY2:
             >>> RuntimeError:
             >>> [message] original message
         '''
-        from barril.foundation.exceptions import ExceptionToUnicode
+        from barril._foundation.exceptions import ExceptionToUnicode
 
         # IMPORTANT: Do NOT use try/except mechanisms in this method or the sys.exc_info()[-1] will be invalid
         if hasattr(exception, 'reraised_message'):

@@ -7,7 +7,7 @@ import sys
 import pytest
 import six
 
-from barril.foundation.exceptions import ExceptionToUnicode
+from barril._foundation.exceptions import ExceptionToUnicode
 
 skip_py3_obsolete_unicode = pytest.mark.skipif(
     condition=not six.PY2, reason='Python 3 turned unicode conversions obsolete')
@@ -63,7 +63,7 @@ def testExceptionToUnicodeWithReraise():
     third_caption = 'third'
 
     def FunctionWithReraise():
-        from barril.foundation.reraise import Reraise
+        from barril._foundation.reraise import Reraise
         try:
             raise RuntimeError(first_caption)
         except RuntimeError as e:

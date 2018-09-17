@@ -5,7 +5,7 @@ from pytest import approx
 import six
 from six.moves import range, zip
 
-from barril.foundation.odict import odict
+from barril._foundation.odict import odict
 from barril import units
 from barril.units import Array, InvalidUnitError, ObtainQuantity, Quantity
 

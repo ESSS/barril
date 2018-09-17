@@ -109,7 +109,7 @@ def FloatFromString(str_value, use_locale=True):
     import locale
 
     if str_value.__class__ != six.text_type:
-        from barril.foundation.types_ import CheckType
+        from barril._foundation.types_ import CheckType
         CheckType(str_value, six.text_type)
 
     if str_value == PLUS_INFINITY_STR:
