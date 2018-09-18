@@ -1,0 +1,23 @@
+skip_branch_with_pr: true
+
+environment:
+  matrix:
+    - PYTHON: "C:\\Python36"
+      TOX_ENV: "py36"
+
+    - PYTHON: "C:\\Python35"
+      TOX_ENV: "py35"
+
+    - PYTHON: "C:\\Python27"
+      TOX_ENV: "py27"
+
+platform:
+    - x64
+
+install:
+  - "%PYTHON%/python.exe -m pip install -U pip tox wheel"
+
+build: false  # Not a C# project, build stuff at the test step instead.
+
+test_script:
+  - "%PYTHON%/Scripts/tox -e %TOX_ENV%"
