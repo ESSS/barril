@@ -30,7 +30,7 @@ setup(
     extras_require={
         ':python_version == "2.7"': [ 'ruamel.ordereddict>=0.4.6' ],
         'docs': [ 'sphinx >= 1.4', 'sphinx_rtd_theme', 'sphinx-autodoc-typehints'],
-        'testing': ['pytest', 'pytest-cov', 'pytest-mock']
+        'testing': ['codecov', 'pytest', 'pytest-cov', 'pytest-mock']
     },
     install_requires=requirements,
     license="MIT license",
