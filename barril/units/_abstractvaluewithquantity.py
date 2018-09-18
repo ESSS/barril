@@ -269,7 +269,7 @@ class AbstractValueWithQuantityObject(object):
         try:
             pattern % 'unit'
         except TypeError as e:
-            from barril.foundation.reraise import Reraise
+            from barril._foundation.reraise import Reraise
             Reraise(e, 'Incompatible pattern for Scalar suffix. Expected a format for a unicode value.')
         cls.FORMATTED_SUFFIX_FORMAT = pattern
 

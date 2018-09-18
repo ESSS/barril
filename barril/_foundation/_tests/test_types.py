@@ -4,8 +4,8 @@ import pytest
 import six
 from six.moves import range  # @UnresolvedImport
 
-from barril.foundation.odict import odict
-from barril.foundation.types_ import (
+from barril._foundation.odict import odict
+from barril._foundation.types_ import (
     AsList, Boolean, CheckBasicType, CheckEnum, CheckFormatString, CheckIsNumber, CheckType,
     Flatten, FlattenDictValues, Intersection, IsBasicType, IsNumber, MergeDictsRecursively,
     OrderedIntersection, RemoveDuplicates, RemoveDuplicatesById, StructMap, _GetKnownNumberTypes)

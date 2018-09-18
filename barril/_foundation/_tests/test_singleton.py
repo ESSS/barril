@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import pytest
 
-from barril.foundation.singleton import (
+from barril._foundation.singleton import (
     PushPopSingletonError, Singleton, SingletonAlreadySetError, SingletonNotSetError)
 
 

@@ -6,8 +6,8 @@ import traceback
 import pytest
 import six
 
-from barril.foundation.exceptions import ExceptionToUnicode
-from barril.foundation.reraise import Reraise
+from barril._foundation.exceptions import ExceptionToUnicode
+from barril._foundation.reraise import Reraise
 
 pytestmark = pytest.mark.skipif(
     condition=not six.PY2,

@@ -7,7 +7,7 @@ from __future__ import absolute_import, unicode_literals
 import six
 from six.moves import range, zip  # @UnresolvedImport
 
-from barril.foundation.odict import odict
+from barril._foundation.odict import odict
 from barril.units.unit_database import UnitsError
 from ._unit_constants import UNKNOWN_UNIT
 from .unit_database import UnitDatabase

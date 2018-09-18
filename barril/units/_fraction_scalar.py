@@ -5,7 +5,7 @@ from functools import total_ordering
 
 import six
 
-from barril.foundation.types_ import CheckType
+from barril._foundation.types_ import CheckType
 from barril.basic.fraction import FractionValue
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
