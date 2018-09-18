@@ -9,6 +9,12 @@ Barril
 .. image:: https://img.shields.io/travis/ESSS/barril.svg
         :target: https://travis-ci.org/ESSS/barril
 
+.. image:: https://ci.appveyor.com/api/projects/status/github/ESSS/barril?branch=master
+    :target: https://ci.appveyor.com/project/ESSS/barril/?branch=master&svg=true
+
+.. image:: https://codecov.io/gh/ESSS/barril/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/ESSS/barril
+
 .. image:: https://readthedocs.org/projects/barril/badge/?version=latest
         :target: https://barril.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
