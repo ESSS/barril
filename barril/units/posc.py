@@ -4443,7 +4443,7 @@ def CreateVolumeQuantityFromLengthQuantity(length_quantity):
     '''
 
     from ._quantity import Quantity
-    from barril.foundation.odict import odict
+    from barril._foundation.odict import odict
 
     category = length_quantity.GetCategory()
     assert category == 'length', 'The given quantity must have length as category. %s was given.' % category
@@ -4477,7 +4477,7 @@ def CreateAreaQuantityFromLengthQuantity(length_quantity):
     '''
 
     from ._quantity import Quantity
-    from barril.foundation.odict import odict
+    from barril._foundation.odict import odict
 
     category = length_quantity.GetCategory()
     assert category == 'length', 'The given quantity must have length as category. %s was given.' % category

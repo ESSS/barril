@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 import six
 
-from barril.foundation.types_ import IsNumber
+from barril._foundation.types_ import IsNumber
 from barril.basic.format_float import FormatFloat
 from barril.units.unit_database import UnitDatabase
 

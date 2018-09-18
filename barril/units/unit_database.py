@@ -8,8 +8,8 @@ import traceback
 import six
 from six.moves import zip  # @UnresolvedImport
 
-from barril.foundation.singleton import Singleton
-from barril.foundation.types_ import CheckType
+from barril._foundation.singleton import Singleton
+from barril._foundation.types_ import CheckType
 
 # Contains the registry for all the avaiable unit types.
 __all__ = [

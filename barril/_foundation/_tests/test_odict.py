@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from barril.foundation.odict import odict
+from barril._foundation.odict import odict
 
 
 def testInsert():
