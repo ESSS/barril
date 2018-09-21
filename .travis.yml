@@ -5,14 +5,16 @@ stages:
 - name: deploy
   if: repo = ESSS/barril AND tag IS present
 
+install:
+- pip install -U pip
+- pip install -U tox
+
+script:
+- tox
+
 jobs:
   include:
-    - install:
-      - pip install -U pip
-      - pip install -U tox
-      script:
-      - tox
-      python: '2.7'
+    - python: '2.7'
       env: TOXENV=py27
 
     - python: '3.5'
