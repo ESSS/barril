@@ -17,7 +17,7 @@ def testFormatFloat():
     scalar = Scalar('length', 0.0, 'm')
     assert FormatFloat('%g', scalar.GetValue()) == '0'
 
-    assert locale.format('%g', scalar.GetValue('ft')) == '-0'
+    assert locale.format_string('%g', scalar.GetValue('ft')) == '-0'
     assert FormatFloat('%g', scalar.GetValue('ft')) == '0'
 
     # Large float numbers on integer format.
