@@ -18,6 +18,8 @@ stages:
 
 jobs:
   include:
+    - python: '3.6'
+      script: tox -e flake8
     - stage: deploy
       python: '3.6'
       env:
