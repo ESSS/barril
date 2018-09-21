@@ -4,11 +4,10 @@ import pytest
 import six
 from six.moves import range  # @UnresolvedImport
 
-from barril._foundation.odict import odict
 from barril._foundation.types_ import (
     AsList, Boolean, CheckBasicType, CheckEnum, CheckFormatString, CheckIsNumber, CheckType,
-    Flatten, FlattenDictValues, Intersection, IsBasicType, IsNumber, MergeDictsRecursively,
-    OrderedIntersection, RemoveDuplicates, RemoveDuplicatesById, StructMap, _GetKnownNumberTypes)
+    Flatten, Intersection, IsBasicType, IsNumber, MergeDictsRecursively,
+    OrderedIntersection, StructMap, _GetKnownNumberTypes)
 
 
 def testBoolean():
@@ -345,59 +344,3 @@ def testStructMap():
     expected = {'alpha' : ['1', '2', '3'], 'bravo' : ('1', '2', '3')}
     assert obtained == expected
 
-
-def testFlattenDictValues():
-    assert sorted(FlattenDictValues({'a' : 1, 'b' : 2})) == list(range(1, 3))
-    assert sorted(FlattenDictValues({'a' : 1, 'b' : { 'c' : 2 }})) == list(range(1, 3))
-    assert sorted(FlattenDictValues({'a' : 1, 'b' : [2, 3]})) == list(range(1, 4))
-    assert sorted(FlattenDictValues({'a' : 1, 'b' : { 'c' : [2, 3]}})) == list(range(1, 4))
-    assert sorted(FlattenDictValues({'a' : 1, 'b' : { 'c' : [2, {'d' : 3}]}})) == list(range(1, 4))
-    assert sorted(FlattenDictValues({'a' : 1, 'b' : [{'c' : 2}, 3, [4, [5]]]})) == list(range(1, 6))
-
-    with pytest.raises(ValueError):
-        FlattenDictValues([1, 2])
-    with pytest.raises(ValueError):
-        FlattenDictValues(1)
-
-
-def testFlattenDictValuesWithODict():
-    d = odict()
-    d['z'] = 1
-
-    inner_dict = odict()
-    inner_dict['key'] = 2
-
-    d['a'] = [
-        inner_dict,
-        3,
-        [
-            4,
-            [5]
-        ]
-    ]
-    assert FlattenDictValues(d) == list(range(1, 6))
-
-
-def testRemoveDuplicates():
-    elements = [(1,), (1,), (7,), (3,), (1,)]
-    assert len(elements) == 5
-    no_duplicates = RemoveDuplicates(elements)
-    assert len(no_duplicates) == 3
-    # Keep order.
-    order = [elements.index(x) for x in no_duplicates]
-    assert all(order[i] < order[i + 1] for i in range(len(order) - 1))
-
-
-def testRemoveDuplicatesById():
-    elements = [(1,), (1,), (7,), (3,), (1,)]
-    assert len(elements) == 5
-    no_duplicates = RemoveDuplicatesById(elements)
-    assert len(no_duplicates) == 5
-
-    elements[1] = elements[0]
-    elements[4] = elements[0]
-    no_duplicates = RemoveDuplicatesById(elements)
-    assert len(no_duplicates) == 3
-    # Keep order.
-    order = [elements.index(x) for x in no_duplicates]
-    assert all(order[i] < order[i + 1] for i in range(len(order) - 1))

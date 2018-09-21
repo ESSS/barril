@@ -4,8 +4,6 @@ Extensions to python native types.
 
 from __future__ import unicode_literals
 
-import collections
-
 import six
 
 from barril._foundation.klass import IsInstance
@@ -394,43 +392,6 @@ def IterFlattened(iterable, skip_types=None):
 
 
 #===================================================================================================
-# IterFlattenedDictValues
-#===================================================================================================
-def IterFlattenedDictValues(dictionary):
-    '''
-    Flattens a dictionary values() recursively.
-
-    If the outer dictionary contains an inner dictionary the inner dictionary values are also flattened.
-
-    Other inner values that are containers will be flattened too, not only the dicts.
-
-    :param collections.Mapping dictionary:
-    :return: sequence(object)
-    '''
-    if not isinstance(dictionary, collections.Mapping):
-        raise ValueError('Parameter "dictionary" must be a dict')
-    values = IterFlattened(iter(dictionary.values()), skip_types=[collections.Mapping])
-    for v in values:
-        if isinstance(v, collections.Mapping):
-            for v2 in IterFlattenedDictValues(v):
-                yield v2
-        else:
-            yield v
-
-
-#===================================================================================================
-# FlattenDictValues
-#===================================================================================================
-def FlattenDictValues(dictionary):
-    '''
-    :param dict dictionary:
-    :return: list(object)
-    :see: IterFlattenedDictValues
-    '''
-    return list(IterFlattenedDictValues(dictionary))
-
-
-#===================================================================================================
 # MergeDictsRecursively
 #===================================================================================================
 def MergeDictsRecursively(original_dict, merging_dict):
@@ -482,42 +443,6 @@ def ListDuplicates(iterable):
     seen_twice = set(x for x in iterable if x in seen or seen_add(x))
     # turn the set into a list (as requested)
     return list(seen_twice)
-
-
-#===================================================================================================
-# RemoveDuplicates
-#===================================================================================================
-def RemoveDuplicates(iterable):
-    '''
-    Given a sequence, returns a list with duplicate elements removed (only the first appearance
-    of the element is kept). Preserves order.
-
-    :type iterable: an iterable object, ie, an object that iter() can handle.
-    '''
-    seen = set()
-    seen_add = seen.add
-    return [ x for x in iterable if x not in seen and not seen_add(x)]
-
-
-#===================================================================================================
-# RemoveDuplicatesById
-#===================================================================================================
-def RemoveDuplicatesById(iterable):
-    '''
-    Similar to `RemoveDuplicates` but using the object `id` as filter.
-
-    :type iterable: an iterable object, ie, an object that iter() can handle.
-    '''
-    seen = set()
-    seen_add = seen.add
-    result = []
-    result_append = result.append
-    for x in iterable:
-        x_id = id(x)
-        if x_id not in seen:
-            seen_add(x_id)
-            result_append(x)
-    return result
 
 
 #===================================================================================================
