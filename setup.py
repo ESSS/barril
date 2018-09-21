@@ -3,13 +3,14 @@
 
 """The setup script."""
 
+import io
 from setuptools import find_packages, setup
 
-with open('README.rst') as readme_file:
+with io.open('README.rst', encoding='UTF-8') as readme_file:
     readme = readme_file.read()
 
-with open('HISTORY.rst') as history_file:
-    history = history_file.read()
+with io.open('CHANGELOG.rst', encoding='UTF-8') as changelog_file:
+    history = changelog_file.read()
 
 requirements = ['attrs>=18.1.0', 'numpy>=1.11.0']
 
