@@ -76,11 +76,11 @@ def FormatFloat(pattern, value, grouping=False, use_locale=True):
 
     if use_locale:
         try:
-            result = locale.format(pattern, value, grouping)
+            result = locale.format_string(pattern, value, grouping)
         except TypeError:
             # Python has a limitation to convert large float numbers to integer format.
             # To avoid this the values will be forced to int when requesting for the integer format.
-            result = locale.format(pattern, int(value), grouping)
+            result = locale.format_string(pattern, int(value), grouping)
     else:
         result = pattern % value
 
