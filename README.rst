@@ -4,24 +4,23 @@ Barril
 
 
 .. image:: https://img.shields.io/pypi/v/barril.svg
-        :target: https://pypi.python.org/pypi/barril
+    :target: https://pypi.python.org/pypi/barril
+        
+.. image:: https://img.shields.io/pypi/pyversions/barril.svg
+    :target: https://pypi.org/project/barril
 
 .. image:: https://img.shields.io/travis/ESSS/barril.svg
-        :target: https://travis-ci.org/ESSS/barril
+    :target: https://travis-ci.org/ESSS/barril
 
-.. image:: https://ci.appveyor.com/api/projects/status/github/ESSS/barril?branch=master
+.. image:: https://ci.appveyor.com/api/projects/status/2y9spccc6pk9gh96/branch/master?svg=true
     :target: https://ci.appveyor.com/project/ESSS/barril/?branch=master&svg=true
 
 .. image:: https://codecov.io/gh/ESSS/barril/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/ESSS/barril
 
-.. image:: https://readthedocs.org/projects/barril/badge/?version=latest
-        :target: https://barril.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
-
 
 What is Barril?
-================
+===============
 
 Python package to manage units for physical quantities.
 
