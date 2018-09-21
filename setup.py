@@ -13,6 +13,11 @@ with io.open('CHANGELOG.rst', encoding='UTF-8') as changelog_file:
     history = changelog_file.read()
 
 requirements = ['attrs>=18.1.0', 'numpy>=1.11.0']
+extras_require = {
+    ':python_version == "2.7"': ['ruamel.ordereddict>=0.4.6'],
+    'docs': ['sphinx >= 1.4', 'sphinx_rtd_theme', 'sphinx-autodoc-typehints'],
+    'testing': ['codecov', 'pytest', 'pytest-cov', 'pytest-mock'],
+}
 
 setup(
     author="ESSS",
@@ -26,11 +31,7 @@ setup(
         'Programming Language :: Python :: 3.7',
     ],
     description="Python package to manage units for physical quantities",
-    extras_require={
-        ':python_version == "2.7"': ['ruamel.ordereddict>=0.4.6'],
-        'docs': [ 'sphinx >= 1.4', 'sphinx_rtd_theme', 'sphinx-autodoc-typehints'],
-        'testing': ['codecov', 'pytest', 'pytest-cov', 'pytest-mock']
-    },
+    extras_require=extras_require,
     install_requires=requirements,
     license="MIT license",
     long_description=readme + '\n\n' + history,
