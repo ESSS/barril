@@ -29,7 +29,7 @@ setup(
     ],
     description="Python package to manage units for physical quantities",
     extras_require={
-        ':python_version == "2.7"': [ 'ruamel.ordereddict>=0.4.6' ],
+        ':python_version == "2.7"': ['ruamel.ordereddict>=0.4.6'],
         'docs': [ 'sphinx >= 1.4', 'sphinx_rtd_theme', 'sphinx-autodoc-typehints'],
         'testing': ['codecov', 'pytest', 'pytest-cov', 'pytest-mock']
     },

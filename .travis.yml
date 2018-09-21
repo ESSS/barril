@@ -21,9 +21,6 @@ jobs:
     - python: '3.6'
       env: TOXENV=py36
 
-    - python: '3.6'
-      env: TOXENV=flake8
-
     - stage: deploy
       python: '3.6'
       env:
