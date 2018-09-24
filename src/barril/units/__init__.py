@@ -85,9 +85,12 @@ from .unit_database import (
     UnitsError)
 
 __all__ = [
+    str("AbstractValueWithQuantityObject"),
     str("Array"),
+    str("ChangeScalars"),
     str("FixedArray"),
     str("FractionScalar"),
+    str("GetUnknownQuantity"),
     str("InvalidQuantityTypeError"),
     str("InvalidUnitError"),
     str("Quantity"),
@@ -96,7 +99,6 @@ __all__ = [
     str("ScalarFactory"),
     str("UnitDatabase"),
     str("UnitsError"),
-    str("AbstractValueWithQuantityObject"),
 ]
 
 # Unknown quantity instance
