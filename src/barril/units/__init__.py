@@ -85,18 +85,18 @@ from .unit_database import (
     UnitsError)
 
 __all__ = [
-    "Array",
-    "FixedArray",
-    "FractionScalar",
-    "InvalidQuantityTypeError",
-    "InvalidUnitError",
-    "Quantity",
-    "ReadOnlyError",
-    "Scalar",
-    "ScalarFactory",
-    "UnitDatabase",
-    "UnitsError",
-    "AbstractValueWithQuantityObject",
+    str("Array"),
+    str("FixedArray"),
+    str("FractionScalar"),
+    str("InvalidQuantityTypeError"),
+    str("InvalidUnitError"),
+    str("Quantity"),
+    str("ReadOnlyError"),
+    str("Scalar"),
+    str("ScalarFactory"),
+    str("UnitDatabase"),
+    str("UnitsError"),
+    str("AbstractValueWithQuantityObject"),
 ]
 
 # Unknown quantity instance

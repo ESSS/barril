@@ -13,12 +13,12 @@ from barril._foundation.types_ import CheckType
 
 # Contains the registry for all the avaiable unit types.
 __all__ = [
-    "CategoryInfo",
-    "InvalidOperationError",
-    "InvalidQuantityTypeError",
-    "InvalidUnitError",
-    "UnitDatabase",
-    "UnitsError",
+    str("CategoryInfo"),
+    str("InvalidOperationError"),
+    str("InvalidQuantityTypeError"),
+    str("InvalidUnitError"),
+    str("UnitDatabase"),
+    str("UnitsError"),
 ]
 
 
