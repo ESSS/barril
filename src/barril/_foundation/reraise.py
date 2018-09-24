@@ -70,6 +70,8 @@ if six.PY2:
         exception.reraised_message = message
 
         # taken from source code of future.utils.raise_with_traceback
+        import sys  # noqa
+
         exec("raise exception, None, sys.exc_info()[-1]")
 
     # ===================================================================================================
