@@ -6,22 +6,17 @@ from ._quantity import Quantity
 __all__ = [str("FixedArray")]  # pylint: disable=invalid-all-object
 
 
-#===================================================================================================
+# ===================================================================================================
 # FixedArray
-#===================================================================================================
+# ===================================================================================================
 class FixedArray(Array):
-    '''Represents an Array with fixed number of elements.
-    '''
+    """Represents an Array with fixed number of elements.
+    """
+
     _dimension = None
 
-    def __init__(
-        self,
-        dimension,
-        category,
-        values=None,
-        unit=None,
-        ):
-        '''
+    def __init__(self, dimension, category, values=None, unit=None):
+        """
         :param int dimension:
             The dimension for this array.
 
@@ -36,24 +31,19 @@ class FixedArray(Array):
 
         :param unicode unit:
             Unit (not used if a quantity is passed).
-        '''
+        """
         if dimension < 2:
-            raise ValueError('Dimension MUST be 2 or more')
+            raise ValueError("Dimension MUST be 2 or more")
         self._dimension = dimension
 
         Array.__init__(self, category, values, unit)
 
     def _InternalCreateWithQuantity(
-        self,
-        quantity,
-        values=None,
-        unit_database=None,
-        dimension=None,
-        value=None
-        ):
+        self, quantity, values=None, unit_database=None, dimension=None, value=None
+    ):
         if value is not None:
             if values is not None:
-                raise ValueError('Duplicated values parameter given')
+                raise ValueError("Duplicated values parameter given")
 
             values = value
 
@@ -66,12 +56,15 @@ class FixedArray(Array):
 
             dimension = self._dimension
 
-        elif hasattr(self, '_dimension'):
+        elif hasattr(self, "_dimension"):
             if self._dimension is not None and dimension != self._dimension:
-                raise ValueError('Dimension re-definition mismatch: %s != %s' % (self._dimension, dimension))
+                raise ValueError(
+                    "Dimension re-definition mismatch: %s != %s"
+                    % (self._dimension, dimension)
+                )
 
         if dimension < 2:
-            raise ValueError('Dimension MUST be 2 or more')
+            raise ValueError("Dimension MUST be 2 or more")
         self._dimension = dimension
 
         if values is None:
@@ -92,32 +85,32 @@ class FixedArray(Array):
 
     # Values ---------------------------------------------------------------------------------------
     def _GetDefaultValue(self, category_info, unit=None):
-        '''
+        """
 
         :param category_info:
         :param unit:
-        '''
+        """
         return [0.0] * self._dimension
 
     def CheckValues(self, values, dimension=None):
-        '''Checks whether the dimensions consistent with the dimensions in this unit point
-        '''
+        """Checks whether the dimensions consistent with the dimensions in this unit point
+        """
         if dimension is None:
             dimension = self.dimension
 
         if len(values) != dimension:
-            msg = 'Values must have %d elements, but has %d'
+            msg = "Values must have %d elements, but has %d"
             raise ValueError(msg % (dimension, len(values)))
 
     @classmethod
     def CreateEmptyArray(cls, dimension, values=None):
-        '''
+        """
         Allows the creation of a array that does not have any associated category nor unit.
 
         :rtype: Array
         :returns:
             Returns an empty array.
-        '''
+        """
         if values is None:
             values = [0.0] * dimension
 
@@ -138,15 +131,18 @@ class FixedArray(Array):
         """
         Defining reduce so that we can pickle fixed arrays.
         """
-        return FixedArray, (
-            self._dimension,
-            self._quantity,
-            self.values,
-            None,  # Unit defined in quantity
+        return (
+            FixedArray,
+            (
+                self._dimension,
+                self._quantity,
+                self.values,
+                None,  # Unit defined in quantity
+            ),
         )
 
     def ChangingIndex(self, index, value, use_value_unit=True):
-        '''
+        """
         Creates a FixedArray from based on this FixedArray changing a single value based on the
         passed index.
 
@@ -166,7 +162,7 @@ class FixedArray(Array):
 
         :return FixedArray:
             The created FixedArray.
-        '''
+        """
         from barril.units import Scalar
         from barril.units import FixedArray
 
@@ -189,7 +185,7 @@ class FixedArray(Array):
         return FixedArray(self.dimension, quantity, tuple(values))
 
     def IndexAsScalar(self, index, quantity=None):
-        '''
+        """
         :param int index:
             The index which should be gotten as a Scalar.
 
@@ -199,8 +195,9 @@ class FixedArray(Array):
 
         :return Scalar:
             A Scalar representation of the given index.
-        '''
+        """
         from barril.units import Scalar
+
         if quantity is None:
             quantity = self.GetQuantity()
         return Scalar(quantity, self.GetValues(unit=quantity.GetUnit())[index])

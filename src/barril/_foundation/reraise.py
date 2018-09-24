@@ -6,12 +6,12 @@ from six import raise_from
 # Inspired by http://www.thescripts.com/forum/thread46361.html
 
 if six.PY2:
-    
-    #===============================================================================================
+
+    # ===============================================================================================
     # Reraise
-    #===============================================================================================
-    def Reraise(exception, message, separator='\n'):
-        '''
+    # ===============================================================================================
+    def Reraise(exception, message, separator="\n"):
+        """
         Raised the same exception given, with an additional message.
 
         :param Exception exception:
@@ -40,11 +40,11 @@ if six.PY2:
 
             >>> RuntimeError:
             >>> [message] original message
-        '''
+        """
         from barril._foundation.exceptions import ExceptionToUnicode
 
         # IMPORTANT: Do NOT use try/except mechanisms in this method or the sys.exc_info()[-1] will be invalid
-        if hasattr(exception, 'reraised_message'):
+        if hasattr(exception, "reraised_message"):
             current_message = exception.reraised_message
         else:
             current_message = ExceptionToUnicode(exception)
@@ -52,7 +52,7 @@ if six.PY2:
         # Build the new message
         if not current_message.startswith(separator):
             current_message = separator + current_message
-        message = '\n' + message + current_message
+        message = "\n" + message + current_message
 
         if exception.__class__ in _SPECIAL_EXCEPTION_MAP:
             # Handling for special case, some exceptions have different behaviors.
@@ -70,14 +70,12 @@ if six.PY2:
         exception.reraised_message = message
 
         # taken from source code of future.utils.raise_with_traceback
-        import sys
-        exec('raise exception, None, sys.exc_info()[-1]')
+        exec("raise exception, None, sys.exc_info()[-1]")
 
-    #===================================================================================================
+    # ===================================================================================================
     # SPECIAL_EXCEPTIONS
-    #===================================================================================================
+    # ===================================================================================================
     class ReraisedKeyError(KeyError):
-
         def __init__(self, *args):
             KeyError.__init__(self, *args)
             self.message = None
@@ -86,7 +84,6 @@ if six.PY2:
             return self.message
 
     class ReraisedOSError(OSError):
-
         def __init__(self, *args):
             OSError.__init__(self, *args)
             self.message = None
@@ -95,7 +92,6 @@ if six.PY2:
             return self.message
 
     class ReraisedSyntaxError(SyntaxError):
-
         def __init__(self, *args):
             SyntaxError.__init__(self, *args)
             self.message = None
@@ -104,7 +100,6 @@ if six.PY2:
             return self.message
 
     class ReraisedUnicodeDecodeError(UnicodeDecodeError):
-
         def __init__(self, *args):
             UnicodeDecodeError.__init__(self, *args)
             self.message = None
@@ -113,7 +108,6 @@ if six.PY2:
             return self.message
 
     class ReraisedUnicodeEncodeError(UnicodeEncodeError):
-
         def __init__(self, *args):
             UnicodeEncodeError.__init__(self, *args)
             self.message = None
@@ -122,16 +116,16 @@ if six.PY2:
             return self.message
 
     _SPECIAL_EXCEPTION_MAP = {
-        KeyError : ReraisedKeyError,
-        OSError : ReraisedOSError,
-        SyntaxError : ReraisedSyntaxError,
-        UnicodeDecodeError : ReraisedUnicodeDecodeError,
-        UnicodeEncodeError : ReraisedUnicodeEncodeError,
+        KeyError: ReraisedKeyError,
+        OSError: ReraisedOSError,
+        SyntaxError: ReraisedSyntaxError,
+        UnicodeDecodeError: ReraisedUnicodeDecodeError,
+        UnicodeEncodeError: ReraisedUnicodeEncodeError,
     }
     # [[[end]]] (checksum: 87ea5d69d51083d7009b216f50cc2be5)
 else:
 
-    def Reraise(exception, message, separator='\n'):
+    def Reraise(exception, message, separator="\n"):
         """
         Forwards to a `raise exc from cause` statement. Kept alive for backwards compatibility
         (`separator` argument only kept for this reason).

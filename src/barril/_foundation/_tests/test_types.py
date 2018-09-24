@@ -5,26 +5,38 @@ import six
 from six.moves import range  # @UnresolvedImport
 
 from barril._foundation.types_ import (
-    AsList, Boolean, CheckBasicType, CheckEnum, CheckFormatString, CheckIsNumber, CheckType,
-    Flatten, Intersection, IsBasicType, IsNumber, MergeDictsRecursively,
-    OrderedIntersection, StructMap, _GetKnownNumberTypes)
+    AsList,
+    Boolean,
+    CheckBasicType,
+    CheckEnum,
+    CheckFormatString,
+    CheckIsNumber,
+    CheckType,
+    Flatten,
+    Intersection,
+    IsBasicType,
+    IsNumber,
+    MergeDictsRecursively,
+    OrderedIntersection,
+    StructMap,
+    _GetKnownNumberTypes,
+)
 
 
 def testBoolean():
-    assert Boolean('TRUE') == True
-    assert Boolean('true') == True
-    assert Boolean('yes') == True
-    assert Boolean('1') == True
-    assert Boolean('false') == False
-    assert Boolean('no') == False
-    assert Boolean('0') == False
+    assert Boolean("TRUE")
+    assert Boolean("true")
+    assert Boolean("yes")
+    assert Boolean("1")
+    assert not Boolean("false")
+    assert not Boolean("no")
+    assert not Boolean("0")
 
     with pytest.raises(ValueError):
-        Boolean('INVALID')
+        Boolean("INVALID")
 
 
 def testPassing():
-
     class Foo(object):
         pass
 
@@ -35,28 +47,28 @@ def testPassing():
 
 def testRaising():
     with pytest.raises(TypeError):
-        CheckType('hellou', int)
+        CheckType("hellou", int)
 
     with pytest.raises(TypeError):
-        CheckType('hellou', (int, float))
+        CheckType("hellou", (int, float))
 
     with pytest.raises(TypeError):
         CheckType(99, (six.text_type, float))
 
 
 def testCheckFormatString():
-    CheckFormatString('%s', 1)
-    CheckFormatString('%s m', 1)
+    CheckFormatString("%s", 1)
+    CheckFormatString("%s m", 1)
 
     with pytest.raises(ValueError):
-        CheckFormatString('%s m %s', 1)
+        CheckFormatString("%s m %s", 1)
 
     with pytest.raises(ValueError):
-        CheckFormatString('%s m %s', 1, 3, 3)
+        CheckFormatString("%s m %s", 1, 3, 3)
 
 
 def testIfCustomMessageIsAppendedToDefaultMessage():
-    message = 'Zero is not unicode!'
+    message = "Zero is not unicode!"
 
     with pytest.raises(TypeError) as exception:
         CheckType(0, six.text_type, message)
@@ -65,9 +77,8 @@ def testIfCustomMessageIsAppendedToDefaultMessage():
 
 
 def testBasicType():
-
     class NonBasic(object):
-        ''
+        ""
 
     assert IsBasicType(1)
     assert not IsBasicType([1])
@@ -79,11 +90,11 @@ def testBasicType():
     assert not IsBasicType({1: NonBasic()}, accept_compound=True)
     assert not IsBasicType({NonBasic(): 1}, accept_compound=True)
 
-    assert IsBasicType(NonBasic(), accept_compound=True) == False
-    assert IsBasicType([NonBasic()], accept_compound=True) == False
-    assert IsBasicType([1, [NonBasic()]], accept_compound=True) == False
+    assert not IsBasicType(NonBasic(), accept_compound=True)
+    assert not IsBasicType([NonBasic()], accept_compound=True)
+    assert not IsBasicType([1, [NonBasic()]], accept_compound=True)
 
-    assert CheckBasicType(0) == True
+    assert CheckBasicType(0)
     with pytest.raises(TypeError):
         CheckBasicType([0])
 
@@ -97,11 +108,11 @@ def testCheckEnum():
     with pytest.raises(ValueError):
         CheckEnum(11, list(range(10)))
     with pytest.raises(ValueError):
-        CheckEnum('foo', list(range(10)))
+        CheckEnum("foo", list(range(10)))
 
 
 def testCheckNumber():
-    numpy = pytest.importorskip('numpy')
+    numpy = pytest.importorskip("numpy")
 
     for number_class in [float] + list(six.integer_types):
         converted = number_class(1)
@@ -114,13 +125,14 @@ def testCheckNumber():
 
 def testGetKnownNumberTypes(monkeypatch):
     import sys
-    numpy = pytest.importorskip('numpy')
+
+    numpy = pytest.importorskip("numpy")
 
     expected = {float, complex, numpy.number}
     expected.update(set(six.integer_types))
     assert set(_GetKnownNumberTypes()) == expected
 
-    monkeypatch.setitem(sys.modules, 'numpy', None)
+    monkeypatch.setitem(sys.modules, "numpy", None)
     expected.remove(numpy.number)
     assert set(_GetKnownNumberTypes()) == expected
 
@@ -131,11 +143,10 @@ def testCheckIsNumber():
     if six.PY2:
         assert CheckIsNumber(long(1))  # noqa
     with pytest.raises(TypeError):
-        CheckIsNumber('alpha')
+        CheckIsNumber("alpha")
 
 
 class ListWithoutIter(object):
-
     def __init__(self, *args, **kwargs):
         self.contents = []
         for item in args:
@@ -148,9 +159,9 @@ class ListWithoutIter(object):
 def testAsList():
     a = [1, 2, 3]
     assert a is AsList(a)
-    assert ['a'] == AsList('a')
-    assert ['a'] == AsList(('a',))
-    assert ['a'] == AsList(set('a'))
+    assert ["a"] == AsList("a")
+    assert ["a"] == AsList(("a",))
+    assert ["a"] == AsList(set("a"))
 
 
 def testFlatten():
@@ -177,8 +188,8 @@ def testFlattenForStrings():
 
 
 def testFlattenForUnicodeStrings():
-    a = [[u"a", u"bb"], u"ccc"]
-    assert Flatten(a) == [u"a", u"bb", u"ccc"]
+    a = [["a", "bb"], "ccc"]
+    assert Flatten(a) == ["a", "bb", "ccc"]
 
 
 def testFlattenForTuples():
@@ -187,126 +198,82 @@ def testFlattenForTuples():
 
 
 def testFlattenSkipSpecificClass():
-    obj = ListWithoutIter('a', 'b')
-    a = [obj, 'c', ['d', 'e']]
-    assert Flatten(a, skip_types=[ListWithoutIter]) == [obj, 'c', 'd', 'e']
+    obj = ListWithoutIter("a", "b")
+    a = [obj, "c", ["d", "e"]]
+    assert Flatten(a, skip_types=[ListWithoutIter]) == [obj, "c", "d", "e"]
 
 
 def testFlattenSkipTypeOfSubclass():
-
     class Foo(ListWithoutIter):
-
         def __init__(self, *args, **kwargs):
             super(Foo, self).__init__(*args, **kwargs)
 
     obj = Foo()
-    a = [obj, 'c', 'd']
-    assert Flatten(a, skip_types=[ListWithoutIter]) == [obj, 'c', 'd']
+    a = [obj, "c", "d"]
+    assert Flatten(a, skip_types=[ListWithoutIter]) == [obj, "c", "d"]
 
 
 def testMergeDictsRecursively():
-    dict_1 = { 'a' : 1, 'b' : 2 }
-    dict_2 = { 'c' : 3, 'd' : 4 }
-    assert MergeDictsRecursively(dict_1, dict_2) == { 'a' : 1, 'b' : 2, 'c' : 3, 'd' : 4 }
+    dict_1 = {"a": 1, "b": 2}
+    dict_2 = {"c": 3, "d": 4}
+    assert MergeDictsRecursively(dict_1, dict_2) == {"a": 1, "b": 2, "c": 3, "d": 4}
 
 
 def testMergeDictsRecursivelyDictsOnTheRightHaveHigherPrecedence():
-    dict_1 = { 'a' : 1, 'b' : 2 }
-    dict_2 = { 'b' : 3, 'd' : 4 }
-    assert MergeDictsRecursively(dict_1, dict_2) == { 'a' : 1, 'b' : 3, 'd' : 4 }
+    dict_1 = {"a": 1, "b": 2}
+    dict_2 = {"b": 3, "d": 4}
+    assert MergeDictsRecursively(dict_1, dict_2) == {"a": 1, "b": 3, "d": 4}
 
 
 def testMergeDictsRecursivelyManyLevelsOfRecursion():
     dict_1 = {
-        'a' : 0,
-        'b' : {
-            'replaced_inner_b' : 0,
-            'kept_inner_b' : 0,
-        },
-        'c' : {
-            'inner_c' : {
-                'replaced_inner_c' : 0,
-                'kept_inner_c' : 0,
-            },
-        },
+        "a": 0,
+        "b": {"replaced_inner_b": 0, "kept_inner_b": 0},
+        "c": {"inner_c": {"replaced_inner_c": 0, "kept_inner_c": 0}},
     }
     dict_2 = {
-        'b' : {
-            'replaced_inner_b' : 42,
-            'added_inner_b' : 0,
-        },
-        'c' : {
-            'inner_c' : {
-                'replaced_inner_c' : 42,
-                'added_inner_c' : 0,
-            }
-        }
+        "b": {"replaced_inner_b": 42, "added_inner_b": 0},
+        "c": {"inner_c": {"replaced_inner_c": 42, "added_inner_c": 0}},
     }
-    assert (
-        MergeDictsRecursively(dict_1, dict_2)
-        == {
-            'a' : 0,
-            'b' : {
-                'kept_inner_b' : 0,
-                'replaced_inner_b' : 42,
-                'added_inner_b' : 0,
-            },
-            'c' : {
-                'inner_c' : {
-                    'replaced_inner_c' : 42,
-                    'added_inner_c' : 0,
-                    'kept_inner_c' : 0,
-                }
-            },
-        }
-    )
+    assert MergeDictsRecursively(dict_1, dict_2) == {
+        "a": 0,
+        "b": {"kept_inner_b": 0, "replaced_inner_b": 42, "added_inner_b": 0},
+        "c": {
+            "inner_c": {"replaced_inner_c": 42, "added_inner_c": 0, "kept_inner_c": 0}
+        },
+    }
 
 
 def testMergeDictsRecursivelyWhenLeftHasDictKeyButRightDoesnt():
-    dict_1 = {
-        'a' : {
-            'inner_a' : 0
-        }
-    }
-    dict_2 = {
-        'a' : 42
-    }
-    assert MergeDictsRecursively(dict_1, dict_2) == { 'a' : 42 }
+    dict_1 = {"a": {"inner_a": 0}}
+    dict_2 = {"a": 42}
+    assert MergeDictsRecursively(dict_1, dict_2) == {"a": 42}
 
 
 def testMergeDictsRecursivelyWhenRightHasDictKeyButLeftDoesnt():
-    dict_1 = {
-        'a' : 42
-    }
-    dict_2 = {
-        'a' : {
-            'inner_a' : 0
-        }
-    }
-    assert (
-        MergeDictsRecursively(dict_1, dict_2)
-        == {
-            'a' : {
-                'inner_a' : 0
-            }
-        }
-    )
+    dict_1 = {"a": 42}
+    dict_2 = {"a": {"inner_a": 0}}
+    assert MergeDictsRecursively(dict_1, dict_2) == {"a": {"inner_a": 0}}
 
 
 def testMergeDictsWithWrongTypes():
     with pytest.raises(AttributeError):
-        MergeDictsRecursively('Foo', {})
+        MergeDictsRecursively("Foo", {})
 
     with pytest.raises(TypeError):
-        MergeDictsRecursively({}, 'Foo')
+        MergeDictsRecursively({}, "Foo")
 
     with pytest.raises(TypeError) as excinfo:
-        MergeDictsRecursively({}, 'Foo')
+        MergeDictsRecursively({}, "Foo")
 
     if six.PY2:
-        expected = 'Wrong types passed. Expecting two dictionaries, got: "dict" and "unicode"'
+        expected = (
+            'Wrong types passed. Expecting two dictionaries, got: "dict" and "unicode"'
+        )
     else:
-        expected = 'Wrong types passed. Expecting two dictionaries, got: "dict" and "str"'
+        expected = (
+            'Wrong types passed. Expecting two dictionaries, got: "dict" and "str"'
+        )
     assert six.text_type(excinfo.value) == expected
 
 
@@ -334,13 +301,10 @@ def testOrderedIntersection():
 
 def testStructMap():
 
-    a = {'alpha' : [1, 2, 3], 'bravo' : (1, 2, 3)}
+    a = {"alpha": [1, 2, 3], "bravo": (1, 2, 3)}
 
     obtained = StructMap(
-        a,
-        func=six.text_type,
-        conditional=lambda x: isinstance(x, int)
+        a, func=six.text_type, conditional=lambda x: isinstance(x, int)
     )
-    expected = {'alpha' : ['1', '2', '3'], 'bravo' : ('1', '2', '3')}
+    expected = {"alpha": ["1", "2", "3"], "bravo": ("1", "2", "3")}
     assert obtained == expected
-

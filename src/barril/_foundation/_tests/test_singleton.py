@@ -3,7 +3,11 @@ from __future__ import unicode_literals
 import pytest
 
 from barril._foundation.singleton import (
-    PushPopSingletonError, Singleton, SingletonAlreadySetError, SingletonNotSetError)
+    PushPopSingletonError,
+    Singleton,
+    SingletonAlreadySetError,
+    SingletonNotSetError,
+)
 
 
 def CheckCurrentSingleton(singleton_class, value):
@@ -12,9 +16,7 @@ def CheckCurrentSingleton(singleton_class, value):
 
 
 def testSingleton():
-
     class MySingleton(Singleton):
-
         def __init__(self, value):
             self.value = value
 
@@ -58,9 +60,7 @@ def testSingleton():
 
 
 def testSetSingleton():
-
     class MySingleton(Singleton):
-
         def __init__(self, value=None):
             self.value = value
 
@@ -81,9 +81,7 @@ def testSetSingleton():
 
 
 def testPushPop():
-
     class MySingleton(Singleton):
-
         def __init__(self, value=None):
             self.value = value
 
@@ -106,11 +104,11 @@ def testPushPop():
     with pytest.raises(PushPopSingletonError):
         MySingleton.PopSingleton()
 
+
 def testGetSingletonThreadSafe(mocker):
     from threading import Event, Thread
 
     class MySingleton(Singleton):
-
         @classmethod
         def SlowConstructor(cls, event):
             event.wait(1)

@@ -6,13 +6,13 @@ import six
 __bases_cache = {}
 
 
-#===================================================================================================
+# ===================================================================================================
 # AllBasesNames
-#===================================================================================================
+# ===================================================================================================
 def AllBasesNames(p_class):
-    '''
+    """
         :rtype: set with all the names of the bases classes of the given class.
-    '''
+    """
     try:
         return __bases_cache[p_class]
     except KeyError:
@@ -23,11 +23,11 @@ def AllBasesNames(p_class):
         return __bases_cache.setdefault(p_class, result)
 
 
-#===================================================================================================
+# ===================================================================================================
 # IsInstance
-#===================================================================================================
+# ===================================================================================================
 def IsInstance(p_object, p_class_name):
-    '''
+    """
     :param object p_object:
         The object we would like to test for.
 
@@ -35,7 +35,7 @@ def IsInstance(p_object, p_class_name):
         Name or class to test if the object is an instance of.
 
     Like the built-in isinstance, but also accepts a class name as parameter.
-    '''
+    """
     try:
         # obtain the type of the class; using only type() is not enough, because some built-in
         # types don't respond to type() correctly (vtk objects for instance always return the
@@ -52,13 +52,13 @@ class _NotFoundSentinel(object):
     pass
 
 
-#===================================================================================================
+# ===================================================================================================
 # IsSubclass
-#===================================================================================================
+# ===================================================================================================
 def IsSubclass(p_class, p_class_name):
-    '''
+    """
     Like the built-in issubclass, but also accepts a class name as parameter.
-    '''
+    """
     is_instance = isinstance  # put it in locals
 
     if is_instance(p_class_name, six.string_types):
@@ -71,8 +71,11 @@ def IsSubclass(p_class, p_class_name):
             return p_class_name in AllBasesNames(p_class)
         else:
             return p_class_name in names
-    elif is_instance(p_class_name, tuple) and len(p_class_name) > 0 and \
-            is_instance(p_class_name[0], six.string_types):
+    elif (
+        is_instance(p_class_name, tuple)
+        and len(p_class_name) > 0
+        and is_instance(p_class_name[0], six.string_types)
+    ):
 
         names = None
 
@@ -93,5 +96,3 @@ def IsSubclass(p_class, p_class_name):
 
     else:
         return issubclass(p_class, p_class_name)
-
-

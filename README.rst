@@ -5,7 +5,7 @@ Barril
 
 .. image:: https://img.shields.io/pypi/v/barril.svg
     :target: https://pypi.python.org/pypi/barril
-        
+
 .. image:: https://img.shields.io/pypi/pyversions/barril.svg
     :target: https://pypi.org/project/barril
 
