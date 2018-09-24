@@ -544,6 +544,8 @@ class _Quantity(Quantity):
     def GetUnit(self):
         return self._unit
 
+    unit = property(GetUnit)
+
     def GetUnitName(self):
         '''
         :rtype: unicode
