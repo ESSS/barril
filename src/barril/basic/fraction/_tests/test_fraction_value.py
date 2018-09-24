@@ -10,13 +10,13 @@ from barril.basic.fraction import Fraction, FractionValue
 
 def testBasicUsage():
     f = FractionValue(3, Fraction(5, 3))
-    assert f._number == 3
-    assert f._fraction == Fraction(5, 3)
+    assert f.number == 3
+    assert f.fraction == Fraction(5, 3)
 
-    f._number = 5.5
-    f._fraction = Fraction(6, 5)
-    assert f._number == 5.5
-    assert f._fraction == Fraction(6, 5)
+    f.number = 5.5
+    f.fraction = Fraction(6, 5)
+    assert f.number == 5.5
+    assert f.fraction == Fraction(6, 5)
 
     with pytest.raises(TypeError):
         f.SetNumber('hello')
@@ -29,8 +29,8 @@ def testBasicUsage():
 
 def testDefault():
     f = FractionValue()
-    assert f._number == 0.0
-    assert f._fraction == Fraction(0, 1)
+    assert f.number == 0.0
+    assert f.fraction == Fraction(0, 1)
 
 def testPartsArentNone():
     '''
@@ -91,8 +91,8 @@ def testCopy():
     assert f == cf
     assert f is not cf
 
-    cf._fraction.numerator = 10
-    cf._fraction.denominator = 4
+    cf.fraction.numerator = 10
+    cf.fraction.denominator = 4
     assert f == FractionValue(3, (5, 3))
 
 

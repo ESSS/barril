@@ -72,6 +72,8 @@ class FractionValue(object):
         '''
         return self._number
 
+    number = property(GetNumber, SetNumber)
+
     # Fraction -------------------------------------------------------------------------------------
 
     def SetFraction(self, fraction):
@@ -102,6 +104,9 @@ class FractionValue(object):
             The fractional part.
         '''
         return self._fraction
+
+
+    fraction = property(GetFraction, SetFraction)
 
     # Str/Repr -------------------------------------------------------------------------------------
 
