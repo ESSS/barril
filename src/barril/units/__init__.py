@@ -85,20 +85,20 @@ from .unit_database import (
     UnitsError)
 
 __all__ = [
-    str("AbstractValueWithQuantityObject"),  # noqa
-    str("Array"),  # noqa
-    str("ChangeScalars"),  # noqa
-    str("FixedArray"),  # noqa
-    str("FractionScalar"),  # noqa
-    str("GetUnknownQuantity"),  # noqa
-    str("InvalidQuantityTypeError"),  # noqa
-    str("InvalidUnitError"),  # noqa
-    str("Quantity"),  # noqa
-    str("ReadOnlyError"),  # noqa
-    str("Scalar"),  # noqa
-    str("ScalarFactory"),  # noqa
-    str("UnitDatabase"),  # noqa
-    str("UnitsError"),  # noqa
+    str("AbstractValueWithQuantityObject"),  # pylint: disable=invalid-all-object
+    str("Array"),  # pylint: disable=invalid-all-object
+    str("ChangeScalars"),  # pylint: disable=invalid-all-object
+    str("FixedArray"),  # pylint: disable=invalid-all-object
+    str("FractionScalar"),  # pylint: disable=invalid-all-object
+    str("GetUnknownQuantity"),  # pylint: disable=invalid-all-object
+    str("InvalidQuantityTypeError"),  # pylint: disable=invalid-all-object
+    str("InvalidUnitError"),  # pylint: disable=invalid-all-object
+    str("Quantity"),  # pylint: disable=invalid-all-object
+    str("ReadOnlyError"),  # pylint: disable=invalid-all-object
+    str("Scalar"),  # pylint: disable=invalid-all-object
+    str("ScalarFactory"),  # pylint: disable=invalid-all-object
+    str("UnitDatabase"),  # pylint: disable=invalid-all-object
+    str("UnitsError"),  # pylint: disable=invalid-all-object
 ]
 
 # Unknown quantity instance

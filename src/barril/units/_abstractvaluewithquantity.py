@@ -7,7 +7,7 @@ from barril.units.unit_database import UnitDatabase
 
 from ._quantity import ObtainQuantity
 
-__all__ = [str("AbstractValueWithQuantityObject")]  # noqa
+__all__ = [str("AbstractValueWithQuantityObject")]  # pylint: disable=invalid-all-object
 
 
 class AbstractValueWithQuantityObject(object):

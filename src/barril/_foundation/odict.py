@@ -40,6 +40,6 @@ class _OrderedDict(collections.OrderedDict):
 
 
 if six.PY2:
-    from _ordereddict import ordereddict as odict  # noqa
+    from _ordereddict import ordereddict as odict  # pylint: disable=unused-import
 else:
-    odict = _OrderedDict  # noqa
+    odict = _OrderedDict  # pylint: disable=unused-import
