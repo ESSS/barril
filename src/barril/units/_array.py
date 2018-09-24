@@ -9,7 +9,7 @@ from barril.units.unit_database import UnitDatabase
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._quantity import Quantity
 
-__all__ = ["Array"]
+__all__ = [str("Array")]  # pylint: disable=invalid-all-object
 
 
 class Array(AbstractValueWithQuantityObject):

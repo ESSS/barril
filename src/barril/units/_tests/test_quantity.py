@@ -93,4 +93,5 @@ def testDivision():
     speed = meters / seconds
     no_unit = meters / meters
     assert speed.GetUnit() == 'm/s'
+    assert speed.unit == 'm/s'
     assert no_unit.GetUnit() == ''

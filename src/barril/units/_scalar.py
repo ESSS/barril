@@ -15,7 +15,7 @@ from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._quantity import ObtainQuantity, Quantity
 from .unit_database import UnitDatabase
 
-__all__ = ["Scalar"]
+__all__ = [str("Scalar")]  # pylint: disable=invalid-all-object
 
 
 @total_ordering

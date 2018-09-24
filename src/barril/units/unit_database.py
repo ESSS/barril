@@ -13,11 +13,12 @@ from barril._foundation.types_ import CheckType
 
 # Contains the registry for all the avaiable unit types.
 __all__ = [
-    "UnitsError",
-    "InvalidQuantityTypeError",
-    "InvalidUnitError",
-    "UnitDatabase",
-    "InvalidOperationError",
+   str("CategoryInfo"),  # pylint: disable=invalid-all-object
+   str("InvalidOperationError"),  # pylint: disable=invalid-all-object
+   str("InvalidQuantityTypeError"),  # pylint: disable=invalid-all-object
+   str("InvalidUnitError"),  # pylint: disable=invalid-all-object
+   str("UnitDatabase"),  # pylint: disable=invalid-all-object
+   str("UnitsError"),  # pylint: disable=invalid-all-object
 ]
 
 

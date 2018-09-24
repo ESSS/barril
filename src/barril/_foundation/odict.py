@@ -39,12 +39,7 @@ class _OrderedDict(collections.OrderedDict):
             collections.OrderedDict.__delitem__(self, key)
 
 
-def _GetSymbol():
-    if six.PY2:
-        import _ordereddict
-        return _ordereddict.ordereddict
-    else:
-        return _OrderedDict
-
-
-odict = _GetSymbol()
+if six.PY2:
+    from _ordereddict import ordereddict as odict  # pylint: disable=unused-import
+else:
+    odict = _OrderedDict  # pylint: disable=unused-import

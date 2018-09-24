@@ -12,7 +12,7 @@ from barril.units.unit_database import UnitsError
 from ._unit_constants import UNKNOWN_UNIT
 from .unit_database import UnitDatabase
 
-__all__ = ["Quantity"]
+__all__ = [str("Quantity")]  # pylint: disable=invalid-all-object
 
 
 #===================================================================================================
@@ -62,7 +62,7 @@ def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
             unit = odict((cat, unit_and_exp) for (cat, unit_and_exp) in zip(category, unit))
             category = None
 
-    if unit.__class__ == odict:
+    if hasattr(unit, 'items'):
         assert category is None
         if len(unit) == 1 and next(six.itervalues(unit))[1] == 1:
             # Although passed as composing, it's a simple case
@@ -207,7 +207,7 @@ class Quantity(object):
         unit_database = UnitDatabase.GetSingleton()
 
         if validate_category_and_units:
-            assert category_to_unit_and_exps.__class__ == odict
+            assert hasattr(category_to_unit_and_exps, 'items'), 'validate_category_and_units needs to be a dict'
             for category, (unit, _exp) in six.iteritems(category_to_unit_and_exps):
                 # will do the checkings needed for validation (category/unit)
                 # so that we can later just store the internal information without
@@ -543,6 +543,8 @@ class _Quantity(Quantity):
 
     def GetUnit(self):
         return self._unit
+
+    unit = property(GetUnit)
 
     def GetUnitName(self):
         '''
