@@ -9,7 +9,7 @@ from barril.units.unit_database import UnitDatabase
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._quantity import Quantity
 
-__all__ = [str("Array")]
+__all__ = [str("Array")]  # noqa
 
 
 class Array(AbstractValueWithQuantityObject):

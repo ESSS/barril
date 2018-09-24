@@ -40,6 +40,6 @@ class _OrderedDict(collections.OrderedDict):
 
 
 if six.PY2:
-    from _ordereddict import ordereddict as odict
+    from _ordereddict import ordereddict as odict  # noqa
 else:
-    odict = _OrderedDict
+    odict = _OrderedDict  # noqa

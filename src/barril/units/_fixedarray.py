@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from ._array import Array
 from ._quantity import Quantity
 
-__all__ = [str("FixedArray")]
+__all__ = [str("FixedArray")]  # noqa
 
 
 #===================================================================================================

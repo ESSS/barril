@@ -7,7 +7,7 @@ from barril.units.unit_database import UnitDatabase
 
 from ._quantity import ObtainQuantity
 
-__all__ = [str("AbstractValueWithQuantityObject")]
+__all__ = [str("AbstractValueWithQuantityObject")]  # noqa
 
 
 class AbstractValueWithQuantityObject(object):

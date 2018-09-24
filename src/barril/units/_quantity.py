@@ -12,7 +12,7 @@ from barril.units.unit_database import UnitsError
 from ._unit_constants import UNKNOWN_UNIT
 from .unit_database import UnitDatabase
 
-__all__ = [str("Quantity")]
+__all__ = [str("Quantity")]  # noqa
 
 
 #===================================================================================================
