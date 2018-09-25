@@ -8,10 +8,9 @@ Welcome to Barril's documentation!
    readme
    installation
    usage
-   modules
+   api
    contributing
-   authors
-   history
+   changelog
 
 Indices and tables
 ==================

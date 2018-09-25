@@ -18,6 +18,8 @@ Barril
 .. image:: https://codecov.io/gh/ESSS/barril/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/ESSS/barril
 
+.. image:: https://img.shields.io/readthedocs/pip.svg
+    :target: https://barril.readthedocs.io/en/latest/
 
 What is Barril?
 ===============
@@ -81,7 +83,11 @@ Here is a quick summary of the steps necessary to setup your environment to cont
 
     $ pytest --pyargs barril
 
+#. Generate docs locally::
 
+    $ tox -e docs
+
+   The documentation files will be generated in ``docs/_build``.
 
 Credits
 -------
