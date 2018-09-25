@@ -1,4 +1,4 @@
-'''
+"""
 B{Unit Management}
 
 It is very common within an application (especially on engineering applications) to have
@@ -63,7 +63,7 @@ B{Design decisions}:
 
 
 @see: L{definitions} for the basic interfaces defined.
-'''
+"""
 
 from __future__ import absolute_import, unicode_literals
 
@@ -71,18 +71,27 @@ from weakref import WeakValueDictionary
 
 import six
 
-from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
-from ._array import Array
-from ._fixedarray import FixedArray
-from ._fraction_scalar import FractionScalar
-from ._quantity import ObtainQuantity, Quantity, ReadOnlyError
-from ._scalar import Scalar
-from ._scalar_factory import ScalarFactory
-from ._unit_constants import (
-    LENGTH_QUANTITY_TYPE, UNKNOWN_QUANTITY_TYPE, UNKNOWN_UNIT, CreateUnknwonwReadOnlyQuantity)
-from .unit_database import (
-    InvalidOperationError, InvalidQuantityTypeError, InvalidUnitError, UnitDatabase, UnitInfo,
-    UnitsError)
+from ._abstractvaluewithquantity import AbstractValueWithQuantityObject  # noqa
+from ._array import Array  # noqa
+from ._fixedarray import FixedArray  # noqa
+from ._fraction_scalar import FractionScalar  # noqa
+from ._quantity import ObtainQuantity, Quantity, ReadOnlyError  # noqa
+from ._scalar import Scalar  # noqa
+from ._scalar_factory import ScalarFactory  # noqa
+from ._unit_constants import (  # noqa
+    LENGTH_QUANTITY_TYPE,
+    UNKNOWN_QUANTITY_TYPE,
+    UNKNOWN_UNIT,
+    CreateUnknwonwReadOnlyQuantity,
+)
+from .unit_database import (  # noqa
+    InvalidOperationError,
+    InvalidQuantityTypeError,
+    InvalidUnitError,
+    UnitDatabase,
+    UnitInfo,
+    UnitsError,
+)
 
 __all__ = [
     str("AbstractValueWithQuantityObject"),  # pylint: disable=invalid-all-object
@@ -108,26 +117,26 @@ UNKNOWN_QUANTITY = ObtainQuantity(UNKNOWN_UNIT, UNKNOWN_QUANTITY_TYPE)
 UNKNOWN_QUANTITY_WEAK_CACHE = WeakValueDictionary()
 
 
-#===================================================================================================
+# ===================================================================================================
 # GetUnknownQuantity
-#===================================================================================================
+# ===================================================================================================
 def GetUnknownQuantity(unknown_caption=None):
-    '''
+    """
     Returns the quantity object for Unknown units.
 
     :rtype: Quantity
-    '''
+    """
     if unknown_caption:
         return ObtainQuantity(UNKNOWN_UNIT, UNKNOWN_QUANTITY_TYPE, unknown_caption)
 
     return UNKNOWN_QUANTITY
 
 
-#===================================================================================================
+# ===================================================================================================
 # Utilities
-#===================================================================================================
+# ===================================================================================================
 def ChangeScalars(owner, **scalars):
-    '''
+    """
     Change the given set of scalars for the owner
 
     :param owner: object
@@ -143,7 +152,7 @@ def ChangeScalars(owner, **scalars):
         ChangeScalars(fluid, density=(10, None))
         # To change unit only
         ChangeScalars(fluid, density=(None, 'lbm/galUS'))
-    '''
+    """
     for scalar_name, (value, unit) in six.iteritems(scalars):
         new_scalar = getattr(owner, scalar_name).CreateCopy(value=value, unit=unit)
         setattr(owner, scalar_name, new_scalar)

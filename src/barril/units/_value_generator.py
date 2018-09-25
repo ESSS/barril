@@ -4,11 +4,11 @@ import numpy
 from six.moves import zip  # @UnresolvedImport
 
 
-#===================================================================================================
+# ===================================================================================================
 # _ValueGenerator
-#===================================================================================================
+# ===================================================================================================
 class _ValueGenerator(object):
-    '''
+    """
     Generator for values so that 1 one of the values is generated from iterating through a list and
     the other is a fixed values returned.
 
@@ -17,7 +17,7 @@ class _ValueGenerator(object):
     python side).
 
     Internal API used to convert array values.
-    '''
+    """
 
     def __init__(self, p1, p2):
         self.p1 = p1
@@ -27,19 +27,19 @@ class _ValueGenerator(object):
         self.iterate_2nd = isinstance(p2, (tuple, list))
 
     def IsNumpy(self):
-        '''
+        """
         :rtype: bool
         :returns:
             If either one of the contained elements is a numpy array.
-        '''
+        """
         return isinstance(self.p1, numpy.ndarray) or isinstance(self.p2, numpy.ndarray)
 
     def IsTuple(self):
-        '''
+        """
         :rtype: bool
         :returns:
             Whether the element(s) iterated is a tuple.
-        '''
+        """
         if self.iterate_1st and self.iterate_2nd:
             return isinstance(self.p1, tuple) and isinstance(self.p2, tuple)
 
@@ -52,10 +52,10 @@ class _ValueGenerator(object):
         return False
 
     def __iter__(self):
-        '''
+        """
         Yield the individual values we should convert (which may mean the same number all the time
         and the value being iterated in a list). Numpy is a special case (see classdocs)
-        '''
+        """
         if self.IsNumpy():
             yield self.p1, self.p2
 

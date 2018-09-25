@@ -14,6 +14,9 @@ script:
 
 jobs:
   include:
+    - python: '3.6'
+      env: TOXENV=linting
+
     - python: '2.7'
       env: TOXENV=py27
 

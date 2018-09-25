@@ -1,33 +1,30 @@
-'''
+"""
 Locale-aware methods that convert to and from float values, trying to give the best representation
 possible.
-'''
+"""
 from __future__ import absolute_import, unicode_literals
-
-import math
-from decimal import ROUND_HALF_EVEN, Decimal
 
 import six
 
-#===================================================================================================
+# ===================================================================================================
 # Constants
-#===================================================================================================
+# ===================================================================================================
 
-PLUS_INFINITY = float('inf')
+PLUS_INFINITY = float("inf")
 PLUS_INFINITY_STR = "+INF"
 
-MINUS_INFINITY = float('-inf')
+MINUS_INFINITY = float("-inf")
 MINUS_INFINITY_STR = "-INF"
 
-NAN = float('nan')
+NAN = float("nan")
 NAN_STR = "-1.#IND"
 
 
-#===================================================================================================
+# ===================================================================================================
 # FormatFloat
-#===================================================================================================
+# ===================================================================================================
 def FormatFloat(pattern, value, grouping=False, use_locale=True):
-    '''
+    """
     Formats the value given according to the current LC_NUMERIC setting. The format follows the
     conventions of the % operator. For floating point values, the decimal point is modified if
     appropriate. If grouping is True, the thousands separator set in locale settings is also taken
@@ -55,7 +52,7 @@ def FormatFloat(pattern, value, grouping=False, use_locale=True):
     :rtype: unicode
     :returns:
         The formated value.
-    '''
+    """
     # Handling INFINITY
     # - locale.format tries to round the infinity value:
     #   ( ".3g", 9e999 ) ==> +1.#J
@@ -87,11 +84,11 @@ def FormatFloat(pattern, value, grouping=False, use_locale=True):
     return result
 
 
-#===================================================================================================
+# ===================================================================================================
 # FloatFromString
-#===================================================================================================
+# ===================================================================================================
 def FloatFromString(str_value, use_locale=True):
-    '''
+    """
     Converts the given string value into a float, taking in account the current locale.
 
     :param unicode str_value:
@@ -105,11 +102,12 @@ def FloatFromString(str_value, use_locale=True):
 
     :raises ValueError:
         If given string is not a valid float literal in the current locale
-    '''
+    """
     import locale
 
     if str_value.__class__ != six.text_type:
         from barril._foundation.types_ import CheckType
+
         CheckType(str_value, six.text_type)
 
     if str_value == PLUS_INFINITY_STR:
@@ -125,4 +123,3 @@ def FloatFromString(str_value, use_locale=True):
         return locale.atof(str_value)
     else:
         return float(str_value)
-

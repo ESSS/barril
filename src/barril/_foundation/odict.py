@@ -6,7 +6,6 @@ import six
 
 
 class _OrderedDict(collections.OrderedDict):
-
     def insert(self, index, key, value, dict_setitem=dict.__setitem__):
         """
         Convenience method to have same interface as `ruamel.ordereddict`, which as traditionally
@@ -23,7 +22,9 @@ class _OrderedDict(collections.OrderedDict):
             moved = [k for i, k in enumerate(self.keys()) if i >= index and k != key]
             last = True
         else:
-            moved = reversed([k for i, k in enumerate(self.keys()) if i < index or k == key])
+            moved = reversed(
+                [k for i, k in enumerate(self.keys()) if i < index or k == key]
+            )
             last = False
         for k in moved:
             self.move_to_end(k, last=last)

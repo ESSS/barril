@@ -8,7 +8,7 @@ def testEmptyScalar():
     assert not scalar.HasCategory()
     assert scalar == scalar.Copy()
 
-    scalar = scalar.CreateCopy(category='pressure', unit='psi')
+    scalar = scalar.CreateCopy(category="pressure", unit="psi")
     assert scalar.HasCategory()
     assert scalar.GetValue() == 0.0
 

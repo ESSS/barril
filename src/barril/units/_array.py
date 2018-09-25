@@ -13,7 +13,7 @@ __all__ = [str("Array")]  # pylint: disable=invalid-all-object
 
 
 class Array(AbstractValueWithQuantityObject):
-    '''
+    """
     Array represents a sequence of values that also have an unit associated.
 
     Some ways to construct it (note that usually numpy arrays should be used).
@@ -25,15 +25,19 @@ class Array(AbstractValueWithQuantityObject):
         - Array('length', [0, 1, 2, 3, 4], 'm')
 
         - Array(ObtainQuantity('m', 'length'), [0, 1, 2, 3, 4])
-    '''
+    """
 
     def __init__(self, category, values=None, unit=None):
-        AbstractValueWithQuantityObject.__init__(self, category, value=values, unit=unit)
+        AbstractValueWithQuantityObject.__init__(
+            self, category, value=values, unit=unit
+        )
 
-    def _InternalCreateWithQuantity(self, quantity, values=None, unit_database=None, value=None):
+    def _InternalCreateWithQuantity(
+        self, quantity, values=None, unit_database=None, value=None
+    ):
         if value is not None:
             if values is not None:
-                raise ValueError('Duplicated values parameter given')
+                raise ValueError("Duplicated values parameter given")
             values = value
 
         self._value = values
@@ -43,22 +47,23 @@ class Array(AbstractValueWithQuantityObject):
         self._validity_exception = None
 
     def CheckValidity(self):
-        '''
+        """
         :raises ValueError: when current value is wrong somehow (out of limits, for example).
-        '''
+        """
         self.ValidateValues(self._value, self._quantity)
 
     def CreateCopy(self, values=None, unit=None, category=None, **kwargs):
         return AbstractValueWithQuantityObject.CreateCopy(
-            self, value=values, unit=unit, category=category, **kwargs)
+            self, value=values, unit=unit, category=category, **kwargs
+        )
 
     # Values ---------------------------------------------------------------------------------------
     def GetAbstractValue(self, unit=None):
-        '''@param unit: this is the unit in which we want the values
+        """@param unit: this is the unit in which we want the values
         :rtype: list(number)
         :returns:
             the values stored. May be an a list of int, float, etc.
-        '''
+        """
         values = self._value
         if unit is None or unit == self._quantity._unit:
             return values
@@ -67,7 +72,9 @@ class Array(AbstractValueWithQuantityObject):
             try:
                 return len(v) > 0 and isinstance(v[0], tuple)
             except TypeError:
-                return False  # numpy raises a TypeError if it's a 0D array, so ignores it
+                return (
+                    False
+                )  # numpy raises a TypeError if it's a 0D array, so ignores it
 
         if IsListOfTuples(values):
             result = []
@@ -83,15 +90,15 @@ class Array(AbstractValueWithQuantityObject):
     values = property(GetAbstractValue)
 
     def _GetDefaultValue(self, category_info, unit=None):
-        '''
+        """
 
         :param category_info:
         :param unit:
-        '''
+        """
         return []
 
     def ValidateValues(self, values, quantity):
-        '''Set the value to store in this values_quantity. May be an int,
+        """Set the value to store in this values_quantity. May be an int,
         float, numarray, list of floats, etc.
 
         :type values: sequence(values) or numpy array.
@@ -101,7 +108,7 @@ class Array(AbstractValueWithQuantityObject):
         :param unicode unit:
             The unit of the values being passed (note that GetUnit will still return the previous
             unit set -- this unit is only to indicate the internal value).
-        '''
+        """
         if self._is_valid is True:
             return
 
@@ -118,16 +125,19 @@ class Array(AbstractValueWithQuantityObject):
             self._is_valid = True
 
     def _DoValidateValues(self, values, quantity):
-        '''
+        """
         .. seealso:: :meth:`.ValidateValues`
-        '''
+        """
         is_derived = quantity.IsDerived()
         if not is_derived:
             # only check min, max if we have only 1 category (otherwise, we won't have a valid assumption
             # about the actual values)
             category_info = quantity.GetCategoryInfo()
 
-            if category_info.min_value is not None or category_info.max_value is not None:
+            if (
+                category_info.min_value is not None
+                or category_info.max_value is not None
+            ):
                 # verify if values are in the given limits (if needed)
                 CheckValue = quantity.CheckValue
                 if len(values) > 0:
@@ -138,6 +148,7 @@ class Array(AbstractValueWithQuantityObject):
                                     CheckValue(v)
                     else:
                         import numpy
+
                         isnam = numpy.isnan
 
                         # Search for the first non-NaN value to initialize MIN/MAX.
@@ -176,12 +187,12 @@ class Array(AbstractValueWithQuantityObject):
 
     @classmethod
     def CreateEmptyArray(cls, values=None):
-        '''
+        """
             Allows the creation of a array that does not have any associated
             category nor unit.
 
             :rtype: Array
-        '''
+        """
         if values is None:
             values = []
 
@@ -193,26 +204,33 @@ class Array(AbstractValueWithQuantityObject):
         if not isinstance(other, Array):
             return False
 
-        return tuple(self.values) == tuple(other.values) \
-            and self._quantity == other._quantity \
+        return (
+            tuple(self.values) == tuple(other.values)
+            and self._quantity == other._quantity
             and self.unit == other.unit
+        )
 
     def __repr__(self):
-        values_str = '[%s]' % ', '.join(six.text_type(v) for v in self.values)
-        return '%s(%s, %s, %s)' % (self.__class__.__name__, self.GetQuantityType(), values_str, self.GetUnit())
+        values_str = "[%s]" % ", ".join(six.text_type(v) for v in self.values)
+        return "%s(%s, %s, %s)" % (
+            self.__class__.__name__,
+            self.GetQuantityType(),
+            values_str,
+            self.GetUnit(),
+        )
 
     def __str__(self):
-        '''
+        """
         Should return a user-friendly representation of this object.
 
         :rtype: unicode
         :returns:
             The formatted string
-        '''
+        """
         if len(self.values) > 0 and isinstance(self.values[0], tuple):
-            values_str = ' '.join(six.text_type(v) for v in self.values)
+            values_str = " ".join(six.text_type(v) for v in self.values)
         else:
-            values_str = ' '.join((FormatFloat('%g', v)) for v in self.values)
+            values_str = " ".join((FormatFloat("%g", v)) for v in self.values)
 
         return values_str + self.GetFormattedSuffix()
 
@@ -231,35 +249,35 @@ class Array(AbstractValueWithQuantityObject):
         return iter(self.values)
 
     def __truediv__(self, other):
-        return self._DoOperation(self, other, 'Divide')
+        return self._DoOperation(self, other, "Divide")
 
     def __mul__(self, other):
-        return self._DoOperation(self, other, 'Multiply')
+        return self._DoOperation(self, other, "Multiply")
 
     def __add__(self, other):
-        return self._DoOperation(self, other, 'Sum')
+        return self._DoOperation(self, other, "Sum")
 
     def __sub__(self, other):
-        return self._DoOperation(self, other, 'Subtract')
+        return self._DoOperation(self, other, "Subtract")
 
     # Right-Basic operators ------------------------------------------------------------------------
     def __rdiv__(self, other):
-        return self._DoOperation(other, self, 'Divide')
+        return self._DoOperation(other, self, "Divide")
 
     def __rmul__(self, other):
-        return self._DoOperation(other, self, 'Multiply')
+        return self._DoOperation(other, self, "Multiply")
 
     def __radd__(self, other):
-        return self._DoOperation(other, self, 'Sum')
+        return self._DoOperation(other, self, "Sum")
 
     def __rsub__(self, other):
-        return self._DoOperation(other, self, 'Subtract')
+        return self._DoOperation(other, self, "Subtract")
 
     def _DoOperation(self, p1, p2, operation):
-        '''
+        """
             Actually go on and do an operation considering the data we have to transform considering
             any combination of: number, list and numpy
-        '''
+        """
         from ._value_generator import _ValueGenerator
         import numpy
 

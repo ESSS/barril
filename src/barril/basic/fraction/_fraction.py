@@ -13,21 +13,23 @@ SequenceType = (tuple, list)
 
 @total_ordering
 class Fraction(object):
-    '''
+    """
     Numerator, denominator similar to standard fraction with support to
     float values in numerator and denominator which will be automatically
     reduced to a simpler fraction. Class has also an special handling for
     rounding and representation issues for numbers.
-    '''
+    """
 
     def __init__(self, a, b=None):
-        if a == float('inf') or a == float('-inf'):
-            raise ValueError('Numerator cannot be an infinite value')
+        if a == float("inf") or a == float("-inf"):
+            raise ValueError("Numerator cannot be an infinite value")
 
-        if b == float('inf') or b == float('-inf'):
-            raise ValueError('Denominator cannot be an infinite value')
+        if b == float("inf") or b == float("-inf"):
+            raise ValueError("Denominator cannot be an infinite value")
 
-        assert (isinstance(a, NumberType) and ((isinstance(b, NumberType) and b != 0) or b is None)), (a, b)
+        assert isinstance(a, NumberType) and (
+            (isinstance(b, NumberType) and b != 0) or b is None
+        ), (a, b)
         if b is None:
             b = 1
         elif b < 0:
@@ -53,14 +55,19 @@ class Fraction(object):
         return x[key]
 
     def __setitem__(self, key, value):
-        assert (isinstance(value, NumberType) and (value or key != 1)), value
+        assert isinstance(value, NumberType) and (value or key != 1), value
         x = list([self.numerator, self.denominator])
         x[key] = value
         self.x = StdFraction(*x)
 
     def __str__(self):
         from barril.basic.format_float import FormatFloat
-        return FormatFloat('%g', self.numerator) + '/' + FormatFloat('%g', self.denominator)
+
+        return (
+            FormatFloat("%g", self.numerator)
+            + "/"
+            + FormatFloat("%g", self.denominator)
+        )
 
     if six.PY2:
         __unicode__ = __str__
@@ -73,7 +80,8 @@ class Fraction(object):
         return float(self.x)
 
     def __add__(self, other):
-        if isinstance(other, NumberType): other = Fraction(other)
+        if isinstance(other, NumberType):
+            other = Fraction(other)
         x = self.x + other.x
         return Fraction(x.numerator, x.denominator)
 
@@ -91,18 +99,24 @@ class Fraction(object):
         return -(self - other)
 
     def __mul__(self, other):
-        if classify(other) == -1: return other * self  # hope a list structure can sort itself out
-        if isinstance(other, NumberType): other = Fraction(other)
-        x = Fraction(self.numerator * other.numerator, self.denominator * other.denominator)
+        if classify(other) == -1:
+            return other * self  # hope a list structure can sort itself out
+        if isinstance(other, NumberType):
+            other = Fraction(other)
+        x = Fraction(
+            self.numerator * other.numerator, self.denominator * other.denominator
+        )
         x.reduce()
         return x
 
     def __rmul__(self, other):
-        if classify(other) == -1: raise ValueError(self, other)
+        if classify(other) == -1:
+            raise ValueError(self, other)
         return self * other
 
     def __truediv__(self, other):
-        if isinstance(other, NumberType): other = Fraction(other)
+        if isinstance(other, NumberType):
+            other = Fraction(other)
         return self * other.inv()
 
     def __rtruediv__(self, other):
@@ -118,12 +132,13 @@ class Fraction(object):
             return Fraction(float(self) ** other)
 
     def __old_cmp__(self, other):
-        if other == float('inf'):
+        if other == float("inf"):
             return -1
-        if other == float('-inf'):
+        if other == float("-inf"):
             return 1
 
-        if isinstance(other, NumberType): other = Fraction(other)
+        if isinstance(other, NumberType):
+            other = Fraction(other)
         t = self.numerator * other.denominator - other.numerator * self.denominator
         if t < 0:
             return -1
@@ -146,7 +161,8 @@ class Fraction(object):
         return Fraction(abs(self.numerator), self.denominator)
 
     def __mod__(self, other):
-        if isinstance(other, NumberType): other = Fraction(other)
+        if isinstance(other, NumberType):
+            other = Fraction(other)
         x = self.x % other.x
         return Fraction(x.numerator, x.denominator)
 
@@ -164,25 +180,25 @@ class Fraction(object):
         return Fraction(self.numerator, self.denominator)
 
     def get_numerator(self):
-        '''
+        """
         Returns the numerator of the fraction.
 
         :rtype: C{float}
         :returns:
             the numerator
-        '''
+        """
         return self.x.numerator
 
     def set_numerator(self, numerator):
-        '''
+        """
         Sets the numerator of the fraction.
 
         :type numerator: C{float}
         :param numerator:
             the numerator
-        '''
-        if numerator == float('inf') or numerator == float('-inf'):
-            raise ValueError('Numerator cannot be an infinite value')
+        """
+        if numerator == float("inf") or numerator == float("-inf"):
+            raise ValueError("Numerator cannot be an infinite value")
 
         if isinstance(numerator, float):
             a = Fraction(numerator)
@@ -194,25 +210,25 @@ class Fraction(object):
     numerator = property(get_numerator, set_numerator)
 
     def get_denominator(self):
-        '''
+        """
         Returns the denominator of the fraction.
 
         :rtype: C{float}
         :returns:
             the numerator
-        '''
+        """
         return self.x.denominator
 
     def set_denominator(self, denominator):
-        '''
+        """
         Sets the denominator of the fraction.
 
         :type denominator: C{float}
         :param denominator:
             the numerator
-        '''
-        if denominator == float('inf') or denominator == float('-inf'):
-            raise ValueError('Denominator cannot be an infinite value')
+        """
+        if denominator == float("inf") or denominator == float("-inf"):
+            raise ValueError("Denominator cannot be an infinite value")
 
         if isinstance(denominator, float):
             a = Fraction(self.numerator)
@@ -226,8 +242,10 @@ class Fraction(object):
 
 def classify(instance):
     "Decide if instance is a sequence or a number. Returns 1 for number, -1 for sequence"
-    if isinstance(instance, NumberType) or isinstance(instance, Fraction): return 1
-    if isinstance(instance, SequenceType): return -1
+    if isinstance(instance, NumberType) or isinstance(instance, Fraction):
+        return 1
+    if isinstance(instance, SequenceType):
+        return -1
     try:
         iter(instance)
         return -1

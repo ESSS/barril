@@ -4,13 +4,13 @@ import locale
 
 import six
 
-#===================================================================================================
+# ===================================================================================================
 # ExceptionToUnicode
-#===================================================================================================
+# ===================================================================================================
 if six.PY2:
 
     def ExceptionToUnicode(exception):
-        '''
+        """
         Obtains unicode representation of an Exception.
 
         This wrapper is used to circumvent Python 2.7 problems with built-in exceptions with unicode
@@ -27,7 +27,7 @@ if six.PY2:
 
         :return six.text_type:
             Unicode representation of an Exception.
-        '''
+        """
 
         try:
             # First, try to obtain __unicode__ as defined by the Exception
@@ -39,16 +39,16 @@ if six.PY2:
         import warnings
 
         with warnings.catch_warnings():
-            warnings.simplefilter('ignore')
+            warnings.simplefilter("ignore")
             # exception.message deprecated since Python 2.6
-            exception_message = getattr(exception, 'message', None)
-        if isinstance(exception_message, unicode):
+            exception_message = getattr(exception, "message", None)
+        if isinstance(exception_message, unicode):  # noqa
             return exception_message
 
         bytes_msg = six.binary_type(exception)
         try:
             # If that fails, try decoding with utf-8 which is the strictest and will complain loudly.
-            return bytes_msg.decode('utf-8')
+            return bytes_msg.decode("utf-8")
         except UnicodeError:
             pass
         try:
@@ -58,7 +58,8 @@ if six.PY2:
             pass
 
         # If all failed, give up and decode with ascii replacing errors.
-        return bytes_msg.decode(errors='replace')
+        return bytes_msg.decode(errors="replace")
+
 
 else:
 
@@ -73,4 +74,4 @@ else:
         while exception:
             messages.append(str(exception))
             exception = exception.__cause__ or exception.__context__
-        return '\n'.join(messages)
+        return "\n".join(messages)
