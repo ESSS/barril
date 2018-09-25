@@ -327,8 +327,10 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnitBase("force per velocity", "Newton second per meter", "Ns/m")
     db.AddUnitBase("force per angle", "Newton per angle", "N/rad")
     db.AddUnitBase("force per angular velocity", "Newton second per angle", "Ns/rad")
-    db.AddUnitBase('moment per angle', 'Newton meter per angle', 'Nm/rad')
-    db.AddUnitBase('moment per angular velocity', 'newton meter per angular velocity', 'Nms/rad')
+    db.AddUnitBase("moment per angle", "Newton meter per angle", "Nm/rad")
+    db.AddUnitBase(
+        "moment per angular velocity", "newton meter per angular velocity", "Nms/rad"
+    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 6.283185307, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 6.283185307, 1.0, 0.0)
     db.AddUnit(
@@ -13053,7 +13055,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "lbf.s/ft",
         f_base_to_unit,
         f_unit_to_base,
-        default_category=None
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 175.126835246, 1, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 175.126835246, 1, 0.0)
@@ -13063,7 +13065,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "lbf.s/in",
         f_base_to_unit,
         f_unit_to_base,
-        default_category=None
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 9.80665, 1, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 9.80665, 1, 0.0)
@@ -13073,7 +13075,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "kgf.s/m",
         f_base_to_unit,
         f_unit_to_base,
-        default_category=None
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 1, 0.017453292519943, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 1, 0.017453292519943, 0.0)
@@ -13083,7 +13085,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "Nm/dega",
         f_base_to_unit,
         f_unit_to_base,
-        default_category=None
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 836.169044926, 1, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 836.169044926, 1, 0.0)
@@ -13093,7 +13095,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "lbf.ft/dega",
         f_base_to_unit,
         f_unit_to_base,
-        default_category=None
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 1.35581794833, 1, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 1.35581794833, 1, 0.0)
@@ -13103,7 +13105,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "lbf.ft/rad",
         f_base_to_unit,
         f_unit_to_base,
-        default_category=None
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 6.47355385229, 1, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 6.47355385229, 1, 0.0)
@@ -13113,7 +13115,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "lbf.in/dega",
         f_base_to_unit,
         f_unit_to_base,
-        default_category=None
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 0.11298482902, 1, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 0.11298482902, 1, 0.0)
@@ -13123,7 +13125,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "lbf.in/rad",
         f_base_to_unit,
         f_unit_to_base,
-        default_category=None
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 561.879656162, 1, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 561.879656162, 1, 0.0)
@@ -13133,7 +13135,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "kgf.m/dega",
         f_base_to_unit,
         f_unit_to_base,
-        default_category=None
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 9.80665, 1, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 9.80665, 1, 0.0)
@@ -13143,7 +13145,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "kgf.m/rad",
         f_base_to_unit,
         f_unit_to_base,
-        default_category=None
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 1, 0.017453292519943, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 1, 0.017453292519943, 0.0)
@@ -13153,7 +13155,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "Nms/dega",
         f_base_to_unit,
         f_unit_to_base,
-        default_category=None
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 0.017453292519943, 1, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 0.017453292519943, 1, 0.0)
@@ -13163,7 +13165,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "lbf.ft.s/dega",
         f_base_to_unit,
         f_unit_to_base,
-        default_category=None
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 1.35581794833, 1, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 1.35581794833, 1, 0.0)
@@ -13173,7 +13175,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "lbf.ft.s/rad",
         f_base_to_unit,
         f_unit_to_base,
-        default_category=None
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 6.47355385229, 1, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 6.47355385229, 1, 0.0)
@@ -13183,7 +13185,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "lbf.in.s/dega",
         f_base_to_unit,
         f_unit_to_base,
-        default_category=None
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 0.11298482902, 1, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 0.11298482902, 1, 0.0)
@@ -13193,7 +13195,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "lbf.in.s/rad",
         f_base_to_unit,
         f_unit_to_base,
-        default_category=None
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 561.879656162, 1, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 561.879656162, 1, 0.0)
@@ -13203,7 +13205,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "kgf.m.s/dega",
         f_base_to_unit,
         f_unit_to_base,
-        default_category=None
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 9.80665, 1, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 9.80665, 1, 0.0)
@@ -13213,7 +13215,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "kgf.m.s/rad",
         f_base_to_unit,
         f_unit_to_base,
-        default_category=None
+        default_category=None,
     )
 
     if fill_categories:
@@ -16845,13 +16847,31 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
             "moment per angle",
             "moment per angle",
             override=override_categories,
-            valid_units=["Nm/rad", "Nm/dega", "lbf.ft/dega", "lbf.ft/rad", "lbf.in/dega", "lbf.in/rad", "kgf.m/dega", "kgf.m/rad"]
+            valid_units=[
+                "Nm/rad",
+                "Nm/dega",
+                "lbf.ft/dega",
+                "lbf.ft/rad",
+                "lbf.in/dega",
+                "lbf.in/rad",
+                "kgf.m/dega",
+                "kgf.m/rad",
+            ],
         )
         db.AddCategory(
             "moment per angular velocity",
             "moment per angular velocity",
             override=override_categories,
-            valid_units=["Nms/rad", "Nms/dega", "lbf.ft.s/dega", "lbf.ft.s/rad", "lbf.in.s/dega", "lbf.in.s/rad", "kgf.m.s/dega", "kgf.m.s/rad"]
+            valid_units=[
+                "Nms/rad",
+                "Nms/dega",
+                "lbf.ft.s/dega",
+                "lbf.ft.s/rad",
+                "lbf.in.s/dega",
+                "lbf.in.s/rad",
+                "kgf.m.s/dega",
+                "kgf.m.s/rad",
+            ],
         )
 
     return db
