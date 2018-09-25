@@ -18,6 +18,8 @@ Barril
 .. image:: https://codecov.io/gh/ESSS/barril/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/ESSS/barril
 
+.. image:: https://img.shields.io/readthedocs/pip.svg
+    :target: https://barril.readthedocs.io/en/latest/
 
 What is Barril?
 ===============
