@@ -1,6 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from barril.units.unit_database import UnitDatabase
+
 from ._quantity import ObtainQuantity
 
 
@@ -326,6 +327,10 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnitBase("force per velocity", "Newton second per meter", "Ns/m")
     db.AddUnitBase("force per angle", "Newton per angle", "N/rad")
     db.AddUnitBase("force per angular velocity", "Newton second per angle", "Ns/rad")
+    db.AddUnitBase("moment per angle", "Newton meter per angle", "Nm/rad")
+    db.AddUnitBase(
+        "moment per angular velocity", "newton meter per angular velocity", "Nms/rad"
+    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 6.283185307, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 6.283185307, 1.0, 0.0)
     db.AddUnit(
@@ -13042,6 +13047,176 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category="fluid gas concentration",
     )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 14.5939029372, 1, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 14.5939029372, 1, 0.0)
+    db.AddUnit(
+        "force per velocity",
+        "Pound force second per foot",
+        "lbf.s/ft",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 175.126835246, 1, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 175.126835246, 1, 0.0)
+    db.AddUnit(
+        "force per velocity",
+        "Pound force second per inch",
+        "lbf.s/in",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 9.80665, 1, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 9.80665, 1, 0.0)
+    db.AddUnit(
+        "force per velocity",
+        "Kilogram force second per meter",
+        "kgf.s/m",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1, 0.017453292519943, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1, 0.017453292519943, 0.0)
+    db.AddUnit(
+        "moment per angle",
+        "Newton meter per angle",
+        "Nm/dega",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 836.169044926, 1, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 836.169044926, 1, 0.0)
+    db.AddUnit(
+        "moment per angle",
+        "Pound force foot per angle",
+        "lbf.ft/dega",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.35581794833, 1, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.35581794833, 1, 0.0)
+    db.AddUnit(
+        "moment per angle",
+        "Pound force foot per angle",
+        "lbf.ft/rad",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 6.47355385229, 1, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 6.47355385229, 1, 0.0)
+    db.AddUnit(
+        "moment per angle",
+        "Pound force inch per angle",
+        "lbf.in/dega",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 0.11298482902, 1, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 0.11298482902, 1, 0.0)
+    db.AddUnit(
+        "moment per angle",
+        "Pound force inch per angle",
+        "lbf.in/rad",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 561.879656162, 1, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 561.879656162, 1, 0.0)
+    db.AddUnit(
+        "moment per angle",
+        "Kilogram force meter per angle",
+        "kgf.m/dega",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 9.80665, 1, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 9.80665, 1, 0.0)
+    db.AddUnit(
+        "moment per angle",
+        "Kilogram force meter per angle",
+        "kgf.m/rad",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1, 0.017453292519943, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1, 0.017453292519943, 0.0)
+    db.AddUnit(
+        "moment per angular velocity",
+        "newton meter per angular velocity",
+        "Nms/dega",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 0.017453292519943, 1, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 0.017453292519943, 1, 0.0)
+    db.AddUnit(
+        "moment per angular velocity",
+        "Pound force foot per angular velocity",
+        "lbf.ft.s/dega",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.35581794833, 1, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.35581794833, 1, 0.0)
+    db.AddUnit(
+        "moment per angular velocity",
+        "Pound force foot per angular velocity",
+        "lbf.ft.s/rad",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 6.47355385229, 1, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 6.47355385229, 1, 0.0)
+    db.AddUnit(
+        "moment per angular velocity",
+        "Pound force inch per angular velocity",
+        "lbf.in.s/dega",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 0.11298482902, 1, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 0.11298482902, 1, 0.0)
+    db.AddUnit(
+        "moment per angular velocity",
+        "Pound force inch per angular velocity",
+        "lbf.in.s/rad",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 561.879656162, 1, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 561.879656162, 1, 0.0)
+    db.AddUnit(
+        "moment per angular velocity",
+        "Kilogram force meter per angular velocity",
+        "kgf.m.s/dega",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 9.80665, 1, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 9.80665, 1, 0.0)
+    db.AddUnit(
+        "moment per angular velocity",
+        "Kilogram force meter per angular velocity",
+        "kgf.m.s/rad",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
 
     if fill_categories:
         db.AddCategory(
@@ -16654,7 +16829,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
             "force per velocity",
             "force per velocity",
             override=override_categories,
-            valid_units=["Ns/m"],
+            valid_units=["Ns/m", "lbf.s/ft", "lbf.s/in", "kgf.s/m"],
         )
         db.AddCategory(
             "force per angle",
@@ -16667,6 +16842,36 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
             "force per angular velocity",
             override=override_categories,
             valid_units=["Ns/rad"],
+        )
+        db.AddCategory(
+            "moment per angle",
+            "moment per angle",
+            override=override_categories,
+            valid_units=[
+                "Nm/rad",
+                "Nm/dega",
+                "lbf.ft/dega",
+                "lbf.ft/rad",
+                "lbf.in/dega",
+                "lbf.in/rad",
+                "kgf.m/dega",
+                "kgf.m/rad",
+            ],
+        )
+        db.AddCategory(
+            "moment per angular velocity",
+            "moment per angular velocity",
+            override=override_categories,
+            valid_units=[
+                "Nms/rad",
+                "Nms/dega",
+                "lbf.ft.s/dega",
+                "lbf.ft.s/rad",
+                "lbf.in.s/dega",
+                "lbf.in.s/rad",
+                "kgf.m.s/dega",
+                "kgf.m.s/rad",
+            ],
         )
 
     return db

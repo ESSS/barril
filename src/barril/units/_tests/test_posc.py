@@ -378,3 +378,24 @@ def testFluidGasConcentration(unit_database_posc):
     assert approx(abs(q.ConvertScalarValue(1, "ppm") - 333.33), 7) == 0
     assert approx(abs(q.ConvertScalarValue(1, "%") - 0.033333), 7) == 0
     assert approx(abs(q.ConvertScalarValue(1, "Euc") - 0.00033333), 7) == 0
+
+
+def testSpringDashpotUnits(unit_database_posc):
+    """
+    Units used to define Spring-Dashpot movements
+    """
+
+    q = ObtainQuantity("Ns/m")
+    assert "force per velocity" == q.GetQuantityType()
+    assert approx(abs(q.ConvertScalarValue(1, "lbf.s/ft") - 14.5939029372), 7) == 0
+
+    q = ObtainQuantity("Nm/rad")
+    assert "moment per angle" == q.GetQuantityType()
+    assert approx(abs(q.ConvertScalarValue(1, "lbf.ft/dega") - 836.169044926), 7) == 0
+
+    q = ObtainQuantity("Nms/rad")
+    assert "moment per angular velocity" == q.GetQuantityType()
+    assert (
+        approx(abs(q.ConvertScalarValue(1, "lbf.ft.s/dega") - 0.017453292519943), 7)
+        == 0
+    )
