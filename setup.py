@@ -16,7 +16,7 @@ requirements = ["attrs>=18.1.0", "numpy>=1.11.0"]
 extras_require = {
     ':python_version == "2.7"': ["ruamel.ordereddict>=0.4.6"],
     "docs": ["sphinx >= 1.4", "sphinx_rtd_theme", "sphinx-autodoc-typehints"],
-    "testing": ["codecov", "pytest", "pytest-cov", "pytest-mock", "pre-commit"],
+    "testing": ["codecov", "pytest", "pytest-cov", "pytest-mock", "pre-commit", "tox"],
 }
 
 setup(
