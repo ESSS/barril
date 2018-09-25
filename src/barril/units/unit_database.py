@@ -721,8 +721,9 @@ class UnitDatabase(Singleton):
         :returns:
             The default unit for the given category.
 
-        .. note:: This method shouldn't return None, when the default_unit isn't defined for the category
-        the quantity type base unit is used.
+        .. note::
+            This method shouldn't return None, when the default_unit isn't defined for the category
+            the quantity type base unit is used.
         """
         category_info = self.GetCategoryInfo(category)
         return category_info.default_unit
@@ -1278,16 +1279,17 @@ class UnitDatabase(Singleton):
         Multiplication with different quantities.
 
         Rationale:
-            - the multiplication of different quantities can result in a derived quantity type.
-            - the quantities / values should be transformed if there are quantity types that are
-            equal in bot quantities (e.g.: if there's cm in the quantity1 and m in the quantity2,
-            the value1 and the quantity1 must be converted to m before proceeding with the
-            actual multiplication)
-            - note that if a given quantity type has different units in the quantity1 or in
-            the quantity2, they must 1st be converted to have the same unit in a given quantity type.
-            - after the quantities are compatible, it's just a matter of creating a join of
-            the available units and summing the expoents to create the resulting quantity
-            (and multiplying the actual values).
+
+        - the multiplication of different quantities can result in a derived quantity type.
+        - the quantities / values should be transformed if there are quantity types that are
+          equal in bot quantities (e.g.: if there's cm in the quantity1 and m in the quantity2,
+          the value1 and the quantity1 must be converted to m before proceeding with the
+          actual multiplication)
+        - note that if a given quantity type has different units in the quantity1 or in
+          the quantity2, they must 1st be converted to have the same unit in a given quantity type.
+        - after the quantities are compatible, it's just a matter of creating a join of
+          the available units and summing the expoents to create the resulting quantity
+          (and multiplying the actual values).
 
         :type quantity1: IQuantity (related to value1)
         :param quantity1:

@@ -18,13 +18,15 @@ class Array(AbstractValueWithQuantityObject):
 
     Some ways to construct it (note that usually numpy arrays should be used).
 
-        - Array(numpy.array([0, 1, 2, 3, 4], numpy.float64), 'm')
+    .. code-block:: python
 
-        - Array([0, 1, 2, 3, 4], 'm')
+        Array(numpy.array([0, 1, 2, 3, 4], numpy.float64), 'm')
 
-        - Array('length', [0, 1, 2, 3, 4], 'm')
+        Array([0, 1, 2, 3, 4], 'm')
 
-        - Array(ObtainQuantity('m', 'length'), [0, 1, 2, 3, 4])
+        Array('length', [0, 1, 2, 3, 4], 'm')
+
+        Array(ObtainQuantity('m', 'length'), [0, 1, 2, 3, 4])
     """
 
     def __init__(self, category, values=None, unit=None):
@@ -59,7 +61,8 @@ class Array(AbstractValueWithQuantityObject):
 
     # Values ---------------------------------------------------------------------------------------
     def GetAbstractValue(self, unit=None):
-        """@param unit: this is the unit in which we want the values
+        """
+        :param str unit: this is the unit in which we want the values
         :rtype: list(number)
         :returns:
             the values stored. May be an a list of int, float, etc.
