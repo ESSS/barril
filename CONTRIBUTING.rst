@@ -117,14 +117,4 @@ $ pytest
 Deploying
 ---------
 
-A reminder for the maintainers on how to deploy.
-Make sure all your changes are committed (including an entry in HISTORY.rst).
-Then run::
-
-$ git tag vX.Y.Z
-$ git push
-$ git push --tags
-
-Where the numbers X,Y,Z  should follow the [semantic versioning](https://semver.org/)
-
-Travis will then deploy to PyPI if tests pass.
+See `HOWTORELEASE <https://github.com/ESSS/barril/blob/master/HOWTORELEASE.rst>`_.

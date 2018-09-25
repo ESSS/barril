@@ -24,14 +24,64 @@ What is Barril?
 
 Python package to manage units for physical quantities.
 
+Quick example:
 
-* Free software: MIT license
+.. code-block:: python
+
+    from barril.units import Scalar
+
+    s1 = Scalar(10, 'm')
+    s2 = Scalar(500, 'cm')
+    assert s1 + s2 == Scalar(15, 'm')
 
 
 Features
 --------
 
-* TODO
+* Pre-defined unit database containing several physical quantities for the Oil & Gas industry.
+* Data types with an associated unit: ``Scalar``, ``Array``, ``Quantity``, ``FixedArray``.
+* Automatic conversion during arithmetic operations.
+
+Development
+-----------
+
+For complete description of what type of contributions are possible,
+see the full `CONTRIBUTING <CONTRIBUTING.rst>`_ guide.
+
+Here is a quick summary of the steps necessary to setup your environment to contribute to ``barril``.
+
+#. Create a virtual environment and activate it::
+
+    $ python -m virtualenv .env
+    $ .env\Scripts\activate  # windows
+    $ source .env/bin/activate  # linux
+
+
+   .. note::
+
+       If you use ``conda``, you can install ``virtualenv`` in the root environment::
+
+           $ conda install -n root virtualenv
+
+       Don't worry as this is safe to do.
+
+#. Update ``pip``::
+
+    $ python -m pip install -U pip
+
+#. Install development dependencies::
+
+    $ pip install -e .[testing]
+
+#. Install pre-commit::
+
+    $ pre-commit install
+
+#. Run tests::
+
+    $ pytest --pyargs barril
+
+
 
 Credits
 -------
