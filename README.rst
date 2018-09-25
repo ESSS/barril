@@ -81,7 +81,11 @@ Here is a quick summary of the steps necessary to setup your environment to cont
 
     $ pytest --pyargs barril
 
+#. Generate docs locally::
 
+    $ tox -e docs
+
+   The documentation files will be generated in ``docs/_build``.
 
 Credits
 -------
