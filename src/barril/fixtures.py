@@ -95,27 +95,6 @@ def CreateUnitDatabasePoscLen(fill_categories=True):
     return unit_database
 
 
-def CreateUnitDatabaseLenTemp():
-    """
-    :rtype: UnitDatabase
-    :returns:
-        Returns a unit database with length and time quantity types
-    """
-    unit_database = units.UnitDatabase()
-
-    unit_database.AddUnitBase("length", "meters", "m")
-    unit_database.AddUnit("length", "kilometers", "km", "%f / 1000.0", "%f * 1000.0")
-    unit_database.AddUnitBase("temperature", "degC", "degC")
-    unit_database.AddUnit(
-        "temperature", "Kelvin", "K", "%f + 270", "%f - 270"
-    )  # not correct convertion on purpose (for testing only)
-
-    unit_database.AddCategory("length", "length")
-    unit_database.AddCategory("temperature", "temperature")
-
-    return unit_database
-
-
 def CreateUnitDatabaseLenPressure():
     """
     :rtype: UnitDatabase
@@ -251,16 +230,6 @@ def unit_database_start_units():
 @pytest.fixture
 def unit_database_well_length():
     database = CreateUnitDatabaseWellLength()
-    units.UnitDatabase.PushSingleton(database)
-
-    yield database
-
-    units.UnitDatabase.PopSingleton()
-
-
-@pytest.fixture
-def unit_database_len_temp():
-    database = CreateUnitDatabaseLenTemp()
     units.UnitDatabase.PushSingleton(database)
 
     yield database
