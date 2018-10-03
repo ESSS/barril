@@ -127,3 +127,11 @@ def testCreateFromString():
     AssertCreateFromString("33/4", 0, (33, 4))
     AssertCreateFromString("  35/4", 0, (35, 4))
     AssertCreateFromString("3 36/4", 3, (36, 4))
+
+
+def testCreateFromFloat():
+    """
+    Allow the user enter only the fraction value
+    """
+    assert FractionValue.CreateFromFloat(1.375) == FractionValue(1, (3, 8))
+    assert FractionValue.CreateFromFloat(2.5) == FractionValue(2, (1, 2))
