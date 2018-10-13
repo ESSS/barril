@@ -2,8 +2,10 @@
 CHANGELOG
 =========
 
-Unreleased
-----------
+1.3.0 (2018-10-13)
+------------------
+
+* Add "per micrometre" unit to "per length" category.
 
 * Remove internal ``barril.fixtures``  module as it is not necessary or part of the public API.
 
