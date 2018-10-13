@@ -386,9 +386,9 @@ def testPerMicrometre(db):
     per_micrometre = units.Scalar("per length", 1.0, "1/um")
     per_metre = per_micrometre.CreateCopy(unit="1/m")
     per_inch = per_micrometre.CreateCopy(unit="1/in")
-    
-    assert per_micrometre.GetValue("1/m") == 10**6
-    assert approx(per_metre.GetValue()) == 10**6
+
+    assert per_micrometre.GetValue("1/m") == 10 ** 6
+    assert approx(per_metre.GetValue()) == 10 ** 6
     assert approx(per_inch.GetValue()) == 25400
-    assert per_metre == units.Scalar("per length", 10**6, "1/m")
+    assert per_metre == units.Scalar("per length", 10 ** 6, "1/m")
     assert per_inch == units.Scalar("per length", 25400.0, "1/in")
