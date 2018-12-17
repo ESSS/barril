@@ -5,7 +5,7 @@ CHANGELOG
 1.4.0 (2018-12-17)
 ------------------
 
-* Add "concentration ratio" as a new category.
+* Add new category for "concentration ratio".
 
 1.3.0 (2018-10-13)
 ------------------
