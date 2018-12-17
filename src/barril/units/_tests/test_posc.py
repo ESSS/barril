@@ -399,3 +399,11 @@ def testSpringDashpotUnits(unit_database_posc):
         approx(abs(q.ConvertScalarValue(1, "lbf.ft.s/dega") - 0.017453292519943), 7)
         == 0
     )
+
+
+def testConcentrationRatio(unit_database_posc):
+    """
+    Units used to express a ratio of concentrations
+    """
+    concentration_ratio_units = unit_database_posc.GetValidUnits("concentration ratio")
+    assert concentration_ratio_units == ["mg/l/mg/l", "kg/m3/kg/m3"]
