@@ -16676,6 +16676,12 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
             valid_units=["mg/kg/d", "kg/kg/d"],
         )
         db.AddCategory(
+            "concentration ratio",
+            "mass consumption efficiency",
+            override=override_categories,
+            valid_units=["mg/l/mg/l", "kg/m3/kg/m3"],
+        )
+        db.AddCategory(
             "mass consumption efficiency",
             "mass consumption efficiency",
             override=override_categories,
