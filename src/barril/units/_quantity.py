@@ -8,6 +8,7 @@ import six
 from six.moves import range, zip  # @UnresolvedImport
 
 from barril._foundation.odict import odict
+from barril.units.exceptions import QuantityValidationError
 from barril.units.unit_database import UnitsError
 from ._unit_constants import UNKNOWN_UNIT
 from .unit_database import UnitDatabase
@@ -718,8 +719,8 @@ class _Quantity(Quantity):
 
     def _RaiseValueError(self, value, operator, limit_value, use_literals):
         """
-        Raises a ValueError exception with a formatted message about the comparison of the value
-        with it's limit.
+        Raises a QuantityValidationError exception with a formatted message about the comparison of the value
+        with it's limit and it's values as attributes.
 
         :param float value:
             Value with boundary error.
@@ -733,15 +734,19 @@ class _Quantity(Quantity):
         :param Boolean use_literals:
             If literals are to be used in the error message.
         """
-        invalid_value_message = "Invalid value for %s: %g. Must be %s %r."
-        raise ValueError(
-            invalid_value_message
-            % (
-                self._category_info.caption,
-                value,
-                self._GetComparison(operator, use_literals),
-                limit_value,
-            )
+        invalid_value_message = "Invalid value for %s: %g. Must be %s %r." % (
+            self._category_info.caption,
+            value,
+            self._GetComparison(operator, use_literals),
+            limit_value,
+        )
+
+        raise QuantityValidationError(
+            invalid_value_message,
+            self._category_info.caption,
+            value,
+            self._GetComparison(operator, use_literals),
+            limit_value
         )
 
     def CheckValue(self, value, use_literals=False):
@@ -751,7 +756,7 @@ class _Quantity(Quantity):
         :param float value:
             The value to be checked.
 
-        :raises ValueError:
+        :raises QuantityValidationError:
             if the value is not valid for this quantity.
         """
         if self._is_derived:  # It's not possible to check value for a derived category.

@@ -20,6 +20,7 @@ from barril.units import (
     Quantity,
     UnitsError,
 )
+from barril.units.exceptions import QuantityValidationError
 from barril.units.unit_database import UnitDatabase
 
 
@@ -214,20 +215,24 @@ def testCategory(unit_database_custom_conversion):
     quantity = ObtainQuantity("m", "my length")
     formatted_value = FormatFloat("%g", -6e-010)
     with pytest.raises(
-        ValueError,
+        QuantityValidationError,
         match="Invalid value for My Length: %s. Must be > %s."
         % (formatted_value, formatted_value),
-    ):
+    ) as exc_info:
         quantity.CheckValue(-6e-10)
+    e = exc_info.value
+    assert hasattr(e, 'caption') is True
 
     quantity.CheckValue(0)  # without specifying unit
     mm_quantity = ObtainQuantity("mm", "my length")
     mm_quantity.CheckValue(2e5)
 
     with pytest.raises(
-        ValueError, match="Invalid value for My Length: 200000. Must be <= 200000.0."
-    ):
+        QuantityValidationError, match="Invalid value for My Length: 200000. Must be <= 200000.0."
+    ) as exc_info:
         mm_quantity.CheckValue(2e8 + 1)
+    e = exc_info.value
+    assert hasattr(e, 'message') is True
 
     # Check the unit info using a category instead a quantity_type
     with pytest.raises(InvalidQuantityTypeError):
