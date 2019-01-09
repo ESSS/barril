@@ -5,15 +5,15 @@ class QuantityValidationError(ValueError):
         """
             QuantityValidationError inherits from ValueError
             with helpers attributes (message, caption, value, operator, limit_value)
-        :param message:
+        :param str message:
             the full formatted message
-        :param caption:
+        :param str caption:
             caption of the category info
-        :param value:
+        :param float value:
             value validated
-        :param operator:
+        :param str operator:
             operator (literal or not)
-        :param limit_value:
+        :param float limit_value:
             limit value
         """
         super(QuantityValidationError, self).__init__(message)
