@@ -746,7 +746,7 @@ class _Quantity(Quantity):
             self._category_info.caption,
             value,
             self._GetComparison(operator, use_literals),
-            limit_value
+            limit_value,
         )
 
     def CheckValue(self, value, use_literals=False):

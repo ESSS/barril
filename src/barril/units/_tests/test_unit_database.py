@@ -221,20 +221,22 @@ def testCategory(unit_database_custom_conversion):
     ) as exc_info:
         quantity.CheckValue(-6e-10)
     e = exc_info.value
-    assert e.message == "Invalid value for My Length: %s. Must be > %s." \
-        % (formatted_value, formatted_value)
+    assert e.message == "Invalid value for My Length: %s. Must be > %s." % (
+        formatted_value,
+        formatted_value,
+    )
     assert e.caption == "My Length"
     assert e.value == float(formatted_value)
     assert e.operator == ">"
     assert e.value == float(formatted_value)
-
 
     quantity.CheckValue(0)  # without specifying unit
     mm_quantity = ObtainQuantity("mm", "my length")
     mm_quantity.CheckValue(2e5)
 
     with pytest.raises(
-        QuantityValidationError, match="Invalid value for My Length: 200000. Must be <= 200000.0."
+        QuantityValidationError,
+        match="Invalid value for My Length: 200000. Must be <= 200000.0.",
     ):
         mm_quantity.CheckValue(2e8 + 1)
 

@@ -1,5 +1,3 @@
-
-
 class QuantityValidationError(ValueError):
     def __init__(self, message, caption, value, operator, limit_value):
         """
