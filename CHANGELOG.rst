@@ -2,6 +2,11 @@
 CHANGELOG
 =========
 
+1.5.0 (2019-01-09)
+------------------
+
+* ``Quantity.CheckValue`` now raises ``QuantityValidationError`` instead of ``ValueError``.
+
 1.4.0 (2018-12-17)
 ------------------
 
