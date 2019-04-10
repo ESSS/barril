@@ -14,7 +14,7 @@ class QuantityValidationError(ValueError):
         :param float limit_value:
             limit value
         """
-        super(QuantityValidationError, self).__init__(message)
+        super().__init__(message)
         self.message = message
         self.caption = caption
         self.value = value

@@ -2,10 +2,6 @@
 Extensions to python native types.
 """
 
-from __future__ import unicode_literals
-
-import six
-
 from barril._foundation.klass import IsInstance
 
 _TRUE_VALUES = ["TRUE", "YES", "1"]
@@ -23,7 +19,7 @@ def _GetKnownNumberTypes():
     performance penalties.
     """
     result = {float, complex}
-    result.update(set(six.integer_types))
+    result.update(set((int,)))
     try:
         import numpy
     except ImportError:
@@ -216,7 +212,7 @@ def IsBasicType(value, accept_compound=False, additional=None):
 
     if accept_compound:
         if isinstance(value, dict):
-            for key, val in six.iteritems(value):
+            for key, val in value.items():
                 if not IsBasicType(key, accept_compound, additional) or not IsBasicType(
                     val, accept_compound, additional
                 ):
@@ -233,7 +229,7 @@ def IsBasicType(value, accept_compound=False, additional=None):
 
 
 _ACCEPTED_BASIC_TYPES = tuple(
-    list(six.string_types) + list(six.integer_types) + [bytes, float, bool, complex]
+    list((str,)) + list((int,)) + [bytes, float, bool, complex]
 )
 
 
@@ -373,7 +369,7 @@ def IterFlattened(iterable, skip_types=None):
     if skip_types is None:
         skip_types = []
 
-    for s in six.string_types:
+    for s in (str,):
         if s not in skip_types:
             # Exceptional case: we want to treat strings as elements!
             skip_types.append(s)
@@ -450,7 +446,7 @@ def ListDuplicates(iterable):
     seen = set()
     seen_add = seen.add
     # adds all elements it doesn't know yet to seen and all other to seen_twice
-    seen_twice = set(x for x in iterable if x in seen or seen_add(x))
+    seen_twice = {x for x in iterable if x in seen or seen_add(x)}
     # turn the set into a list (as requested)
     return list(seen_twice)
 

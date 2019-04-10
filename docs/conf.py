@@ -47,9 +47,9 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = u"Barril"
-copyright = u"2018, ESSS"
-author = u"ESSS"
+project = "Barril"
+copyright = "2018, ESSS"
+author = "ESSS"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -128,7 +128,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass
 # [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "barril.tex", u"Barril Documentation", u"ESSS", "manual")
+    (master_doc, "barril.tex", "Barril Documentation", "ESSS", "manual")
 ]
 
 
@@ -136,7 +136,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, "barril", u"Barril Documentation", [author], 1)]
+man_pages = [(master_doc, "barril", "Barril Documentation", [author], 1)]
 
 
 # -- Options for Texinfo output ----------------------------------------
@@ -148,7 +148,7 @@ texinfo_documents = [
     (
         master_doc,
         "barril",
-        u"Barril Documentation",
+        "Barril Documentation",
         author,
         "barril",
         "One line description of project.",

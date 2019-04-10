@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 
 import threading
 
@@ -42,7 +41,7 @@ class PushPopSingletonError(SingletonError):
 # ===================================================================================================
 # Singleton
 # ===================================================================================================
-class Singleton(object):
+class Singleton:
     """
     Base class for singletons.
 

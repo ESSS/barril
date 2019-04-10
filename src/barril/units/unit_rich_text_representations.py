@@ -1,10 +1,9 @@
-from __future__ import unicode_literals
 
 
 # ===================================================================================================
 # UnitRichTextRepresentations
 # ===================================================================================================
-class UnitRichTextRepresentations(object):
+class UnitRichTextRepresentations:
     """
     Placeholder for unit rich text representations. For now return the units in html form, used for
     plot axis.

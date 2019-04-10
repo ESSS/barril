@@ -1,6 +1,4 @@
-from __future__ import absolute_import, unicode_literals
 
-import six
 import pytest
 from pytest import approx
 
@@ -11,7 +9,7 @@ from barril.units import InvalidUnitError, ObtainQuantity, Quantity
 
 def testFormatting(unit_database_start_units):
     point = units.FixedArray(2, "length", [(100, 150), (50, 50)], "m")
-    assert "(100, 150) (50, 50) [m]" == six.text_type(point)
+    assert "(100, 150) (50, 50) [m]" == str(point)
 
 
 def testValues(unit_database_start_units):
@@ -41,7 +39,7 @@ def testValues(unit_database_start_units):
 
     assert approx(point.GetValues("km")) == [0.050, 0.080, 0.090]
 
-    assert "50 80 90 [m]" == six.text_type(point)
+    assert "50 80 90 [m]" == str(point)
 
     with pytest.raises(AttributeError):
         setattr(point, "values", [50, 80, 90])

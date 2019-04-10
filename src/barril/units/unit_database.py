@@ -1,12 +1,8 @@
-from __future__ import absolute_import, division, unicode_literals
 
 import attr
 import copy
 import math
 import traceback
-
-import six
-from six.moves import zip  # @UnresolvedImport
 
 from barril._foundation.singleton import Singleton
 from barril._foundation.types_ import CheckType
@@ -93,7 +89,7 @@ class ComposedUnitError(UnitsError):
 # ===================================================================================================
 # UnitInfo
 # ===================================================================================================
-class UnitInfo(object):
+class UnitInfo:
     """
     Holds information about a unit type
     """
@@ -129,12 +125,12 @@ class UnitInfo(object):
             ret.__has_conversion__ = True
             return ret
 
-        if isinstance(frombase, six.text_type):
+        if isinstance(frombase, str):
             frombase_func = MakeLambda(frombase)
         else:
             frombase_func = frombase
 
-        if isinstance(tobase, six.text_type):
+        if isinstance(tobase, str):
             tobase_func = MakeLambda(tobase)
         else:
             tobase_func = tobase
@@ -178,7 +174,7 @@ class UnitInfo(object):
 # CategoryInfo
 # ===================================================================================================
 @attr.s
-class CategoryInfo(object):
+class CategoryInfo:
     """
     Holds information about a category
     """
@@ -252,9 +248,7 @@ class UnitDatabase(Singleton):
         )
 
         if fill_categories:
-            for quantity_alias, quantity_type in six.iteritems(
-                cls._ADDITIONAL_CATEGORY_ALIASES
-            ):
+            for quantity_alias, quantity_type in cls._ADDITIONAL_CATEGORY_ALIASES.items():
                 unit_database.AddCategory(quantity_alias, quantity_type)
 
         return unit_database
@@ -312,12 +306,7 @@ class UnitDatabase(Singleton):
         if not default_singleton:
             # If this is not the default singleton, mark from where was it created if we need
             # to check later on.
-            if six.PY2:
-                # unfortunately functions from 'traceback' WILL mix bytes and unicode, so we have
-                # to use the more permissive StringIO module from PY2
-                from cStringIO import StringIO
-            else:
-                from io import StringIO
+            from io import StringIO
             s = StringIO()
             traceback.print_stack(file=s)
             self._database_created_from = s.getvalue()
@@ -416,7 +405,7 @@ class UnitDatabase(Singleton):
         :raises UnitsError:
             If the category was already added and override is not set to True
         """
-        CheckType(category, six.text_type)
+        CheckType(category, str)
 
         if from_category and quantity_type:
             raise ValueError("cannot pass both quantity_type and from_category")
@@ -578,7 +567,7 @@ class UnitDatabase(Singleton):
         :returns:
             An iterator that'll provide all the categories.
         """
-        return six.iterkeys(self.categories_to_quantity_types)
+        return self.categories_to_quantity_types.keys()
 
     def GetCategoryInfo(self, category):
         """
@@ -593,7 +582,7 @@ class UnitDatabase(Singleton):
             return self.categories_to_quantity_types[category]
         except KeyError:
             categories_str = ""
-            for cat in sorted(six.iterkeys(self.categories_to_quantity_types)):
+            for cat in sorted(self.categories_to_quantity_types.keys()):
                 if cat is None:
                     cat = "None"
                 categories_str += cat + "\n"
@@ -654,10 +643,10 @@ class UnitDatabase(Singleton):
         :raises InvalidUnitError:
             if the unit provided is not accepted for this category
         """
-        assert category.__class__ == six.text_type, "Expected unicode. Found: %s" % (
+        assert category.__class__ == str, "Expected unicode. Found: %s" % (
             category,
         )
-        assert unit.__class__ == six.text_type, "Expected unicode. Found: %s" % (unit,)
+        assert unit.__class__ == str, "Expected unicode. Found: %s" % (unit,)
 
         key = (category, unit)
         try:
@@ -665,7 +654,7 @@ class UnitDatabase(Singleton):
             if not self._category_unit_valid[key]:
                 raise InvalidUnitError(unit, None, category)
         except KeyError:
-            if category.__class__ != six.text_type:
+            if category.__class__ != str:
                 raise TypeError(
                     "Only unicode is accepted. %s is not." % category.__class__
                 )
@@ -759,7 +748,7 @@ class UnitDatabase(Singleton):
             The default category for the added unit (if any).
         """
         assert quantity_type is not None
-        if unit.__class__ != six.text_type:
+        if unit.__class__ != str:
             raise TypeError("Only unicode is accepted. %s is not." % unit.__class__)
 
         if unit is None:
@@ -873,7 +862,7 @@ class UnitDatabase(Singleton):
         unit_split = compiled.split(unit.lower())
 
         close_match = []
-        for existing_unit in six.iterkeys(self.unit_to_unit_info):
+        for existing_unit in self.unit_to_unit_info.keys():
             existing_unit_split = compiled.split(existing_unit.lower())
             if len(existing_unit_split) == len(unit_split):
                 for a, b in zip(existing_unit_split, unit_split):
@@ -892,7 +881,7 @@ class UnitDatabase(Singleton):
         :returns:
             A list of the available categories, sorted.
         """
-        return sorted(six.iterkeys(self.quantity_types))
+        return sorted(self.quantity_types.keys())
 
     def GetUnits(self, quantity_type=None):
         """
@@ -956,7 +945,7 @@ class UnitDatabase(Singleton):
             quantity_types = self.quantity_types[quantity_type]
         except KeyError:
             raise InvalidQuantityTypeError(
-                quantity_type, sorted(six.iterkeys(self.quantity_types))
+                quantity_type, sorted(self.quantity_types.keys())
             )
         else:
             for info in quantity_types:
@@ -994,7 +983,7 @@ class UnitDatabase(Singleton):
         """
         if quantity_type is None:
             all_infos = []
-            for infos in six.itervalues(self.quantity_types):
+            for infos in self.quantity_types.values():
                 all_infos.extend(infos)
             return all_infos
         else:
@@ -1108,7 +1097,7 @@ class UnitDatabase(Singleton):
         else:
             assert cls._additional_conversions[class_] == func, (
                 "The class %s already has a convertion function registered"
-                % (six.text_type(class_))
+                % (str(class_))
             )
 
     def Convert(self, category_or_quantity_type, from_unit, to_unit, value):
@@ -1141,7 +1130,7 @@ class UnitDatabase(Singleton):
         """
         supported_types = tuple(self._additional_conversions)
         if isinstance(value, supported_types):
-            for key, convert_function in six.iteritems(self._additional_conversions):
+            for key, convert_function in self._additional_conversions.items():
                 if isinstance(value, key):
                     break  # keep convert_function for later use
             else:
@@ -1190,7 +1179,7 @@ class UnitDatabase(Singleton):
         this = self.GetInfo(quantity_type, from_unit, fix_unknown=True)
         other = self.GetInfo(quantity_type, to_unit, fix_unknown=True)
 
-        if isinstance(value, (float,) + six.integer_types):  # , numpy.ndarray)):
+        if isinstance(value, (float,) + (int,)):  # , numpy.ndarray)):
             return other.frombase(this.tobase(value))
         else:  # list / tuple
             frombase = other.frombase
@@ -1396,7 +1385,7 @@ class UnitDatabase(Singleton):
 # ===================================================================================================
 # RegisterConversion
 # ===================================================================================================
-class RegisterConversion(object):
+class RegisterConversion:
 
     _registered = False
 

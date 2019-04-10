@@ -1,9 +1,6 @@
-from __future__ import absolute_import, unicode_literals
 
 import copy
 from functools import total_ordering
-
-import six
 
 from barril._foundation.types_ import CheckType
 from barril.basic.fraction import FractionValue
@@ -112,7 +109,7 @@ class FractionScalar(AbstractValueWithQuantityObject):
             the converted fraction value
         """
         # check if a quantity type unicode was passed
-        if quantity.__class__ == six.text_type:
+        if quantity.__class__ == str:
             # Note: actually ignoring the initial quantity type in this case because we
             # do the operation just using the from unit which may have any category (i.e.
             # the important thing is the quantity type, so, it can be created with the
@@ -159,10 +156,6 @@ class FractionScalar(AbstractValueWithQuantityObject):
             the string representation
         """
         return self.GetFormatted()
-
-    if six.PY2:
-        __unicode__ = __str__
-        del __str__
 
     def GetFormatted(self, unit=None):
         """

@@ -1,10 +1,7 @@
 # coding: UTF-8
-from __future__ import absolute_import, division, unicode_literals
 
 import pytest
 from pytest import approx
-
-from six.moves import range
 
 from barril import units
 from barril.basic.format_float import FormatFloat
@@ -171,8 +168,7 @@ def testBaseUnit(unit_database_custom_conversion):
 
 def testUnitNames(unit_database_custom_conversion):
     unit_database = unit_database_custom_conversion
-    names = set(
-        [
+    names = {
             "meters",
             "milimeters",
             "centimeters",
@@ -180,8 +176,7 @@ def testUnitNames(unit_database_custom_conversion):
             "miles",
             "inches",
             "micrometers",
-        ]
-    )
+    }
     onames = set(unit_database.GetUnitNames("length"))
     assert names == onames
 

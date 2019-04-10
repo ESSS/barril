@@ -1,11 +1,8 @@
 # -*- coding: cp1252 -*-
-from __future__ import absolute_import, unicode_literals
 
-import six
 import pytest
 from pytest import approx
 
-from barril._foundation.reraise import Reraise
 from barril import units
 from barril.units import UnitsError
 from barril.units.unit_database import UnitDatabase
@@ -34,21 +31,19 @@ def testMegagramPerCubicMeterToKilogramPerCubicMeter():
 
 def testDivisionError():
     unit_database = UnitDatabase.CreateDefaultSingleton()
-    for category, category_info in six.iteritems(
-        unit_database.categories_to_quantity_types
-    ):
+    for category, category_info in unit_database.categories_to_quantity_types.items():
         base_unit = category_info.default_unit
         for unit in unit_database.GetValidUnits(category):
             for i in [-1, 0, 1]:
                 try:
                     unit_database.Convert(category, base_unit, unit, i)
                 except Exception as e:
-                    Reraise(e, "Error converting: from: %s to: %s" % (base_unit, unit))
+                    raise(e, "Error converting: from: %s to: %s" % (base_unit, unit))
 
                 try:
                     unit_database.Convert(category, unit, base_unit, i)
                 except Exception as e:
-                    Reraise(e, "Error converting: from: %s to: %s" % (unit, base_unit))
+                    raise(e, "Error converting: from: %s to: %s" % (unit, base_unit))
 
 
 def testScfPerBblToM3ToM3():

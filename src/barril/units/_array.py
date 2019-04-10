@@ -1,17 +1,16 @@
-from __future__ import absolute_import, unicode_literals
-
-import six
 
 from barril._foundation.types_ import IsNumber
 from barril.basic.format_float import FormatFloat
 from barril.units.unit_database import UnitDatabase
+from oop_ext.interface._interface import ImplementsInterface
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
+from ._definitions import IArray
 from ._quantity import Quantity
 
 __all__ = [str("Array")]  # pylint: disable=invalid-all-object
 
-
+@ImplementsInterface(IArray)
 class Array(AbstractValueWithQuantityObject):
     """
     Array represents a sequence of values that also have an unit associated.
@@ -214,7 +213,7 @@ class Array(AbstractValueWithQuantityObject):
         )
 
     def __repr__(self):
-        values_str = "[%s]" % ", ".join(six.text_type(v) for v in self.values)
+        values_str = "[%s]" % ", ".join(str(v) for v in self.values)
         return "%s(%s, %s, %s)" % (
             self.__class__.__name__,
             self.GetQuantityType(),
@@ -231,15 +230,11 @@ class Array(AbstractValueWithQuantityObject):
             The formatted string
         """
         if len(self.values) > 0 and isinstance(self.values[0], tuple):
-            values_str = " ".join(six.text_type(v) for v in self.values)
+            values_str = " ".join(str(v) for v in self.values)
         else:
             values_str = " ".join((FormatFloat("%g", v)) for v in self.values)
 
         return values_str + self.GetFormattedSuffix()
-
-    if six.PY2:
-        __unicode__ = __str__
-        del __str__
 
     # Basic operators ------------------------------------------------------------------------------
     def __len__(self):

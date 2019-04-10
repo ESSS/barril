@@ -1,6 +1,3 @@
-from __future__ import unicode_literals
-
-import six
 
 # Custom cache for optimization purposes.
 __bases_cache = {}
@@ -48,7 +45,7 @@ def IsInstance(p_object, p_class_name):
     return IsSubclass(class_, p_class_name)
 
 
-class _NotFoundSentinel(object):
+class _NotFoundSentinel:
     pass
 
 
@@ -61,7 +58,7 @@ def IsSubclass(p_class, p_class_name):
     """
     is_instance = isinstance  # put it in locals
 
-    if is_instance(p_class_name, six.string_types):
+    if is_instance(p_class_name, (str,)):
         if p_class_name == p_class.__name__:
             return True
 
@@ -74,7 +71,7 @@ def IsSubclass(p_class, p_class_name):
     elif (
         is_instance(p_class_name, tuple)
         and len(p_class_name) > 0
-        and is_instance(p_class_name[0], six.string_types)
+        and is_instance(p_class_name[0], (str,))
     ):
 
         names = None

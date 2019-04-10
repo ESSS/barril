@@ -1,8 +1,5 @@
-from __future__ import unicode_literals
 
 import pytest
-import six
-from six.moves import range  # @UnresolvedImport
 
 from barril._foundation.types_ import (
     AsList,
@@ -37,7 +34,7 @@ def testBoolean():
 
 
 def testPassing():
-    class Foo(object):
+    class Foo:
         pass
 
     CheckType(Foo(), Foo)
@@ -53,7 +50,7 @@ def testRaising():
         CheckType("hellou", (int, float))
 
     with pytest.raises(TypeError):
-        CheckType(99, (six.text_type, float))
+        CheckType(99, (str, float))
 
 
 def testCheckFormatString():
@@ -71,20 +68,20 @@ def testIfCustomMessageIsAppendedToDefaultMessage():
     message = "Zero is not unicode!"
 
     with pytest.raises(TypeError) as exception:
-        CheckType(0, six.text_type, message)
+        CheckType(0, str, message)
 
-    assert message in six.text_type(exception.value)
+    assert message in str(exception.value)
 
 
 def testBasicType():
-    class NonBasic(object):
+    class NonBasic:
         ""
 
     assert IsBasicType(1)
     assert not IsBasicType([1])
     assert IsBasicType([1], accept_compound=True)
     assert IsBasicType({1: [1]}, accept_compound=True)
-    assert IsBasicType({1: set([1])}, accept_compound=True)
+    assert IsBasicType({1: {1}}, accept_compound=True)
     assert IsBasicType(frozenset([1, 2]), accept_compound=True)
     assert IsBasicType([1, [2, [3]]], accept_compound=True)
     assert not IsBasicType({1: NonBasic()}, accept_compound=True)
@@ -114,7 +111,7 @@ def testCheckEnum():
 def testCheckNumber():
     numpy = pytest.importorskip("numpy")
 
-    for number_class in [float] + list(six.integer_types):
+    for number_class in [float] + list((int,)):
         converted = number_class(1)
         assert IsNumber(converted)
 
@@ -129,7 +126,7 @@ def testGetKnownNumberTypes(monkeypatch):
     numpy = pytest.importorskip("numpy")
 
     expected = {float, complex, numpy.number}
-    expected.update(set(six.integer_types))
+    expected.update(set((int,)))
     assert set(_GetKnownNumberTypes()) == expected
 
     monkeypatch.setitem(sys.modules, "numpy", None)
@@ -140,13 +137,11 @@ def testGetKnownNumberTypes(monkeypatch):
 def testCheckIsNumber():
     assert CheckIsNumber(1)
     assert CheckIsNumber(1.)
-    if six.PY2:
-        assert CheckIsNumber(long(1))  # noqa
     with pytest.raises(TypeError):
         CheckIsNumber("alpha")
 
 
-class ListWithoutIter(object):
+class ListWithoutIter:
     def __init__(self, *args, **kwargs):
         self.contents = []
         for item in args:
@@ -206,7 +201,7 @@ def testFlattenSkipSpecificClass():
 def testFlattenSkipTypeOfSubclass():
     class Foo(ListWithoutIter):
         def __init__(self, *args, **kwargs):
-            super(Foo, self).__init__(*args, **kwargs)
+            super().__init__(*args, **kwargs)
 
     obj = Foo()
     a = [obj, "c", "d"]
@@ -266,15 +261,10 @@ def testMergeDictsWithWrongTypes():
     with pytest.raises(TypeError) as excinfo:
         MergeDictsRecursively({}, "Foo")
 
-    if six.PY2:
-        expected = (
-            'Wrong types passed. Expecting two dictionaries, got: "dict" and "unicode"'
-        )
-    else:
-        expected = (
-            'Wrong types passed. Expecting two dictionaries, got: "dict" and "str"'
-        )
-    assert six.text_type(excinfo.value) == expected
+    expected = (
+        'Wrong types passed. Expecting two dictionaries, got: "dict" and "str"'
+    )
+    assert str(excinfo.value) == expected
 
 
 def testIntersection():
@@ -304,7 +294,7 @@ def testStructMap():
     a = {"alpha": [1, 2, 3], "bravo": (1, 2, 3)}
 
     obtained = StructMap(
-        a, func=six.text_type, conditional=lambda x: isinstance(x, int)
+        a, func=str, conditional=lambda x: isinstance(x, int)
     )
     expected = {"alpha": ["1", "2", "3"], "bravo": ("1", "2", "3")}
     assert obtained == expected

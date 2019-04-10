@@ -1,16 +1,16 @@
-from __future__ import absolute_import, unicode_literals
-
-import six
 
 from barril.units._quantity import _Quantity
 from barril.units.unit_database import UnitDatabase
+from oop_ext.interface._interface import ImplementsInterface
 
+from ._definitions import IObjectWithQuantity, IQuantity
 from ._quantity import ObtainQuantity
 
 __all__ = [str("AbstractValueWithQuantityObject")]  # pylint: disable=invalid-all-object
 
 
-class AbstractValueWithQuantityObject(object):
+@ImplementsInterface(IObjectWithQuantity, IQuantity)
+class AbstractValueWithQuantityObject:
     """
     This is an abstract class that provides a default implementation for having a class
     that has a value associated with a quantity.
@@ -34,7 +34,7 @@ class AbstractValueWithQuantityObject(object):
                 value = self._GetDefaultValue(quantity.GetCategoryInfo())
 
         else:
-            if category.__class__ != six.text_type:
+            if category.__class__ != str:
                 # Support for creating a scalar as:
                 # Scalar(10, 'm')
                 # Scalar(10, 'm', 'length')
@@ -147,7 +147,7 @@ class AbstractValueWithQuantityObject(object):
     # ===============================================================================================
     # __Stub
     # ===============================================================================================
-    class __Stub(object):
+    class __Stub:
         """
         Helper class for used in CreateWithQuantity.
         """
@@ -279,12 +279,7 @@ class AbstractValueWithQuantityObject(object):
         try:
             pattern % "unit"
         except TypeError as e:
-            from barril._foundation.reraise import Reraise
-
-            Reraise(
-                e,
-                "Incompatible pattern for Scalar suffix. Expected a format for a unicode value.",
-            )
+            raise(e, "Incompatible pattern for Scalar suffix. Expected a format for a unicode value.")
         cls.FORMATTED_SUFFIX_FORMAT = pattern
 
     def GetFormattedSuffix(self, unit=None):

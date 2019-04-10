@@ -1,24 +1,21 @@
 """
 This module provides the implementation of an Scalar object.
 """
-from __future__ import absolute_import, division, unicode_literals
 
 from functools import total_ordering
 
-import six
-from six.moves import range  # @UnresolvedImport
-
-from barril._foundation.reraise import Reraise
 from barril._foundation.types_ import IsNumber
+from oop_ext.interface._interface import ImplementsInterface
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
+from ._definitions import IQuantity, IScalar
 from ._quantity import ObtainQuantity, Quantity
 from .unit_database import UnitDatabase
 
 __all__ = [str("Scalar")]  # pylint: disable=invalid-all-object
 
-
 @total_ordering
+@ImplementsInterface(IScalar, IQuantity)
 class Scalar(AbstractValueWithQuantityObject):
     """
     This object represents a scalar (a value that has an associated quantity).
@@ -179,10 +176,6 @@ class Scalar(AbstractValueWithQuantityObject):
         """
         return self.GetFormatted()
 
-    if six.PY2:
-        __unicode__ = __str__
-        del __str__
-
     # Format ---------------------------------------------------------------------------------------
 
     FORMATTED_VALUE_FORMAT = "%g"
@@ -199,10 +192,7 @@ class Scalar(AbstractValueWithQuantityObject):
         try:
             value_format % 1.11
         except TypeError as e:
-            Reraise(
-                e,
-                "Incompatible format for Scalar value. Expected a format for a float value.",
-            )
+            raise(e, "Incompatible format for Scalar value. Expected a format for a float value.")
         cls.FORMATTED_VALUE_FORMAT = value_format
 
     def GetFormattedValue(self, unit=None, value_format=None):

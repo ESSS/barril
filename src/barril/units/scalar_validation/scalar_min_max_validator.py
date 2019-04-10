@@ -1,14 +1,10 @@
-from __future__ import absolute_import, unicode_literals
-
-import six
 
 from barril.units import ObtainQuantity
-
 
 # ===================================================================================================
 # ScalarMinMaxValidator
 # ===================================================================================================
-class ScalarMinMaxValidator(object):
+class ScalarMinMaxValidator:
     """
     Simple helper class to create default checkers.
 
@@ -65,6 +61,6 @@ class ScalarMinMaxValidator(object):
             quantity.CheckValue(scalar.GetValue(), use_literals=True)
 
         except ValueError as error:
-            return six.text_type(error)
+            return str(error)
 
         return None

@@ -65,14 +65,13 @@ B{Design decisions}:
 @see: L{definitions} for the basic interfaces defined.
 """
 
-from __future__ import absolute_import, unicode_literals
 
 from weakref import WeakValueDictionary
 
-import six
-
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject  # noqa
 from ._array import Array  # noqa
+from ._definitions import (
+    IArray, IObjectWithQuantity, IQuantity, IQuantity2, IQuantity3, IQuantity6, IScalar)  # noqa
 from ._fixedarray import FixedArray  # noqa
 from ._fraction_scalar import FractionScalar  # noqa
 from ._quantity import ObtainQuantity, Quantity, ReadOnlyError  # noqa
@@ -100,6 +99,11 @@ __all__ = [
     str("FixedArray"),  # pylint: disable=invalid-all-object
     str("FractionScalar"),  # pylint: disable=invalid-all-object
     str("GetUnknownQuantity"),  # pylint: disable=invalid-all-object
+    str("IArray"),  # pylint: disable=invalid-all-object
+    str("IQuantity"),  # pylint: disable=invalid-all-object
+    str("IObjectWithQuantity,"),  # pylint: disable=invalid-all-object
+    str("IReadOnlyScalar"),  # pylint: disable=invalid-all-object
+    str("IScalar"),  # pylint: disable=invalid-all-object
     str("InvalidQuantityTypeError"),  # pylint: disable=invalid-all-object
     str("InvalidUnitError"),  # pylint: disable=invalid-all-object
     str("Quantity"),  # pylint: disable=invalid-all-object
@@ -153,6 +157,6 @@ def ChangeScalars(owner, **scalars):
         # To change unit only
         ChangeScalars(fluid, density=(None, 'lbm/galUS'))
     """
-    for scalar_name, (value, unit) in six.iteritems(scalars):
+    for scalar_name, (value, unit) in scalars.items():
         new_scalar = getattr(owner, scalar_name).CreateCopy(value=value, unit=unit)
         setattr(owner, scalar_name, new_scalar)

@@ -1,9 +1,7 @@
-from __future__ import absolute_import, division, unicode_literals
 
 import copy
 
 import pytest
-import six
 
 from barril.basic.fraction import Fraction, FractionValue
 
@@ -61,11 +59,11 @@ def testMatchFractionPart():
 
 def testStr():
     f = FractionValue(3, Fraction(5, 3))
-    assert six.text_type(f) == "3 5/3"
+    assert str(f) == "3 5/3"
     assert repr(f) == "FractionValue(3, 5/3)"
 
     f = FractionValue(3)
-    assert six.text_type(f) == "3"
+    assert str(f) == "3"
     assert repr(f) == "FractionValue(3, 0/1)"
 
 

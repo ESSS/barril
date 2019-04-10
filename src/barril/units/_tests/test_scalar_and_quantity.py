@@ -1,11 +1,10 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from barril.units import Scalar
 from barril.units.unit_database import UnitDatabase
 import pytest
 
 
-class _LightweightQuantity(object):
+class _LightweightQuantity:
     """
     A lightweight representation of a quantity. This class has the following purposes:
 

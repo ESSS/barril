@@ -1,4 +1,3 @@
-from __future__ import absolute_import, unicode_literals
 
 from ._scalar import Scalar as _Scalar
 

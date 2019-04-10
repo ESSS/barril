@@ -1,0 +1,13 @@
+name: barril
+
+dependencies:
+  - python>=3.6
+  - attrs>=18.1.0
+  - numpy>=1.11.0
+  - oop-ext>=0.2.4
+  - pytest
+  - pytest-mock>=1.10
+
+environment:
+  PYTHONPATH:
+    - {{ root }}/src

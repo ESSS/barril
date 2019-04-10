@@ -2,9 +2,6 @@
 Locale-aware methods that convert to and from float values, trying to give the best representation
 possible.
 """
-from __future__ import absolute_import, unicode_literals
-
-import six
 
 # ===================================================================================================
 # Constants
@@ -105,10 +102,10 @@ def FloatFromString(str_value, use_locale=True):
     """
     import locale
 
-    if str_value.__class__ != six.text_type:
+    if str_value.__class__ != str:
         from barril._foundation.types_ import CheckType
 
-        CheckType(str_value, six.text_type)
+        CheckType(str_value, str)
 
     if str_value == PLUS_INFINITY_STR:
         return PLUS_INFINITY
@@ -117,9 +114,6 @@ def FloatFromString(str_value, use_locale=True):
     elif str_value == NAN_STR:
         return NAN
     elif use_locale:
-        # In Python 2 use byte string within locale's atof, so to avoid any decode error.
-        if six.PY2:
-            str_value = str_value.encode(locale.getpreferredencoding())
         return locale.atof(str_value)
     else:
         return float(str_value)

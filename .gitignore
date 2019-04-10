@@ -93,6 +93,9 @@ celerybeat-schedule
 venv/
 ENV/
 
+# conda env
+environment.yml
+
 # Spyder project settings
 .spyderproject
 .spyproject

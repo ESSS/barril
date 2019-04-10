@@ -1,6 +1,10 @@
-=========
-CHANGELOG
-=========
+
+1.6.0 (2019-04-10)
+------------------
+
+* Add curve implementation.
+* Add support to interfaces from oop-ext.
+* Drop support to Python 2.
 
 1.5.0 (2019-01-09)
 ------------------
@@ -16,7 +20,6 @@ CHANGELOG
 ------------------
 
 * Add "per micrometre" unit to "per length" category.
-
 * Remove internal ``barril.fixtures``  module as it is not necessary or part of the public API.
 
 1.2.0 (2018-09-26)

@@ -1,17 +1,14 @@
 """
 This module provides the implementation of an Quantity object.
 """
-# NoQuantityReplacement
-from __future__ import absolute_import, unicode_literals
-
-import six
-from six.moves import range, zip  # @UnresolvedImport
 
 from barril._foundation.odict import odict
 from barril.units.exceptions import QuantityValidationError
-from barril.units.unit_database import UnitsError
+from barril.units.unit_database import UnitDatabase, UnitsError
+from oop_ext.interface._interface import ImplementsInterface
+
+from ._definitions import IQuantity, IQuantity2, IQuantity3, IQuantity6
 from ._unit_constants import UNKNOWN_UNIT
-from .unit_database import UnitDatabase
 
 __all__ = [str("Quantity")]  # pylint: disable=invalid-all-object
 
@@ -67,13 +64,13 @@ def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
 
     if hasattr(unit, "items"):
         assert category is None
-        if len(unit) == 1 and next(six.itervalues(unit))[1] == 1:
+        if len(unit) == 1 and next(iter(unit.values()))[1] == 1:
             # Although passed as composing, it's a simple case
-            category, (unit, _exp) = next(six.iteritems(unit))
+            category, (unit, _exp) = next(iter(unit.items()))
         else:
             key = tuple(
                 (category, tuple(unit_and_exp))
-                for (category, unit_and_exp) in six.iteritems(unit)
+                for (category, unit_and_exp) in unit.items()
             )
             if unknown_unit_caption:
                 key += (unknown_unit_caption,)
@@ -92,7 +89,7 @@ def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
         pass  # Just go on with the regular flow.
 
     assert unit.__class__ != bytes, "unit must be given as unicode string always"
-    if unit.__class__ != six.text_type:
+    if unit.__class__ != str:
         if category is None:
             raise AssertionError("Currently only supporting unit as a string.")
         else:
@@ -138,7 +135,7 @@ class ReadOnlyError(NotImplementedError):
 # ===================================================================================================
 # Quantity
 # ===================================================================================================
-class Quantity(object):
+class Quantity:
     """
     .. note:: This class has nothing but factory methods. The real Quantity implementation is at
     _Quantity (which is what's returned from ObtainQuantity).
@@ -223,14 +220,14 @@ class Quantity(object):
             assert hasattr(
                 category_to_unit_and_exps, "items"
             ), "validate_category_and_units needs to be a dict"
-            for category, (unit, _exp) in six.iteritems(category_to_unit_and_exps):
+            for category, (unit, _exp) in category_to_unit_and_exps.items():
                 # will do the checkings needed for validation (category/unit)
                 # so that we can later just store the internal information without
                 # any other check.
 
                 # changes to accomodate making operations with derived units (internally the
                 # information must be a dict)
-                if category.__class__ != six.text_type:
+                if category.__class__ != str:
                     raise TypeError(
                         "Only unicode is accepted. %s is not." % category.__class__
                     )
@@ -242,7 +239,7 @@ class Quantity(object):
                 if unit is None:
                     unit = category_info.default_unit
                 else:
-                    if unit.__class__ != six.text_type:
+                    if unit.__class__ != str:
                         raise TypeError(
                             "Only unicode is accepted. %s is not." % unit.__class__
                         )
@@ -253,7 +250,7 @@ class Quantity(object):
         return ObtainQuantity(
             odict(
                 (category, unit_and_exp[:])
-                for (category, unit_and_exp) in six.iteritems(category_to_unit_and_exps)
+                for (category, unit_and_exp) in category_to_unit_and_exps.items()
             ),
             unknown_unit_caption=unknown_unit_caption,
         )
@@ -262,6 +259,13 @@ class Quantity(object):
 # ===================================================================================================
 # Quantity
 # ===================================================================================================
+@ImplementsInterface(
+    IQuantity,
+    IQuantity2,
+    IQuantity3,
+    IQuantity6,
+    no_check=True
+)
 class _Quantity(Quantity):
     """
     The quantity is an object that has its associated category, quantity type and unit.
@@ -324,9 +328,7 @@ class _Quantity(Quantity):
         """
         lst = list(
             (category, unit_and_exp)
-            for (category, unit_and_exp) in six.iteritems(
-                self._category_to_unit_and_exps
-            )
+            for (category, unit_and_exp) in self._category_to_unit_and_exps.items()
         )
         if self._unknown_unit_caption:
             lst.append(self._unknown_unit_caption)
@@ -359,7 +361,7 @@ class _Quantity(Quantity):
 
         if unknown_unit_caption is not None:
             assert (
-                unknown_unit_caption.__class__ == six.text_type
+                unknown_unit_caption.__class__ == str
             ), "Unit caption must be a string. Note: the unit database and unit system parameters were removed."
             self._unknown_unit_caption = unknown_unit_caption
         else:
@@ -371,9 +373,7 @@ class _Quantity(Quantity):
             self._is_derived = True
 
             rep_and_exp = odict()
-            for category, (_unit, exp) in six.iteritems(
-                self._category_to_unit_and_exps
-            ):
+            for category, (_unit, exp) in self._category_to_unit_and_exps.items():
                 quantity_type = unit_database.GetCategoryQuantityType(category)
                 existing = rep_and_exp.get(quantity_type, 0)
                 rep_and_exp[quantity_type] = existing + exp
@@ -381,21 +381,17 @@ class _Quantity(Quantity):
             self._category = self._MakeStr(
                 [
                     (category, exp)
-                    for category, (_unit, exp) in six.iteritems(
-                        self._category_to_unit_and_exps
-                    )
+                    for category, (_unit, exp) in self._category_to_unit_and_exps.items()
                 ]
             )
             self._quantity_type = self._MakeStr(list(rep_and_exp.items()))
             self._unit = self._CreateUnitsWithJoinedExponentsString()
             self._composing_units = tuple(
                 (unit, exp)
-                for _category, (unit, exp) in six.iteritems(
-                    self._category_to_unit_and_exps
-                )
+                for _category, (unit, exp) in self._category_to_unit_and_exps.items()
             )
             self._composing_categories = tuple(
-                six.iterkeys(self._category_to_unit_and_exps)
+                self._category_to_unit_and_exps.keys()
             )
             self._category_info = None
             return
@@ -404,7 +400,7 @@ class _Quantity(Quantity):
 
         # changes to accommodate making operations with derived units (internally the
         # information must be a dict)
-        if category.__class__ != six.text_type:
+        if category.__class__ != str:
             raise TypeError("Only unicode is accepted. %s is not." % category.__class__)
 
         # Getting the category should be enough to check that it's valid.
@@ -415,7 +411,7 @@ class _Quantity(Quantity):
         if unit is None:
             unit = category_info.default_unit
         else:
-            if unit.__class__ != six.text_type:
+            if unit.__class__ != str:
                 raise TypeError("Only unicode is accepted. %s is not." % unit.__class__)
             unit_database.CheckCategoryUnit(category, unit)
 
@@ -583,7 +579,7 @@ class _Quantity(Quantity):
 
                 ret += unit
                 if exp != -1:
-                    ret += six.text_type(abs(exp))
+                    ret += str(abs(exp))
 
         return ret
 
@@ -606,7 +602,7 @@ class _Quantity(Quantity):
         repr_and_exp = odict()
         unit_database = self._unit_database
 
-        for category, (unit, exp) in six.iteritems(self._category_to_unit_and_exps):
+        for category, (unit, exp) in self._category_to_unit_and_exps.items():
             quantity_type = unit_database.GetCategoryQuantityType(category)
             unit_name = unit_database.GetUnitName(quantity_type, unit)
             existing = repr_and_exp.get(unit_name, 0)
@@ -813,9 +809,7 @@ class _Quantity(Quantity):
             return self._composing_units_joining_exponents
         except AttributeError:
             ret = odict()
-            for _category, (unit, exp) in six.iteritems(
-                self._category_to_unit_and_exps
-            ):
+            for _category, (unit, exp) in self._category_to_unit_and_exps.items():
                 existing = ret.get(unit, 0)
                 ret[unit] = existing + exp
             self._composing_units_joining_exponents = tuple(ret.items())
@@ -833,7 +827,7 @@ class _Quantity(Quantity):
 
         return odict(
             (category, unit_and_exp[:])
-            for (category, unit_and_exp) in six.iteritems(unit_and_exps)
+            for (category, unit_and_exp) in unit_and_exps.items()
         )
 
     def __hash__(self):
@@ -842,9 +836,7 @@ class _Quantity(Quantity):
         except AttributeError:
             lst = list(
                 (category, tuple(unit_and_exp))
-                for (category, unit_and_exp) in six.iteritems(
-                    self._category_to_unit_and_exps
-                )
+                for (category, unit_and_exp) in self._category_to_unit_and_exps.items()
             )
             lst.append(self._unknown_unit_caption)
             self._hash = hash(tuple(lst))
@@ -879,7 +871,7 @@ class _Quantity(Quantity):
         return not self == other
 
     # Used to cast a constant value
-    BASE_NUMBER = six.integer_types + (float,)
+    BASE_NUMBER = (int,) + (float,)
 
     OPERATION_DIVIDE = "Divide"
     OPERATION_MULTIPLY = "Multiply"
@@ -908,8 +900,6 @@ class _Quantity(Quantity):
     def __truediv__(self, other):
         return self._DoOperation(self, other, self.OPERATION_DIVIDE)
 
-    if six.PY2:
-        __div__ = __truediv__  # python2 uses __div__ as the / operator
     __mod__ = __truediv__
     __rtruediv__ = __truediv__
 

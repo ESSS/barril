@@ -1,18 +1,15 @@
-from __future__ import absolute_import, division, unicode_literals
 
 from fractions import Fraction as StdFraction
 from functools import total_ordering
 
-import six
-
 SMALL = 1e-8
 
-NumberType = (six.integer_types, float)
+NumberType = ((int,), float)
 SequenceType = (tuple, list)
 
 
 @total_ordering
-class Fraction(object):
+class Fraction:
     """
     Numerator, denominator similar to standard fraction with support to
     float values in numerator and denominator which will be automatically
@@ -68,10 +65,6 @@ class Fraction(object):
             + "/"
             + FormatFloat("%g", self.denominator)
         )
-
-    if six.PY2:
-        __unicode__ = __str__
-        del __str__
 
     def __repr__(self):
         return repr(self.x)
@@ -148,11 +141,6 @@ class Fraction(object):
 
     def __eq__(self, other):
         return self.__old_cmp__(other) == 0
-
-    if six.PY2:
-
-        def __ne__(self, other):
-            return not self == other
 
     def __lt__(self, other):
         return self.__old_cmp__(other) == -1

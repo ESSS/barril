@@ -3,12 +3,9 @@
         The "unit" must not containt unicode character. All unit name and representation must use
         the standard ascii representation.
 """
-from __future__ import absolute_import, division, unicode_literals
 
 import pytest
 from pytest import approx
-
-import six
 
 from barril._foundation.odict import odict
 from barril import units
@@ -167,14 +164,14 @@ def testScalarCopyAndRepresentation(unit_database_empty):
     s = Scalar("well-diameter", 10, "m")
 
     assert "Scalar(10.0, 'm', 'well-diameter')" == repr(s)
-    assert "10.0" == six.text_type(s.value)
+    assert "10.0" == str(s.value)
     assert "m" == s.unit
     assert "well-diameter" == s.GetCategory()
     assert "length" == s.GetQuantityType()
 
     s = s.CreateCopy(unit="cm")
     assert "Scalar(1000.0, 'cm', 'well-diameter')" == repr(s)
-    assert "1000 [cm]" == six.text_type(s)
+    assert "1000 [cm]" == str(s)
 
 
 def testSort(unit_database_empty):
@@ -285,7 +282,7 @@ def testCreationWithDerivedQuantity(unit_database_len_time):
 
     quantity, value = unit_database.Multiply(m, km_city, 1, 0.01)
     calculated1 = Scalar.CreateWithQuantity(quantity, value)
-    assert six.text_type(calculated1)
+    assert str(calculated1)
 
     s1 = Scalar.CreateWithQuantity(m, 1)
     s2 = Scalar.CreateWithQuantity(km_city, 0.01)
