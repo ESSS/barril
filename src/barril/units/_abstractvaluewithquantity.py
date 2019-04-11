@@ -3,7 +3,7 @@ from barril.units._quantity import _Quantity
 from barril.units.unit_database import UnitDatabase
 from oop_ext.interface._interface import ImplementsInterface
 
-from ._definitions import IObjectWithQuantity, IQuantity
+from .interfaces import IObjectWithQuantity, IQuantity
 from ._quantity import ObtainQuantity
 
 __all__ = [str("AbstractValueWithQuantityObject")]  # pylint: disable=invalid-all-object
@@ -124,7 +124,7 @@ class AbstractValueWithQuantityObject:
     # UnitDatabase Shortcuts -----------------------------------------------------------------------
     def GetUnitName(self):
         """
-        :rtype: unicode
+        :rtype: str
         :returns:
             Returns a user-friendly name for the given unit (i.e.: 'm' would me 'meters')
         """
@@ -132,7 +132,7 @@ class AbstractValueWithQuantityObject:
 
     def GetValidUnits(self):
         """
-        :rtype: list(unicode)
+        :rtype: list(str)
         :returns:
             Returns a list with all the valid units for the category for this object + the current
             unit if it's not in the list of valid units (because it may be using a unit valid for
@@ -258,7 +258,7 @@ class AbstractValueWithQuantityObject:
         """
         Returns the formatted suffix for the unit.
 
-        :rtype: unicode
+        :rtype: str
         :returns:
             The formatted suffix
         """
@@ -270,14 +270,14 @@ class AbstractValueWithQuantityObject:
         Sets the format for the formatted text suffix, which may include the unit (Use "%s" to
         place the unit.).
 
-        :param unicode pattern:
+        :param str pattern:
             A format-like string containing one C{%s} format code
         """
         try:
             pattern % "unit"
         except TypeError as e:
             raise TypeError(
-                "Incompatible pattern for Scalar suffix. Expected a format for a unicode value."
+                "Incompatible pattern for Scalar suffix. Expected a format for a str value."
             ) from e
         cls.FORMATTED_SUFFIX_FORMAT = pattern
 
@@ -285,7 +285,7 @@ class AbstractValueWithQuantityObject:
         """
         Returns the suffix for the formatted string using the current unit.
 
-        :rtype: unicode
+        :rtype: str
         :returns:
             The suffix
         """

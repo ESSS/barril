@@ -8,7 +8,7 @@ from barril._foundation.types_ import IsNumber
 from oop_ext.interface._interface import ImplementsInterface
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
-from ._definitions import IQuantity, IScalar
+from .interfaces import IQuantity, IScalar
 from ._quantity import ObtainQuantity, Quantity
 from .unit_database import UnitDatabase
 
@@ -80,7 +80,7 @@ class Scalar(AbstractValueWithQuantityObject):
         """
         For internal use only. Is used to initialize the actual quantity.
 
-        :type quantity: unicode or IQuantity
+        :type quantity: str or IQuantity
         :param quantity:
             The quantity of this scalar.
 
@@ -171,7 +171,7 @@ class Scalar(AbstractValueWithQuantityObject):
         """
         Should return a user-friendly representation of this object.
 
-        :rtype: unicode
+        :rtype: str
         :returns:
             The formatted string
         """
@@ -207,14 +207,14 @@ class Scalar(AbstractValueWithQuantityObject):
 
         .. note:: The unit is NOT returned in this method.
 
-        :param unicode unit:
+        :param str unit:
             The unit in which the value should be gotten.
 
-        :param unicode value_format:
+        :param str value_format:
             If not None (default), replaces the default value_format defined in
             Scalar.FORMATTED_VALUE_FORMAT
 
-        :rtype: unicode
+        :rtype: str
         :returns:
             A string with the value of this scalar formatted.
         """
@@ -231,7 +231,7 @@ class Scalar(AbstractValueWithQuantityObject):
         :param unit:
             The unit in which the value should be gotten.
 
-        :type unit: unicode or list(tuple(unicode, int)) for derived units.
+        :type unit: str or list(tuple(str, int)) for derived units.
 
         :param value_format:
             @see Scalar.GetFormattedValue

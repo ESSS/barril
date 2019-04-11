@@ -27,10 +27,10 @@ class _LightweightQuantity:
 
     def __init__(self, unit, category):
         """
-        :param unicode unit:
+        :param str unit:
             The unit name. It must be valid within that category.
 
-        :param unicode category:
+        :param str category:
             A valid category.
         """
         self._unit = unit

@@ -22,7 +22,7 @@ class FractionScalar(AbstractValueWithQuantityObject):
         """
         For internal use only. Is used to initialize the actual quantity.
 
-        :type quantity: unicode or IQuantity
+        :type quantity: str or IQuantity
         :param quantity:
             The quantity of this scalar.
 
@@ -92,7 +92,7 @@ class FractionScalar(AbstractValueWithQuantityObject):
         :param fraction_value:
             the fraction value to convert
 
-        :type quantity: IQuantity or unicode
+        :type quantity: IQuantity or str
         :param quantity:
             the IQuantity object to use in the conversion, or the quantity type itself
 
@@ -108,7 +108,7 @@ class FractionScalar(AbstractValueWithQuantityObject):
         :returns:
             the converted fraction value
         """
-        # check if a quantity type unicode was passed
+        # check if a quantity type str was passed
         if quantity.__class__ == str:
             # Note: actually ignoring the initial quantity type in this case because we
             # do the operation just using the from unit which may have any category (i.e.
@@ -141,7 +141,7 @@ class FractionScalar(AbstractValueWithQuantityObject):
         """
         Returns the value part, that is, the number and fraction.
 
-        :rtype: C{unicode}
+        :rtype: str
         :returns:
             the formatted string
         """
@@ -149,9 +149,9 @@ class FractionScalar(AbstractValueWithQuantityObject):
 
     def __str__(self):
         """
-        unicode() operator.
+        str() operator.
 
-        :rtype: C{unicode}
+        :rtype: str
         :returns:
             the string representation
         """
@@ -161,11 +161,11 @@ class FractionScalar(AbstractValueWithQuantityObject):
         """
         Returns the string representation for this FractionScalar.
 
-        :param unicode unit:
+        :param str unit:
             If None, returns the current unit, otherwise, returns the string representation of the
             value converted to the given unit.
 
-        :rtype: unicode
+        :rtype: str
         :returns:
             The string representation
         """
@@ -175,7 +175,7 @@ class FractionScalar(AbstractValueWithQuantityObject):
         """
         repr() operator.
 
-        :rtype: C{unicode}
+        :rtype: str
         :returns:
             the string representation
         """

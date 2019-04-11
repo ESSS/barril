@@ -5,7 +5,7 @@ from barril.units.unit_database import UnitDatabase
 from oop_ext.interface._interface import ImplementsInterface
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
-from ._definitions import IArray
+from .interfaces import IArray
 from ._quantity import Quantity
 
 __all__ = [str("Array")]  # pylint: disable=invalid-all-object
@@ -108,7 +108,7 @@ class Array(AbstractValueWithQuantityObject):
         :param values:
             The values to be set.
 
-        :param unicode unit:
+        :param str unit:
             The unit of the values being passed (note that GetUnit will still return the previous
             unit set -- this unit is only to indicate the internal value).
         """
@@ -226,7 +226,7 @@ class Array(AbstractValueWithQuantityObject):
         """
         Should return a user-friendly representation of this object.
 
-        :rtype: unicode
+        :rtype: str
         :returns:
             The formatted string
         """

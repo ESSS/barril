@@ -70,7 +70,7 @@ from weakref import WeakValueDictionary
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject  # noqa
 from ._array import Array  # noqa
-from ._definitions import (
+from .interfaces import (
     IArray,
     IObjectWithQuantity,
     IQuantity,

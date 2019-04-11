@@ -24,7 +24,7 @@ def FormatFloat(pattern, value, grouping=False, use_locale=True):
         This function is used to format float values. There are known issues like convert unit
         from scalar where value is "0.0", it can get representation "-0.0"
 
-    :param unicode pattern:
+    :param str pattern:
         The pattern used to format the value.
 
     :param float value:
@@ -37,9 +37,9 @@ def FormatFloat(pattern, value, grouping=False, use_locale=True):
         separator.
 
     :param bool use_locale:
-        Use locale.format or unicode % operator (locale-independent output).
+        Use locale.format or str % operator (locale-independent output).
 
-    :rtype: unicode
+    :rtype: str
     :returns:
         The formated value.
     """
@@ -78,7 +78,7 @@ def FloatFromString(str_value, use_locale=True):
     """
     Converts the given string value into a float, taking in account the current locale.
 
-    :param unicode str_value:
+    :param str str_value:
 
     :rtype: float
     :returns:

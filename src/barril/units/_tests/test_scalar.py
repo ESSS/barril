@@ -1,7 +1,6 @@
 """
-    REMARKS: Unicode
-        The "unit" must not containt unicode character. All unit name and representation must use
-        the standard ascii representation.
+    The 'unit' must not containt str character. All unit name and representation must use
+    the standard ascii representation.
 """
 
 import pytest

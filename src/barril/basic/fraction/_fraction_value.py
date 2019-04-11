@@ -18,7 +18,7 @@ class FractionValue:
     Usage example:
         foo = FractionValue(1.25, Fraction(3, 4))
         print float(foo) # 2.0 == 1.25 + 3/4
-        print unicode(foo) # '1.25 3/4'
+        print str(foo) # '1.25 3/4'
 
     .. note:: neither number nor fractional part can be None, TypeError will be raised whenever an
            attempt to set any of these parts as None is performed.
@@ -107,7 +107,7 @@ class FractionValue:
 
     def GetLocalizedString(self):
         """
-        :rtype: unicode
+        :rtype: str
         :returns:
             Returns a locale-dependent and user-friendly string representation.
         """
@@ -117,7 +117,7 @@ class FractionValue:
 
     def GetLocalizedFraction(self):
         """
-        :rtype: unicode
+        :rtype: str
         :returns:
             Returns a locale-dependent and user-friendly string representation only of fraction
             part.
@@ -128,7 +128,7 @@ class FractionValue:
 
     def __str__(self):
         """
-        :rtype: unicode
+        :rtype: str
         :returns:
             Returns a locale-agnostic and user-friendly string representation.
         """
@@ -140,7 +140,7 @@ class FractionValue:
             A function that receives, respectively, string format to convert value and a float
             value. Must return a string representation of value.
 
-        :rtype: unicode
+        :rtype: str
         :returns:
             Fraction values follow format "%(number)g %(fraction)s".
         """
@@ -155,7 +155,7 @@ class FractionValue:
             A function that receives, respectively, string format to convert value and a float
             value. Must return a string representation of fractional part.
 
-        :rtype: unicode
+        :rtype: str
         :returns:
             Fractional part follows format "%(fraction)s". Whenever fractional part is equivalent to
             zero it is omitted from string to be more user-friendly.
@@ -167,7 +167,7 @@ class FractionValue:
 
     def __repr__(self):
         """
-        :rtype: unicode
+        :rtype: str
         :returns:
             Returns the programmer-friendly string representation.
         """
@@ -304,7 +304,7 @@ class FractionValue:
         """
         Create a FractionValue from a string.
 
-        :param unicode text:
+        :param str text:
             The text with a fraction-value, that is, three integers separated by space and slash
             respectively.
             <value> <value>/<value>
@@ -356,7 +356,7 @@ class FractionValue:
         """
         Verify if the given text matchs only the fractional part of a fraction value.
 
-        :param unicode text:
+        :param str text:
             The given text to verify matching
 
         @raise: ValueError

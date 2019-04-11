@@ -182,11 +182,6 @@ def testFlattenForStrings():
     assert Flatten(a) == ["a", "bb", "ccc"]
 
 
-def testFlattenForUnicodeStrings():
-    a = [["a", "bb"], "ccc"]
-    assert Flatten(a) == ["a", "bb", "ccc"]
-
-
 def testFlattenForTuples():
     a = [(0, "a"), (1, "b"), ((2, "c"), 42)]
     assert Flatten(a) == [0, "a", 1, "b", 2, "c", 42]

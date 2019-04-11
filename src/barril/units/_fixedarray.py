@@ -25,7 +25,7 @@ class FixedArray(Array):
         :param values:
             A sequence with its initial values.
 
-        :param unicode unit:
+        :param str unit:
             Unit (not used if a quantity is passed).
         """
         if dimension < 2:

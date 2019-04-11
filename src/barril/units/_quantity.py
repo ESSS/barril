@@ -7,7 +7,7 @@ from barril.units.exceptions import QuantityValidationError
 from barril.units.unit_database import UnitDatabase, UnitsError
 from oop_ext.interface._interface import ImplementsInterface
 
-from ._definitions import IQuantity, IQuantity2, IQuantity3, IQuantity6
+from .interfaces import IQuantity, IQuantity2, IQuantity3, IQuantity6
 from ._unit_constants import UNKNOWN_UNIT
 
 __all__ = ["Quantity"]  # pylint: disable=invalid-all-object
@@ -24,16 +24,16 @@ def _ObtainReduced(state):
 
 def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
     """
-    :type unit: unicode or odict(unicode -> list(unicode, int))
+    :type unit: str or odict(str -> list(str, int))
     :param unit:
         Either the string representing the unit or an ordered dict with the composing unit
         information (if composing all the info, including the category will be received in this
         parameter).
 
-    :param unicode category:
+    :param str category:
         The category for the quantity. If not given it's gotten based on the unit passed.
 
-    :param unicode unknown_unit_caption:
+    :param str unknown_unit_caption:
         The caption for the unit (used if unknown).
 
     :rtype Quantity:
@@ -42,7 +42,7 @@ def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
     quantities_cache = unit_database.quantities_cache
 
     if unit.__class__ in (list, tuple):
-        # It may be a derived unit with list(tuple(unicode, int)) -- in which case the category
+        # It may be a derived unit with list(tuple(str, int)) -- in which case the category
         # must also be a list (of the same size)
         if len(unit) == 1 and unit[0][1] == 1:
             # Although passed as composing, it's a simple case
@@ -82,7 +82,7 @@ def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
     except KeyError:
         pass  # Just go on with the regular flow.
 
-    assert unit.__class__ != bytes, "unit must be given as unicode string always"
+    assert unit.__class__ != bytes, "unit must be given as str string always"
     if unit.__class__ != str:
         if category is None:
             raise AssertionError("Currently only supporting unit as a string.")
@@ -186,7 +186,7 @@ class Quantity:
         Create a category that represents a derived quantity (usually resulting from operations
         among quantities).
 
-        :type category_to_unit_and_exps: odict(unicode->(list(unicode, int)))
+        :type category_to_unit_and_exps: odict(str->(list(str, int)))
         :param category_to_unit_and_exps:
             This odict defines the category as well as the unit in a way that we can specify exponents.
 
@@ -217,7 +217,7 @@ class Quantity:
                 # information must be a dict)
                 if category.__class__ != str:
                     raise TypeError(
-                        "Only unicode is accepted. %s is not." % category.__class__
+                        "Only str is accepted. %s is not." % category.__class__
                     )
 
                 # Getting the category should be enough to know that it's valid.
@@ -229,7 +229,7 @@ class Quantity:
                 else:
                     if unit.__class__ != str:
                         raise TypeError(
-                            "Only unicode is accepted. %s is not." % unit.__class__
+                            "Only str is accepted. %s is not." % unit.__class__
                         )
                     unit_database.CheckQuantityTypeUnit(
                         category_info.quantity_type, unit
@@ -317,12 +317,12 @@ class _Quantity(Quantity):
 
     def __init__(self, category, unit, unknown_unit_caption=None):
         """
-        :type category: unicode or odict
+        :type category: str or odict
         :param category:
             The category to which the new quantity should be bound or an odict with information on
             the derived category/unit (in which case the unit parameter is ignored).
 
-        :param unicode unit:
+        :param str unit:
             The unit which the new quantity should have.
         """
         try:
@@ -381,7 +381,7 @@ class _Quantity(Quantity):
         # changes to accommodate making operations with derived units (internally the
         # information must be a dict)
         if category.__class__ != str:
-            raise TypeError("Only unicode is accepted. %s is not." % category.__class__)
+            raise TypeError("Only str is accepted. %s is not." % category.__class__)
 
         # Getting the category should be enough to check that it's valid.
         category_info = unit_database.GetCategoryInfo(category)
@@ -392,7 +392,7 @@ class _Quantity(Quantity):
             unit = category_info.default_unit
         else:
             if unit.__class__ != str:
-                raise TypeError("Only unicode is accepted. %s is not." % unit.__class__)
+                raise TypeError("Only str is accepted. %s is not." % unit.__class__)
             unit_database.CheckCategoryUnit(category, unit)
 
         # store it as odict so that we can have a decent order when creating a string from
@@ -482,11 +482,11 @@ class _Quantity(Quantity):
         """
         Used to make a string representation given a string and its exponents
 
-        :type repr_and_exp: list(tuple(unicode, int))
+        :type repr_and_exp: list(tuple(str, int))
         :param repr_and_exp:
             List of string, exponent.
 
-        :rtype: unicode
+        :rtype: str
         :returns:
             A string with the string and the given exponents. E.g.:
             Receiving [('m', 2)] will return m ** 2
@@ -530,7 +530,7 @@ class _Quantity(Quantity):
         Create a string with the joined units and exponents of the units to be shown to the
         user.
 
-        :rtype: unicode
+        :rtype: str
         :returns:
             A string with the units with the joined exponents.
             E.g.: m2, 1/m and so on (dependent on the unit it has internally)
@@ -570,7 +570,7 @@ class _Quantity(Quantity):
 
     def GetUnitName(self):
         """
-        :rtype: unicode
+        :rtype: str
         :returns:
             A description of the unit showing all the containing parts in the category,
             units and the exponent for each. This differs from the default unit because the
@@ -594,7 +594,7 @@ class _Quantity(Quantity):
         """
         Shortcut for getting the valid units
 
-        :rtype: list(unicode)
+        :rtype: list(str)
         :returns:
             The valid units.
         """
@@ -623,7 +623,7 @@ class _Quantity(Quantity):
         :param float value:
             The value to be converted.
 
-        :type to_unit: unicode or list((unicode, int))
+        :type to_unit: str or list((str, int))
         :param to_unit:
             The target unit for the value.
 
@@ -654,7 +654,7 @@ class _Quantity(Quantity):
         :param object value:
             The value to be converted (array, numpy, etc.)
 
-        :type to_unit: unicode or list((unicode, int))
+        :type to_unit: str or list((str, int))
         :param to_unit:
             The target unit for the value.
 
@@ -672,13 +672,13 @@ class _Quantity(Quantity):
         Method for getting different representations of comparisons for messages, using operator or
         literals.
 
-        :param unicode operator:
+        :param str operator:
             The key to the operator.
 
         :param Boolean use_literals:
             If literals are to be used.
 
-        :returns unicode:
+        :returns str:
             A comparison representation, with operator or literal.
         """
         OPERATOR_COMPARISON = {">": ">", "<": "<", ">=": ">=", "<=": "<="}
@@ -701,7 +701,7 @@ class _Quantity(Quantity):
         :param float value:
             Value with boundary error.
 
-        :param unicode operator:
+        :param str operator:
             The key to the operator.
 
         :param float limit_value:

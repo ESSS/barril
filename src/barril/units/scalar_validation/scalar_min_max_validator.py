@@ -14,10 +14,10 @@ class ScalarMinMaxValidator:
         """
         :param Scalar scalar:
             The scalar to be checked against its limits
-        :param unicode name:
+        :param str name:
             The scalar property name
 
-        :returns unicode:
+        :returns str:
             The built warning message saying if the scalar is less or greater than its limits
         """
         predicate = cls._ScalarCheckMsgPredicate(scalar)
@@ -32,10 +32,10 @@ class ScalarMinMaxValidator:
         """
          :param Scalar scalar:
             The scalar to be checked against its limits
-        :param unicode name:
+        :param str name:
             The scalar property name
 
-        :returns unicode:
+        :returns str:
             The built error message saying if the scalar is less or greater than its limits
         """
         predicate = cls._ScalarCheckMsgPredicate(scalar)
@@ -51,7 +51,7 @@ class ScalarMinMaxValidator:
         :param Scalar scalar:
             The scalar to be checked against its limits
 
-        :returns unicode:
+        :returns str:
             The built message saying if the scalar is less or greater than its limits
         """
         try:

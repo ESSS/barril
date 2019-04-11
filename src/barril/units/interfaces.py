@@ -1,8 +1,5 @@
-
-from oop_ext.interface import Interface
-
 """
-The basic interfaces for the coilib50.units module should be defined here
+Barril basic interfaces are defined here.
 
 Basic concepts used in the interfaces:
 
@@ -19,6 +16,9 @@ Unit: the unit itself. E.g.: m, m/s, kg
 Note: The naming conventions were gathered from posc:
     http://www.posc.org/ebiz/pefxml/patternsobjects.html http://www.posc.org/refs/poscUnits20.xml
 """
+
+from oop_ext.interface import Interface
+
 
 __all__ = [
     "IQuantity",
@@ -40,14 +40,14 @@ class IQuantity(Interface):
 
     def GetCategory(self):
         """
-        :rtype: unicode
+        :rtype: str
         :returns:
             The constant category for this quantity.
         """
 
     def GetQuantityType(self):
         """
-        :rtype: unicode
+        :rtype: str
         :returns:
             The constant name of the quantity type for this quantity.
             This method may be slow.
@@ -55,7 +55,7 @@ class IQuantity(Interface):
 
     def GetUnit(self):
         """
-        :rtype: unicode
+        :rtype: str
         :returns:
             The unit for this quantity.
         """
@@ -81,7 +81,7 @@ class IQuantity2(Interface):
 
     def GetComposingCategories(self):
         """
-        :rtype: tuple(unicode) or unicode
+        :rtype: tuple(str) or str
         :returns:
             A tuple with the categories used.
 
@@ -94,7 +94,7 @@ class IQuantity2(Interface):
 
     def GetComposingUnits(self):
         """
-        :rtype: tuple(tuple(unicode, int)) or unicode
+        :rtype: tuple(tuple(str, int)) or str
         :returns:
             A list that will have an entry for each category in this quantity.
             e.g.:tuple(('m',1), ('m',1))
@@ -108,7 +108,7 @@ class IQuantity2(Interface):
 
     def GetComposingUnitsJoiningExponents(self):
         """
-        :rtype: tuple(tuple(unicode, int))
+        :rtype: tuple(tuple(str, int))
         :returns:
             A list with an entry pointing to the total number of exponents found for each unit.
             e.g.:tuple(('m',2))
@@ -146,14 +146,14 @@ class IQuantity6(Interface):
 
     def GetUnitCaption(self):
         """
-        :rtype: unicode
+        :rtype: str
         :returns:
             The text related to this quantity that should be shown to the user.
         """
 
     def SetUnknownCaption(self, caption):
         """
-        :param unicode caption:
+        :param str caption:
             The caption to be shown to the user when it's an unknown unit.
 
             An empty caption means that the regular unit should be shown to the user even
@@ -162,7 +162,7 @@ class IQuantity6(Interface):
 
     def GetUnknownCaption(self):
         """
-        :rtype: unicode
+        :rtype: str
         :returns:
             The caption that's set to be shown to the user when it's an unknown unit.
         """
@@ -191,7 +191,7 @@ class IScalar(IObjectWithQuantity, IQuantity):
 
     def GetValue(self, unit=None):
         """
-        :param unicode unit:
+        :param str unit:
             The unit we want to get the value back.
             Note that, for lightweight scalars, this parameter will be used *only* for verification
             that the stored unit is the expected one.
@@ -204,7 +204,7 @@ class IScalar(IObjectWithQuantity, IQuantity):
 
     def GetValueAndUnit(self):
         """
-        :rtype: (float, unicode)
+        :rtype: (float, str)
         :returns:
             Tuple with value and current unit name.
         """
@@ -225,7 +225,7 @@ class IArray(IObjectWithQuantity):
 
     def GetValues(self, unit=None):
         """
-        :param unicode unit:
+        :param str unit:
             This is the unit in which we want the value
 
         :rtype: sequence or numpy array.

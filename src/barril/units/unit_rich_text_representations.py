@@ -710,10 +710,10 @@ class UnitRichTextRepresentations:
     @classmethod
     def GetUnitHtmlRepresentation(cls, unit):
         """
-        :param unicode unit:
+        :param str unit:
             The unit to get the html representation
 
-        :rtype: unicode
+        :rtype: str
         :returns:
             The unit representation in html, for example the unit 'm3' is represented as
             <html>m<sup>3</sup></html>
