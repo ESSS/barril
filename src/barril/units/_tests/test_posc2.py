@@ -38,12 +38,12 @@ def testDivisionError():
                 try:
                     unit_database.Convert(category, base_unit, unit, i)
                 except Exception as e:
-                    raise(e, "Error converting: from: %s to: %s" % (base_unit, unit))
+                    raise (e, "Error converting: from: %s to: %s" % (base_unit, unit))
 
                 try:
                     unit_database.Convert(category, unit, base_unit, i)
                 except Exception as e:
-                    raise(e, "Error converting: from: %s to: %s" % (unit, base_unit))
+                    raise (e, "Error converting: from: %s to: %s" % (unit, base_unit))
 
 
 def testScfPerBblToM3ToM3():

@@ -137,7 +137,6 @@ class FractionValue:
         """
         return self.__FormatToString(lambda pattern, value: pattern % value)
 
-
     def __FormatToString(self, formatter):
         """
         :param callable formatter:

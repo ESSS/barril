@@ -261,9 +261,7 @@ def testMergeDictsWithWrongTypes():
     with pytest.raises(TypeError) as excinfo:
         MergeDictsRecursively({}, "Foo")
 
-    expected = (
-        'Wrong types passed. Expecting two dictionaries, got: "dict" and "str"'
-    )
+    expected = 'Wrong types passed. Expecting two dictionaries, got: "dict" and "str"'
     assert str(excinfo.value) == expected
 
 
@@ -293,8 +291,6 @@ def testStructMap():
 
     a = {"alpha": [1, 2, 3], "bravo": (1, 2, 3)}
 
-    obtained = StructMap(
-        a, func=str, conditional=lambda x: isinstance(x, int)
-    )
+    obtained = StructMap(a, func=str, conditional=lambda x: isinstance(x, int))
     expected = {"alpha": ["1", "2", "3"], "bravo": ("1", "2", "3")}
     assert obtained == expected

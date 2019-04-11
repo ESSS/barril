@@ -97,4 +97,3 @@ def testStrFormat():
         barril.basic.format_float.FormatFloat = original_format_float
 
     assert str(f) == "28/15"
-

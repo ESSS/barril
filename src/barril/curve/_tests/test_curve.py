@@ -4,41 +4,50 @@ from barril.units import Array, ObtainQuantity, UnitDatabase
 import pytest
 
 
-@pytest.yield_fixture 
+@pytest.yield_fixture
 def unit_database():
     unit_database = UnitDatabase()
-    unit_database.AddUnit('length', 'milimeters', 'mm', '%f * 1000.0', '%f / 1000.0')
-    unit_database.AddUnitBase('length', 'meters', 'm')
-    unit_database.AddUnit('length', 'centimeters', 'cm', '%f * 100.0', '%f / 100.0')
-    unit_database.AddUnit('length', 'kilometers', 'km', '%f / 1000.0', '%f * 1000.0')
+    unit_database.AddUnit("length", "milimeters", "mm", "%f * 1000.0", "%f / 1000.0")
+    unit_database.AddUnitBase("length", "meters", "m")
+    unit_database.AddUnit("length", "centimeters", "cm", "%f * 100.0", "%f / 100.0")
+    unit_database.AddUnit("length", "kilometers", "km", "%f / 1000.0", "%f * 1000.0")
 
-    unit_database.AddUnitBase('time', 'seconds', 's')
-    unit_database.AddUnit('time', 'minutes', 'min', '%f * 60.0', ' %f * 60.0')
-    unit_database.AddUnit('time', 'hours', 'h', '%f * 3600.0', ' %f * 3600.0')
-    unit_database.AddUnit('time', 'days', 'd', '%f * 86400.0', ' %f * 86400.0')
+    unit_database.AddUnitBase("time", "seconds", "s")
+    unit_database.AddUnit("time", "minutes", "min", "%f * 60.0", " %f * 60.0")
+    unit_database.AddUnit("time", "hours", "h", "%f * 3600.0", " %f * 3600.0")
+    unit_database.AddUnit("time", "days", "d", "%f * 86400.0", " %f * 86400.0")
 
-    unit_database.AddCategory(category='length', quantity_type='length', valid_units=['cm', 'm', 'km'])
-    unit_database.AddCategory(category='time', quantity_type='time', valid_units=['s', 'min', 'h', 'd'])
-    
+    unit_database.AddCategory(
+        category="length", quantity_type="length", valid_units=["cm", "m", "km"]
+    )
+    unit_database.AddCategory(
+        category="time", quantity_type="time", valid_units=["s", "min", "h", "d"]
+    )
+
     UnitDatabase.PushSingleton(unit_database)
     yield unit_database
-    
+
     UnitDatabase.PopSingleton()
+
 
 def testCurves(unit_database):
     import numpy
 
-    r = ObtainQuantity('m', 'length')
+    r = ObtainQuantity("m", "length")
 
     values10 = Array(r, values=numpy.array(list(range(10)), dtype=numpy.int32))
     values9 = Array(r, values=numpy.array(list(range(9)), dtype=numpy.int32))
 
-    domain9 = Array('time', values=numpy.array(list(range(9)), dtype=numpy.int32), unit='s')
-    domain10 = Array('time', values=numpy.array(list(range(10)), dtype=numpy.int32), unit='s')
+    domain9 = Array(
+        "time", values=numpy.array(list(range(9)), dtype=numpy.int32), unit="s"
+    )
+    domain10 = Array(
+        "time", values=numpy.array(list(range(10)), dtype=numpy.int32), unit="s"
+    )
 
     with pytest.raises(ValueError):
         Curve(values10, domain9)
-        
+
     c = Curve(values10, domain10)
 
     with pytest.raises(ValueError):
@@ -46,8 +55,9 @@ def testCurves(unit_database):
     with pytest.raises(ValueError):
         c.SetImage(values9)
 
+
 def testSlice(unit_database):
-    quantity = ObtainQuantity('m', 'length')
+    quantity = ObtainQuantity("m", "length")
 
     def MakeArray(values):
         return Array(quantity, values=values)
@@ -61,15 +71,19 @@ def testSlice(unit_database):
     assert curve[:3] == ([5, 10, 20], [0, 1, 2])
     assert curve[:] == ([5, 10, 20, 30, 40, 50], [0, 1, 2, 3, 4, 5])
 
+
 def testCurveRepr(unit_database):
-    q1 = ObtainQuantity('m', 'length')
-    q2 = ObtainQuantity('d', 'time')
+    q1 = ObtainQuantity("m", "length")
+    q2 = ObtainQuantity("d", "time")
     curve = Curve(Array(q1, []), Array(q2, []))
-    assert 'Curve(m, d)[]' == repr(curve)
+    assert "Curve(m, d)[]" == repr(curve)
 
     curve = Curve(Array(q1, list(range(3))), Array(q2, list(range(3))))
-    assert 'Curve(m, d)[(0, 0) (1, 1) (2, 2)]' == repr(curve)
+    assert "Curve(m, d)[(0, 0) (1, 1) (2, 2)]" == repr(curve)
 
     curve = Curve(Array(q1, list(range(100))), Array(q2, list(range(100))))
-    expected = 'Curve(m, d)[(0, 0) (1, 1) (2, 2) (3, 3) (4, 4) (5, 5) (6, 6) (7, 7) (8, 8) (9, 9) (10, 10) (11, 11) (12, 12) (13, 13) (14, 14) (15, 15) (16, 16) (17, 17) (18, 18) (19, 19) (20, 20)  ... ]'
+    expected = "Curve(m, d)[(0, 0) (1, 1) (2, 2) (3, 3) (4, 4) (5, 5) \
+                            (6, 6) (7, 7) (8, 8) (9, 9) (10, 10) (11, 11) \
+                            (12, 12) (13, 13) (14, 14) (15, 15) (16, 16) \
+                            (17, 17) (18, 18) (19, 19) (20, 20)  ... ]"
     assert repr(curve) == expected

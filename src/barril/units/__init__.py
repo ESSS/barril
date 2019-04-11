@@ -71,7 +71,14 @@ from weakref import WeakValueDictionary
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject  # noqa
 from ._array import Array  # noqa
 from ._definitions import (
-    IArray, IObjectWithQuantity, IQuantity, IQuantity2, IQuantity3, IQuantity6, IScalar)  # noqa
+    IArray,
+    IObjectWithQuantity,
+    IQuantity,
+    IQuantity2,
+    IQuantity3,
+    IQuantity6,
+    IScalar,
+)  # noqa
 from ._fixedarray import FixedArray  # noqa
 from ._fraction_scalar import FractionScalar  # noqa
 from ._quantity import ObtainQuantity, Quantity, ReadOnlyError  # noqa

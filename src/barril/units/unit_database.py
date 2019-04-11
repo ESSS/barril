@@ -248,7 +248,10 @@ class UnitDatabase(Singleton):
         )
 
         if fill_categories:
-            for quantity_alias, quantity_type in cls._ADDITIONAL_CATEGORY_ALIASES.items():
+            for (
+                quantity_alias,
+                quantity_type,
+            ) in cls._ADDITIONAL_CATEGORY_ALIASES.items():
                 unit_database.AddCategory(quantity_alias, quantity_type)
 
         return unit_database
@@ -307,6 +310,7 @@ class UnitDatabase(Singleton):
             # If this is not the default singleton, mark from where was it created if we need
             # to check later on.
             from io import StringIO
+
             s = StringIO()
             traceback.print_stack(file=s)
             self._database_created_from = s.getvalue()
@@ -643,9 +647,7 @@ class UnitDatabase(Singleton):
         :raises InvalidUnitError:
             if the unit provided is not accepted for this category
         """
-        assert category.__class__ == str, "Expected unicode. Found: %s" % (
-            category,
-        )
+        assert category.__class__ == str, "Expected unicode. Found: %s" % (category,)
         assert unit.__class__ == str, "Expected unicode. Found: %s" % (unit,)
 
         key = (category, unit)

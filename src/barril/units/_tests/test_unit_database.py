@@ -169,13 +169,13 @@ def testBaseUnit(unit_database_custom_conversion):
 def testUnitNames(unit_database_custom_conversion):
     unit_database = unit_database_custom_conversion
     names = {
-            "meters",
-            "milimeters",
-            "centimeters",
-            "kilometers",
-            "miles",
-            "inches",
-            "micrometers",
+        "meters",
+        "milimeters",
+        "centimeters",
+        "kilometers",
+        "miles",
+        "inches",
+        "micrometers",
     }
     onames = set(unit_database.GetUnitNames("length"))
     assert names == onames

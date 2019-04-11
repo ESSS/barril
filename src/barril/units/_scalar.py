@@ -14,6 +14,7 @@ from .unit_database import UnitDatabase
 
 __all__ = [str("Scalar")]  # pylint: disable=invalid-all-object
 
+
 @total_ordering
 @ImplementsInterface(IScalar, IQuantity)
 class Scalar(AbstractValueWithQuantityObject):
@@ -192,7 +193,10 @@ class Scalar(AbstractValueWithQuantityObject):
         try:
             value_format % 1.11
         except TypeError as e:
-            raise(e, "Incompatible format for Scalar value. Expected a format for a float value.")
+            raise (
+                e,
+                "Incompatible format for Scalar value. Expected a format for a float value.",
+            )
         cls.FORMATTED_VALUE_FORMAT = value_format
 
     def GetFormattedValue(self, unit=None, value_format=None):

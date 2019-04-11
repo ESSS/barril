@@ -279,7 +279,10 @@ class AbstractValueWithQuantityObject:
         try:
             pattern % "unit"
         except TypeError as e:
-            raise(e, "Incompatible pattern for Scalar suffix. Expected a format for a unicode value.")
+            raise (
+                e,
+                "Incompatible pattern for Scalar suffix. Expected a format for a unicode value.",
+            )
         cls.FORMATTED_SUFFIX_FORMAT = pattern
 
     def GetFormattedSuffix(self, unit=None):

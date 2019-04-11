@@ -259,13 +259,7 @@ class Quantity:
 # ===================================================================================================
 # Quantity
 # ===================================================================================================
-@ImplementsInterface(
-    IQuantity,
-    IQuantity2,
-    IQuantity3,
-    IQuantity6,
-    no_check=True
-)
+@ImplementsInterface(IQuantity, IQuantity2, IQuantity3, IQuantity6, no_check=True)
 class _Quantity(Quantity):
     """
     The quantity is an object that has its associated category, quantity type and unit.
@@ -381,7 +375,10 @@ class _Quantity(Quantity):
             self._category = self._MakeStr(
                 [
                     (category, exp)
-                    for category, (_unit, exp) in self._category_to_unit_and_exps.items()
+                    for category, (
+                        _unit,
+                        exp,
+                    ) in self._category_to_unit_and_exps.items()
                 ]
             )
             self._quantity_type = self._MakeStr(list(rep_and_exp.items()))
@@ -390,9 +387,7 @@ class _Quantity(Quantity):
                 (unit, exp)
                 for _category, (unit, exp) in self._category_to_unit_and_exps.items()
             )
-            self._composing_categories = tuple(
-                self._category_to_unit_and_exps.keys()
-            )
+            self._composing_categories = tuple(self._category_to_unit_and_exps.keys())
             self._category_info = None
             return
 
