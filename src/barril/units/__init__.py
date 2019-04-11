@@ -109,7 +109,6 @@ __all__ = [
     "IArray",  # pylint: disable=invalid-all-object
     "IQuantity",  # pylint: disable=invalid-all-object
     "IObjectWithQuantity",  # pylint: disable=invalid-all-object
-    "IReadOnlyScalar",  # pylint: disable=invalid-all-object
     "IScalar",  # pylint: disable=invalid-all-object
     "InvalidQuantityTypeError",  # pylint: disable=invalid-all-object
     "InvalidUnitError",  # pylint: disable=invalid-all-object

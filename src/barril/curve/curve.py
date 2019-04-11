@@ -3,6 +3,7 @@ from barril.units.interfaces import IArray
 from oop_ext.interface._interface import ImplementsInterface, AssertImplements
 from oop_ext.foundation.decorators import Implements, Deprecated
 
+__all__ = ["Curve"]  # pylint: disable=invalid-all-object
 
 @ImplementsInterface(ICurve)
 class Curve:
