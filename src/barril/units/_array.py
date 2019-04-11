@@ -8,7 +8,7 @@ from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from .interfaces import IArray
 from ._quantity import Quantity
 
-__all__ = [str("Array")]  # pylint: disable=invalid-all-object
+__all__ = ["Array"]  # pylint: disable=invalid-all-object
 
 
 @ImplementsInterface(IArray)
