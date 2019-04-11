@@ -49,7 +49,7 @@ def IsSubclass(p_class, p_class_name):
     """
     is_instance = isinstance  # put it in locals
 
-    if is_instance(p_class_name, (str,)):
+    if is_instance(p_class_name, str):
         if p_class_name == p_class.__name__:
             return True
 
@@ -62,7 +62,7 @@ def IsSubclass(p_class, p_class_name):
     elif (
         is_instance(p_class_name, tuple)
         and len(p_class_name) > 0
-        and is_instance(p_class_name[0], (str,))
+        and is_instance(p_class_name[0], str)
     ):
 
         names = None

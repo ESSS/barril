@@ -145,7 +145,7 @@ def ChangeScalars(owner, **scalars):
     Change the given set of scalars for the owner
 
     :param owner: object
-        The objectwith scalar instances to be changed.
+        The object with scalar instances to be changed.
 
     :param kwargs scalars:
         A dict with the scalar attribute names and the values and unit to be changed

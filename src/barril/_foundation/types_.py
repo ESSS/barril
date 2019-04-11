@@ -203,9 +203,7 @@ def IsBasicType(value, accept_compound=False, additional=None):
     return False
 
 
-_ACCEPTED_BASIC_TYPES = tuple(
-    list((str,)) + list((int,)) + [bytes, float, bool, complex]
-)
+_ACCEPTED_BASIC_TYPES = tuple([str, int, bytes, float, bool, complex])
 
 
 def CheckBasicType(value, accept_compound=False, additional=None):

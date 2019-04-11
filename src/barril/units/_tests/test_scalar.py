@@ -1,6 +1,5 @@
 """
-    The 'unit' must not containt str character. All unit name and representation must use
-    the standard ascii representation.
+    The 'unit' must be ascii only.
 """
 
 import pytest
@@ -14,6 +13,7 @@ from barril.units import (
     ObtainQuantity,
     Quantity,
     Scalar,
+    ChangeScalars,
 )
 
 
@@ -600,3 +600,18 @@ def testScalarHashEq():
     assert hash(scalar2) != hash(scalar3)
     assert scalar3 != scalar4
     assert hash(scalar4) != hash(scalar3)
+
+
+def testChangeScalars():
+    class Fluid:
+        density = Scalar(0, "lbm/galUS")
+        concentration = Scalar(0, "%")
+
+    fluid = Fluid()
+    assert fluid.density.GetValue("lbm/galUS") == 0
+    assert fluid.concentration.GetValue("%") == 0
+
+    ChangeScalars(fluid, density=(10, "lbm/galUS"), concentration=(1.0, "%"))
+
+    assert fluid.density.GetValue("lbm/galUS") == 10
+    assert fluid.concentration.GetValue("%") == 1.0

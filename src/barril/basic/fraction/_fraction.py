@@ -4,7 +4,7 @@ from functools import total_ordering
 
 SMALL = 1e-8
 
-NumberType = ((int,), float)
+NumberType = (int, float)
 SequenceType = (tuple, list)
 
 
