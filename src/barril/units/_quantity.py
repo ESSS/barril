@@ -851,7 +851,7 @@ class _Quantity(Quantity):
         return not self == other
 
     # Used to cast a constant value
-    BASE_NUMBER = (int,) + (float,)
+    BASE_NUMBER = (int, float)
 
     OPERATION_DIVIDE = "Divide"
     OPERATION_MULTIPLY = "Multiply"

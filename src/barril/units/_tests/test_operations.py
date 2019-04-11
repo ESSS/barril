@@ -19,7 +19,7 @@ def testOperation():
         operator.mul,
         operator.mod,
     ]
-    SCALAR_TYPES = (int,) + (float,)
+    SCALAR_TYPES = (int, float)
 
     for operation in SCALAR_OPERATION:
         for cast_type in SCALAR_TYPES:

@@ -193,10 +193,9 @@ class Scalar(AbstractValueWithQuantityObject):
         try:
             value_format % 1.11
         except TypeError as e:
-            raise (
-                e,
-                "Incompatible format for Scalar value. Expected a format for a float value.",
-            )
+            raise TypeError(
+                "Incompatible format for Scalar value. Expected a format for a float value."
+            ) from e
         cls.FORMATTED_VALUE_FORMAT = value_format
 
     def GetFormattedValue(self, unit=None, value_format=None):
