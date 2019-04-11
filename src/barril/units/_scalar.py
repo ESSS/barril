@@ -1,17 +1,14 @@
 """
 This module provides the implementation of an Scalar object.
 """
-from __future__ import absolute_import, division, unicode_literals
 
 from functools import total_ordering
 
-import six
-from six.moves import range  # @UnresolvedImport
-
-from barril._foundation.reraise import Reraise
 from barril._foundation.types_ import IsNumber
+from oop_ext.interface._interface import ImplementsInterface
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
+from .interfaces import IQuantity, IScalar
 from ._quantity import ObtainQuantity, Quantity
 from .unit_database import UnitDatabase
 
@@ -19,6 +16,7 @@ __all__ = [str("Scalar")]  # pylint: disable=invalid-all-object
 
 
 @total_ordering
+@ImplementsInterface(IScalar, IQuantity)
 class Scalar(AbstractValueWithQuantityObject):
     """
     This object represents a scalar (a value that has an associated quantity).
@@ -82,7 +80,7 @@ class Scalar(AbstractValueWithQuantityObject):
         """
         For internal use only. Is used to initialize the actual quantity.
 
-        :type quantity: unicode or IQuantity
+        :type quantity: str or IQuantity
         :param quantity:
             The quantity of this scalar.
 
@@ -173,15 +171,11 @@ class Scalar(AbstractValueWithQuantityObject):
         """
         Should return a user-friendly representation of this object.
 
-        :rtype: unicode
+        :rtype: str
         :returns:
             The formatted string
         """
         return self.GetFormatted()
-
-    if six.PY2:
-        __unicode__ = __str__
-        del __str__
 
     # Format ---------------------------------------------------------------------------------------
 
@@ -199,10 +193,9 @@ class Scalar(AbstractValueWithQuantityObject):
         try:
             value_format % 1.11
         except TypeError as e:
-            Reraise(
-                e,
-                "Incompatible format for Scalar value. Expected a format for a float value.",
-            )
+            raise TypeError(
+                "Incompatible format for Scalar value. Expected a format for a float value."
+            ) from e
         cls.FORMATTED_VALUE_FORMAT = value_format
 
     def GetFormattedValue(self, unit=None, value_format=None):
@@ -214,14 +207,14 @@ class Scalar(AbstractValueWithQuantityObject):
 
         .. note:: The unit is NOT returned in this method.
 
-        :param unicode unit:
+        :param str unit:
             The unit in which the value should be gotten.
 
-        :param unicode value_format:
+        :param str value_format:
             If not None (default), replaces the default value_format defined in
             Scalar.FORMATTED_VALUE_FORMAT
 
-        :rtype: unicode
+        :rtype: str
         :returns:
             A string with the value of this scalar formatted.
         """
@@ -238,7 +231,7 @@ class Scalar(AbstractValueWithQuantityObject):
         :param unit:
             The unit in which the value should be gotten.
 
-        :type unit: unicode or list(tuple(unicode, int)) for derived units.
+        :type unit: str or list(tuple(str, int)) for derived units.
 
         :param value_format:
             @see Scalar.GetFormattedValue

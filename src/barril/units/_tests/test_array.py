@@ -1,9 +1,6 @@
-from __future__ import absolute_import, division, unicode_literals
 
 import pytest
 from pytest import approx
-import six
-from six.moves import range, zip
 
 from barril._foundation.odict import odict
 from barril import units
@@ -44,7 +41,7 @@ def testArrayWithNaNs(unit_database_len):
 
 def testStr():
     array = units.Array("length", values=[100, 150, 200], unit="m")
-    assert six.text_type(array) == "100 150 200 [m]"
+    assert str(array) == "100 150 200 [m]"
 
 
 def testConvertValuesFromArray():
@@ -124,7 +121,7 @@ def testCategoryParameters(unit_database_len, mocker):
 
     assert not a2.IsValid()
     assert a2._is_valid is False
-    assert six.text_type(a2._validity_exception) == "my value error"
+    assert str(a2._validity_exception) == "my value error"
     assert a2._DoValidateValues.call_count == 1
 
     with pytest.raises(ValueError):
@@ -198,7 +195,7 @@ def testArrayOperations(unit_database_len_time):
     calculated1 = Array.CreateWithQuantity(quantity, [value])
 
     array = s1 * s2
-    six.text_type(array)  # just to see if it works...
+    str(array)  # just to see if it works...
     assert calculated1 == s1 * s2
 
     quantity, value = unit_database.Sum(m, km_city, 1, 0.01)

@@ -1,14 +1,10 @@
-from __future__ import absolute_import, unicode_literals
 
 from ._array import Array
 from ._quantity import Quantity
 
-__all__ = [str("FixedArray")]  # pylint: disable=invalid-all-object
+__all__ = ["FixedArray"]  # pylint: disable=invalid-all-object
 
 
-# ===================================================================================================
-# FixedArray
-# ===================================================================================================
 class FixedArray(Array):
     """Represents an Array with fixed number of elements.
     """
@@ -29,7 +25,7 @@ class FixedArray(Array):
         :param values:
             A sequence with its initial values.
 
-        :param unicode unit:
+        :param str unit:
             Unit (not used if a quantity is passed).
         """
         if dimension < 2:

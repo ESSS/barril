@@ -1,8 +1,6 @@
-from __future__ import absolute_import, division, unicode_literals
 
 import operator
 
-import six
 import pytest
 
 from barril.units import ObtainQuantity
@@ -21,7 +19,7 @@ def testOperation():
         operator.mul,
         operator.mod,
     ]
-    SCALAR_TYPES = six.integer_types + (float,)
+    SCALAR_TYPES = (int, float)
 
     for operation in SCALAR_OPERATION:
         for cast_type in SCALAR_TYPES:

@@ -1,4 +1,3 @@
-from __future__ import absolute_import, unicode_literals
 
 from barril.units.unit_rich_text_representations import UnitRichTextRepresentations
 

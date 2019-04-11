@@ -65,14 +65,20 @@ B{Design decisions}:
 @see: L{definitions} for the basic interfaces defined.
 """
 
-from __future__ import absolute_import, unicode_literals
 
 from weakref import WeakValueDictionary
 
-import six
-
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject  # noqa
 from ._array import Array  # noqa
+from .interfaces import (
+    IArray,
+    IObjectWithQuantity,
+    IQuantity,
+    IQuantity2,
+    IQuantity3,
+    IQuantity6,
+    IScalar,
+)  # noqa
 from ._fixedarray import FixedArray  # noqa
 from ._fraction_scalar import FractionScalar  # noqa
 from ._quantity import ObtainQuantity, Quantity, ReadOnlyError  # noqa
@@ -94,20 +100,25 @@ from .unit_database import (  # noqa
 )
 
 __all__ = [
-    str("AbstractValueWithQuantityObject"),  # pylint: disable=invalid-all-object
-    str("Array"),  # pylint: disable=invalid-all-object
-    str("ChangeScalars"),  # pylint: disable=invalid-all-object
-    str("FixedArray"),  # pylint: disable=invalid-all-object
-    str("FractionScalar"),  # pylint: disable=invalid-all-object
-    str("GetUnknownQuantity"),  # pylint: disable=invalid-all-object
-    str("InvalidQuantityTypeError"),  # pylint: disable=invalid-all-object
-    str("InvalidUnitError"),  # pylint: disable=invalid-all-object
-    str("Quantity"),  # pylint: disable=invalid-all-object
-    str("ReadOnlyError"),  # pylint: disable=invalid-all-object
-    str("Scalar"),  # pylint: disable=invalid-all-object
-    str("ScalarFactory"),  # pylint: disable=invalid-all-object
-    str("UnitDatabase"),  # pylint: disable=invalid-all-object
-    str("UnitsError"),  # pylint: disable=invalid-all-object
+    "AbstractValueWithQuantityObject",  # pylint: disable=invalid-all-object
+    "Array",  # pylint: disable=invalid-all-object
+    "ChangeScalars",  # pylint: disable=invalid-all-object
+    "FixedArray",  # pylint: disable=invalid-all-object
+    "FractionScalar",  # pylint: disable=invalid-all-object
+    "GetUnknownQuantity",  # pylint: disable=invalid-all-object
+    "IArray",  # pylint: disable=invalid-all-object
+    "IQuantity",  # pylint: disable=invalid-all-object
+    "IObjectWithQuantity",  # pylint: disable=invalid-all-object
+    "IReadOnlyScalar",  # pylint: disable=invalid-all-object
+    "IScalar",  # pylint: disable=invalid-all-object
+    "InvalidQuantityTypeError",  # pylint: disable=invalid-all-object
+    "InvalidUnitError",  # pylint: disable=invalid-all-object
+    "Quantity",  # pylint: disable=invalid-all-object
+    "ReadOnlyError",  # pylint: disable=invalid-all-object
+    "Scalar",  # pylint: disable=invalid-all-object
+    "ScalarFactory",  # pylint: disable=invalid-all-object
+    "UnitDatabase",  # pylint: disable=invalid-all-object
+    "UnitsError",  # pylint: disable=invalid-all-object
 ]
 
 # Unknown quantity instance
@@ -117,9 +128,6 @@ UNKNOWN_QUANTITY = ObtainQuantity(UNKNOWN_UNIT, UNKNOWN_QUANTITY_TYPE)
 UNKNOWN_QUANTITY_WEAK_CACHE = WeakValueDictionary()
 
 
-# ===================================================================================================
-# GetUnknownQuantity
-# ===================================================================================================
 def GetUnknownQuantity(unknown_caption=None):
     """
     Returns the quantity object for Unknown units.
@@ -132,15 +140,12 @@ def GetUnknownQuantity(unknown_caption=None):
     return UNKNOWN_QUANTITY
 
 
-# ===================================================================================================
-# Utilities
-# ===================================================================================================
 def ChangeScalars(owner, **scalars):
     """
     Change the given set of scalars for the owner
 
     :param owner: object
-        The objectwith scalar instances to be changed.
+        The object with scalar instances to be changed.
 
     :param kwargs scalars:
         A dict with the scalar attribute names and the values and unit to be changed
@@ -153,6 +158,6 @@ def ChangeScalars(owner, **scalars):
         # To change unit only
         ChangeScalars(fluid, density=(None, 'lbm/galUS'))
     """
-    for scalar_name, (value, unit) in six.iteritems(scalars):
+    for scalar_name, (value, unit) in scalars.items():
         new_scalar = getattr(owner, scalar_name).CreateCopy(value=value, unit=unit)
         setattr(owner, scalar_name, new_scalar)

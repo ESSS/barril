@@ -1,20 +1,14 @@
-from __future__ import absolute_import, division, unicode_literals
 
 import locale
 import math
 import re
-
-import six
 
 from barril._foundation.types_ import CheckType
 from barril.basic.format_float import FloatFromString
 from barril.basic.fraction import Fraction
 
 
-# ===================================================================================================
-# FractionValue
-# ===================================================================================================
-class FractionValue(object):
+class FractionValue:
     """
     Simple class that acts as a container for both a number and a fraction. Useful
     to aggregate both concepts in a single object.
@@ -24,7 +18,7 @@ class FractionValue(object):
     Usage example:
         foo = FractionValue(1.25, Fraction(3, 4))
         print float(foo) # 2.0 == 1.25 + 3/4
-        print unicode(foo) # '1.25 3/4'
+        print str(foo) # '1.25 3/4'
 
     .. note:: neither number nor fractional part can be None, TypeError will be raised whenever an
            attempt to set any of these parts as None is performed.
@@ -113,7 +107,7 @@ class FractionValue(object):
 
     def GetLocalizedString(self):
         """
-        :rtype: unicode
+        :rtype: str
         :returns:
             Returns a locale-dependent and user-friendly string representation.
         """
@@ -123,7 +117,7 @@ class FractionValue(object):
 
     def GetLocalizedFraction(self):
         """
-        :rtype: unicode
+        :rtype: str
         :returns:
             Returns a locale-dependent and user-friendly string representation only of fraction
             part.
@@ -134,15 +128,11 @@ class FractionValue(object):
 
     def __str__(self):
         """
-        :rtype: unicode
+        :rtype: str
         :returns:
             Returns a locale-agnostic and user-friendly string representation.
         """
         return self.__FormatToString(lambda pattern, value: pattern % value)
-
-    if six.PY2:
-        __unicode__ = __str__
-        del __str__
 
     def __FormatToString(self, formatter):
         """
@@ -150,7 +140,7 @@ class FractionValue(object):
             A function that receives, respectively, string format to convert value and a float
             value. Must return a string representation of value.
 
-        :rtype: unicode
+        :rtype: str
         :returns:
             Fraction values follow format "%(number)g %(fraction)s".
         """
@@ -165,7 +155,7 @@ class FractionValue(object):
             A function that receives, respectively, string format to convert value and a float
             value. Must return a string representation of fractional part.
 
-        :rtype: unicode
+        :rtype: str
         :returns:
             Fractional part follows format "%(fraction)s". Whenever fractional part is equivalent to
             zero it is omitted from string to be more user-friendly.
@@ -177,7 +167,7 @@ class FractionValue(object):
 
     def __repr__(self):
         """
-        :rtype: unicode
+        :rtype: str
         :returns:
             Returns the programmer-friendly string representation.
         """
@@ -314,7 +304,7 @@ class FractionValue(object):
         """
         Create a FractionValue from a string.
 
-        :param unicode text:
+        :param str text:
             The text with a fraction-value, that is, three integers separated by space and slash
             respectively.
             <value> <value>/<value>
@@ -329,7 +319,7 @@ class FractionValue(object):
         :raises ValueError:
             If the text is not convertible to a FractionValue
         """
-        text = six.text_type(text).strip()
+        text = str(text).strip()
 
         if consider_locale:
             string_to_float_callable = FloatFromString
@@ -366,13 +356,13 @@ class FractionValue(object):
         """
         Verify if the given text matchs only the fractional part of a fraction value.
 
-        :param unicode text:
+        :param str text:
             The given text to verify matching
 
         @raise: ValueError
             When the text not match the expression, like "3 1/2"
         """
-        text = six.text_type(text).strip()
+        text = str(text).strip()
         m = cls._FRACTION_PARTIAL_RE.match(text)
         if m is None:
             raise ValueError('Please enter a text in the form: "3/4"')
@@ -405,7 +395,7 @@ class FractionValue(object):
             return result
 
         def GetMaxNumerator(value):
-            str_value = six.text_type(value)
+            str_value = str(value)
             ixe = str_value.lower().find("e")
 
             # How many digits?
@@ -450,7 +440,7 @@ class FractionValue(object):
             return infinity / infinity
 
         def GetFractionalPart(value):
-            str_value = six.text_type(value)
+            str_value = str(value)
             pos = str_value.find(".")
             return float("0." + str_value[pos + 1 :])
 
@@ -474,7 +464,7 @@ class FractionValue(object):
 
         integer_part = int(value)
         fractional_part = GetFractionalPart(value)
-        str_fractional_part = six.text_type(fractional_part)
+        str_fractional_part = str(fractional_part)
         max_numerator = GetMaxNumerator(fractional_part)
 
         # Hold the calculation
@@ -499,13 +489,13 @@ class FractionValue(object):
             denominators.append(L2 * denominators[i - 1] + denominators[i - 2])
 
             calculation = numerators[i] / float(denominators[i])
-            if six.text_type(calculation) == six.text_type(previous_calculation):
+            if str(calculation) == str(previous_calculation):
                 break
 
             numerator = abs(numerators[i])
             denominator = abs(denominators[i])
 
-            if six.text_type(calculation) == str_fractional_part:
+            if str(calculation) == str_fractional_part:
                 break
 
             previous_calculation = calculation
@@ -514,7 +504,7 @@ class FractionValue(object):
 
             i += 1
 
-        if six.text_type(numerator) == six.text_type(denominator):
+        if str(numerator) == str(denominator):
             return FractionValue(integer_part)
 
         return FractionValue(sign * integer_part, (sign * numerator, denominator))

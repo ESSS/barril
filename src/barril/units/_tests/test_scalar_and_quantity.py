@@ -1,11 +1,10 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from barril.units import Scalar
 from barril.units.unit_database import UnitDatabase
 import pytest
 
 
-class _LightweightQuantity(object):
+class _LightweightQuantity:
     """
     A lightweight representation of a quantity. This class has the following purposes:
 
@@ -28,10 +27,10 @@ class _LightweightQuantity(object):
 
     def __init__(self, unit, category):
         """
-        :param unicode unit:
+        :param str unit:
             The unit name. It must be valid within that category.
 
-        :param unicode category:
+        :param str category:
             A valid category.
         """
         self._unit = unit
@@ -54,9 +53,6 @@ class _LightweightQuantity(object):
         return UnitDatabase.GetSingleton()
 
 
-# ===================================================================================================
-# _LightweightScalar
-# ===================================================================================================
 class _LightweightScalar(
     tuple
 ):  # Could derive from _LightweightQuantity, but this way is faster

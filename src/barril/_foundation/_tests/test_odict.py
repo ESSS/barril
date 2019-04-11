@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 
 from barril._foundation.odict import odict
 

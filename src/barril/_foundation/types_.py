@@ -2,10 +2,6 @@
 Extensions to python native types.
 """
 
-from __future__ import unicode_literals
-
-import six
-
 from barril._foundation.klass import IsInstance
 
 _TRUE_VALUES = ["TRUE", "YES", "1"]
@@ -22,8 +18,7 @@ def _GetKnownNumberTypes():
     This code replaces an old implementation with "code replacement". Not checked if we have any
     performance penalties.
     """
-    result = {float, complex}
-    result.update(set(six.integer_types))
+    result = {float, complex, int}
     try:
         import numpy
     except ImportError:
@@ -33,9 +28,6 @@ def _GetKnownNumberTypes():
     return tuple(result)
 
 
-# ===================================================================================================
-# Boolean
-# ===================================================================================================
 def Boolean(text):
     """
     :param str text:
@@ -54,9 +46,6 @@ def Boolean(text):
     return text_upper in _TRUE_VALUES
 
 
-# ===================================================================================================
-# MakeTuple
-# ===================================================================================================
 def MakeTuple(object_):
     """
     Returns the given object as a tuple, if it is not, creates one with it inside.
@@ -70,9 +59,6 @@ def MakeTuple(object_):
         return (object_,)
 
 
-# ===================================================================================================
-# CheckType
-# ===================================================================================================
 def CheckType(object_, type_, message=None):
     """
     Check if the given object is of the given type, raising a descriptive "TypeError" if it is
@@ -120,9 +106,6 @@ def CheckType(object_, type_, message=None):
     return result
 
 
-# ===================================================================================================
-# CheckFormatString
-# ===================================================================================================
 def CheckFormatString(pattern, *arguments):
     """
     Checks if the given format string (for instance, "%.g") is valid for the given arguments.
@@ -137,9 +120,6 @@ def CheckFormatString(pattern, *arguments):
         raise ValueError("%r is not a valid format string." % pattern)
 
 
-# ===================================================================================================
-# _IsNumber
-# ===================================================================================================
 def _IsNumber(v):
     """
     Actual function code for IsNumber.
@@ -152,9 +132,6 @@ def _IsNumber(v):
     return isinstance(v, _KNOWN_NUMBER_TYPES)
 
 
-# ===================================================================================================
-# IsNumber
-# ===================================================================================================
 def IsNumber(v):
     """
     Checks if the given value is a number
@@ -179,18 +156,12 @@ def IsNumber(v):
     return _IsNumber(v)
 
 
-# ===================================================================================================
-# CheckIsNumber
-# ===================================================================================================
 def CheckIsNumber(v):
     if not IsNumber(v):
         raise TypeError("Expecting a number. Received:%s (%s)" % (v, type(v)))
     return True
 
 
-# ===================================================================================================
-# IsBasicType
-# ===================================================================================================
 def IsBasicType(value, accept_compound=False, additional=None):
     """
     :param object value:
@@ -216,7 +187,7 @@ def IsBasicType(value, accept_compound=False, additional=None):
 
     if accept_compound:
         if isinstance(value, dict):
-            for key, val in six.iteritems(value):
+            for key, val in value.items():
                 if not IsBasicType(key, accept_compound, additional) or not IsBasicType(
                     val, accept_compound, additional
                 ):
@@ -232,14 +203,9 @@ def IsBasicType(value, accept_compound=False, additional=None):
     return False
 
 
-_ACCEPTED_BASIC_TYPES = tuple(
-    list(six.string_types) + list(six.integer_types) + [bytes, float, bool, complex]
-)
+_ACCEPTED_BASIC_TYPES = tuple([str, int, bytes, float, bool, complex])
 
 
-# ===================================================================================================
-# CheckBasicType
-# ===================================================================================================
 def CheckBasicType(value, accept_compound=False, additional=None):
     """
     .. see:: IsBasicType for parameters descriptions.
@@ -258,9 +224,6 @@ def CheckBasicType(value, accept_compound=False, additional=None):
     return True
 
 
-# ===================================================================================================
-# CheckEnum
-# ===================================================================================================
 def CheckEnum(value, enum_values):
     """
     Checks if the given value belongs to the given enum. This function is meant to replace code like
@@ -289,9 +252,6 @@ def CheckEnum(value, enum_values):
         raise ValueError(msg % (value, list(enum_values)))
 
 
-# ===================================================================================================
-# Intersection
-# ===================================================================================================
 def Intersection(*sequences):
     """
     Return the intersection of all the elements in the given sequences, ie, the items common to all
@@ -309,9 +269,6 @@ def Intersection(*sequences):
     return result
 
 
-# ===================================================================================================
-# OrderedIntersection
-# ===================================================================================================
 def OrderedIntersection(*sequences):
     """
     Like Intersection, but the returned sequence is in the order of the first one.
@@ -323,9 +280,6 @@ def OrderedIntersection(*sequences):
     return [x for x in sequences[0] if x in intersection]
 
 
-# ===================================================================================================
-# AsList
-# ===================================================================================================
 def AsList(arg):
     """Returns the given argument as a list; if already a list, return it unchanged, otherwise
     return a list with the arg as only element.
@@ -339,9 +293,6 @@ def AsList(arg):
     return [arg]
 
 
-# ===================================================================================================
-# Flatten
-# ===================================================================================================
 def Flatten(iterable, skip_types=None):
     """
     :rtype: list
@@ -351,9 +302,6 @@ def Flatten(iterable, skip_types=None):
     return list(IterFlattened(iterable, skip_types))
 
 
-# ===================================================================================================
-# IterFlattened
-# ===================================================================================================
 def IterFlattened(iterable, skip_types=None):
     """
     Flattens recursively the passed iterable with subsequences into a flat iterator.
@@ -373,10 +321,9 @@ def IterFlattened(iterable, skip_types=None):
     if skip_types is None:
         skip_types = []
 
-    for s in six.string_types:
-        if s not in skip_types:
-            # Exceptional case: we want to treat strings as elements!
-            skip_types.append(s)
+    if str not in skip_types:
+        # Exceptional case: we want to treat strings as elements!
+        skip_types.append(str)
 
     skip_types_tuple = tuple(skip_types)
 
@@ -398,9 +345,6 @@ def IterFlattened(iterable, skip_types=None):
                 yield x
 
 
-# ===================================================================================================
-# MergeDictsRecursively
-# ===================================================================================================
 def MergeDictsRecursively(original_dict, merging_dict):
     """
     Merges two dictionaries by iterating over both of their keys and returning the merge
@@ -437,9 +381,6 @@ def MergeDictsRecursively(original_dict, merging_dict):
     return original_dict
 
 
-# ===================================================================================================
-# ListDuplicates
-# ===================================================================================================
 def ListDuplicates(iterable):
     """
     Given a sequence, returns a list containing all the items in 'iterable' that appear more than
@@ -450,14 +391,11 @@ def ListDuplicates(iterable):
     seen = set()
     seen_add = seen.add
     # adds all elements it doesn't know yet to seen and all other to seen_twice
-    seen_twice = set(x for x in iterable if x in seen or seen_add(x))
+    seen_twice = {x for x in iterable if x in seen or seen_add(x)}
     # turn the set into a list (as requested)
     return list(seen_twice)
 
 
-# ===================================================================================================
-# StructMap
-# ===================================================================================================
 def StructMap(obj, func, conditional=lambda x: True):
     """
     Maps an object recursively for dict/tuple/list types.

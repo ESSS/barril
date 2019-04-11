@@ -1,13 +1,8 @@
-from __future__ import absolute_import, unicode_literals
 
 import numpy
-from six.moves import zip  # @UnresolvedImport
 
 
-# ===================================================================================================
-# _ValueGenerator
-# ===================================================================================================
-class _ValueGenerator(object):
+class _ValueGenerator:
     """
     Generator for values so that 1 one of the values is generated from iterating through a list and
     the other is a fixed values returned.

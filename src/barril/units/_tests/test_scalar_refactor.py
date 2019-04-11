@@ -1,14 +1,8 @@
-from __future__ import absolute_import, unicode_literals
-
-import six
 
 from barril.units.unit_database import InvalidUnitError, UnitDatabase
 
 
-# ===================================================================================================
-# _SimpleScalar
-# ===================================================================================================
-class _SimpleScalar(object):
+class _SimpleScalar:
     def __init__(self, value, unit, category=None):
         self._value = value
         self._value_quantity = _ObtainQuantity(unit, category)
@@ -35,9 +29,6 @@ class _SimpleScalar(object):
 _quantities_cache = {}
 
 
-# ===================================================================================================
-# _ObtainQuantity
-# ===================================================================================================
 def _ObtainQuantity(unit, category=None):
     if not category:
         unit_database = UnitDatabase.GetSingleton()
@@ -52,10 +43,7 @@ def _ObtainQuantity(unit, category=None):
     return quantity
 
 
-# ===================================================================================================
-# _SimpleQuantity
-# ===================================================================================================
-class _SimpleQuantity(object):
+class _SimpleQuantity:
     def __init__(self, category, unit):
         self._category = category
         self._unit = unit
@@ -73,15 +61,8 @@ class _SimpleQuantity(object):
     def __str__(self):
         return "Quantity(%s, %s)" % (self._category, self._unit)
 
-    if six.PY2:
-        __unicode__ = __str__
-        del __str__
 
-
-# ===================================================================================================
-# _ComposingQuantity
-# ===================================================================================================
-class _ComposingQuantity(object):
+class _ComposingQuantity:
     def __init__(self, category_to_unit_and_exps):
         self._category_to_unit_and_exps = category_to_unit_and_exps
 
@@ -89,7 +70,7 @@ class _ComposingQuantity(object):
 def testScalarRefactor():
     quantity = _ObtainQuantity("m")
     quantity2 = _ObtainQuantity("m")
-    assert "Quantity(length, m)" == six.text_type(quantity)
+    assert "Quantity(length, m)" == str(quantity)
     assert quantity is quantity2
 
     scalar = _SimpleScalar(10, "m")

@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 
 # constants for unknown quantities
 UNKNOWN_QUANTITY_TYPE = "Unknown"
@@ -7,9 +6,6 @@ UNKNOWN_UNIT = "<unknown>"
 LENGTH_QUANTITY_TYPE = "length"
 
 
-# ===================================================================================================
-# CreateUnknwonwReadOnlyQuantity
-# ===================================================================================================
 def CreateUnknwonwReadOnlyQuantity():
     """
     :rtype: Quantity

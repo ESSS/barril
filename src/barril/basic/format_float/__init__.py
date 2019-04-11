@@ -2,13 +2,6 @@
 Locale-aware methods that convert to and from float values, trying to give the best representation
 possible.
 """
-from __future__ import absolute_import, unicode_literals
-
-import six
-
-# ===================================================================================================
-# Constants
-# ===================================================================================================
 
 PLUS_INFINITY = float("inf")
 PLUS_INFINITY_STR = "+INF"
@@ -20,9 +13,6 @@ NAN = float("nan")
 NAN_STR = "-1.#IND"
 
 
-# ===================================================================================================
-# FormatFloat
-# ===================================================================================================
 def FormatFloat(pattern, value, grouping=False, use_locale=True):
     """
     Formats the value given according to the current LC_NUMERIC setting. The format follows the
@@ -34,7 +24,7 @@ def FormatFloat(pattern, value, grouping=False, use_locale=True):
         This function is used to format float values. There are known issues like convert unit
         from scalar where value is "0.0", it can get representation "-0.0"
 
-    :param unicode pattern:
+    :param str pattern:
         The pattern used to format the value.
 
     :param float value:
@@ -47,9 +37,9 @@ def FormatFloat(pattern, value, grouping=False, use_locale=True):
         separator.
 
     :param bool use_locale:
-        Use locale.format or unicode % operator (locale-independent output).
+        Use locale.format or str % operator (locale-independent output).
 
-    :rtype: unicode
+    :rtype: str
     :returns:
         The formated value.
     """
@@ -84,14 +74,11 @@ def FormatFloat(pattern, value, grouping=False, use_locale=True):
     return result
 
 
-# ===================================================================================================
-# FloatFromString
-# ===================================================================================================
 def FloatFromString(str_value, use_locale=True):
     """
     Converts the given string value into a float, taking in account the current locale.
 
-    :param unicode str_value:
+    :param str str_value:
 
     :rtype: float
     :returns:
@@ -105,10 +92,10 @@ def FloatFromString(str_value, use_locale=True):
     """
     import locale
 
-    if str_value.__class__ != six.text_type:
+    if str_value.__class__ != str:
         from barril._foundation.types_ import CheckType
 
-        CheckType(str_value, six.text_type)
+        CheckType(str_value, str)
 
     if str_value == PLUS_INFINITY_STR:
         return PLUS_INFINITY
@@ -117,9 +104,6 @@ def FloatFromString(str_value, use_locale=True):
     elif str_value == NAN_STR:
         return NAN
     elif use_locale:
-        # In Python 2 use byte string within locale's atof, so to avoid any decode error.
-        if six.PY2:
-            str_value = str_value.encode(locale.getpreferredencoding())
         return locale.atof(str_value)
     else:
         return float(str_value)

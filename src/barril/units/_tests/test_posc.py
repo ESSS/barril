@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, unicode_literals
 
 from barril import units
 from barril.units import ObtainQuantity

@@ -1,14 +1,8 @@
-from __future__ import absolute_import, unicode_literals
-
-import six
 
 from barril.units import ObtainQuantity
 
 
-# ===================================================================================================
-# ScalarMinMaxValidator
-# ===================================================================================================
-class ScalarMinMaxValidator(object):
+class ScalarMinMaxValidator:
     """
     Simple helper class to create default checkers.
 
@@ -20,10 +14,10 @@ class ScalarMinMaxValidator(object):
         """
         :param Scalar scalar:
             The scalar to be checked against its limits
-        :param unicode name:
+        :param str name:
             The scalar property name
 
-        :returns unicode:
+        :returns str:
             The built warning message saying if the scalar is less or greater than its limits
         """
         predicate = cls._ScalarCheckMsgPredicate(scalar)
@@ -38,10 +32,10 @@ class ScalarMinMaxValidator(object):
         """
          :param Scalar scalar:
             The scalar to be checked against its limits
-        :param unicode name:
+        :param str name:
             The scalar property name
 
-        :returns unicode:
+        :returns str:
             The built error message saying if the scalar is less or greater than its limits
         """
         predicate = cls._ScalarCheckMsgPredicate(scalar)
@@ -57,7 +51,7 @@ class ScalarMinMaxValidator(object):
         :param Scalar scalar:
             The scalar to be checked against its limits
 
-        :returns unicode:
+        :returns str:
             The built message saying if the scalar is less or greater than its limits
         """
         try:
@@ -65,6 +59,6 @@ class ScalarMinMaxValidator(object):
             quantity.CheckValue(scalar.GetValue(), use_literals=True)
 
         except ValueError as error:
-            return six.text_type(error)
+            return str(error)
 
         return None

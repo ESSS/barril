@@ -1,9 +1,5 @@
-from __future__ import absolute_import, division, unicode_literals
 
 import copy
-
-import pytest
-import six
 
 from barril.basic.fraction import Fraction
 
@@ -23,10 +19,10 @@ def testBasicUsage():
 
 
 def testStr():
-    assert six.text_type(Fraction(5, 3)) == "5/3"
+    assert str(Fraction(5, 3)) == "5/3"
     assert repr(Fraction(5, 3)) == "Fraction(5, 3)"
 
-    assert six.text_type(Fraction(3 / 1000, 4)) == "3/4000"
+    assert str(Fraction(3 / 1000, 4)) == "3/4000"
 
 
 def testReduce():
@@ -87,25 +83,17 @@ def testStrFormat():
 
     # By default, the numbers are formatted using "%g"
     f = Fraction(5, 3)
-    assert six.text_type(f), "5/3"
+    assert str(f), "5/3"
 
     # Test the use of FormatFloat | 5.6 is 28/5 | 5.6/3 is 28/15
     f = Fraction(5.6, 3)
-    assert six.text_type(f) == "28/15"
+    assert str(f) == "28/15"
 
     original_format_float = barril.basic.format_float.FormatFloat
     barril.basic.format_float.FormatFloat = lambda x, y: "X%.2fX" % y
     try:
-        assert six.text_type(f) == "X28.00X/X15.00X"
+        assert str(f) == "X28.00X/X15.00X"
     finally:
         barril.basic.format_float.FormatFloat = original_format_float
 
-    assert six.text_type(f) == "28/15"
-
-
-@pytest.mark.skipif(
-    condition=not six.PY2, reason="Long type is no longer available in Python 3"
-)
-def testLong():
-    f = Fraction(20000000000000000, None)
-    assert tuple(f) == (20000000000000000, 1)
+    assert str(f) == "28/15"

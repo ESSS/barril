@@ -1,13 +1,12 @@
-from __future__ import unicode_literals
 
 from barril._foundation.klass import AllBasesNames, IsInstance, IsSubclass
 
 
-class _A(object):
+class _A:
     pass
 
 
-class _B(object):
+class _B:
     pass
 
 
@@ -46,7 +45,7 @@ def testIsSubclass():
 
 
 def testKlass():
-    class A(object):
+    class A:
         pass
 
     class B(A):
@@ -58,7 +57,7 @@ def testKlass():
     class D(C):
         pass
 
-    class Alpha(object):
+    class Alpha:
         pass
 
     class AlphaC(Alpha, C):

@@ -1,10 +1,4 @@
-from __future__ import unicode_literals
-
-
-# ===================================================================================================
-# UnitRichTextRepresentations
-# ===================================================================================================
-class UnitRichTextRepresentations(object):
+class UnitRichTextRepresentations:
     """
     Placeholder for unit rich text representations. For now return the units in html form, used for
     plot axis.
@@ -716,10 +710,10 @@ class UnitRichTextRepresentations(object):
     @classmethod
     def GetUnitHtmlRepresentation(cls, unit):
         """
-        :param unicode unit:
+        :param str unit:
             The unit to get the html representation
 
-        :rtype: unicode
+        :rtype: str
         :returns:
             The unit representation in html, for example the unit 'm3' is represented as
             <html>m<sup>3</sup></html>
