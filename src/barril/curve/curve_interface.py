@@ -3,6 +3,7 @@ from oop_ext.interface import Interface
 
 __all__ = ["ICurve"]  # pylint: disable=invalid-all-object
 
+
 class ICurve(Interface):
     """
         The curve is an element that has values and domain for those values.

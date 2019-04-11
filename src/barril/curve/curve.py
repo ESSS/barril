@@ -5,6 +5,7 @@ from oop_ext.foundation.decorators import Implements, Deprecated
 
 __all__ = ["Curve"]  # pylint: disable=invalid-all-object
 
+
 @ImplementsInterface(ICurve)
 class Curve:
     """
