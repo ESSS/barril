@@ -6,9 +6,6 @@ UNKNOWN_UNIT = "<unknown>"
 LENGTH_QUANTITY_TYPE = "length"
 
 
-# ===================================================================================================
-# CreateUnknwonwReadOnlyQuantity
-# ===================================================================================================
 def CreateUnknwonwReadOnlyQuantity():
     """
     :rtype: Quantity

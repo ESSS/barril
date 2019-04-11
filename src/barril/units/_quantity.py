@@ -10,12 +10,9 @@ from oop_ext.interface._interface import ImplementsInterface
 from ._definitions import IQuantity, IQuantity2, IQuantity3, IQuantity6
 from ._unit_constants import UNKNOWN_UNIT
 
-__all__ = [str("Quantity")]  # pylint: disable=invalid-all-object
+__all__ = ["Quantity"]  # pylint: disable=invalid-all-object
 
 
-# ===================================================================================================
-# _ObtainReduced
-# ===================================================================================================
 def _ObtainReduced(state):
     """
     :param list state:
@@ -25,9 +22,6 @@ def _ObtainReduced(state):
     return ObtainQuantity(odict(state), None, unknown_unit_caption)
 
 
-# ===================================================================================================
-# ObtainQuantity
-# ===================================================================================================
 def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
     """
     :type unit: unicode or odict(unicode -> list(unicode, int))
@@ -123,18 +117,12 @@ def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
         return quantity
 
 
-# ===================================================================================================
-# ReadOnlyError
-# ===================================================================================================
 class ReadOnlyError(NotImplementedError):
     """
     Error thrown if some change is attempted in the quantity (as it's now read-only).
     """
 
 
-# ===================================================================================================
-# Quantity
-# ===================================================================================================
 class Quantity:
     """
     .. note:: This class has nothing but factory methods. The real Quantity implementation is at
@@ -256,9 +244,6 @@ class Quantity:
         )
 
 
-# ===================================================================================================
-# Quantity
-# ===================================================================================================
 @ImplementsInterface(IQuantity, IQuantity2, IQuantity3, IQuantity6, no_check=True)
 class _Quantity(Quantity):
     """

@@ -53,9 +53,6 @@ class _LightweightQuantity:
         return UnitDatabase.GetSingleton()
 
 
-# ===================================================================================================
-# _LightweightScalar
-# ===================================================================================================
 class _LightweightScalar(
     tuple
 ):  # Could derive from _LightweightQuantity, but this way is faster

@@ -4,9 +4,6 @@ from barril.units.unit_database import UnitDatabase
 from ._quantity import ObtainQuantity
 
 
-# ===================================================================================================
-# MakeCustomaryToBase
-# ===================================================================================================
 def MakeCustomaryToBase(a, b, c, d):
     """
     Formula to convert some value from Customary Unit to Base Unit
@@ -32,9 +29,6 @@ def MakeCustomaryToBase(a, b, c, d):
     return ret
 
 
-# ===================================================================================================
-# MakeBaseToCustomary
-# ===================================================================================================
 def MakeBaseToCustomary(a, b, c, d):
     """
     Formula to convert some value from Derivate Unit to Base Unit
@@ -61,9 +55,6 @@ def MakeBaseToCustomary(a, b, c, d):
     return ret
 
 
-# ===================================================================================================
-# FillUnitDatabaseWithPosc
-# ===================================================================================================
 def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=False):
     """
     Fills the given database with the posc units and the additional units defined in barril.
@@ -16892,9 +16883,6 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     return db
 
 
-# ===================================================================================================
-# CreateVolumeQuantityFromLengthQuantity
-# ===================================================================================================
 def CreateVolumeQuantityFromLengthQuantity(length_quantity):
     """
     Creates a volume quantity based on the given length quantity.
@@ -16930,9 +16918,6 @@ def CreateVolumeQuantityFromLengthQuantity(length_quantity):
         return ObtainQuantity(volume_unit, "volume")
 
 
-# ===================================================================================================
-# CreateAreaQuantityFromLengthQuantity
-# ===================================================================================================
 def CreateAreaQuantityFromLengthQuantity(length_quantity):
     """
     Creates a area quantity based on the given length quantity.

@@ -8,9 +8,6 @@ from barril.basic.format_float import FloatFromString
 from barril.basic.fraction import Fraction
 
 
-# ===================================================================================================
-# FractionValue
-# ===================================================================================================
 class FractionValue:
     """
     Simple class that acts as a container for both a number and a fraction. Useful

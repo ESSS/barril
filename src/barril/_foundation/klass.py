@@ -3,9 +3,6 @@
 __bases_cache = {}
 
 
-# ===================================================================================================
-# AllBasesNames
-# ===================================================================================================
 def AllBasesNames(p_class):
     """
         :rtype: set with all the names of the bases classes of the given class.
@@ -20,9 +17,6 @@ def AllBasesNames(p_class):
         return __bases_cache.setdefault(p_class, result)
 
 
-# ===================================================================================================
-# IsInstance
-# ===================================================================================================
 def IsInstance(p_object, p_class_name):
     """
     :param object p_object:
@@ -49,9 +43,6 @@ class _NotFoundSentinel:
     pass
 
 
-# ===================================================================================================
-# IsSubclass
-# ===================================================================================================
 def IsSubclass(p_class, p_class_name):
     """
     Like the built-in issubclass, but also accepts a class name as parameter.

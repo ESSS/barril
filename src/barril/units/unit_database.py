@@ -4,32 +4,26 @@ import copy
 import math
 import traceback
 
-from barril._foundation.singleton import Singleton
 from barril._foundation.types_ import CheckType
+from oop_ext.foundation.singleton import Singleton
 
 # Contains the registry for all the avaiable unit types.
 __all__ = [
-    str("CategoryInfo"),  # pylint: disable=invalid-all-object
-    str("InvalidOperationError"),  # pylint: disable=invalid-all-object
-    str("InvalidQuantityTypeError"),  # pylint: disable=invalid-all-object
-    str("InvalidUnitError"),  # pylint: disable=invalid-all-object
-    str("UnitDatabase"),  # pylint: disable=invalid-all-object
-    str("UnitsError"),  # pylint: disable=invalid-all-object
+    "CategoryInfo",  # pylint: disable=invalid-all-object
+    "InvalidOperationError",  # pylint: disable=invalid-all-object
+    "InvalidQuantityTypeError",  # pylint: disable=invalid-all-object
+    "InvalidUnitError",  # pylint: disable=invalid-all-object
+    "UnitDatabase",  # pylint: disable=invalid-all-object
+    "UnitsError",  # pylint: disable=invalid-all-object
 ]
 
 
-# ===================================================================================================
-# UnitsError
-# ===================================================================================================
 class UnitsError(RuntimeError):
     """
     Base class for errors related to units.
     """
 
 
-# ===================================================================================================
-# InvalidQuantityTypeError
-# ===================================================================================================
 class InvalidQuantityTypeError(UnitsError):
     """
     Error raised when an invalid quantity type is found
@@ -42,9 +36,6 @@ class InvalidQuantityTypeError(UnitsError):
         UnitsError.__init__(self, msg)
 
 
-# ===================================================================================================
-# InvalidUnitError
-# ===================================================================================================
 class InvalidUnitError(UnitsError):
     """
     Error raised when an invalid unit is found
@@ -66,9 +57,6 @@ class InvalidUnitError(UnitsError):
         UnitsError.__init__(self, msg)
 
 
-# ===================================================================================================
-# InvalidOperationError
-# ===================================================================================================
 class InvalidOperationError(UnitsError):
     """
     Error raised when some operation but couldn't actually be performed with the given units.
@@ -76,9 +64,6 @@ class InvalidOperationError(UnitsError):
     """
 
 
-# ===================================================================================================
-# ComposedUnitException
-# ===================================================================================================
 class ComposedUnitError(UnitsError):
     """
     Error raised when a composed unit conversion is performed
@@ -86,9 +71,6 @@ class ComposedUnitError(UnitsError):
     """
 
 
-# ===================================================================================================
-# UnitInfo
-# ===================================================================================================
 class UnitInfo:
     """
     Holds information about a unit type
@@ -170,9 +152,6 @@ class UnitInfo:
         return not self == other
 
 
-# ===================================================================================================
-# CategoryInfo
-# ===================================================================================================
 @attr.s
 class CategoryInfo:
     """
@@ -192,9 +171,6 @@ class CategoryInfo:
     caption = attr.ib(default="")
 
 
-# ===================================================================================================
-# UnitDatabase
-# ===================================================================================================
 class UnitDatabase(Singleton):
     """
     Registry with all the available quantity types and units that represent the physical units.
@@ -647,8 +623,8 @@ class UnitDatabase(Singleton):
         :raises InvalidUnitError:
             if the unit provided is not accepted for this category
         """
-        assert category.__class__ == str, "Expected unicode. Found: %s" % (category,)
-        assert unit.__class__ == str, "Expected unicode. Found: %s" % (unit,)
+        assert category.__class__ == str, f"Expected unit of type str, found {category}"
+        assert unit.__class__ == str, f"Expected unit of type str, found {unit}"
 
         key = (category, unit)
         try:
@@ -1181,7 +1157,7 @@ class UnitDatabase(Singleton):
         this = self.GetInfo(quantity_type, from_unit, fix_unknown=True)
         other = self.GetInfo(quantity_type, to_unit, fix_unknown=True)
 
-        if isinstance(value, (float,) + (int,)):  # , numpy.ndarray)):
+        if isinstance(value, (float, int)):  # , numpy.ndarray)):
             return other.frombase(this.tobase(value))
         else:  # list / tuple
             frombase = other.frombase
@@ -1384,9 +1360,6 @@ class UnitDatabase(Singleton):
         return result, operation(value1, value2)
 
 
-# ===================================================================================================
-# RegisterConversion
-# ===================================================================================================
 class RegisterConversion:
 
     _registered = False

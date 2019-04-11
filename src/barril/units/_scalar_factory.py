@@ -2,9 +2,6 @@
 from ._scalar import Scalar as _Scalar
 
 
-# ===================================================================================================
-# ScalarFactory
-# ===================================================================================================
 def ScalarFactory(category):
     class Scalar(_Scalar):
         def __init__(self, *args, **kwargs):

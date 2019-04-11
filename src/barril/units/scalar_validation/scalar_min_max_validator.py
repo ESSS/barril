@@ -1,9 +1,7 @@
 
 from barril.units import ObtainQuantity
 
-# ===================================================================================================
-# ScalarMinMaxValidator
-# ===================================================================================================
+
 class ScalarMinMaxValidator:
     """
     Simple helper class to create default checkers.

@@ -2,9 +2,6 @@
 from oop_ext.interface import Interface
 
 
-# ===================================================================================================
-# ICurve
-# ===================================================================================================
 class ICurve(Interface):
     """
         The curve is an element that has values and domain for those values.

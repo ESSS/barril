@@ -1,9 +1,7 @@
 
 from barril.units.unit_database import InvalidUnitError, UnitDatabase
 
-# ===================================================================================================
-# _SimpleScalar
-# ===================================================================================================
+
 class _SimpleScalar:
     def __init__(self, value, unit, category=None):
         self._value = value
@@ -31,9 +29,6 @@ class _SimpleScalar:
 _quantities_cache = {}
 
 
-# ===================================================================================================
-# _ObtainQuantity
-# ===================================================================================================
 def _ObtainQuantity(unit, category=None):
     if not category:
         unit_database = UnitDatabase.GetSingleton()
@@ -48,9 +43,6 @@ def _ObtainQuantity(unit, category=None):
     return quantity
 
 
-# ===================================================================================================
-# _SimpleQuantity
-# ===================================================================================================
 class _SimpleQuantity:
     def __init__(self, category, unit):
         self._category = category
@@ -70,9 +62,6 @@ class _SimpleQuantity:
         return "Quantity(%s, %s)" % (self._category, self._unit)
 
 
-# ===================================================================================================
-# _ComposingQuantity
-# ===================================================================================================
 class _ComposingQuantity:
     def __init__(self, category_to_unit_and_exps):
         self._category_to_unit_and_exps = category_to_unit_and_exps

@@ -144,9 +144,6 @@ class AbstractValueWithQuantityObject:
             valid_units.append(current_unit)
         return valid_units
 
-    # ===============================================================================================
-    # __Stub
-    # ===============================================================================================
     class __Stub:
         """
         Helper class for used in CreateWithQuantity.

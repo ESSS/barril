@@ -30,9 +30,6 @@ __all__ = [
 ]
 
 
-# ===================================================================================================
-# IQuantity
-# ===================================================================================================
 class IQuantity(Interface):
     """
     The quantity is an object that has its associated category, quantity type and unit.
@@ -64,9 +61,6 @@ class IQuantity(Interface):
         """
 
 
-# ===================================================================================================
-# IQuantity2
-# ===================================================================================================
 class IQuantity2(Interface):
     """
     Optional interface to the IQuantity used to deal with operations dealing with different
@@ -134,9 +128,6 @@ class IQuantity2(Interface):
         """
 
 
-# ===================================================================================================
-# IQuantity3
-# ===================================================================================================
 class IQuantity3(Interface):
     def GetUnitDatabase(self):
         """
@@ -146,9 +137,6 @@ class IQuantity3(Interface):
         """
 
 
-# ===================================================================================================
-# IQuantity6
-# ===================================================================================================
 class IQuantity6(Interface):
     """
     Interface that defines a way to get the unit caption properly. This means that the
@@ -180,9 +168,6 @@ class IQuantity6(Interface):
         """
 
 
-# ===================================================================================================
-# IObjectWithQuantity
-# ===================================================================================================
 class IObjectWithQuantity(Interface):
     """
     Interface provided for an object that has an associated quantity.
@@ -198,9 +183,6 @@ class IObjectWithQuantity(Interface):
         """
 
 
-# ===================================================================================================
-# IScalar
-# ===================================================================================================
 class IScalar(IObjectWithQuantity, IQuantity):
     """
     Defines a value with an associated unit, without any support for modification, validation or
@@ -235,9 +217,6 @@ class IScalar(IObjectWithQuantity, IQuantity):
         """
 
 
-# ===================================================================================================
-# IArray
-# ===================================================================================================
 class IArray(IObjectWithQuantity):
     """
         The Array defines a list of values with a quantity (so, it implements the IObjectWithQuantity

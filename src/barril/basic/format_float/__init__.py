@@ -3,10 +3,6 @@ Locale-aware methods that convert to and from float values, trying to give the b
 possible.
 """
 
-# ===================================================================================================
-# Constants
-# ===================================================================================================
-
 PLUS_INFINITY = float("inf")
 PLUS_INFINITY_STR = "+INF"
 
@@ -17,9 +13,6 @@ NAN = float("nan")
 NAN_STR = "-1.#IND"
 
 
-# ===================================================================================================
-# FormatFloat
-# ===================================================================================================
 def FormatFloat(pattern, value, grouping=False, use_locale=True):
     """
     Formats the value given according to the current LC_NUMERIC setting. The format follows the
@@ -81,9 +74,6 @@ def FormatFloat(pattern, value, grouping=False, use_locale=True):
     return result
 
 
-# ===================================================================================================
-# FloatFromString
-# ===================================================================================================
 def FloatFromString(str_value, use_locale=True):
     """
     Converts the given string value into a float, taking in account the current locale.

@@ -2,12 +2,9 @@
 from ._array import Array
 from ._quantity import Quantity
 
-__all__ = [str("FixedArray")]  # pylint: disable=invalid-all-object
+__all__ = ["FixedArray"]  # pylint: disable=invalid-all-object
 
 
-# ===================================================================================================
-# FixedArray
-# ===================================================================================================
 class FixedArray(Array):
     """Represents an Array with fixed number of elements.
     """

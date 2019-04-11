@@ -1,9 +1,7 @@
 
 import numpy
 
-# ===================================================================================================
-# _ValueGenerator
-# ===================================================================================================
+
 class _ValueGenerator:
     """
     Generator for values so that 1 one of the values is generated from iterating through a list and

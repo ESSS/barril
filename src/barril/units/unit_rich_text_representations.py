@@ -1,8 +1,3 @@
-
-
-# ===================================================================================================
-# UnitRichTextRepresentations
-# ===================================================================================================
 class UnitRichTextRepresentations:
     """
     Placeholder for unit rich text representations. For now return the units in html form, used for
