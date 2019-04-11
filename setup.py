@@ -12,7 +12,7 @@ with io.open("README.rst", encoding="UTF-8") as readme_file:
 with io.open("CHANGELOG.rst", encoding="UTF-8") as changelog_file:
     history = changelog_file.read()
 
-requirements = ["attrs>=18.1.0", "numpy>=1.11.0", "oop-ext>=2.4.0"]
+requirements = ["attrs>=18.1.0", "numpy>=1.11.0", "oop-ext>=0.2.4"]
 extras_require = {
     "docs": ["sphinx >= 1.4", "sphinx_rtd_theme", "sphinx-autodoc-typehints"],
     "testing": ["codecov", "pytest", "pytest-cov", "pytest-mock", "pre-commit", "tox"],
