@@ -2,7 +2,7 @@
 1.6.1 (2019-04-11)
 ------------------
 
-* Fix export issues.
+* Change export to include ICurve and Curve and exclude IReadOnlyScalar.
 
 1.6.0 (2019-04-10)
 ------------------
