@@ -13,10 +13,10 @@ from pytest import approx
 
 def testPoscFrequency(unit_database_posc):
     u1 = units.Scalar("frequency", 1, "Hz")
-    assert u1.GetValue("GHz") == 1.0E-9
+    assert u1.GetValue("GHz") == 1.0e-9
 
     u1 = units.Scalar("frequency", 1, "GHz")
-    assert u1.GetValue("Hz") == 1E9
+    assert u1.GetValue("Hz") == 1e9
 
 
 def testPoscTime(unit_database_posc):
@@ -353,11 +353,11 @@ def testPower(unit_database_posc):
     assert "volt ampere" == ObtainQuantity("VA").GetQuantityType()
     assert "volt ampere reactive" == ObtainQuantity("VAr").GetQuantityType()
 
-    assert unit_database.Convert("force", "N", "kN", 56.) == 0.056
+    assert unit_database.Convert("force", "N", "kN", 56.0) == 0.056
     assert (
         approx(
             abs(
-                unit_database.Convert("force", [("N", 2)], [("kN", 2)], -(56. * 56))
+                unit_database.Convert("force", [("N", 2)], [("kN", 2)], -(56.0 * 56))
                 - -(0.056 * 0.056)
             ),
             7,

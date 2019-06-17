@@ -1,4 +1,3 @@
-
 from ._array import Array
 from ._quantity import Quantity
 

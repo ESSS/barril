@@ -6,10 +6,10 @@ from .unit_system_interface import IUnitSystem
 
 @ImplementsInterface(IUnitSystem)
 class UnitSystem:
-    '''
+    """
     Default implementation for a Unit System.
     .. see:: IUnitSystem
-    '''
+    """
 
     @Implements(IUnitSystem.__init__)
     def __init__(self, id, caption, units_mapping, read_only=False):
@@ -73,10 +73,12 @@ class UnitSystem:
         if not IsImplementation(other, IUnitSystem):
             return False
 
-        return self.GetId() == other.GetId() and \
-            self.GetCaption() == other.GetCaption() and \
-            self.GetUnitsMapping() == other.GetUnitsMapping() and \
-            self.IsReadOnly() == other.IsReadOnly()
+        return (
+            self.GetId() == other.GetId()
+            and self.GetCaption() == other.GetCaption()
+            and self.GetUnitsMapping() == other.GetUnitsMapping()
+            and self.IsReadOnly() == other.IsReadOnly()
+        )
 
     @Implements(IUnitSystem.__ne__)
     def __ne__(self, other):

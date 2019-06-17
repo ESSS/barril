@@ -1,4 +1,3 @@
-
 from barril.units import Scalar
 from barril.units.scalar_validation.scalar_min_max_validator import (
     ScalarMinMaxValidator

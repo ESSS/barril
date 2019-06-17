@@ -1,4 +1,3 @@
-
 from barril.curve.curve import Curve
 from barril.units import Array, ObtainQuantity, UnitDatabase
 import pytest

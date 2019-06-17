@@ -1,4 +1,3 @@
-
 import copy
 
 from barril.basic.fraction import Fraction

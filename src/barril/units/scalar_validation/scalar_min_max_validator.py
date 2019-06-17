@@ -1,4 +1,3 @@
-
 from barril.units import ObtainQuantity
 
 

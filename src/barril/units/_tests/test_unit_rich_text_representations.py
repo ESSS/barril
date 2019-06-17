@@ -1,4 +1,3 @@
-
 from barril.units.unit_rich_text_representations import UnitRichTextRepresentations
 
 

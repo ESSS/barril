@@ -368,10 +368,10 @@ def testFlowCoefficient(db):
 def testHertzPerSecond():
     from barril.units import Scalar
 
-    assert approx(Scalar(1, "rpm").GetValue("Hz")) == 1 / 60.
-    assert approx(Scalar(1, "Hz").GetValue("rpm")) == 60.
-    assert approx(Scalar(1, "Hz/s").GetValue("rpm/s")) == 60.
-    assert approx(Scalar(1, "rpm/s").GetValue("Hz/s")) == 1 / 60.
+    assert approx(Scalar(1, "rpm").GetValue("Hz")) == 1 / 60.0
+    assert approx(Scalar(1, "Hz").GetValue("rpm")) == 60.0
+    assert approx(Scalar(1, "Hz/s").GetValue("rpm/s")) == 60.0
+    assert approx(Scalar(1, "rpm/s").GetValue("Hz/s")) == 1 / 60.0
 
 
 def testFluidGasConcentration():

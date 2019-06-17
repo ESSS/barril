@@ -20,7 +20,7 @@ def testFormatFloat():
     assert FormatFloat("%g", scalar.GetValue("ft")) == "0"
 
     # Large float numbers on integer format.
-    large_float_number = 1e+010 * 1.0
+    large_float_number = 1e010 * 1.0
     assert FormatFloat("%d", large_float_number) == "10000000000"
 
     # Infinity

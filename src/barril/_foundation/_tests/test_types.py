@@ -1,4 +1,3 @@
-
 import pytest
 
 from barril._foundation.types_ import (
@@ -136,7 +135,7 @@ def testGetKnownNumberTypes(monkeypatch):
 
 def testCheckIsNumber():
     assert CheckIsNumber(1)
-    assert CheckIsNumber(1.)
+    assert CheckIsNumber(1.0)
     with pytest.raises(TypeError):
         CheckIsNumber("alpha")
 

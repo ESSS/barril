@@ -1,4 +1,3 @@
-
 from barril.units import Scalar
 from barril.units.unit_database import UnitDatabase
 import pytest

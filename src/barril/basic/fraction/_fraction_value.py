@@ -1,4 +1,3 @@
-
 import locale
 import math
 import re

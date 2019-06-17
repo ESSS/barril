@@ -1,4 +1,3 @@
-
 import pickle
 
 from barril._foundation.odict import odict

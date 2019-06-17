@@ -1,4 +1,3 @@
-
 from barril.units.unit_database import UnitDatabase
 
 from ._quantity import ObtainQuantity
@@ -881,13 +880,13 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 1E-021, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 1E-021, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1e-021, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1e-021, 1.0, 0.0)
     db.AddUnit(
         "mass", "attogram", "ag", f_base_to_unit, f_unit_to_base, default_category=None
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 1E-018, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 1E-018, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1e-018, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1e-018, 1.0, 0.0)
     db.AddUnit(
         "moment of force",
         "attojoule",
@@ -966,13 +965,13 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 1E+028, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 1E+028, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1e028, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1e028, 1.0, 0.0)
     db.AddUnit(
         "area", "barn", "b", f_base_to_unit, f_unit_to_base, default_category=None
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 1E+034, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 1E+034, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1e034, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1e034, 1.0, 0.0)
     db.AddUnit(
         "per length",
         "barns/cubic centimetre",
@@ -1036,8 +1035,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 1.E+13, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 1.E+13, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.0e13, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.0e13, 1.0, 0.0)
     db.AddUnit(
         "pressure per time",
         "bar squared per centipoise",
@@ -3001,8 +3000,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 1E+018, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 1E+018, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1e018, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1e018, 1.0, 0.0)
     db.AddUnit(
         "moment of force",
         "exajoule",
@@ -3101,8 +3100,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 1.602177E-019, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 1.602177E-019, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.602177e-019, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.602177e-019, 1.0, 0.0)
     db.AddUnit(
         "moment of force",
         "electron volts",
@@ -3121,8 +3120,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 1E-015, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 1E-015, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1e-015, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1e-015, 1.0, 0.0)
     db.AddUnit(
         "electric capacity",
         "femtocoulomb",
@@ -3181,8 +3180,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 1E-015, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 1E-015, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1e-015, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1e-015, 1.0, 0.0)
     db.AddUnit(
         "length",
         "femtometer",
@@ -3941,8 +3940,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 3.155815E+016, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 3.155815E+016, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 3.155815e016, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 3.155815e016, 1.0, 0.0)
     db.AddUnit(
         "time", "gigayears", "Ga", f_base_to_unit, f_unit_to_base, default_category=None
     )
@@ -4496,8 +4495,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 1E+018, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 1E+018, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1e018, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1e018, 1.0, 0.0)
     db.AddUnit(
         "pressure squared",
         "gigapascal squared",
@@ -5251,8 +5250,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 1.60217733E-016, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 1.60217733E-016, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.60217733e-016, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.60217733e-016, 1.0, 0.0)
     db.AddUnit(
         "moment of force",
         "kiloelectron volts",
@@ -6246,8 +6245,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, .001, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, .001, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 0.001, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 0.001, 1.0, 0.0)
     db.AddUnit(
         "molar volume",
         "litres/mole (gram)",
@@ -7166,8 +7165,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category="amount of substance",
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 1., 8640000000, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 1., 8640000000, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.0, 8640000000, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.0, 8640000000, 0.0)
     db.AddUnit(
         "productivity index",
         "cubic meter per day per bar",
@@ -7376,8 +7375,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, .001, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, .001, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 0.001, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 0.001, 1.0, 0.0)
     db.AddUnit(
         "molar volume",
         "cubic metres/mole (kilogram)",
@@ -7631,8 +7630,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 9.86923E-016, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 9.86923E-016, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 9.86923e-016, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 9.86923e-016, 1.0, 0.0)
     db.AddUnit(
         "area",
         "millidarcy",
@@ -7641,8 +7640,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category="permeability rock",
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 3.008141E-016, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 3.008141E-016, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 3.008141e-016, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 3.008141e-016, 1.0, 0.0)
     db.AddUnit(
         "volume",
         "millidarcy foot",
@@ -7651,8 +7650,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category="permeability length",
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 9.86932E-016, 47.88026, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 9.86932E-016, 47.88026, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 9.86932e-016, 47.88026, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 9.86932e-016, 47.88026, 0.0)
     db.AddUnit(
         "unit productivity index",
         "millidarcy sq feet/pound force second",
@@ -7661,8 +7660,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category="mobility",
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 9.86932E-016, 6894.757, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 9.86932E-016, 6894.757, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 9.86932e-016, 6894.757, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 9.86932e-016, 6894.757, 0.0)
     db.AddUnit(
         "unit productivity index",
         "millidarcy sq inches/pound force second",
@@ -7671,8 +7670,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category="mobility",
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 9.86932E-016, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 9.86932E-016, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 9.86932e-016, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 9.86932e-016, 1.0, 0.0)
     db.AddUnit(
         "volume",
         "millidarcy metres",
@@ -7681,8 +7680,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category="permeability length",
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 9.86932E-016, 0.001, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 9.86932E-016, 0.001, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 9.86932e-016, 0.001, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 9.86932e-016, 0.001, 0.0)
     db.AddUnit(
         "unit productivity index",
         "millidarcies/centipoise",
@@ -7691,8 +7690,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category="mobility",
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 9.86932E-016, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 9.86932E-016, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 9.86932e-016, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 9.86932e-016, 1.0, 0.0)
     db.AddUnit(
         "unit productivity index",
         "millidarcies/Pascal second",
@@ -9576,8 +9575,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 0.4535924, 16., 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 0.4535924, 16., 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 0.4535924, 16.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 0.4535924, 16.0, 0.0)
     db.AddUnit(
         "mass",
         "ounce mass",
@@ -9956,8 +9955,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 3.5486698355E+017, 0.0000008018438, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 3.5486698355E+017, 0.0000008018438, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 3.5486698355e017, 0.0000008018438, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 3.5486698355e017, 0.0000008018438, 0.0)
     db.AddUnit(
         "nonDarcy flow coefficient",
         "(psi days/cubic foot)squared/centipoise",
@@ -9966,8 +9965,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 3.5486698355E+017, 0.0000008018438, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 3.5486698355E+017, 0.0000008018438, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 3.5486698355e017, 0.0000008018438, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 3.5486698355e017, 0.0000008018438, 0.0)
     db.AddUnit(
         "nonDarcy flow coefficient",
         "(psi days/cubic foot)squared/centipoise",
@@ -10076,8 +10075,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 1.055056E+018, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 1.055056E+018, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.055056e018, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.055056e018, 1.0, 0.0)
     db.AddUnit(
         "moment of force",
         "quads",
@@ -10086,8 +10085,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 1.055056E+018, 31558150, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 1.055056E+018, 31558150, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.055056e018, 31558150, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.055056e018, 31558150, 0.0)
     db.AddUnit(
         "power",
         "quads/year",
@@ -10566,8 +10565,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 1.0E12, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 1.0E12, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.0e12, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.0e12, 1.0, 0.0)
     db.AddUnit(
         "activity (of radioactivity)",
         "terabecquerel",
@@ -10936,8 +10935,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 3.6E+015, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 3.6E+015, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 3.6e015, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 3.6e015, 1.0, 0.0)
     db.AddUnit(
         "moment of force",
         "terrawatt hours",
@@ -11601,8 +11600,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 1.1802270983E-10, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 1.1802270983E-10, 1.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.1802270983e-10, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.1802270983e-10, 1.0, 0.0)
     db.AddUnit(
         "injectivity factor",
         "injectivity factor in meter per day",

@@ -1,4 +1,3 @@
-
 from barril._foundation.klass import AllBasesNames, IsInstance, IsSubclass
 
 

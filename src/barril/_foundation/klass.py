@@ -1,4 +1,3 @@
-
 # Custom cache for optimization purposes.
 __bases_cache = {}
 

@@ -1,4 +1,3 @@
-
 # constants for unknown quantities
 UNKNOWN_QUANTITY_TYPE = "Unknown"
 UNKNOWN_UNIT = "<unknown>"

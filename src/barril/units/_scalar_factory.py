@@ -1,4 +1,3 @@
-
 from ._scalar import Scalar as _Scalar
 
 

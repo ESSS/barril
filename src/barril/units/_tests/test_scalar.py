@@ -377,7 +377,7 @@ def testEmptyScalar():
     scalar_1 = Scalar.CreateEmptyScalar(20.0)
 
     # When try to retrieve scalar value or unit a  exception was being raised
-    assert scalar_1.GetValue("m") == 20.
+    assert scalar_1.GetValue("m") == 20.0
     assert scalar_1.GetUnit() == ""
 
 

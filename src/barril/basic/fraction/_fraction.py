@@ -1,4 +1,3 @@
-
 from fractions import Fraction as StdFraction
 from functools import total_ordering
 

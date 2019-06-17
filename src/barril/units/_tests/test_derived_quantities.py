@@ -1,4 +1,3 @@
-
 import pytest
 
 from barril._foundation.odict import odict

@@ -1,4 +1,3 @@
-
 import attr
 import copy
 import math
