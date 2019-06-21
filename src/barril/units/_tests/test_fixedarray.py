@@ -184,3 +184,12 @@ def testFixedArrayIndexAsScalar():
     assert fixed_array.IndexAsScalar(0).GetCategory() == "length of path"
     assert fixed_array.IndexAsScalar(0) == Scalar("length of path", 1, "m")
     assert fixed_array.IndexAsScalar(1) == Scalar("length of path", 2, "m")
+
+
+def testFixedArrayScalarOperations():
+    original = units.FixedArray(3, "length", [100, 80, 50], "m")
+    expected_division = units.FixedArray(3, "length", [50, 40, 25], "m")
+    expected_subtraction = units.FixedArray(3, "length", [-98, -78, -48], "m")
+
+    assert original / 2 == expected_division
+    assert 2 - original == expected_subtraction
