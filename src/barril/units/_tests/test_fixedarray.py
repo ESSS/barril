@@ -4,6 +4,7 @@ from pytest import approx
 from barril._foundation.odict import odict
 from barril import units
 from barril.units import InvalidUnitError, ObtainQuantity, Quantity
+import operator
 
 
 def testFormatting(unit_database_start_units):
@@ -186,10 +187,26 @@ def testFixedArrayIndexAsScalar():
     assert fixed_array.IndexAsScalar(1) == Scalar("length of path", 2, "m")
 
 
-def testFixedArrayScalarOperations():
-    original = units.FixedArray(3, "length", [100, 80, 50], "m")
-    expected_division = units.FixedArray(3, "length", [50, 40, 25], "m")
-    expected_subtraction = units.FixedArray(3, "length", [-98, -78, -48], "m")
+@pytest.mark.parametrize(
+    "left, op, right, expected",
+    [
+        ([100, 80, 50], operator.truediv, 2, [50, 40, 25]),
+        ([100, 80, 50], operator.sub, 2, [98, 78, 48]),
+        (2, operator.sub, [100, 80, 50], [-98, -78, -48]),
+        (2, operator.add, [100, 80, 50], [102, 82, 52]),
+        ([100, 80, 50], operator.add, 2, [102, 82, 52]),
+        (2, operator.mul, [100, 80, 50], [200, 160, 100]),
+        ([100, 80, 50], operator.mul, 2, [200, 160, 100]),
+    ],
+)
+def testFixedArrayScalarOperations(left, op, right, expected):
+    def Make3Array(values):
+        return units.FixedArray(3, "length", values, "m")
 
-    assert original / 2 == expected_division
-    assert 2 - original == expected_subtraction
+    if isinstance(left, list):
+        left = Make3Array(left)
+    if isinstance(right, list):
+        right = Make3Array(right)
+
+    result = op(left, right)
+    assert result == Make3Array(expected)
