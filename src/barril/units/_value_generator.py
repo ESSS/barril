@@ -56,12 +56,12 @@ class _ValueGenerator:
         elif self.iterate_1st and not self.iterate_2nd:
             static_value = self.p2
             for v in self.p1:
-                yield static_value, v
+                yield v, static_value
 
         elif not self.iterate_1st and self.iterate_2nd:
             static_value = self.p1
             for v in self.p2:
-                yield v, static_value
+                yield static_value, v
 
         elif not self.iterate_1st and not self.iterate_2nd:
             yield self.p1, self.p2

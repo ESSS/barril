@@ -2,6 +2,7 @@ import operator
 
 import pytest
 
+from barril import units
 from barril.units import ObtainQuantity
 from barril.units.unit_database import UnitDatabase
 
@@ -87,3 +88,36 @@ def testOperation():
 
     with pytest.raises(TypeError):
         operator.mul(q, "s")
+
+
+def MakeArray(values):
+    """Creates a standard array used by testScalarOperations"""
+    return units.Array("length", values, "m")
+
+
+def MakeFixedArray(values):
+    """Creates a fixed array with 3 dimensions used by testScalarOperations"""
+    return units.FixedArray(3, "length", values, "m")
+
+
+@pytest.mark.parametrize(
+    "left, op, right, expected",
+    [
+        ([100, 80, 50], operator.truediv, 2, [50, 40, 25]),
+        ([100, 80, 50], operator.sub, 2, [98, 78, 48]),
+        (2, operator.sub, [100, 80, 50], [-98, -78, -48]),
+        (2, operator.add, [100, 80, 50], [102, 82, 52]),
+        ([100, 80, 50], operator.add, 2, [102, 82, 52]),
+        (2, operator.mul, [100, 80, 50], [200, 160, 100]),
+        ([100, 80, 50], operator.mul, 2, [200, 160, 100]),
+    ],
+)
+@pytest.mark.parametrize("array_maker", [MakeArray, MakeFixedArray])
+def testScalarOperations(left, op, right, expected, array_maker):
+    if isinstance(left, list):
+        left = array_maker(left)
+    if isinstance(right, list):
+        right = array_maker(right)
+
+    result = op(left, right)
+    assert result == array_maker(expected)
