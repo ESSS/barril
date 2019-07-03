@@ -1,4 +1,4 @@
-from barril._foundation.types_ import IsNumber
+from barril._util.types_ import IsNumber
 from barril.basic.format_float import FormatFloat
 from barril.units.unit_database import UnitDatabase
 from oop_ext.interface._interface import ImplementsInterface

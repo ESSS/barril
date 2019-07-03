@@ -1,6 +1,6 @@
 import pytest
 
-from barril._foundation.types_ import (
+from barril._util.types_ import (
     CheckFormatString,
     CheckType,
     IsNumber,

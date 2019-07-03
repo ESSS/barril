@@ -3,7 +3,7 @@ import copy
 import math
 import traceback
 
-from barril._foundation.types_ import CheckType
+from barril._util.types_ import CheckType
 from oop_ext.foundation.singleton import Singleton
 
 # Contains the registry for all the avaiable unit types.
