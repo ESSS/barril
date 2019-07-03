@@ -16898,7 +16898,7 @@ def CreateVolumeQuantityFromLengthQuantity(length_quantity):
     """
 
     from ._quantity import Quantity
-    from barril._foundation.odict import odict
+    from collections import OrderedDict
 
     category = length_quantity.GetCategory()
     assert category == "length", (
@@ -16910,7 +16910,7 @@ def CreateVolumeQuantityFromLengthQuantity(length_quantity):
 
     if volume_unit not in volume_units:
         return Quantity.CreateDerived(
-            odict([("length", (length_quantity.GetUnit(), 3))])
+            OrderedDict([("length", (length_quantity.GetUnit(), 3))])
         )
 
     else:
@@ -16933,7 +16933,7 @@ def CreateAreaQuantityFromLengthQuantity(length_quantity):
     """
 
     from ._quantity import Quantity
-    from barril._foundation.odict import odict
+    from collections import OrderedDict
 
     category = length_quantity.GetCategory()
     assert category == "length", (
@@ -16945,7 +16945,7 @@ def CreateAreaQuantityFromLengthQuantity(length_quantity):
 
     if area_unit not in area_units:
         return Quantity.CreateDerived(
-            odict([("length", (length_quantity.GetUnit(), 2))])
+            OrderedDict([("length", (length_quantity.GetUnit(), 2))])
         )
 
     else:

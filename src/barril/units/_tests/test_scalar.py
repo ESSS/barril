@@ -5,7 +5,7 @@
 import pytest
 from pytest import approx
 
-from barril._foundation.odict import odict
+from collections import OrderedDict
 from barril import units
 from barril.units import (
     InvalidOperationError,
@@ -266,7 +266,7 @@ def testDerivedUnits(unit_database_empty):
     assert Scalar("well-diameter", 10.10, "m") == s1 + s2
     assert Scalar("well-diameter", 9.90, "m") == s1 - s2
 
-    quantity = Quantity.CreateDerived(odict())
+    quantity = Quantity.CreateDerived(OrderedDict())
     assert Scalar.CreateWithQuantity(quantity, 100) == s1 / s2
     assert Scalar("well-diameter", 9.90, "m") == s1 - s2
     with pytest.raises(InvalidOperationError):
@@ -276,8 +276,8 @@ def testDerivedUnits(unit_database_empty):
 def testCreationWithDerivedQuantity(unit_database_len_time):
     unit_database = unit_database_len_time
 
-    m = Quantity.CreateDerived(odict([("Table size", ["m", 1])]))
-    km_city = Quantity.CreateDerived(odict([("City size", ["km", 1])]))
+    m = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 1])]))
+    km_city = Quantity.CreateDerived(OrderedDict([("City size", ["km", 1])]))
 
     quantity, value = unit_database.Multiply(m, km_city, 1, 0.01)
     calculated1 = Scalar.CreateWithQuantity(quantity, value)
@@ -290,7 +290,7 @@ def testCreationWithDerivedQuantity(unit_database_len_time):
 
 def testNumberInteractions(unit_database_len_time):
     scalar = Scalar("Table size", 1, "m")
-    scalar2 = Scalar.CreateWithQuantity(Quantity.CreateDerived(odict()), 0)
+    scalar2 = Scalar.CreateWithQuantity(Quantity.CreateDerived(OrderedDict()), 0)
 
     assert scalar == scalar + scalar2
 
@@ -310,8 +310,8 @@ def testNumberInteractions(unit_database_len_time):
 def testDivision(unit_database_len_time):
     unit_database = unit_database_len_time
 
-    m = Quantity.CreateDerived(odict([("Table size", ["m", 1])]))
-    km_city = Quantity.CreateDerived(odict([("City size", ["km", 1])]))
+    m = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 1])]))
+    km_city = Quantity.CreateDerived(OrderedDict([("City size", ["km", 1])]))
     quantity, value = unit_database.Divide(m, km_city, 1, 0.01)
     calculated1 = Scalar.CreateWithQuantity(quantity, value)
     s1 = Scalar.CreateWithQuantity(m, 1)

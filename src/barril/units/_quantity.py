@@ -2,7 +2,7 @@
 This module provides the implementation of an Quantity object.
 """
 
-from barril._foundation.odict import odict
+from collections import OrderedDict
 from barril.units.exceptions import QuantityValidationError
 from barril.units.unit_database import UnitDatabase, UnitsError
 from oop_ext.interface._interface import ImplementsInterface
@@ -19,12 +19,12 @@ def _ObtainReduced(state):
         The value returned from _Quantity.__reduce__ (used in pickle protocol).
     """
     unknown_unit_caption = state.pop(-1)
-    return ObtainQuantity(odict(state), None, unknown_unit_caption)
+    return ObtainQuantity(OrderedDict(state), None, unknown_unit_caption)
 
 
 def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
     """
-    :type unit: str or odict(str -> list(str, int))
+    :type unit: str or OrderedDict(str -> list(str, int))
     :param unit:
         Either the string representing the unit or an ordered dict with the composing unit
         information (if composing all the info, including the category will be received in this
@@ -51,7 +51,7 @@ def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
                 category = category[0]
         else:
             assert category.__class__ in (list, tuple)
-            unit = odict(
+            unit = OrderedDict(
                 (cat, unit_and_exp) for (cat, unit_and_exp) in zip(category, unit)
             )
             category = None
@@ -156,7 +156,7 @@ class Quantity:
         """
         empty = cls._EMPTY_QUANTITY
         if empty is None:
-            empty = cls._EMPTY_QUANTITY = ObtainQuantity(odict())
+            empty = cls._EMPTY_QUANTITY = ObtainQuantity(OrderedDict())
         return empty
 
     @classmethod
@@ -186,7 +186,7 @@ class Quantity:
         Create a category that represents a derived quantity (usually resulting from operations
         among quantities).
 
-        :type category_to_unit_and_exps: odict(str->(list(str, int)))
+        :type category_to_unit_and_exps: OrderedDict(str->(list(str, int)))
         :param category_to_unit_and_exps:
             This odict defines the category as well as the unit in a way that we can specify exponents.
 
@@ -236,7 +236,7 @@ class Quantity:
                     )
 
         return ObtainQuantity(
-            odict(
+            OrderedDict(
                 (category, unit_and_exp[:])
                 for (category, unit_and_exp) in category_to_unit_and_exps.items()
             ),
@@ -346,12 +346,12 @@ class _Quantity(Quantity):
         else:
             self._unknown_unit_caption = ""
 
-        if category.__class__ == odict:
+        if category.__class__ is OrderedDict:
             assert unit is None
             self._category_to_unit_and_exps = category
             self._is_derived = True
 
-            rep_and_exp = odict()
+            rep_and_exp = OrderedDict()
             for category, (_unit, exp) in self._category_to_unit_and_exps.items():
                 quantity_type = unit_database.GetCategoryQuantityType(category)
                 existing = rep_and_exp.get(quantity_type, 0)
@@ -397,7 +397,7 @@ class _Quantity(Quantity):
 
         # store it as odict so that we can have a decent order when creating a string from
         # an operation.
-        category_to_unit_and_exps = odict()
+        category_to_unit_and_exps = OrderedDict()
         category_to_unit_and_exps[category] = [unit, 1]
         self._category_to_unit_and_exps = category_to_unit_and_exps
 
@@ -577,7 +577,7 @@ class _Quantity(Quantity):
             'm', each with exponent 1, it would appear 2 times in this method and would appear
             'm2' in the GetUnit).
         """
-        repr_and_exp = odict()
+        repr_and_exp = OrderedDict()
         unit_database = self._unit_database
 
         for category, (unit, exp) in self._category_to_unit_and_exps.items():
@@ -786,7 +786,7 @@ class _Quantity(Quantity):
         try:
             return self._composing_units_joining_exponents
         except AttributeError:
-            ret = odict()
+            ret = OrderedDict()
             for _category, (unit, exp) in self._category_to_unit_and_exps.items():
                 existing = ret.get(unit, 0)
                 ret[unit] = existing + exp
@@ -803,7 +803,7 @@ class _Quantity(Quantity):
         if unit_and_exps is None:
             unit_and_exps = self._category_to_unit_and_exps
 
-        return odict(
+        return OrderedDict(
             (category, unit_and_exp[:])
             for (category, unit_and_exp) in unit_and_exps.items()
         )

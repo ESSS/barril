@@ -1,6 +1,6 @@
 import pytest
 
-from barril._foundation.odict import odict
+from collections import OrderedDict
 from barril.units import (
     InvalidOperationError,
     InvalidUnitError,
@@ -13,17 +13,25 @@ def testDerivedQuantities(unit_database_len_time):
     # define a simple quantity
     ObtainQuantity(unit="s", category="Time")  # see if it works
     ObtainQuantity(unit="m", category="Table size")  # see if it works
-    q3 = Quantity.CreateDerived(odict([("Table size", ["m", 2]), ("Time", ["s", -1])]))
-    q4 = Quantity.CreateDerived(odict([("Table size", ["m", 2]), ("Time", ["s", -2])]))
-    q5 = Quantity.CreateDerived(
-        odict([("Table size", ["m", 1]), ("City size", ["m", 1]), ("Time", ["s", -2])])
+    q3 = Quantity.CreateDerived(
+        OrderedDict([("Table size", ["m", 2]), ("Time", ["s", -1])])
     )
-    q6 = Quantity.CreateDerived(odict([("Time", ["s", -2])]))
-    q7 = Quantity.CreateDerived(odict([("Table size", ["m", 1]), ("Time", ["s", 2])]))
+    q4 = Quantity.CreateDerived(
+        OrderedDict([("Table size", ["m", 2]), ("Time", ["s", -2])])
+    )
+    q5 = Quantity.CreateDerived(
+        OrderedDict(
+            [("Table size", ["m", 1]), ("City size", ["m", 1]), ("Time", ["s", -2])]
+        )
+    )
+    q6 = Quantity.CreateDerived(OrderedDict([("Time", ["s", -2])]))
+    q7 = Quantity.CreateDerived(
+        OrderedDict([("Table size", ["m", 1]), ("Time", ["s", 2])])
+    )
 
     with pytest.raises(InvalidUnitError):
         Quantity.CreateDerived(
-            odict(
+            OrderedDict(
                 [
                     ("Table size", ["invalid", 1]),
                     ("City size", ["m", 1]),
@@ -45,16 +53,18 @@ def testDerivedQuantities(unit_database_len_time):
 
 
 def testConvertionWithDerivedUnits(unit_database_len_time):
-    empty = Quantity.CreateDerived(odict())
-    m = Quantity.CreateDerived(odict([("Table size", ["m", 1])]))
-    m_city = Quantity.CreateDerived(odict([("City size", ["m", 1])]))
-    cm = Quantity.CreateDerived(odict([("Table size", ["cm", 1])]))
-    km_city = Quantity.CreateDerived(odict([("City size", ["km", 1])]))
-    m2 = Quantity.CreateDerived(odict([("Table size", ["m", 2])]))
-    s = Quantity.CreateDerived(odict([("Time", ["s", -1])]))
-    m2s = Quantity.CreateDerived(odict([("Table size", ["m", 2]), ("Time", ["s", -1])]))
+    empty = Quantity.CreateDerived(OrderedDict())
+    m = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 1])]))
+    m_city = Quantity.CreateDerived(OrderedDict([("City size", ["m", 1])]))
+    cm = Quantity.CreateDerived(OrderedDict([("Table size", ["cm", 1])]))
+    km_city = Quantity.CreateDerived(OrderedDict([("City size", ["km", 1])]))
+    m2 = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 2])]))
+    s = Quantity.CreateDerived(OrderedDict([("Time", ["s", -1])]))
+    m2s = Quantity.CreateDerived(
+        OrderedDict([("Table size", ["m", 2]), ("Time", ["s", -1])])
+    )
     cat_mix_m2 = Quantity.CreateDerived(
-        odict([("Table size", ["m", 1]), ("City size", ["m", 1])])
+        OrderedDict([("Table size", ["m", 1]), ("City size", ["m", 1])])
     )
 
     unit_database = unit_database_len_time
@@ -91,7 +101,7 @@ def testDeepcopy(unit_database_len_time):
     # reference in case we have to debug such a situation again (there was a bug in odict where
     # it decreased references to None when it shouldn't and it crashed the program later on).
 
-    # m = odict([('Table size', ['m', 1])])
+    # m = OrderedDict([('Table size', ['m', 1])])
     # import gc
     # import sys
     # my_none = None
@@ -111,7 +121,7 @@ def testDeepcopy(unit_database_len_time):
     #     # Notice that print sys.getrefcount(None) is always decrementing (this is the error)
     #     m = copy.deepcopy(m)
 
-    m = Quantity.CreateDerived(odict([("Table size", ["m", 1])]))
+    m = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 1])]))
     m0 = copy.deepcopy(m)
     assert m is m0  # Check if our cache is working.
 
@@ -121,7 +131,7 @@ def testReadOnlyOperation(unit_database_len_time):
     m_ro = ObtainQuantity("m", "Table size")
     m_rw = ObtainQuantity("m", "Table size")
 
-    m2 = Quantity.CreateDerived(odict([("Table size", ["m", 2])]))
+    m2 = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 2])]))
 
     # multiplication
     assert (m2, 2) == unit_database.Multiply(m_rw, m_rw, 1, 2)
