@@ -5,7 +5,7 @@ from oop_ext.interface._interface import ImplementsInterface
 from .interfaces import IObjectWithQuantity, IQuantity
 from ._quantity import ObtainQuantity
 
-__all__ = [str("AbstractValueWithQuantityObject")]  # pylint: disable=invalid-all-object
+__all__ = ["AbstractValueWithQuantityObject"]
 
 
 @ImplementsInterface(IObjectWithQuantity, IQuantity)

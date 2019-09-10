@@ -8,12 +8,12 @@ from oop_ext.foundation.singleton import Singleton
 
 # Contains the registry for all the avaiable unit types.
 __all__ = [
-    "CategoryInfo",  # pylint: disable=invalid-all-object
-    "InvalidOperationError",  # pylint: disable=invalid-all-object
-    "InvalidQuantityTypeError",  # pylint: disable=invalid-all-object
-    "InvalidUnitError",  # pylint: disable=invalid-all-object
-    "UnitDatabase",  # pylint: disable=invalid-all-object
-    "UnitsError",  # pylint: disable=invalid-all-object
+    "CategoryInfo",
+    "InvalidOperationError",
+    "InvalidQuantityTypeError",
+    "InvalidUnitError",
+    "UnitDatabase",
+    "UnitsError",
 ]
 
 
@@ -29,7 +29,7 @@ class InvalidQuantityTypeError(UnitsError):
     """
 
     def __init__(self, quantity_type, available=None):
-        msg = "Invalid quantity_type: %s" % (quantity_type,)
+        msg = f"Invalid quantity_type: {quantity_type}"
         if available is not None:
             msg += "\nAvailable:\n%s" % available
         UnitsError.__init__(self, msg)
@@ -42,13 +42,13 @@ class InvalidUnitError(UnitsError):
 
     def __init__(self, unit, quantity_type=None, category=None, valid_units=None):
         if quantity_type is not None:
-            msg = "Invalid unit for quantity_type %s: %s" % (quantity_type, unit)
+            msg = f"Invalid unit for quantity_type {quantity_type}: {unit}"
 
         elif category is not None:
-            msg = "Invalid unit for category %s: %s" % (category, unit)
+            msg = f"Invalid unit for category {category}: {unit}"
 
         else:
-            msg = "Invalid unit:%s" % (unit,)
+            msg = f"Invalid unit:{unit}"
 
         if valid_units is not None:
             msg += " [Valid Units: %s]" % valid_units

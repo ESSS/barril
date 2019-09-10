@@ -92,7 +92,7 @@ def testPickle():
     quantity2 = quantity1.__reduce__()
     assert quantity1 is quantity2[0](*quantity2[1])
     obtained = pickle.loads(pickle.dumps(quantity1))
-    assert obtained is quantity1, "%s != %s" % (obtained, quantity1)
+    assert obtained is quantity1, f"{obtained} != {quantity1}"
 
 
 def testConvert():

@@ -84,7 +84,7 @@ class FractionValue:
         if isinstance(fraction, tuple):
             if len(fraction) != 2:
                 raise ValueError(
-                    "Expected a tuple (numerator, denominator), got %r" % (fraction,)
+                    f"Expected a tuple (numerator, denominator), got {fraction!r}"
                 )
             fraction = Fraction(*fraction)
 
@@ -145,7 +145,9 @@ class FractionValue:
         """
         formatted = formatter("%g", self._number)
         if float(self._fraction) != 0.0:
-            formatted = "%s %s" % (formatted, self.__FormatFractionToString(formatter))
+            formatted = "{} {}".format(
+                formatted, self.__FormatFractionToString(formatter)
+            )
         return formatted
 
     def __FormatFractionToString(self, formatter):
@@ -170,7 +172,7 @@ class FractionValue:
         :returns:
             Returns the programmer-friendly string representation.
         """
-        return "FractionValue(%g, %s)" % (self._number, self._fraction)
+        return f"FractionValue({self._number:g}, {self._fraction})"
 
     # Equality -------------------------------------------------------------------------------------
 

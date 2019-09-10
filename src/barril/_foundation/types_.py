@@ -90,10 +90,8 @@ def CheckType(object_, type_, message=None):
         type_names = '" or "'.join(type_names)
 
         # 002) Build the error message
-        exception_message = 'CheckType: Expecting "%s", got "%s": %s' % (
-            type_names,
-            object_.__class__.__name__,
-            repr(object_),
+        exception_message = 'CheckType: Expecting "{}", got "{}": {}'.format(
+            type_names, object_.__class__.__name__, repr(object_)
         )
 
         # 003) Appends the user message at the end
@@ -158,7 +156,7 @@ def IsNumber(v):
 
 def CheckIsNumber(v):
     if not IsNumber(v):
-        raise TypeError("Expecting a number. Received:%s (%s)" % (v, type(v)))
+        raise TypeError("Expecting a number. Received:{} ({})".format(v, type(v)))
     return True
 
 
@@ -219,7 +217,7 @@ def CheckBasicType(value, accept_compound=False, additional=None):
     """
     if not IsBasicType(value, accept_compound, additional):
         raise TypeError(
-            "Expecting a basic type. Received:%s (%s)" % (value, type(value))
+            "Expecting a basic type. Received:{} ({})".format(value, type(value))
         )
     return True
 
@@ -341,8 +339,7 @@ def IterFlattened(iterable, skip_types=None):
         if element_iter is None:
             yield element
         else:
-            for x in IterFlattened(element_iter, skip_types):
-                yield x
+            yield from IterFlattened(element_iter, skip_types)
 
 
 def MergeDictsRecursively(original_dict, merging_dict):

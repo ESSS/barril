@@ -12,7 +12,7 @@ from .interfaces import IQuantity, IScalar
 from ._quantity import ObtainQuantity, Quantity
 from .unit_database import UnitDatabase
 
-__all__ = [str("Scalar")]  # pylint: disable=invalid-all-object
+__all__ = ["Scalar"]
 
 
 @total_ordering
@@ -160,11 +160,8 @@ class Scalar(AbstractValueWithQuantityObject):
     # Repr -----------------------------------------------------------------------------------------
 
     def __repr__(self):
-        return "%s(%s, '%s', '%s')" % (
-            self.__class__.__name__,
-            self._value,
-            self.GetUnit(),
-            self.GetCategory(),
+        return "{}({}, '{}', '{}')".format(
+            self.__class__.__name__, self._value, self.GetUnit(), self.GetCategory()
         )
 
     def __str__(self):

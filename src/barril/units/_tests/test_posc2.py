@@ -1,4 +1,3 @@
-# -*- coding: cp1252 -*-
 
 import pytest
 from pytest import approx

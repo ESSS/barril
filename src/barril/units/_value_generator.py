@@ -67,5 +67,4 @@ class _ValueGenerator:
             yield self.p1, self.p2
 
         else:  # iterate both
-            for v0, v1 in zip(self.p1, self.p2):
-                yield v0, v1
+            yield from zip(self.p1, self.p2)

@@ -178,10 +178,8 @@ class FractionScalar(AbstractValueWithQuantityObject):
         :returns:
             the string representation
         """
-        return "FractionScalar(%r, value=%r, unit=%r)" % (
-            self._quantity.GetCategory(),
-            self._value,
-            self.unit,
+        return "FractionScalar({!r}, value={!r}, unit={!r})".format(
+            self._quantity.GetCategory(), self._value, self.unit
         )
 
     # Equality -------------------------------------------------------------------------------------

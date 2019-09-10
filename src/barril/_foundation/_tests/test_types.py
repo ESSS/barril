@@ -125,7 +125,7 @@ def testGetKnownNumberTypes(monkeypatch):
     numpy = pytest.importorskip("numpy")
 
     expected = {float, complex, numpy.number}
-    expected.update(set((int,)))
+    expected.update({int})
     assert set(_GetKnownNumberTypes()) == expected
 
     monkeypatch.setitem(sys.modules, "numpy", None)

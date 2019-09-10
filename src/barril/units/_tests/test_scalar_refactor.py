@@ -58,7 +58,7 @@ class _SimpleQuantity:
         return self._unit
 
     def __str__(self):
-        return "Quantity(%s, %s)" % (self._category, self._unit)
+        return f"Quantity({self._category}, {self._unit})"
 
 
 class _ComposingQuantity:
