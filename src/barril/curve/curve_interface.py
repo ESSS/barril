@@ -1,6 +1,6 @@
 from oop_ext.interface import Interface
 
-__all__ = ["ICurve"]  # pylint: disable=invalid-all-object
+__all__ = ["ICurve"]
 
 
 class ICurve(Interface):

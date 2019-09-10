@@ -7,7 +7,7 @@ from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from .interfaces import IArray
 from ._quantity import Quantity
 
-__all__ = ["Array"]  # pylint: disable=invalid-all-object
+__all__ = ["Array"]
 
 
 @ImplementsInterface(IArray)
@@ -214,11 +214,8 @@ class Array(AbstractValueWithQuantityObject):
 
     def __repr__(self):
         values_str = "[%s]" % ", ".join(str(v) for v in self.values)
-        return "%s(%s, %s, %s)" % (
-            self.__class__.__name__,
-            self.GetQuantityType(),
-            values_str,
-            self.GetUnit(),
+        return "{}({}, {}, {})".format(
+            self.__class__.__name__, self.GetQuantityType(), values_str, self.GetUnit()
         )
 
     def __str__(self):

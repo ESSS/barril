@@ -446,7 +446,7 @@ class UnitSystemManager(Singleton):
         :returns:
             The available id.
         """
-        ids = set(id for id in self._unit_systems)
+        ids = {id for id in self._unit_systems}
         count = 1
         new_id = "%s %d" % ("system", count)
         while new_id in ids:

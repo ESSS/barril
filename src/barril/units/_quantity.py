@@ -10,7 +10,7 @@ from oop_ext.interface._interface import ImplementsInterface
 from .interfaces import IQuantity, IQuantity2, IQuantity3, IQuantity6
 from ._unit_constants import UNKNOWN_UNIT
 
-__all__ = ["Quantity"]  # pylint: disable=invalid-all-object
+__all__ = ["Quantity"]
 
 
 def _ObtainReduced(state):
@@ -97,7 +97,7 @@ def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
     elif category is None:
         category = unit_database.GetDefaultCategory(unit)
         if not category:
-            raise UnitsError("Unable to get default category for: %s" % (unit,))
+            raise UnitsError(f"Unable to get default category for: {unit}")
 
         key_with_resolved_category = (category, unit, unknown_unit_caption)
         try:
@@ -453,13 +453,11 @@ class _Quantity(Quantity):
 
     def __repr__(self, *args, **kwargs):
         if self._unknown_unit_caption:
-            return "Quantity(%r, %r, %r)" % (
-                self.GetCategory(),
-                self._unit,
-                self._unknown_unit_caption,
+            return "Quantity({!r}, {!r}, {!r})".format(
+                self.GetCategory(), self._unit, self._unknown_unit_caption
             )
 
-        return "Quantity(%r, %r)" % (self.GetCategory(), self._unit)
+        return "Quantity({!r}, {!r})".format(self.GetCategory(), self._unit)
 
     def SetUnknownCaption(self, caption):
         raise ReadOnlyError("Quantity is now read-only.")
@@ -501,7 +499,7 @@ class _Quantity(Quantity):
                     ret += " * "
 
                 if exp != 1:
-                    ret += "(%s) ** %s" % (rep, exp)
+                    ret += f"({rep}) ** {exp}"
                 else:
                     ret += rep
 
@@ -516,7 +514,7 @@ class _Quantity(Quantity):
                         ret += "1 / "
 
                 if exp != -1:
-                    ret += "(%s) ** %s" % (rep, abs(exp))
+                    ret += "({}) ** {}".format(rep, abs(exp))
                 else:
                     ret += rep
 
@@ -543,7 +541,7 @@ class _Quantity(Quantity):
                     ret += "."
 
                 if exp != 1:
-                    ret += "%s%s" % (unit, exp)
+                    ret += f"{unit}{exp}"
                 else:
                     ret += unit
 
@@ -710,7 +708,7 @@ class _Quantity(Quantity):
         :param Boolean use_literals:
             If literals are to be used in the error message.
         """
-        invalid_value_message = "Invalid value for %s: %g. Must be %s %r." % (
+        invalid_value_message = "Invalid value for {}: {:g}. Must be {} {!r}.".format(
             self._category_info.caption,
             value,
             self._GetComparison(operator, use_literals),

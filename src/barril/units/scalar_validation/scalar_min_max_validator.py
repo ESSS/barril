@@ -22,7 +22,7 @@ class ScalarMinMaxValidator:
         predicate = cls._ScalarCheckMsgPredicate(scalar)
 
         if predicate is not None:
-            return "Warning in %s. %s" % (name, predicate)
+            return f"Warning in {name}. {predicate}"
 
         return None
 
@@ -40,7 +40,7 @@ class ScalarMinMaxValidator:
         predicate = cls._ScalarCheckMsgPredicate(scalar)
 
         if predicate is not None:
-            return "Error in %s. %s" % (name, predicate)
+            return f"Error in {name}. {predicate}"
 
         return None
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 from barril import units
 from barril.units import ObtainQuantity
@@ -321,7 +320,7 @@ def testPoscValidUnitsNotRepeated(unit_database_posc):
         valid_units = unit_database.GetValidUnits(category)
         assert len(valid_units) == len(
             set(valid_units)
-        ), 'There is a duplicate unit defined in "%s": %s' % (category, valid_units)
+        ), f'There is a duplicate unit defined in "{category}": {valid_units}'
 
 
 def testPoscKVmm(unit_database_posc):

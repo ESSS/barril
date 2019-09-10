@@ -1,7 +1,7 @@
 from ._array import Array
 from ._quantity import Quantity
 
-__all__ = ["FixedArray"]  # pylint: disable=invalid-all-object
+__all__ = ["FixedArray"]
 
 
 class FixedArray(Array):
