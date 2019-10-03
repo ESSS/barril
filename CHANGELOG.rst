@@ -1,4 +1,4 @@
-1.7.1 (unreleased)
+1.7.1 (2019-10-03)
 ------------------
 
 * Fixed bug in ``/`` and ``-`` operators for ``FixedArray``.
