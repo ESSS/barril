@@ -1,4 +1,3 @@
-
 import locale
 
 from barril.basic.format_float import FormatFloat, MINUS_INFINITY, NAN, PLUS_INFINITY
