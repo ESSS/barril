@@ -10,6 +10,9 @@ UNRELEASED
   division, i.e., operations like ``a // b``  where ``a`` and ``b`` are ``Scalar`` or ``Array``
   (and combinations with ``float`` or ``int``).
 * Add new unit category for Joule-Thomson coefficient (``K/Pa``).
+* Modified comparison behavior of ``Scalar``. The previous behavior assumes that ``Scalar(1, "m") != Scalar(100, "cm")``
+  and not it has been changed to ``Scalar(1, "m") == Scalar(100, "cm")``. This may affect users that rely on the previous
+  behavior.
 
 1.7.1 (2019-10-03)
 ------------------

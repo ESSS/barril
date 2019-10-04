@@ -10,7 +10,7 @@ from oop_ext.interface._interface import ImplementsInterface
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._quantity import ObtainQuantity, Quantity
 from .interfaces import IQuantity, IScalar
-from .unit_database import UnitDatabase
+from .unit_database import InvalidQuantityTypeError, UnitDatabase
 
 __all__ = ["Scalar"]
 
@@ -238,23 +238,34 @@ class Scalar(AbstractValueWithQuantityObject):
         )
 
     # Compare --------------------------------------------------------------------------------------
+    def _GetValueInDefaultUnit(self):
+        try:
+            return self.GetValue(
+                self._unit_database.GetDefaultUnit(self._quantity._category)
+            )
+        except InvalidQuantityTypeError:
+            return self._value
 
     def __eq__(self, other):
         return (
             type(self) is type(other)
-            and self._value == other.value
-            and self._quantity == other._quantity
+            and self._quantity._category == other._quantity._category
+            and self._GetValueInDefaultUnit() == other._GetValueInDefaultUnit()
         )
 
     def AlmostEqual(self, other, precision):
         return (
             type(self) is type(other)
-            and round(self._value - other.value, precision) == 0
-            and self._quantity == other._quantity
+            and self._quantity._category == other._quantity._category
+            and round(
+                self._GetValueInDefaultUnit() - other._GetValueInDefaultUnit(),
+                precision,
+            )
+            == 0
         )
 
     def __hash__(self, *args, **kwargs):
-        return hash((self._value, self._quantity))
+        return hash((self._quantity._category, self._GetValueInDefaultUnit()))
 
     def __lt__(self, other):
         if self.quantity_type != other.quantity_type:
