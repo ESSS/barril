@@ -8,8 +8,8 @@ from barril._util.types_ import IsNumber
 from oop_ext.interface._interface import ImplementsInterface
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
-from .interfaces import IQuantity, IScalar
 from ._quantity import ObtainQuantity, Quantity
+from .interfaces import IQuantity, IScalar
 from .unit_database import UnitDatabase
 
 __all__ = ["Scalar"]
