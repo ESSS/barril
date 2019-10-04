@@ -8,6 +8,8 @@ dependencies:
   - pre_commit
   - pytest
   - pytest-mock>=1.10
+  - black>=19.3b0
+  - pre-commit>=1.11.0
 
 environment:
   PYTHONPATH:
