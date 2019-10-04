@@ -6,6 +6,9 @@ UNRELEASED
 * Add new unit category mass temperature per mol (``kg.K/mol``).
 * Some units have been renamed as they were deemed out-of-place in the oil industry to something more usual (for example, ``1000ft3/d`` became ``Mcf/d``).
   The old representation of those units is still supported, but they will be automatically translated during ``Quantity`` creation, so this change should not affect users much.
+* Fix division ``1.0 / a`` where ``a`` is a ``Scalar`` or ``Array`` and also add support for floor
+  division, i.e., operations like ``a // b``  where ``a`` and ``b`` are ``Scalar`` or ``Array``
+  (and combinations with ``float`` or ``int``).
 
 1.7.1 (2019-10-03)
 ------------------

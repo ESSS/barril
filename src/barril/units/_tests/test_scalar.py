@@ -3,18 +3,17 @@
 """
 
 import pytest
-from pytest import approx
-
 from collections import OrderedDict
 from barril import units
 from barril.units import (
+    ChangeScalars,
     InvalidOperationError,
     InvalidUnitError,
     ObtainQuantity,
     Quantity,
     Scalar,
-    ChangeScalars,
 )
+from pytest import approx
 
 
 def testScalarInterface(unit_database_well_length):
@@ -317,6 +316,22 @@ def testDivision(unit_database_len_time):
     s1 = Scalar.CreateWithQuantity(m, 1)
     s2 = Scalar.CreateWithQuantity(km_city, 0.01)
     assert calculated1 == s1 / s2
+
+
+def testFloorDivision():
+    a = Scalar(3.5, "m")
+    b = Scalar(100.0, "cm")
+    assert (a // b).GetValueAndUnit() == (3.0, "")
+    assert (350 // b).GetValueAndUnit() == (3.0, "1/cm")
+    assert (a // 1.0).GetValueAndUnit() == (3.0, "m")
+
+
+def testNumberOverScalar():
+    a = Scalar(2.0, "m")
+    b = Scalar(3.0, "m")
+    assert (1.0 / a).GetValueAndUnit() == (0.5, "1/m")
+    assert (3.0 / a).GetValueAndUnit() == (1.5, "1/m")
+    assert b / a == b * 1 / a == b * (1.0 / a)
 
 
 def testPow(unit_database_len_time):
