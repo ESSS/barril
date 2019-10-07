@@ -3,7 +3,7 @@ from copy import deepcopy
 
 from oop_ext.foundation import callback
 from oop_ext.foundation.decorators import Override
-from oop_ext.foundation.odict import odict
+from collections import OrderedDict
 from oop_ext.foundation.singleton import Singleton
 from oop_ext.interface import AssertImplements
 
@@ -101,7 +101,7 @@ class UnitSystemManager(Singleton):
         self._current = None
 
         # container for registered unit systems (strong references)
-        self._unit_systems = odict()
+        self._unit_systems = OrderedDict()
 
         # unit system template.
         self._unit_system_template = None

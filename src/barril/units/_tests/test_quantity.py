@@ -1,6 +1,6 @@
 import pickle
 
-from barril._foundation.odict import odict
+from collections import OrderedDict
 from barril.units import (
     UNKNOWN_QUANTITY,
     UNKNOWN_QUANTITY_TYPE,
@@ -56,7 +56,7 @@ def testQuantityCaption(unit_database_posc_len):
     assert "Feeeet <unknown>" == q.GetUnitCaption()
 
     q = Quantity.CreateDerived(
-        odict([("length", ("m", 1))]), unknown_unit_caption="Feeeet"
+        OrderedDict([("length", ("m", 1))]), unknown_unit_caption="Feeeet"
     )
     assert "m" == q.GetUnitCaption()
 

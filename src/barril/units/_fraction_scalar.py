@@ -1,7 +1,7 @@
 import copy
 from functools import total_ordering
 
-from barril._foundation.types_ import CheckType
+from barril._util.types_ import CheckType
 from barril.basic.fraction import FractionValue
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject

@@ -1,7 +1,7 @@
 import pytest
 from pytest import approx
 
-from barril._foundation.odict import odict
+from collections import OrderedDict
 from barril import units
 from barril.units import Array, InvalidUnitError, ObtainQuantity, Quantity
 
@@ -177,8 +177,8 @@ def testCopy():
 def testArrayOperations(unit_database_len_time):
     unit_database = unit_database_len_time
 
-    m = Quantity.CreateDerived(odict([("Table size", ["m", 1])]))
-    km_city = Quantity.CreateDerived(odict([("City size", ["km", 1])]))
+    m = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 1])]))
+    km_city = Quantity.CreateDerived(OrderedDict([("City size", ["km", 1])]))
 
     s1 = Array.CreateWithQuantity(m, [1])
     s2 = Array.CreateWithQuantity(km_city, [0.01])
@@ -206,8 +206,8 @@ def testArrayOperations(unit_database_len_time):
 
 def testDivision(unit_database_len_time):
     unit_database = unit_database_len_time
-    m = Quantity.CreateDerived(odict([("Table size", ["m", 1])]))
-    km_city = Quantity.CreateDerived(odict([("City size", ["km", 1])]))
+    m = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 1])]))
+    km_city = Quantity.CreateDerived(OrderedDict([("City size", ["km", 1])]))
     quantity, value = unit_database.Divide(m, km_city, 1, 0.01)
     calculated1 = Array.CreateWithQuantity(quantity, [value])
     s1 = Array.CreateWithQuantity(m, [1])
@@ -218,7 +218,7 @@ def testDivision(unit_database_len_time):
 def testNumberInteractions(unit_database_len_time):
     import numpy
 
-    m = Quantity.CreateDerived(odict([("Table size", ["m", 1])]))
+    m = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 1])]))
     s1 = Array.CreateWithQuantity(m, list(range(10)))
     s2 = Array.CreateWithQuantity(m, [x + x for x in range(10)])
     assert s1 == 0 + s1

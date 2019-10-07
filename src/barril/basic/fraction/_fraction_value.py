@@ -2,7 +2,7 @@ import locale
 import math
 import re
 
-from barril._foundation.types_ import CheckType
+from barril._util.types_ import CheckType
 from barril.basic.format_float import FloatFromString
 from barril.basic.fraction import Fraction
 

@@ -1,7 +1,7 @@
 import pytest
 from pytest import approx
 
-from barril._foundation.odict import odict
+from collections import OrderedDict
 from barril import units
 from barril.units import InvalidUnitError, ObtainQuantity, Quantity
 
@@ -57,7 +57,7 @@ def testInvalidUnits(unit_database_start_units):
 
 def testCreateWithQuantity(unit_database_start_units):
     units.FixedArray.CreateWithQuantity(
-        Quantity.CreateDerived(odict()), [100, 150, 200], dimension=3
+        Quantity.CreateDerived(OrderedDict()), [100, 150, 200], dimension=3
     )
 
     quantity = ObtainQuantity("m", "length")

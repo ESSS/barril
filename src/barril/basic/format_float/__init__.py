@@ -93,7 +93,7 @@ def FloatFromString(str_value, use_locale=True):
     import locale
 
     if str_value.__class__ != str:
-        from barril._foundation.types_ import CheckType
+        from barril._util.types_ import CheckType
 
         CheckType(str_value, str)
 
