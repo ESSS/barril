@@ -1,4 +1,3 @@
-
 """Top-level package for Barril."""
 
 __author__ = """ESSS"""
