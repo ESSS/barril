@@ -321,6 +321,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "moment per angular velocity", "newton meter per angular velocity", "Nms/rad"
     )
     db.AddUnitBase("mass temperature per mol", "kg.K/mol", "kg.K/mol")
+    db.AddUnitBase("temperature per pressure", "K/Pa", "K/Pa")
     f_unit_to_base = MakeCustomaryToBase(0.0, 6.283185307, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 6.283185307, 1.0, 0.0)
     db.AddUnit(
@@ -13293,6 +13294,26 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "mass temperature per mol",
         "kg.degF/kmol",
         "kg.degF/kmol",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.0, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.0, 1.0, 0.0)
+    db.AddUnit(
+        "temperature per pressure",
+        "degC/Pa",
+        "degC/Pa",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.0, 1.0e6, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.0, 1.0e6, 0.0)
+    db.AddUnit(
+        "temperature per pressure",
+        "K/MPa",
+        "K/MPa",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
