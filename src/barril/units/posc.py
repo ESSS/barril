@@ -13308,12 +13308,102 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.0, 0.00001, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.0, 0.00001, 0.0)
+    db.AddUnit(
+        "temperature per pressure",
+        "degC/bar",
+        "degC/bar",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 1.0, 1.0e6, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 1.0, 1.0e6, 0.0)
     db.AddUnit(
         "temperature per pressure",
+        "degC/MPa",
+        "degC/MPa",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.0, 0.00001, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.0, 0.00001, 0.0)
+    db.AddUnit(
+        "temperature per pressure",
+        "K/bar",
+        "K/bar",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.0, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.0, 1.0, 0.0)
+    db.AddUnit(
+        "temperature per pressure",
         "K/MPa",
         "K/MPa",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 5.0, 9.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 5.0, 9.0, 0.0)
+    db.AddUnit(
+        "temperature per pressure",
+        "degF/Pa",
+        "degF/Pa",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 5.0, 9.0e-5, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 5.0, 9.0e-5, 0.0)
+    db.AddUnit(
+        "temperature per pressure",
+        "degF/bar",
+        "degF/bar",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 5.0, 9.0e6, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 5.0, 9.0e6, 0.0)
+    db.AddUnit(
+        "temperature per pressure",
+        "degF/MPa",
+        "degF/MPa",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 5.0, 9.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 5.0, 9.0, 0.0)
+    db.AddUnit(
+        "temperature per pressure",
+        "degR/Pa",
+        "degR/Pa",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 5.0, 9.0e-5, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 5.0, 9.0e-5, 0.0)
+    db.AddUnit(
+        "temperature per pressure",
+        "degR/bar",
+        "degR/bar",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 5.0, 9.0e6, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 5.0, 9.0e6, 0.0)
+    db.AddUnit(
+        "temperature per pressure",
+        "degR/MPa",
+        "degR/MPa",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -16993,6 +17083,25 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
                 "g.degF/mol",
                 "kg.degF/mol",
                 "kg.degF/kmol",
+            ],
+        )
+        db.AddCategory(
+            "temperature per pressure",
+            "temperature per pressure",
+            override=override_categories,
+            valid_units=[
+                "K/Pa",
+                "K/bar",
+                "K/MPa",
+                "degC/Pa",
+                "degC/bar",
+                "degC/MPa",
+                "degF/Pa",
+                "degF/bar",
+                "degF/MPa",
+                "degR/Pa",
+                "degR/bar",
+                "degR/MPa",
             ],
         )
 
