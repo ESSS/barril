@@ -383,6 +383,13 @@ def testFormatedUnitsOnScalar(unit_database_empty):
     scalar = Scalar("length", 1.18, "m")
     assert scalar.GetFormatted() == "1.18 [m]"
 
+    # Check that squared works
+    scalar2 = scalar * scalar
+    assert scalar2.GetFormatted("m2") == "1.3924 [m2]"
+    assert scalar2.GetFormattedValue("m2") == "1.3924"
+    assert scalar2.GetFormatted((("m", 2),)) == "1.3924 [('m', 2)]"
+    assert scalar2.GetFormattedValue((("m", 2),)) == "1.3924"
+
 
 def testCopyProperties(unit_database_well_length):
     """

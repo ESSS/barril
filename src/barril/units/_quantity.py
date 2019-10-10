@@ -9,6 +9,7 @@ from barril.units.unit_database import (
     UnitDatabase,
     UnitsError,
     FixUnitIfIsLegacy,
+    ComposedUnitError,
 )
 from oop_ext.interface._interface import ImplementsInterface
 
@@ -677,9 +678,17 @@ class _Quantity(Quantity):
         :returns:
             An object with values to the passed unit.
         """
-        return self._unit_database.Convert(
-            self._category, self._CreateUnitsWithJoinedExponentsString(), to_unit, value
-        )
+        try:
+            return self._unit_database.Convert(
+                self._composing_categories, self._composing_units, to_unit, value
+            )
+        except ComposedUnitError:
+            return self._unit_database.Convert(
+                self._category,
+                self._CreateUnitsWithJoinedExponentsString(),
+                to_unit,
+                value,
+            )
 
     @classmethod
     def _GetComparison(cls, operator, use_literals=False):
