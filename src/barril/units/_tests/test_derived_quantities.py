@@ -81,6 +81,9 @@ def testConvertionWithDerivedUnits(unit_database_len_time):
     # check division with cancelling units (and different categories)
     assert (empty, 1) == unit_database.Divide(m, m_city, 1, 1)
 
+    # floor division
+    assert (m, 3.0) == unit_database.FloorDivide(cat_mix_m2, km_city, 3.5, 0.001)
+
     # sum
     assert (m, 1 + 0.01) == unit_database.Sum(m, cm, 1, 1)
     assert (m, 2) == unit_database.Sum(m, m_city, 1, 1)
