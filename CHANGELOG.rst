@@ -4,6 +4,7 @@ UNRELEASED
 * ``_foundation`` has been renamed to ``_util``, and a lot of functions which were not being
   used anymore have been removed.
 * Add new unit category mass temperature per mol (``kg.K/mol``).
+* Add new unit category for Joule-Thomson coefficient (``K/Pa``).
 
 1.7.1 (2019-10-03)
 ------------------
