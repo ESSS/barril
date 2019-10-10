@@ -1,9 +1,8 @@
 import pytest
-from pytest import approx
-
 from collections import OrderedDict
 from barril import units
 from barril.units import Array, InvalidUnitError, ObtainQuantity, Quantity
+from pytest import approx
 
 
 def testEmptyArray():
@@ -213,6 +212,24 @@ def testDivision(unit_database_len_time):
     s1 = Array.CreateWithQuantity(m, [1])
     s2 = Array.CreateWithQuantity(km_city, [0.01])
     assert calculated1 == s1 / s2
+
+
+def testFloorDivision():
+    a = Array([3.5, 4.2], "m")
+    b = Array([100.0, 100.0], "cm")
+    assert approx((a // b).GetValues()) == [3.0, 4.0]
+    assert approx((350 // b).GetValues("1/cm")) == [3.0, 3.0]
+    assert approx((a // 1.0).GetValues("m")) == [3.0, 4.0]
+
+
+def testNumberOverArray():
+    a = Array([2.0, 2.0], "m")
+    b = Array([3.0, 3.0], "m")
+    c = 1.0 / a
+
+    assert approx(c.GetValues("1/m")) == [0.5, 0.5]
+    assert approx((3.0 / a).GetValues("1/m")) == [1.5, 1.5]
+    assert b / a == b * 1 / a == b * (1 / a)
 
 
 def testNumberInteractions(unit_database_len_time):

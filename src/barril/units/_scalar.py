@@ -8,8 +8,8 @@ from barril._util.types_ import IsNumber
 from oop_ext.interface._interface import ImplementsInterface
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
-from .interfaces import IQuantity, IScalar
 from ._quantity import ObtainQuantity, Quantity
+from .interfaces import IQuantity, IScalar
 from .unit_database import UnitDatabase
 
 __all__ = ["Scalar"]
@@ -269,7 +269,8 @@ class Scalar(AbstractValueWithQuantityObject):
     def __rtruediv__(self, other):
         return self._DoOperation(other, self, "Divide", lambda a, b: a / b)
 
-    __rfloordiv__ = __rtruediv__
+    def __rfloordiv__(self, other):
+        return self._DoOperation(other, self, "FloorDivide", lambda a, b: a // b)
 
     def __rmul__(self, other):
         return self._DoOperation(other, self, "Multiply", lambda a, b: a * b)
@@ -284,7 +285,8 @@ class Scalar(AbstractValueWithQuantityObject):
     def __truediv__(self, other):
         return self._DoOperation(self, other, "Divide", lambda a, b: a / b)
 
-    __floordiv__ = __truediv__
+    def __floordiv__(self, other):
+        return self._DoOperation(self, other, "FloorDivide", lambda a, b: a // b)
 
     def __mul__(self, other):
         return self._DoOperation(self, other, "Multiply", lambda a, b: a * b)
@@ -302,7 +304,8 @@ class Scalar(AbstractValueWithQuantityObject):
         return result
 
     def _DoOperation(self, p1, p2, operation, callback_operation):
-        if IsNumber(p1):
+        p1_is_number = IsNumber(p1)
+        if p1_is_number and operation not in ["Divide", "FloorDivide"]:
             return self.__class__.CreateWithQuantity(
                 self._quantity, callback_operation(p1, self._value)
             )
@@ -313,8 +316,19 @@ class Scalar(AbstractValueWithQuantityObject):
             )
 
         unit_database = self._unit_database
-        operation = getattr(unit_database, operation)
-        q, v = operation(p1.GetQuantity(), p2.GetQuantity(), self._value, p2.value)
+        operation_func = getattr(unit_database, operation)
+        if p1_is_number:
+            assert operation in [
+                "Divide",
+                "FloorDivide",
+            ], "Only operation Divide and FloorDivide allowed here!"
+            q, v = operation_func(
+                Quantity.CreateEmpty(), p2.GetQuantity(), p1, p2.value
+            )
+        else:
+            q, v = operation_func(
+                p1.GetQuantity(), p2.GetQuantity(), self._value, p2.value
+            )
         return self.__class__.CreateWithQuantity(q, v)
 
     def __reduce__(self):

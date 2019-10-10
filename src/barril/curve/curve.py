@@ -80,7 +80,7 @@ class Curve:
         """
         :rtype: int
         :returns:
-            The lenght of the curve
+            The length of the curve
         """
         return len(self._image.GetValues())
 

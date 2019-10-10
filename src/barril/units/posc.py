@@ -687,7 +687,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "volume",
         "thousand cubic feet",
-        "1000ft3",
+        "Mcf",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -697,27 +697,17 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "dimensionless",
         "thousand cubic feet per barrel",
-        "1000ft3/bbl",
+        "Mcf/bbl",
         f_base_to_unit,
         f_unit_to_base,
         default_category="volume per volume",
-    )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 28.31685, 86400, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 28.31685, 86400, 0.0)
-    db.AddUnit(
-        "volume flow rate",
-        "thousand cubic feet per day",
-        "1000ft3/d",
-        f_base_to_unit,
-        f_unit_to_base,
-        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 92.90304, 86400, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 92.90304, 86400, 0.0)
     db.AddUnit(
         "volume per time per length",
         "thousand cubic feet per day per foot",
-        "1000ft3/d.ft",
+        "Mcf/d.ft",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -727,7 +717,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "productivity index",
         "thousand cubic feet per day per psi",
-        "1000ft3/psi.d",
+        "Mcf/psi.d",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -737,7 +727,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "volume flow rate",
         "thousand cubic metres per day",
-        "1000m3/d",
+        "Mm3/d",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -747,7 +737,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "volume per time per length",
         "thousand cubic meter per day per meter",
-        "1000m3/d.m",
+        "Mm3/d.m",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -757,7 +747,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "volume flow rate",
         "thousand cubic metres per hour",
-        "1000m3/h",
+        "Mm3/h",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -767,7 +757,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "volume per time per length",
         "thousand cubic meters per hour per meter",
-        "1000m3/h.m",
+        "Mm3/h.m",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -997,6 +987,16 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "pressure", "bar", "bar", f_base_to_unit, f_unit_to_base, default_category=None
     )
+    f_unit_to_base = MakeCustomaryToBase(101325.0, 100000.0, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(101325.0, 100000.0, 1.0, 0.0)
+    db.AddUnit(
+        "pressure",
+        "bar gauge",
+        "bar(g)",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 100000, 3600, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 100000, 3600, 0.0)
     db.AddUnit(
@@ -1212,16 +1212,6 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category="volume per length",
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 0.1589873, 28.31685, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 0.1589873, 28.31685, 0.0)
-    db.AddUnit(
-        "dimensionless",
-        "barrel per thousand cubic feet",
-        "bbl/k(ft3)",
-        f_base_to_unit,
-        f_unit_to_base,
-        default_category="volume per volume",
-    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 0.1589873, 86400000, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 0.1589873, 86400000, 0.0)
     db.AddUnit(
@@ -1237,7 +1227,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "dimensionless",
         "barrel per million cubic feet",
-        "bbl/M(ft3)",
+        "bbl/MMcf",
         f_base_to_unit,
         f_unit_to_base,
         default_category="volume per volume",
@@ -2342,7 +2332,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "time per volume",
         "day per thousand cubic feet",
-        "d/k(ft3)",
+        "d/Mcf",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -6942,7 +6932,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "volume",
         "million cubic feet",
-        "M(ft3)",
+        "MMcf",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -6952,7 +6942,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "dimensionless",
         "million cubic feet per acre-foot",
-        "M(ft3)/acre.ft",
+        "MMcf/acre.ft",
         f_base_to_unit,
         f_unit_to_base,
         default_category="volume per volume",
@@ -6962,7 +6952,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "volume flow rate",
         "million cubic feet per day",
-        "M(ft3)/d",
+        "MMcf/d",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -6972,7 +6962,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "volume",
         "million cubic meters",
-        "M(m3)",
+        "MMm3",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -6982,7 +6972,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "volume flow rate",
         "million cubic metres per day",
-        "M(m3)/d",
+        "MMm3/d",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -7598,16 +7588,6 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "electric polarization",
         "millicoulombs/square metre",
         "mC/m2",
-        f_base_to_unit,
-        f_unit_to_base,
-        default_category=None,
-    )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 28.316846592, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 28.316846592, 1.0, 0.0)
-    db.AddUnit(
-        "volume",
-        "thousand cubic feet",
-        "Mcf",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -8442,16 +8422,6 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category="volume per volume",
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 28316.85, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 28316.85, 1.0, 0.0)
-    db.AddUnit(
-        "volume",
-        "million cubic feet",
-        "MMcf",
-        f_base_to_unit,
-        f_unit_to_base,
-        default_category=None,
-    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 133.3224, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 133.3224, 1.0, 0.0)
     db.AddUnit(
@@ -9118,6 +9088,36 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "standard volume per time",
         "thousand std cubic metres, 15 degC/day",
         "Mscm(15C)/d",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1, 86400, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1, 86400, 0.0)
+    db.AddUnit(
+        "standard volume per time",
+        "std cubic metres/day",
+        "sm3/d",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1000, 86400, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1000, 86400, 0.0)
+    db.AddUnit(
+        "standard volume per time",
+        "thousand std cubic metres/day",
+        "Msm3/d",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1000000, 86400, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1000000, 86400, 0.0)
+    db.AddUnit(
+        "standard volume per time",
+        "million std cubic metres/day",
+        "MMsm3/d",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -11691,7 +11691,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "dimensionless",
         "cubic meter per million cubic feet",
-        "m3/M(ft3)",
+        "m3/MMcf",
         f_base_to_unit,
         f_unit_to_base,
         default_category="volume per volume",
@@ -11701,7 +11701,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "dimensionless",
         "million cubic feet per barrel",
-        "M(ft3)/bbl",
+        "MMcf/bbl",
         f_base_to_unit,
         f_unit_to_base,
         default_category="volume per volume",
@@ -11816,12 +11816,52 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 158.9873, 86400, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 158.9873, 86400, 0.0)
+    db.AddUnit(
+        "standard volume per time",
+        "thousand stock tank barrels, 60 deg F/day",
+        "Mstb/d",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 158987.3, 86400, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 158987.3, 86400, 0.0)
+    db.AddUnit(
+        "standard volume per time",
+        "million stock tank barrels, 60 deg F/day",
+        "MMstb/d",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 0.028262357, 86400, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 0.028262357, 86400, 0.0)
     db.AddUnit(
         "standard volume per time",
         "standard cubic feet/day",
         "scf/d",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 28.262357, 86400, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 28.262357, 86400, 0.0)
+    db.AddUnit(
+        "standard volume per time",
+        "thousand standard cubic feet/day",
+        "Mscf/d",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 28262.357, 86400, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 28262.357, 86400, 0.0)
+    db.AddUnit(
+        "standard volume per time",
+        "million standard cubic feet/day",
+        "MMscf/d",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -11856,32 +11896,12 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 28.316846592, 0.1589873, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 28.316846592, 0.1589873, 0.0)
-    db.AddUnit(
-        "dimensionless",
-        "thousand cubic feet per barrel",
-        "Mcf/bbl",
-        f_base_to_unit,
-        f_unit_to_base,
-        default_category="volume per volume",
-    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 0.1589873, 28.31685, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 0.1589873, 28.31685, 0.0)
     db.AddUnit(
         "dimensionless",
         "barrel per thousand cubic feet",
         "bbl/Mcf",
-        f_base_to_unit,
-        f_unit_to_base,
-        default_category="volume per volume",
-    )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 0.1589873, 28316.85, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 0.1589873, 28316.85, 0.0)
-    db.AddUnit(
-        "dimensionless",
-        "barrel per million cubic feet",
-        "bbl/MMcf",
         f_base_to_unit,
         f_unit_to_base,
         default_category="volume per volume",
@@ -12475,7 +12495,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "volume",
         "thousand cubic meters",
-        "1000m3",
+        "Mm3",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -13951,12 +13971,12 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
             "dimensionless",
             override=override_categories,
             valid_units=[
-                "1000ft3/bbl",
+                "Mcf/bbl",
                 "bbl/100bbl",
                 "bbl/bbl",
                 "bbl/ft3",
-                "bbl/k(ft3)",
-                "bbl/M(ft3)",
+                "bbl/Mcf",
+                "bbl/MMcf",
                 "cm3/cm3",
                 "cm3/m3",
                 "dm3/m3",
@@ -13971,11 +13991,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
                 "sm3/sm3",
                 "volpercent",
                 "volppm",
-                "m3/M(ft3)",
-                "M(ft3)/bbl",
-                "Mcf/bbl",
-                "bbl/Mcf",
-                "bbl/MMcf",
+                "m3/MMcf",
+                "MMcf/bbl",
             ],
         )
         db.AddCategory(
@@ -15498,9 +15515,9 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
             "volume per time per length",
             override=override_categories,
             valid_units=[
-                "1000ft3/d.ft",
-                "1000m3/d.m",
-                "1000m3/h.m",
+                "Mcf/d.ft",
+                "Mm3/d.m",
+                "Mm3/h.m",
                 "bbl/d.ft",
                 "galUK/hr.ft",
                 "galUK/hr.in",
@@ -15526,7 +15543,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
             override=override_categories,
             valid_units=[
                 "m3",
-                "1000ft3",
+                "Mcf",
                 "bbl",
                 "bcf",
                 "cm3",
@@ -15539,16 +15556,14 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
                 "hL",
                 "in3",
                 "L",
-                "M(ft3)",
-                "M(m3)",
+                "MMcf",
+                "MMm3",
                 "Mbbl",
-                "Mcf",
                 "mL",
                 "mm3",
                 "MMbbl",
-                "MMcf",
                 "tcf",
-                "1000m3",
+                "Mm3",
                 "um3",
             ],
         )
@@ -15651,7 +15666,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
             override=override_categories,
             valid_units=[
                 "m3/Pa.s",
-                "1000ft3/psi.d",
+                "Mcf/psi.d",
                 "bbl/d.psi",
                 "bbl/kPa.d",
                 "bbl/psi.d",
@@ -15677,9 +15692,9 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
             override=override_categories,
             valid_units=[
                 "m3/s",
-                "1000ft3/d",
-                "1000m3/d",
-                "1000m3/h",
+                "Mcf/d",
+                "Mm3/d",
+                "Mm3/h",
                 "bbl/d",
                 "bbl/hr",
                 "bbl/min",
@@ -15702,13 +15717,12 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
                 "L/h",
                 "L/min",
                 "L/s",
-                "M(ft3)/d",
-                "M(m3)/d",
+                "MMcf/d",
+                "MMm3/d",
                 "m3/d",
                 "m3/h",
                 "m3/min",
                 "Mbbl/d",
-                "Mcf/d",
                 "um3/s",
             ],
         )
@@ -16053,6 +16067,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
                 "ubar",
                 "uPa",
                 "upsi",
+                "Pa(g)",
+                "bar(g)",
             ],
         )
         db.AddCategory(
@@ -16095,6 +16111,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
                 "ubar",
                 "uPa",
                 "upsi",
+                "Pa(g)",
+                "bar(g)",
             ],
         )
         db.AddCategory(
@@ -16354,7 +16372,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
                 "s/m3",
                 "d/bbl",
                 "d/ft3",
-                "d/k(ft3)",
+                "d/Mcf",
                 "d/m3",
                 "h/ft3",
                 "h/m3",
@@ -16404,8 +16422,15 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
                 "scf(60F)/d",
                 "scm(15C)/d",
                 "stb(60F)/d",
-                "stb/d",
+                "MMscf/d",
+                "MMsm3/d",
+                "MMstb/d",
+                "Mscf/d",
+                "Msm3/d",
+                "Mstb/d",
                 "scf/d",
+                "sm3/d",
+                "stb/d",
             ],
         )
         db.AddCategory(
