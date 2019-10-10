@@ -2,8 +2,8 @@ from barril.units._quantity import _Quantity
 from barril.units.unit_database import UnitDatabase
 from oop_ext.interface._interface import ImplementsInterface
 
-from .interfaces import IObjectWithQuantity, IQuantity
 from ._quantity import ObtainQuantity
+from .interfaces import IObjectWithQuantity, IQuantity
 
 __all__ = ["AbstractValueWithQuantityObject"]
 
@@ -201,8 +201,12 @@ class AbstractValueWithQuantityObject:
             Returns a new scalar that's a copy of this scalar.
         """
         try:
+
             if value is None:
-                value = self.GetAbstractValue(unit)
+                if not self.HasCategory():
+                    value = self.GetAbstractValue()
+                else:
+                    value = self.GetAbstractValue(unit)
 
             if unit is None and category is None:
                 return self.CreateWithQuantity(self._quantity, value=value, **kwargs)

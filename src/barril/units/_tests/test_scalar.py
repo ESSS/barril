@@ -384,18 +384,6 @@ def testFormatedUnitsOnScalar(unit_database_empty):
     assert scalar.GetFormatted() == "1.18 [m]"
 
 
-def testEmptyScalar():
-    """
-        ScalarMultiData exception when some of its scalars don't have a quantity_type
-    """
-    # An empty scalar doesn't have a category defined
-    scalar_1 = Scalar.CreateEmptyScalar(20.0)
-
-    # When try to retrieve scalar value or unit a  exception was being raised
-    assert scalar_1.GetValue("m") == 20.0
-    assert scalar_1.GetUnit() == ""
-
-
 def testCopyProperties(unit_database_well_length):
     """
         Test if the mehod SetValue is not called when copying the Scalar's properties.
@@ -407,6 +395,11 @@ def testCopyProperties(unit_database_well_length):
     scalar_source = Scalar(category, value, unit)
     scalar_dest = scalar_source.CreateCopyInstance()
 
+    assert scalar_dest.GetCategory() == category
+    assert scalar_dest.GetUnit() == unit
+    assert scalar_dest.GetValue() == value
+
+    scalar_dest = scalar_source.CreateCopy(category=category, value=None, unit=unit)
     assert scalar_dest.GetCategory() == category
     assert scalar_dest.GetUnit() == unit
     assert scalar_dest.GetValue() == value

@@ -677,17 +677,9 @@ class _Quantity(Quantity):
         :returns:
             An object with values to the passed unit.
         """
-        try:
-            return self._unit_database.Convert(
-                self._composing_categories, self._composing_units, to_unit, value
-            )
-        except:
-            return self._unit_database.Convert(
-                self._category,
-                self._CreateUnitsWithJoinedExponentsString(),
-                to_unit,
-                value,
-            )
+        return self._unit_database.Convert(
+            self._category, self._CreateUnitsWithJoinedExponentsString(), to_unit, value
+        )
 
     @classmethod
     def _GetComparison(cls, operator, use_literals=False):
