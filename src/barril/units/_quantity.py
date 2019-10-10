@@ -4,11 +4,16 @@ This module provides the implementation of an Quantity object.
 
 from collections import OrderedDict
 from barril.units.exceptions import QuantityValidationError
-from barril.units.unit_database import UnitDatabase, UnitsError
+from barril.units.unit_database import (
+    InvalidUnitError,
+    UnitDatabase,
+    UnitsError,
+    FixUnitIfIsLegacy,
+)
 from oop_ext.interface._interface import ImplementsInterface
 
-from .interfaces import IQuantity, IQuantity2, IQuantity3, IQuantity6
 from ._unit_constants import UNKNOWN_UNIT
+from .interfaces import IQuantity, IQuantity2, IQuantity3, IQuantity6
 
 __all__ = ["Quantity"]
 
@@ -97,7 +102,11 @@ def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
     elif category is None:
         category = unit_database.GetDefaultCategory(unit)
         if not category:
-            raise UnitsError(f"Unable to get default category for: {unit}")
+            is_legacy, unit = FixUnitIfIsLegacy(unit)
+            if is_legacy:
+                category = unit_database.GetDefaultCategory(unit)
+            else:
+                raise UnitsError(f"Unable to get default category for: {unit}")
 
         key_with_resolved_category = (category, unit, unknown_unit_caption)
         try:
@@ -393,7 +402,15 @@ class _Quantity(Quantity):
         else:
             if unit.__class__ != str:
                 raise TypeError("Only str is accepted. %s is not." % unit.__class__)
-            unit_database.CheckCategoryUnit(category, unit)
+
+            try:
+                unit_database.CheckCategoryUnit(category, unit)
+            except InvalidUnitError as e:
+                is_legacy, unit = FixUnitIfIsLegacy(unit)
+                if is_legacy:
+                    unit_database.CheckCategoryUnit(category, unit)
+                else:
+                    raise e
 
         # store it as odict so that we can have a decent order when creating a string from
         # an operation.

@@ -4,6 +4,8 @@ UNRELEASED
 * ``_foundation`` has been renamed to ``_util``, and a lot of functions which were not being
   used anymore have been removed.
 * Add new unit category mass temperature per mol (``kg.K/mol``).
+* Some units have been renamed as they were deemed out-of-place in the oil industry to something more usual (for example, ``1000ft3/d`` became ``Mcf/d``).
+  The old representation of those units is still supported, but they will be automatically translated during ``Quantity`` creation, so this change should not affect users much.
 
 1.7.1 (2019-10-03)
 ------------------
