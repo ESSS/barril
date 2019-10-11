@@ -13328,8 +13328,8 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 1.0, 0.00001, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 1.0, 0.00001, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.0, 1.0e-5, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.0, 1.0e-5, 0.0)
     db.AddUnit(
         "joule-thomson coefficient",
         "delta degrees celsius per bar",
