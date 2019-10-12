@@ -584,6 +584,9 @@ class _Quantity(Quantity):
 
     unit = property(GetUnit)
 
+    def IsEmpty(self):
+        return self == self._EMPTY_QUANTITY
+
     def GetUnitName(self):
         """
         :rtype: str
@@ -684,10 +687,7 @@ class _Quantity(Quantity):
             )
         except ComposedUnitError:
             return self._unit_database.Convert(
-                self._category,
-                self._CreateUnitsWithJoinedExponentsString(),
-                to_unit,
-                value,
+                self._category, self._unit, to_unit, value
             )
 
     @classmethod

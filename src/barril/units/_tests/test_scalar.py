@@ -585,7 +585,10 @@ def testScalarCreationModes():
     assert Scalar("length", 10, "m") == base
     assert Scalar((10.0, "m")) == base
 
-    with pytest.raises(AssertionError):
+    with pytest.raises(
+        AssertionError,
+        match="If category and value are given, the unit must be specified too.",
+    ):
         Scalar("length", 1.0)  # missing unit
 
 
@@ -633,6 +636,8 @@ def testChangeScalars():
 
 
 def testComparison():
+    from math import pi
+
     a = Scalar(1, "m")
     b = Scalar(100, "cm")
     c = Scalar(99, "cm")
@@ -659,3 +664,17 @@ def testComparison():
     a = Scalar(q, 1.0)
     b = Scalar(q * q, 1.0)
     assert {a, b, b / a} == {b, a}
+
+    for value in [0.0, pi, 0.33333333]:
+        a = Scalar("temperature", value, "degC")
+        b = Scalar("temperature", value * 1.8 + 32, "degF")
+        c = Scalar("temperature", value + 273.15, "K")
+
+        assert a <= b <= c and c <= b <= a
+
+
+def testHashing():
+    m = Scalar(1, "m")
+    cm = Scalar(100, "cm")
+    assert m == cm
+    assert hash(m) == hash(cm)

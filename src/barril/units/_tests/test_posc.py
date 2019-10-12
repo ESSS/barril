@@ -304,7 +304,6 @@ def testDefaultCategories(unit_database_posc):
         "self inductance per length",
         "shear rate",
         "status",
-        "thermodynamic temperature",
         "volume per area",
         "volume per length",
         "volume per time per area",

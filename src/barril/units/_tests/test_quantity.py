@@ -112,3 +112,10 @@ def testDivision():
     assert speed.GetUnit() == "m/s"
     assert speed.unit == "m/s"
     assert no_unit.GetUnit() == ""
+
+
+def testEmptyQuantity():
+    quantity = Quantity.CreateEmpty()
+    assert quantity.IsEmpty()
+    assert quantity.GetUnit() == ""
+    assert quantity.GetQuantityType() == ""

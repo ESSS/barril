@@ -389,3 +389,17 @@ def testPerMicrometre(db):
     assert approx(per_inch.GetValue()) == 25400
     assert per_metre == units.Scalar("per length", 10 ** 6, "1/m")
     assert per_inch == units.Scalar("per length", 25400.0, "1/in")
+
+
+def testMassTemperaturePerMol(db):
+    value = units.Scalar("mass temperature per mol", 3.1415, "kg.K/mol")
+
+    assert value.GetValue("kg.K/mol") == approx(3.1415)
+    assert value.GetValue("kg.degC/mol") == approx(3.1415)
+    assert value.GetValue("g.K/mol") == approx(3.1415 * 1e3)
+    assert value.GetValue("g.degC/mol") == approx(3.1415 * 1e3)
+    assert value.GetValue("kg.K/kmol") == approx(3.1415 * 1e3)
+    assert value.GetValue("kg.degC/kmol") == approx(3.1415 * 1e3)
+    assert value.GetValue("kg.degF/mol") == approx(3.1415 * 9 / 5)
+    assert value.GetValue("g.degF/mol") == approx(3.1415 * 9 / 5 * 1e3)
+    assert value.GetValue("kg.degF/kmol") == approx(3.1415 * 9 * 1e3 / 5)

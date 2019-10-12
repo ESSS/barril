@@ -10,7 +10,7 @@ from oop_ext.interface._interface import ImplementsInterface
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._quantity import ObtainQuantity, Quantity
 from .interfaces import IQuantity, IScalar
-from .unit_database import InvalidQuantityTypeError, UnitDatabase
+from .unit_database import InvalidQuantityTypeError, UnitDatabase, UnitsError
 
 __all__ = ["Scalar"]
 
@@ -109,6 +109,10 @@ class Scalar(AbstractValueWithQuantityObject):
         if unit is None:
             return self._value
         else:
+            if self._quantity.IsEmpty():
+                raise UnitsError(
+                    "Unable to get value for empty quantity, unit should be None."
+                )
             return self._quantity.ConvertScalarValue(self._value, unit)
 
     GetValue = GetAbstractValue
@@ -238,19 +242,21 @@ class Scalar(AbstractValueWithQuantityObject):
         )
 
     # Compare --------------------------------------------------------------------------------------
-    def _GetValueInDefaultUnit(self):
+    def _GetValueInBaseUnit(self):
         try:
+            if self._quantity.IsEmpty():
+                return self._value
             return self.GetValue(
-                self._unit_database.GetDefaultUnit(self._quantity._category)
+                self._unit_database.GetBaseUnit(self._quantity._category)
             )
         except InvalidQuantityTypeError:
-            return self._value
+            return (self._value, self._quantity._unit)
 
     def __eq__(self, other):
         return (
             type(self) is type(other)
             and self._quantity._category == other._quantity._category
-            and self._GetValueInDefaultUnit() == other._GetValueInDefaultUnit()
+            and self._GetValueInBaseUnit() == other._GetValueInBaseUnit()
         )
 
     def AlmostEqual(self, other, precision):
@@ -258,14 +264,13 @@ class Scalar(AbstractValueWithQuantityObject):
             type(self) is type(other)
             and self._quantity._category == other._quantity._category
             and round(
-                self._GetValueInDefaultUnit() - other._GetValueInDefaultUnit(),
-                precision,
+                self._GetValueInBaseUnit() - other._GetValueInBaseUnit(), precision
             )
             == 0
         )
 
     def __hash__(self, *args, **kwargs):
-        return hash((self._quantity._category, self._GetValueInDefaultUnit()))
+        return hash((self._quantity._category, self._GetValueInBaseUnit()))
 
     def __lt__(self, other):
         if self.quantity_type != other.quantity_type:
