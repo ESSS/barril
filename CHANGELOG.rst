@@ -9,6 +9,7 @@ UNRELEASED
 * Fix division ``1.0 / a`` where ``a`` is a ``Scalar`` or ``Array`` and also add support for floor
   division, i.e., operations like ``a // b``  where ``a`` and ``b`` are ``Scalar`` or ``Array``
   (and combinations with ``float`` or ``int``).
+* Add new unit category for Joule-Thomson coefficient (``K/Pa``).
 
 1.7.1 (2019-10-03)
 ------------------

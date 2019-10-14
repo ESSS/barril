@@ -404,3 +404,30 @@ def testConcentrationRatio(unit_database_posc):
     """
     concentration_ratio_units = unit_database_posc.GetValidUnits("concentration ratio")
     assert concentration_ratio_units == ["mg/l/mg/l", "kg/m3/kg/m3"]
+
+
+def testJouleThomsonCoefficientUnits():
+    """
+    Results gathered from NIST.
+    """
+    joule_thomson_si_units = units.Scalar("joule-thomson coefficient", 1, "K/Pa")
+    assert joule_thomson_si_units.value == 1.0
+    assert joule_thomson_si_units.GetValue("degC/Pa") == 1.0
+    assert joule_thomson_si_units.GetValue("degC/MPa") == 1e-6
+    assert joule_thomson_si_units.GetValue("degC/bar") == 1e-5
+    assert joule_thomson_si_units.GetValue("K/MPa") == 1e-6
+    assert joule_thomson_si_units.GetValue("K/bar") == 1e-5
+    assert joule_thomson_si_units.GetValue("degF/Pa") == approx(9 / 5)
+    assert joule_thomson_si_units.GetValue("degF/MPa") == approx(9 / 5 * 1e-6)
+    assert joule_thomson_si_units.GetValue("degF/bar") == approx(9 / 5 * 1e-5)
+    assert joule_thomson_si_units.GetValue("degR/Pa") == approx(9 / 5)
+    assert joule_thomson_si_units.GetValue("degR/MPa") == approx(9 / 5 * 1e-6)
+    assert joule_thomson_si_units.GetValue("degR/bar") == approx(9 / 5 * 1e-5)
+
+    joule_thomson_si_units_mega = units.Scalar("joule-thomson coefficient", 1, "K/MPa")
+    assert joule_thomson_si_units_mega.GetValue("K/Pa") == 1e6
+    assert joule_thomson_si_units_mega.GetValue("K/bar") == 1e1
+    assert joule_thomson_si_units_mega.GetValue("degC/Pa") == 1e6
+    assert joule_thomson_si_units_mega.GetValue("degC/bar") == 1e1
+    assert joule_thomson_si_units_mega.GetValue("degF/Pa") == approx(9 / 5 * 1e6)
+    assert joule_thomson_si_units_mega.GetValue("degF/bar") == approx(9 / 5 * 1e1)

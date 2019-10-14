@@ -321,6 +321,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "moment per angular velocity", "newton meter per angular velocity", "Nms/rad"
     )
     db.AddUnitBase("mass temperature per mol", "kg.K/mol", "kg.K/mol")
+    db.AddUnitBase("joule-thomson coefficient", "delta kelvin per pascal", "K/Pa")
     f_unit_to_base = MakeCustomaryToBase(0.0, 6.283185307, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 6.283185307, 1.0, 0.0)
     db.AddUnit(
@@ -13317,6 +13318,116 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.0, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.0, 1.0, 0.0)
+    db.AddUnit(
+        "joule-thomson coefficient",
+        "delta degrees celsius per pascal",
+        "degC/Pa",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.0, 1.0e-5, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.0, 1.0e-5, 0.0)
+    db.AddUnit(
+        "joule-thomson coefficient",
+        "delta degrees celsius per bar",
+        "degC/bar",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.0, 1.0e-6, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.0, 1.0e-6, 0.0)
+    db.AddUnit(
+        "joule-thomson coefficient",
+        "delta degrees celsius per megapascal",
+        "degC/MPa",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.0, 1.0e-5, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.0, 1.0e-5, 0.0)
+    db.AddUnit(
+        "joule-thomson coefficient",
+        "delta kelvin per bar",
+        "K/bar",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.0, 1.0e-6, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.0, 1.0e-6, 0.0)
+    db.AddUnit(
+        "joule-thomson coefficient",
+        "delta kelvin per megapascal",
+        "K/MPa",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 5.0, 9.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 5.0, 9.0, 0.0)
+    db.AddUnit(
+        "joule-thomson coefficient",
+        "delta degrees fahrenheit per pascal",
+        "degF/Pa",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 5.0, 9.0e-5, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 5.0, 9.0e-5, 0.0)
+    db.AddUnit(
+        "joule-thomson coefficient",
+        "delta degrees fahrenheit per bar",
+        "degF/bar",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 5.0, 9.0e-6, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 5.0, 9.0e-6, 0.0)
+    db.AddUnit(
+        "joule-thomson coefficient",
+        "delta degrees fahrenheit per megapascal",
+        "degF/MPa",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 5.0, 9.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 5.0, 9.0, 0.0)
+    db.AddUnit(
+        "joule-thomson coefficient",
+        "delta degrees rankine per pascal",
+        "degR/Pa",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 5.0, 9.0e-5, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 5.0, 9.0e-5, 0.0)
+    db.AddUnit(
+        "joule-thomson coefficient",
+        "delta degrees rankine per bar",
+        "degR/bar",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 5.0, 9.0e-6, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 5.0, 9.0e-6, 0.0)
+    db.AddUnit(
+        "joule-thomson coefficient",
+        "delta degrees rankine per megapascal",
+        "degR/MPa",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
     if fill_categories:
         db.AddCategory(
             "reluctance",
@@ -16997,6 +17108,25 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
                 "g.degF/mol",
                 "kg.degF/mol",
                 "kg.degF/kmol",
+            ],
+        )
+        db.AddCategory(
+            "joule-thomson coefficient",
+            "joule-thomson coefficient",
+            override=override_categories,
+            valid_units=[
+                "K/Pa",
+                "K/bar",
+                "K/MPa",
+                "degC/Pa",
+                "degC/bar",
+                "degC/MPa",
+                "degF/Pa",
+                "degF/bar",
+                "degF/MPa",
+                "degR/Pa",
+                "degR/bar",
+                "degR/MPa",
             ],
         )
 
