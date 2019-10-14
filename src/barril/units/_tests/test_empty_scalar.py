@@ -1,5 +1,5 @@
 from barril.units import Scalar
-from barril.units.unit_database import InvalidQuantityTypeError, UnitsError
+from barril.units.unit_database import UnitsError
 import pytest
 
 
@@ -24,8 +24,12 @@ def testEmptyScalarWithInitialValue():
     # When try to retrieve an empty scalar value using any unit a exception
     # is being raised
     with pytest.raises(
-        UnitsError, match="Unable to get value for empty quantity, unit should be None."
+        UnitsError,
+        match='Unable to get value for empty quantity, unit should be None or "".',
     ):
         _ = scalar_1.GetValue("m")
 
     assert scalar_1.GetUnit() == ""
+
+    # This operation is only valid for empty Scalar if unit == ""
+    _ = scalar_1.GetValue(scalar_1.GetUnit())

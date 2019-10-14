@@ -105,15 +105,21 @@ class Scalar(AbstractValueWithQuantityObject):
         """
 
         :param unit:
+
+        :type unit: str or None
+
         """
         if unit is None:
             return self._value
-        else:
-            if self._quantity.IsEmpty():
+
+        if self._quantity.IsEmpty():
+            if unit != "":
                 raise UnitsError(
-                    "Unable to get value for empty quantity, unit should be None."
+                    'Unable to get value for empty quantity, unit should be None or "".'
                 )
-            return self._quantity.ConvertScalarValue(self._value, unit)
+            return self._value
+
+        return self._quantity.ConvertScalarValue(self._value, unit)
 
     GetValue = GetAbstractValue
     value = property(GetAbstractValue)
