@@ -10,7 +10,7 @@ from oop_ext.interface._interface import ImplementsInterface
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._quantity import ObtainQuantity, Quantity
 from .interfaces import IQuantity, IScalar
-from .unit_database import InvalidQuantityTypeError, UnitDatabase, UnitsError
+from .unit_database import InvalidQuantityTypeError, UnitDatabase
 
 __all__ = ["Scalar"]
 
@@ -110,13 +110,6 @@ class Scalar(AbstractValueWithQuantityObject):
 
         """
         if unit is None:
-            return self._value
-
-        if self._quantity.IsEmpty():
-            if unit != "":
-                raise UnitsError(
-                    'Unable to get value for empty quantity, unit should be None or "".'
-                )
             return self._value
 
         return self._quantity.ConvertScalarValue(self._value, unit)
