@@ -435,16 +435,12 @@ def testJouleThomsonCoefficientUnits():
 
 def testDensityDerivativePerTemperatureUnitConversion():
     density_derivative_per_temperature = units.Scalar(
-        "density derivative in respect to temperature",
-        1,
-        "kg/m3.degC"
+        "density derivative in respect to temperature", 1, "kg/m3.degC"
     )
     assert density_derivative_per_temperature.value == 1.0
     assert density_derivative_per_temperature.GetValue("kg/m3.K") == 1.0
 
     density_derivative_per_temperature = units.Scalar(
-        "density derivative in respect to temperature",
-        1,
-        "kg/m3.K"
+        "density derivative in respect to temperature", 1, "kg/m3.K"
     )
     assert density_derivative_per_temperature.GetValue("kg/m3.degC") == 1.0
