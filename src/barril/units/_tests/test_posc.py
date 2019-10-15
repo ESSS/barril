@@ -431,3 +431,20 @@ def testJouleThomsonCoefficientUnits():
     assert joule_thomson_si_units_mega.GetValue("degC/bar") == 1e1
     assert joule_thomson_si_units_mega.GetValue("degF/Pa") == approx(9 / 5 * 1e6)
     assert joule_thomson_si_units_mega.GetValue("degF/bar") == approx(9 / 5 * 1e1)
+
+
+def testDensityDerivativePerTemperatureUnitConversion():
+    density_derivative_per_temperature = units.Scalar(
+        "density derivative in respect to temperature",
+        1,
+        "kg/m3.degC"
+    )
+    assert density_derivative_per_temperature.value == 1.0
+    assert density_derivative_per_temperature.GetValue("kg/m3.K") == 1.0
+
+    density_derivative_per_temperature = units.Scalar(
+        "density derivative in respect to temperature",
+        1,
+        "kg/m3.K"
+    )
+    assert density_derivative_per_temperature.GetValue("kg/m3.degC") == 1.0

@@ -13428,6 +13428,16 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.0, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.0, 1.0, 0.0)
+    db.AddUnit(
+        "density derivative in respect to temperature",
+        "kilogram per cubic meter Kelvin",
+        "kg/m3.K",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
     if fill_categories:
         db.AddCategory(
             "reluctance",
@@ -17022,7 +17032,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
             "density derivative in respect to temperature",
             "density derivative in respect to temperature",
             override=override_categories,
-            valid_units=["kg/m3.degC"],
+            valid_units=["kg/m3.degC", "kg/m3.K"],
         )
         db.AddCategory(
             "computer binary memory",
