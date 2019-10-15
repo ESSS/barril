@@ -37,12 +37,8 @@ def testCurves(unit_database):
     values10 = Array(r, values=numpy.array(list(range(10)), dtype=numpy.int32))
     values9 = Array(r, values=numpy.array(list(range(9)), dtype=numpy.int32))
 
-    domain9 = Array(
-        "time", values=numpy.array(list(range(9)), dtype=numpy.int32), unit="s"
-    )
-    domain10 = Array(
-        "time", values=numpy.array(list(range(10)), dtype=numpy.int32), unit="s"
-    )
+    domain9 = Array("time", values=numpy.array(list(range(9)), dtype=numpy.int32), unit="s")
+    domain10 = Array("time", values=numpy.array(list(range(10)), dtype=numpy.int32), unit="s")
 
     with pytest.raises(ValueError):
         Curve(values10, domain9)

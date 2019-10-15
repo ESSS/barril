@@ -46,9 +46,7 @@ def testCopy():
 
 def testEquality():
     def Create(number, fraction):
-        return units.FractionScalar(
-            "length", value=FractionValue(number, fraction), unit="m"
-        )
+        return units.FractionScalar("length", value=FractionValue(number, fraction), unit="m")
 
     assert Create(250, (3, 4)) == Create(250, (3, 4))
     assert not Create(250, (3, 4)) != Create(250, (3, 4))
@@ -111,9 +109,7 @@ def testFractionScalarInvalidValue(unit_database_len):
 
     db.AddCategory("another-length", "length", min_value=5, max_value=15)
 
-    scalar = units.FractionScalar(
-        "another-length", value=FractionValue(1, (1, 5)), unit="m"
-    )
+    scalar = units.FractionScalar("another-length", value=FractionValue(1, (1, 5)), unit="m")
     assert not scalar.IsValid()
     with pytest.raises(ValueError):
         scalar.CheckValidity()
@@ -123,9 +119,7 @@ def testFractionScalarInvalidValue(unit_database_len):
     assert scalar.IsValid()
 
     # Even invalid ,the scalar returns the value, unit and a formatted text.
-    another = units.FractionScalar(
-        "another-length", value=FractionValue(3000), unit="m"
-    )
+    another = units.FractionScalar("another-length", value=FractionValue(3000), unit="m")
     assert not another.IsValid()
     assert another.GetValue("m") == FractionValue(3000)
     assert another.GetUnit() == "m"
@@ -135,9 +129,7 @@ def testFractionScalarInvalidValue(unit_database_len):
     another_2 = scalar.CreateCopy(value=FractionValue(5000))
     assert not another_2.IsValid()
 
-    another_3 = units.FractionScalar(
-        "another-length", unit="m", value=FractionValue(5000)
-    )
+    another_3 = units.FractionScalar("another-length", unit="m", value=FractionValue(5000))
     assert not another_3.IsValid()
 
     # Performing copy between invalid fraction scalars. The validation is not performed on copy.

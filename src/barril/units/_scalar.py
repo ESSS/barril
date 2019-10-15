@@ -233,9 +233,7 @@ class Scalar(AbstractValueWithQuantityObject):
         :param value_format:
             @see Scalar.GetFormattedValue
         """
-        return self.GetFormattedValue(unit, value_format) + self.GetFormattedSuffix(
-            unit
-        )
+        return self.GetFormattedValue(unit, value_format) + self.GetFormattedSuffix(unit)
 
     # Compare --------------------------------------------------------------------------------------
 
@@ -322,13 +320,9 @@ class Scalar(AbstractValueWithQuantityObject):
                 "Divide",
                 "FloorDivide",
             ], "Only operation Divide and FloorDivide allowed here!"
-            q, v = operation_func(
-                Quantity.CreateEmpty(), p2.GetQuantity(), p1, p2.value
-            )
+            q, v = operation_func(Quantity.CreateEmpty(), p2.GetQuantity(), p1, p2.value)
         else:
-            q, v = operation_func(
-                p1.GetQuantity(), p2.GetQuantity(), self._value, p2.value
-            )
+            q, v = operation_func(p1.GetQuantity(), p2.GetQuantity(), self._value, p2.value)
         return self.__class__.CreateWithQuantity(q, v)
 
     def __reduce__(self):

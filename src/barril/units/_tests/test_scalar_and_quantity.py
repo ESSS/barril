@@ -52,9 +52,7 @@ class _LightweightQuantity:
         return UnitDatabase.GetSingleton()
 
 
-class _LightweightScalar(
-    tuple
-):  # Could derive from _LightweightQuantity, but this way is faster
+class _LightweightScalar(tuple):  # Could derive from _LightweightQuantity, but this way is faster
     """
     This is a lightweight version of a Scalar object. Should be as lightweight as a namedtuple,
     without events or any other kind of overhead. This class should be convertible to a full

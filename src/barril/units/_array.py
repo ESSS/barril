@@ -29,13 +29,9 @@ class Array(AbstractValueWithQuantityObject):
     """
 
     def __init__(self, category, values=None, unit=None):
-        AbstractValueWithQuantityObject.__init__(
-            self, category, value=values, unit=unit
-        )
+        AbstractValueWithQuantityObject.__init__(self, category, value=values, unit=unit)
 
-    def _InternalCreateWithQuantity(
-        self, quantity, values=None, unit_database=None, value=None
-    ):
+    def _InternalCreateWithQuantity(self, quantity, values=None, unit_database=None, value=None):
         if value is not None:
             if values is not None:
                 raise ValueError("Duplicated values parameter given")
@@ -74,9 +70,7 @@ class Array(AbstractValueWithQuantityObject):
             try:
                 return len(v) > 0 and isinstance(v[0], tuple)
             except TypeError:
-                return (
-                    False
-                )  # numpy raises a TypeError if it's a 0D array, so ignores it
+                return False  # numpy raises a TypeError if it's a 0D array, so ignores it
 
         if IsListOfTuples(values):
             result = []
@@ -136,10 +130,7 @@ class Array(AbstractValueWithQuantityObject):
             # about the actual values)
             category_info = quantity.GetCategoryInfo()
 
-            if (
-                category_info.min_value is not None
-                or category_info.max_value is not None
-            ):
+            if category_info.min_value is not None or category_info.max_value is not None:
                 # verify if values are in the given limits (if needed)
                 CheckValue = quantity.CheckValue
                 if len(values) > 0:

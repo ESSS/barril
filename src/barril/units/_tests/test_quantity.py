@@ -41,9 +41,7 @@ def testQuantitySharedInstances():
 
 def testQuantityCaption(unit_database_posc_len):
     unit_database = unit_database_posc_len
-    unit_database.AddUnitBase(
-        UNKNOWN_QUANTITY_TYPE, UNKNOWN_QUANTITY_TYPE, UNKNOWN_UNIT
-    )
+    unit_database.AddUnitBase(UNKNOWN_QUANTITY_TYPE, UNKNOWN_QUANTITY_TYPE, UNKNOWN_UNIT)
     unit_database.AddCategory(UNKNOWN_QUANTITY_TYPE, UNKNOWN_QUANTITY_TYPE)
 
     q0 = ObtainQuantity(unit=UNKNOWN_UNIT, category=UNKNOWN_QUANTITY_TYPE)
@@ -55,9 +53,7 @@ def testQuantityCaption(unit_database_posc_len):
     assert "Feeeet" == q.GetUnknownCaption()
     assert "Feeeet <unknown>" == q.GetUnitCaption()
 
-    q = Quantity.CreateDerived(
-        OrderedDict([("length", ("m", 1))]), unknown_unit_caption="Feeeet"
-    )
+    q = Quantity.CreateDerived(OrderedDict([("length", ("m", 1))]), unknown_unit_caption="Feeeet")
     assert "m" == q.GetUnitCaption()
 
 

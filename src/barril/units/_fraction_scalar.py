@@ -115,9 +115,7 @@ class FractionScalar(AbstractValueWithQuantityObject):
             # default category).
             quantity = ObtainQuantity(from_unit)
 
-        convert_to_quantity = ObtainQuantity(
-            from_unit, quantity.GetComposingCategories()
-        )
+        convert_to_quantity = ObtainQuantity(from_unit, quantity.GetComposingCategories())
         converted_number = convert_to_quantity.ConvertScalarValue(
             fraction_value.GetNumber(), to_unit
         )
@@ -235,14 +233,10 @@ class FractionScalar(AbstractValueWithQuantityObject):
             """
             Converts the given Fraction Scalar by applying the converts method of this class.
             """
-            converted = cls.ConvertFractionValue(
-                value, quantity_type, from_unit, to_unit
-            )
+            converted = cls.ConvertFractionValue(value, quantity_type, from_unit, to_unit)
             return FractionValue(number=float(converted))
 
-        UnitDatabase.RegisterAdditionalConversionType(
-            FractionValue, ConvertFractionScalar
-        )
+        UnitDatabase.RegisterAdditionalConversionType(FractionValue, ConvertFractionScalar)
 
 
 FractionScalar.RegisterFractionScalarConversion()

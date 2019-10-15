@@ -27,10 +27,7 @@ def testAdsorptionRate(db):
 
 def testSolubilityProduct(db):
     db.CheckQuantityTypeUnit("solubility product", "(mol/m3)^2")
-    assert (
-        approx(db.Convert("solubility product", "(mol/L)^2", "(mol/m3)^2", 1.0))
-        == 1.0e6
-    )
+    assert approx(db.Convert("solubility product", "(mol/L)^2", "(mol/m3)^2", 1.0)) == 1.0e6
 
 
 def testMassConsumptionEfficiency(db):
@@ -52,10 +49,7 @@ def testPartsPerMillionByVolumeConcentration(db):
     assert (
         approx(
             db.Convert(
-                "parts per million by volume per concentration",
-                "ppmv/mg/l",
-                "ppmv/kg/m3",
-                1.0,
+                "parts per million by volume per concentration", "ppmv/mg/l", "ppmv/kg/m3", 1.0
             )
         )
         == 1000
@@ -205,10 +199,7 @@ def testTemperaturePerLengthdegCP30m():
 
 def testMassPerTimePerArea(db):
     secs_to_days = 60 * 60 * 24
-    assert (
-        approx(db.Convert("mass per time per area", "kg/m2.s", "kg/m2.d", 1))
-        == 1 * secs_to_days
-    )
+    assert approx(db.Convert("mass per time per area", "kg/m2.s", "kg/m2.d", 1)) == 1 * secs_to_days
 
 
 def testAccelerationLinearMetersPerMin2(db):
@@ -232,29 +223,17 @@ def testSpecificVolume(db):
 
 
 def testViscosityPerPressure(db):
-    assert (
-        approx(db.Convert("viscosity per pressure", "cP/kPa", "cP/psi", 10.0))
-        == 68.9475729
-    )
+    assert approx(db.Convert("viscosity per pressure", "cP/kPa", "cP/psi", 10.0)) == 68.9475729
+
+    assert approx(db.Convert("viscosity per pressure", "cP/kPa", "cP/(kgf/cm2)", 10.0)) == 980.665
 
     assert (
-        approx(db.Convert("viscosity per pressure", "cP/kPa", "cP/(kgf/cm2)", 10.0))
-        == 980.665
-    )
-
-    assert (
-        approx(
-            db.Convert("viscosity per pressure", "cP/(kgf/cm2)", "cP/psi", 0.102),
-            abs=1e7,
-        )
+        approx(db.Convert("viscosity per pressure", "cP/(kgf/cm2)", "cP/psi", 0.102), abs=1e7)
         == 0.0071713
     )
 
     # maybe it's from this wrong conversion where IMEX limit of 0.102 comes from:
-    assert (
-        approx(db.Convert("viscosity per pressure", "cP/(kgf/cm2)", "cP/kPa", 10.0))
-        == 0.1019716
-    )
+    assert approx(db.Convert("viscosity per pressure", "cP/(kgf/cm2)", "cP/kPa", 10.0)) == 0.1019716
 
 
 def testForcePerLength(db):
@@ -287,14 +266,10 @@ def testPowerPerWeight(db):
 
 
 def testSelfInductance(db):
-    assert (
-        approx(db.Convert("self inductance per length", "H/m", "H/km", 1.0), rel=0.01)
-        == 1000
-    )
+    assert approx(db.Convert("self inductance per length", "H/m", "H/km", 1.0), rel=0.01) == 1000
 
     assert (
-        approx(db.Convert("self inductance per length", "H/m", "mH/km", 1.0), rel=0.01)
-        == 1000000
+        approx(db.Convert("self inductance per length", "H/m", "mH/km", 1.0), rel=0.01) == 1000000
     )
 
     assert (
@@ -307,19 +282,12 @@ def testSelfInductance(db):
         == 1000000000000
     )
 
-    assert (
-        approx(db.Convert("self inductance per length", "H/m", "mH/m", 1.0), rel=0.01)
-        == 1000
-    )
+    assert approx(db.Convert("self inductance per length", "H/m", "mH/m", 1.0), rel=0.01) == 1000
+
+    assert approx(db.Convert("self inductance per length", "H/m", "uH/m", 1.0), rel=0.01) == 1000000
 
     assert (
-        approx(db.Convert("self inductance per length", "H/m", "uH/m", 1.0), rel=0.01)
-        == 1000000
-    )
-
-    assert (
-        approx(db.Convert("self inductance per length", "H/m", "nH/m", 1.0), rel=0.01)
-        == 1000000000
+        approx(db.Convert("self inductance per length", "H/m", "nH/m", 1.0), rel=0.01) == 1000000000
     )
 
 
@@ -331,10 +299,7 @@ def testConcentrationPerSquareTime(db):
         approx(db.Convert("concentration per square time", "mg/l/d2", "kg/m3/d2", 1.0))
         == 1.0 / 1000.0
     )
-    assert (
-        approx(db.Convert("concentration per square time", "kg/m3/d2", "mg/l/d2", 1.0))
-        == 1000.0
-    )
+    assert approx(db.Convert("concentration per square time", "kg/m3/d2", "mg/l/d2", 1.0)) == 1000.0
 
 
 def testVolumeInCubicMicrometres(db):
@@ -350,15 +315,11 @@ def testVolumeFlowRateInCubicMicrometresPerSecond(db):
 
 
 def testFlowCoefficient(db):
-    obtained = db.Convert(
-        "flow coefficient", "(galUS/min)/(psi^0.5)", "(m3/s)/(Pa^0.5)", 1.0
-    )
+    obtained = db.Convert("flow coefficient", "(galUS/min)/(psi^0.5)", "(m3/s)/(Pa^0.5)", 1.0)
     expected = 7.59805421208337e-07
     assert approx(obtained, rel=1e-12) == expected
 
-    obtained = db.Convert(
-        "flow coefficient", "(m3/h)/(bar^0.5)", "(m3/s)/(Pa^0.5)", 1.0
-    )
+    obtained = db.Convert("flow coefficient", "(m3/h)/(bar^0.5)", "(m3/s)/(Pa^0.5)", 1.0)
     expected = 8.784104611578831e-07
     assert approx(obtained, rel=1e-12) == expected
 

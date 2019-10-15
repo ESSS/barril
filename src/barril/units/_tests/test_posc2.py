@@ -36,22 +36,16 @@ def testDivisionError():
                 try:
                     unit_database.Convert(category, base_unit, unit, i)
                 except Exception as e:
-                    raise TypeError(
-                        f"Error converting: from: {base_unit} to: {unit}"
-                    ) from e
+                    raise TypeError(f"Error converting: from: {base_unit} to: {unit}") from e
 
                 try:
                     unit_database.Convert(category, unit, base_unit, i)
                 except Exception as e:
-                    raise TypeError(
-                        f"Error converting: from: {unit} to: {base_unit}"
-                    ) from e
+                    raise TypeError(f"Error converting: from: {unit} to: {base_unit}") from e
 
 
 def testScfPerBblToM3ToM3():
     unit_database = UnitDatabase.CreateDefaultSingleton()
     expected = 0.17776487178535644
-    obtained = unit_database.Convert(
-        "standard volume per volume", "scf/bbl", "scm(15C)/m3", 1.0
-    )
+    obtained = unit_database.Convert("standard volume per volume", "scf/bbl", "scm(15C)/m3", 1.0)
     assert approx(abs(obtained - expected), 7) == 0

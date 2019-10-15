@@ -45,9 +45,7 @@ def CreateUnitSystemTemplate(manager):
     manager.SetTemplateUnitSystemByUnitsMapping(units_mapping_template)
 
 
-def testUnitSystemManager(
-    unit_manager, units_mapping_1, units_mapping_2, units_mapping_3
-):
+def testUnitSystemManager(unit_manager, units_mapping_1, units_mapping_2, units_mapping_3):
     CreateUnitSystemTemplate(unit_manager)
     unit_manager.AddUnitSystem("system1", "system1", units_mapping_1, False)
     unit_manager.AddUnitSystem("system2", "system2", units_mapping_2, False)

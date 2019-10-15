@@ -4,12 +4,7 @@ This module provides the implementation of an Quantity object.
 
 from collections import OrderedDict
 from barril.units.exceptions import QuantityValidationError
-from barril.units.unit_database import (
-    InvalidUnitError,
-    UnitDatabase,
-    UnitsError,
-    FixUnitIfIsLegacy,
-)
+from barril.units.unit_database import InvalidUnitError, UnitDatabase, UnitsError, FixUnitIfIsLegacy
 from oop_ext.interface._interface import ImplementsInterface
 
 from ._unit_constants import UNKNOWN_UNIT
@@ -56,9 +51,7 @@ def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
                 category = category[0]
         else:
             assert category.__class__ in (list, tuple)
-            unit = OrderedDict(
-                (cat, unit_and_exp) for (cat, unit_and_exp) in zip(category, unit)
-            )
+            unit = OrderedDict((cat, unit_and_exp) for (cat, unit_and_exp) in zip(category, unit))
             category = None
 
     if hasattr(unit, "items"):
@@ -68,17 +61,14 @@ def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
             category, (unit, _exp) = next(iter(unit.items()))
         else:
             key = tuple(
-                (category, tuple(unit_and_exp))
-                for (category, unit_and_exp) in unit.items()
+                (category, tuple(unit_and_exp)) for (category, unit_and_exp) in unit.items()
             )
             if unknown_unit_caption:
                 key += (unknown_unit_caption,)
             try:
                 return quantities_cache[key]
             except KeyError:
-                quantity = quantities_cache[key] = _Quantity(
-                    unit, None, unknown_unit_caption
-                )
+                quantity = quantities_cache[key] = _Quantity(unit, None, unknown_unit_caption)
                 return quantity
 
     key = (category, unit, unknown_unit_caption)
@@ -94,9 +84,7 @@ def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
         else:
             # Unit is given by the category
             unit = unit_database.GetDefaultUnit(category)
-        quantity = quantities_cache[key] = _Quantity(
-            category, unit, unknown_unit_caption
-        )
+        quantity = quantities_cache[key] = _Quantity(category, unit, unknown_unit_caption)
         return quantity
 
     elif category is None:
@@ -120,9 +108,7 @@ def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
             return quantity
 
     else:
-        quantities_cache[key] = quantity = _Quantity(
-            category, unit, unknown_unit_caption
-        )
+        quantities_cache[key] = quantity = _Quantity(category, unit, unknown_unit_caption)
         return quantity
 
 
@@ -178,9 +164,7 @@ class Quantity:
         .. see:: _CreateDerived for parameters.
         """
         return cls._CreateDerived(
-            category_to_unit_and_exps,
-            resulting_class,
-            unknown_unit_caption=unknown_unit_caption,
+            category_to_unit_and_exps, resulting_class, unknown_unit_caption=unknown_unit_caption
         )
 
     @classmethod
@@ -225,9 +209,7 @@ class Quantity:
                 # changes to accomodate making operations with derived units (internally the
                 # information must be a dict)
                 if category.__class__ != str:
-                    raise TypeError(
-                        "Only str is accepted. %s is not." % category.__class__
-                    )
+                    raise TypeError("Only str is accepted. %s is not." % category.__class__)
 
                 # Getting the category should be enough to know that it's valid.
                 category_info = unit_database.GetCategoryInfo(category)
@@ -237,12 +219,8 @@ class Quantity:
                     unit = category_info.default_unit
                 else:
                     if unit.__class__ != str:
-                        raise TypeError(
-                            "Only str is accepted. %s is not." % unit.__class__
-                        )
-                    unit_database.CheckQuantityTypeUnit(
-                        category_info.quantity_type, unit
-                    )
+                        raise TypeError("Only str is accepted. %s is not." % unit.__class__)
+                    unit_database.CheckQuantityTypeUnit(category_info.quantity_type, unit)
 
         return ObtainQuantity(
             OrderedDict(
@@ -369,17 +347,13 @@ class _Quantity(Quantity):
             self._category = self._MakeStr(
                 [
                     (category, exp)
-                    for category, (
-                        _unit,
-                        exp,
-                    ) in self._category_to_unit_and_exps.items()
+                    for category, (_unit, exp) in self._category_to_unit_and_exps.items()
                 ]
             )
             self._quantity_type = self._MakeStr(list(rep_and_exp.items()))
             self._unit = self._CreateUnitsWithJoinedExponentsString()
             self._composing_units = tuple(
-                (unit, exp)
-                for _category, (unit, exp) in self._category_to_unit_and_exps.items()
+                (unit, exp) for _category, (unit, exp) in self._category_to_unit_and_exps.items()
             )
             self._composing_categories = tuple(self._category_to_unit_and_exps.keys())
             self._category_info = None
@@ -653,9 +627,7 @@ class _Quantity(Quantity):
             if from_unit == to_unit:
                 return value
 
-            other = self._unit_database.GetInfo(
-                self._quantity_type, to_unit, fix_unknown=True
-            )
+            other = self._unit_database.GetInfo(self._quantity_type, to_unit, fix_unknown=True)
 
             return other.frombase(self._tobase(value))
         else:
@@ -765,27 +737,19 @@ class _Quantity(Quantity):
             if category_info.min_value is not None:
                 if category_info.is_min_exclusive:
                     if not value > category_info.min_value:
-                        self._RaiseValueError(
-                            value, ">", category_info.min_value, use_literals
-                        )
+                        self._RaiseValueError(value, ">", category_info.min_value, use_literals)
                 else:
                     if not value >= category_info.min_value:
-                        self._RaiseValueError(
-                            value, ">=", category_info.min_value, use_literals
-                        )
+                        self._RaiseValueError(value, ">=", category_info.min_value, use_literals)
 
             # checking maximum value
             if category_info.max_value is not None:
                 if category_info.is_max_exclusive:
                     if not value < category_info.max_value:
-                        self._RaiseValueError(
-                            value, "<", category_info.max_value, use_literals
-                        )
+                        self._RaiseValueError(value, "<", category_info.max_value, use_literals)
                 else:
                     if not value <= category_info.max_value:
-                        self._RaiseValueError(
-                            value, "<=", category_info.max_value, use_literals
-                        )
+                        self._RaiseValueError(value, "<=", category_info.max_value, use_literals)
 
     def GetUnitDatabase(self):
         return self._unit_database
@@ -821,8 +785,7 @@ class _Quantity(Quantity):
             unit_and_exps = self._category_to_unit_and_exps
 
         return OrderedDict(
-            (category, unit_and_exp[:])
-            for (category, unit_and_exp) in unit_and_exps.items()
+            (category, unit_and_exp[:]) for (category, unit_and_exp) in unit_and_exps.items()
         )
 
     def __hash__(self):

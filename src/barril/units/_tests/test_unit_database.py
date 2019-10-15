@@ -34,30 +34,16 @@ def testConv(unit_database_empty):
 
     # add some units for testing
     unit_database.AddUnitBase("temperature", "Celcius", "ºC")
-    unit_database.AddUnit(
-        "temperature", "Fahrenheit", "F", "%f * 1.8 + 32.0", " (%f - 32.0) / 1.8"
-    )
+    unit_database.AddUnit("temperature", "Fahrenheit", "F", "%f * 1.8 + 32.0", " (%f - 32.0) / 1.8")
     unit_database.AddUnit("temperature", "Kelvin", "K", "%f + 273.15", "%f - 273.15")
     unit_database.AddUnit(
-        "temperature",
-        "Rakini",
-        "R",
-        "%f * 1.8 + 32 + 459.67",
-        "(%f - 32 - 459.67) / 1.8",
+        "temperature", "Rakini", "R", "%f * 1.8 + 32 + 459.67", "(%f - 32 - 459.67) / 1.8"
     )
 
     assert 50 == unit_database.Convert("temperature", "ºC", "F", 10)
     assert 10 == unit_database.Convert("temperature", "F", "ºC", 50)
-    assert (
-        approx(
-            abs(-245.372222 - unit_database.Convert("temperature", "R", "ºC", 50)), 5
-        )
-        == 0
-    )
-    assert (
-        approx(abs(581.67 - unit_database.Convert("temperature", "ºC", "R", 50)), 7)
-        == 0
-    )
+    assert approx(abs(-245.372222 - unit_database.Convert("temperature", "R", "ºC", 50)), 5) == 0
+    assert approx(abs(581.67 - unit_database.Convert("temperature", "ºC", "R", 50)), 7) == 0
 
     assert [50, 50, 50] == unit_database.Convert("temperature", "ºC", "F", [10, 10, 10])
     assert [10, 10, 10] == unit_database.Convert("temperature", "F", "ºC", [50, 50, 50])
@@ -68,18 +54,10 @@ def testPrecision():
     unit_database = units.UnitDatabase()
     unit_database.AddUnitBase("Compressibility", "1/Bars", "1/Bars")
     unit_database.AddUnit(
-        "Compressibility",
-        "1/Psi",
-        "1/Psi",
-        frombase="%f / 14.50377",
-        tobase="%f * 14.50377",
+        "Compressibility", "1/Psi", "1/Psi", frombase="%f / 14.50377", tobase="%f * 14.50377"
     )
     unit_database.AddUnit(
-        "Compressibility",
-        "1/Atm",
-        "1/Atm",
-        frombase="%f / 0.986923",
-        tobase="%f * 0.986923",
+        "Compressibility", "1/Atm", "1/Atm", frombase="%f / 0.986923", tobase="%f * 0.986923"
     )
 
     assert (
@@ -142,19 +120,7 @@ def testUnits(unit_database_custom_conversion):
     unit_database = unit_database_custom_conversion
     real = unit_database.GetUnits()
     real.sort()
-    available_units = [
-        UNKNOWN_UNIT,
-        "m",
-        "mm",
-        "cm",
-        "km",
-        "mi",
-        "in",
-        "µm",
-        "ºC",
-        "F",
-        "K",
-    ]
+    available_units = [UNKNOWN_UNIT, "m", "mm", "cm", "km", "mi", "in", "µm", "ºC", "F", "K"]
     available_units.sort()
     assert available_units == real
 
@@ -166,15 +132,7 @@ def testBaseUnit(unit_database_custom_conversion):
 
 def testUnitNames(unit_database_custom_conversion):
     unit_database = unit_database_custom_conversion
-    names = {
-        "meters",
-        "milimeters",
-        "centimeters",
-        "kilometers",
-        "miles",
-        "inches",
-        "micrometers",
-    }
+    names = {"meters", "milimeters", "centimeters", "kilometers", "miles", "inches", "micrometers"}
     onames = set(unit_database.GetUnitNames("length"))
     assert names == onames
 
@@ -209,8 +167,7 @@ def testCategory(unit_database_custom_conversion):
     formatted_value = FormatFloat("%g", -6e-010)
     with pytest.raises(
         QuantityValidationError,
-        match="Invalid value for My Length: %s. Must be > %s."
-        % (formatted_value, formatted_value),
+        match="Invalid value for My Length: %s. Must be > %s." % (formatted_value, formatted_value),
     ) as exc_info:
         quantity.CheckValue(-6e-10)
     e = exc_info.value
@@ -227,8 +184,7 @@ def testCategory(unit_database_custom_conversion):
     mm_quantity.CheckValue(2e5)
 
     with pytest.raises(
-        QuantityValidationError,
-        match="Invalid value for My Length: 200000. Must be <= 200000.0.",
+        QuantityValidationError, match="Invalid value for My Length: 200000. Must be <= 200000.0."
     ):
         mm_quantity.CheckValue(2e8 + 1)
 
@@ -244,9 +200,7 @@ def testUniqueness(unit_database_custom_conversion):
     # trying to re-register milimeters (mm)
     unit_database = unit_database_custom_conversion
     with pytest.raises(RuntimeError):
-        unit_database.AddUnit(
-            "length", "milimeters", "mm", "%f * 1000.0", "%f / 1000.0"
-        )
+        unit_database.AddUnit("length", "milimeters", "mm", "%f * 1000.0", "%f / 1000.0")
 
 
 def testDefaultUnitWhenNoneIsPassed(unit_database_custom_conversion):
@@ -271,18 +225,8 @@ def testConvertionWithExponent(unit_database_custom_conversion):
     Test conversions with different exponents.
     """
     unit_database = unit_database_custom_conversion
-    assert (
-        approx(
-            abs(100 - unit_database.Convert("length", [("m", 1)], [("cm", 1)], 1)), 5
-        )
-        == 0
-    )
-    assert (
-        approx(
-            abs(10000 - unit_database.Convert("length", [("m", 2)], [("cm", 2)], 1)), 5
-        )
-        == 0
-    )
+    assert approx(abs(100 - unit_database.Convert("length", [("m", 1)], [("cm", 1)], 1)), 5) == 0
+    assert approx(abs(10000 - unit_database.Convert("length", [("m", 2)], [("cm", 2)], 1)), 5) == 0
 
     # Doesn't make sense changing the exponent in the from and to
     with pytest.raises(ValueError):
@@ -340,9 +284,7 @@ def testCheckValidUnits(unit_database_custom_conversion):
     """
     unit_database = unit_database_custom_conversion
     with pytest.raises(ValueError):
-        unit_database.AddCategory(
-            "my category", "length", default_unit="mm", valid_units="foooo"
-        )
+        unit_database.AddCategory("my category", "length", default_unit="mm", valid_units="foooo")
 
 
 def testDiscoverCloseUnitMatches():
@@ -361,26 +303,16 @@ def testDefaultCaption():
 def testAddCategoryBasedOnCategory(unit_database_custom_conversion):
     unit_database = unit_database_custom_conversion
     unit_database.AddCategory(
-        "my category",
-        "length",
-        valid_units=["mm", "m"],
-        default_unit="mm",
-        default_value=0.5,
+        "my category", "length", valid_units=["mm", "m"], default_unit="mm", default_value=0.5
     )
 
-    unit_database.AddCategory(
-        "my category 2", from_category="my category", valid_units=["mm"]
-    )
+    unit_database.AddCategory("my category 2", from_category="my category", valid_units=["mm"])
     assert unit_database.GetValidUnits("my category 2") == ["mm"]
 
-    unit_database.AddCategory(
-        "my category 3", from_category="my category", default_unit="m"
-    )
+    unit_database.AddCategory("my category 3", from_category="my category", default_unit="m")
     assert unit_database.GetDefaultUnit("my category 3") == "m"
 
-    unit_database.AddCategory(
-        "my category 4", from_category="my category", default_value=0.8
-    )
+    unit_database.AddCategory("my category 4", from_category="my category", default_value=0.8)
     assert unit_database.GetDefaultValue("my category 4") == 0.8
     assert unit_database.GetValidUnits("my category 4") == ["mm", "m"]
 
@@ -445,12 +377,7 @@ def testNumpyConversion(unit_database_custom_conversion):
     f_unit_to_base = MakeCustomaryToBase(0, 1, 1, 0)
     f_base_to_unit = MakeBaseToCustomary(0, 1, 1, 0)
     unit_database.AddUnit(
-        "My Temperature",
-        "my Kelvin",
-        "myK",
-        f_base_to_unit,
-        f_unit_to_base,
-        default_category=None,
+        "My Temperature", "my Kelvin", "myK", f_base_to_unit, f_unit_to_base, default_category=None
     )
 
     unit_database.AddCategory(

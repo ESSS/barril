@@ -59,11 +59,7 @@ class Fraction:
     def __str__(self):
         from barril.basic.format_float import FormatFloat
 
-        return (
-            FormatFloat("%g", self.numerator)
-            + "/"
-            + FormatFloat("%g", self.denominator)
-        )
+        return FormatFloat("%g", self.numerator) + "/" + FormatFloat("%g", self.denominator)
 
     def __repr__(self):
         return repr(self.x)
@@ -95,9 +91,7 @@ class Fraction:
             return other * self  # hope a list structure can sort itself out
         if isinstance(other, NumberType):
             other = Fraction(other)
-        x = Fraction(
-            self.numerator * other.numerator, self.denominator * other.denominator
-        )
+        x = Fraction(self.numerator * other.numerator, self.denominator * other.denominator)
         x.reduce()
         return x
 

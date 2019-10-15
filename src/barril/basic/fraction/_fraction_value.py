@@ -83,9 +83,7 @@ class FractionValue:
         # convert a tuple
         if isinstance(fraction, tuple):
             if len(fraction) != 2:
-                raise ValueError(
-                    f"Expected a tuple (numerator, denominator), got {fraction!r}"
-                )
+                raise ValueError(f"Expected a tuple (numerator, denominator), got {fraction!r}")
             fraction = Fraction(*fraction)
 
         self._fraction = fraction
@@ -145,9 +143,7 @@ class FractionValue:
         """
         formatted = formatter("%g", self._number)
         if float(self._fraction) != 0.0:
-            formatted = "{} {}".format(
-                formatted, self.__FormatFractionToString(formatter)
-            )
+            formatted = "{} {}".format(formatted, self.__FormatFractionToString(formatter))
         return formatted
 
     def __FormatFractionToString(self, formatter):
@@ -256,9 +252,7 @@ class FractionValue:
         :returns:
             The copy.
         """
-        return self.__class__(
-            self._number, (self._fraction.numerator, self._fraction.denominator)
-        )
+        return self.__class__(self._number, (self._fraction.numerator, self._fraction.denominator))
 
     # FromString -----------------------------------------------------------------------------------
 
@@ -425,14 +419,10 @@ class FractionValue:
             number_of_digits_past_decimal = number_of_digits - number_of_integer_digits
 
             # Find the numerator when the divisor is 2
-            result = FindNumerator(
-                number_of_digits_past_decimal, dividend=float(digits), divisor=2
-            )
+            result = FindNumerator(number_of_digits_past_decimal, dividend=float(digits), divisor=2)
 
             # Find the numerator when the divisor is 5
-            result = FindNumerator(
-                number_of_digits_past_decimal, dividend=result, divisor=5
-            )
+            result = FindNumerator(number_of_digits_past_decimal, dividend=result, divisor=5)
 
             return int(result)
 

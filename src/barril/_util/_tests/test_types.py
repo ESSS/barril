@@ -1,11 +1,6 @@
 import pytest
 
-from barril._util.types_ import (
-    CheckFormatString,
-    CheckType,
-    IsNumber,
-    _GetKnownNumberTypes,
-)
+from barril._util.types_ import CheckFormatString, CheckType, IsNumber, _GetKnownNumberTypes
 
 
 def testPassing():
