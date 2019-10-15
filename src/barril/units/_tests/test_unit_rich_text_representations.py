@@ -17,9 +17,7 @@ def testUnitRichTextRepresentations():
 
     # Testing the default values
     for unit, expected_representation in expected_units_initially_set:
-        stored_representation = UnitRichTextRepresentations.GetUnitHtmlRepresentation(
-            unit
-        )
+        stored_representation = UnitRichTextRepresentations.GetUnitHtmlRepresentation(unit)
         AssertRTFCaption(stored_representation, expected_representation)
 
     # If not found the representation in defaults, returns the unit
@@ -37,8 +35,7 @@ def testUnitRichTextRepresentations():
         new_unit
     ] = new_unit_representation
     AssertRTFCaption(
-        UnitRichTextRepresentations.GetUnitHtmlRepresentation(new_unit),
-        new_unit_representation,
+        UnitRichTextRepresentations.GetUnitHtmlRepresentation(new_unit), new_unit_representation
     )
 
     # But the user should be able to overwrite the default values with a custom representation

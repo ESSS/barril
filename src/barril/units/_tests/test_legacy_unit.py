@@ -37,8 +37,7 @@ def testGetValueInvalidUnitError():
     from barril.units.unit_database import InvalidUnitError
 
     with raises(
-        InvalidUnitError,
-        match="Invalid unit for quantity_type volume flow rate: 1000ft3/foo",
+        InvalidUnitError, match="Invalid unit for quantity_type volume flow rate: 1000ft3/foo"
     ):
         q = Scalar(1.0, "1000ft3/d")
         q.GetValue("1000ft3/foo")
@@ -67,21 +66,15 @@ def testUnitDatabaseConvert(unit_database_posc):
     assert approx(converted) == 28316.85
 
     # Test against numpy arrays
-    converted = unit_database_posc.Convert(
-        "volume flow rate", "1000ft3/d", "m3/d", np.ones(2)
-    )
+    converted = unit_database_posc.Convert("volume flow rate", "1000ft3/d", "m3/d", np.ones(2))
     assert approx(converted) == 28.31685
-    converted = unit_database_posc.Convert(
-        "volume flow rate", "M(ft3)/d", "m3/d", np.ones(2)
-    )
+    converted = unit_database_posc.Convert("volume flow rate", "M(ft3)/d", "m3/d", np.ones(2))
     assert approx(converted) == 28316.85
 
 
 def testUnitDatabaseGetUnitNameLegacy(unit_database_posc):
     assert (
-        unit_database_posc.GetUnitName(
-            quantity_type="volume flow rate", unit="M(ft3)/d"
-        )
+        unit_database_posc.GetUnitName(quantity_type="volume flow rate", unit="M(ft3)/d")
         == "million cubic feet per day"
     )
 
@@ -89,12 +82,8 @@ def testUnitDatabaseGetUnitNameLegacy(unit_database_posc):
 def testUnitDatabaseCheckQuantityTypeUnitLegacy(unit_database_posc):
     from barril.units.unit_database import InvalidUnitError
 
-    with raises(
-        InvalidUnitError, match="Invalid unit for quantity_type volume flow rate"
-    ):
-        unit_database_posc.CheckQuantityTypeUnit(
-            quantity_type="volume flow rate", unit="M(ft3)/d"
-        )
+    with raises(InvalidUnitError, match="Invalid unit for quantity_type volume flow rate"):
+        unit_database_posc.CheckQuantityTypeUnit(quantity_type="volume flow rate", unit="M(ft3)/d")
 
 
 def testUnitDatabaseGetDefaultCategory(unit_database_posc):

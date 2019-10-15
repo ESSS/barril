@@ -10,6 +10,7 @@ UNRELEASED
   division, i.e., operations like ``a // b``  where ``a`` and ``b`` are ``Scalar`` or ``Array``
   (and combinations with ``float`` or ``int``).
 * Add new unit category for Joule-Thomson coefficient (``K/Pa``).
+* Add new temperature unit for density derivative in respect to temperature (``kg/m3.degC``).
 
 1.7.1 (2019-10-03)
 ------------------

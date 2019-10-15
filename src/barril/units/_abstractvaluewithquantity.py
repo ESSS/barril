@@ -209,9 +209,7 @@ class AbstractValueWithQuantityObject:
 
             elif category is not None:
                 if unit is None:
-                    raise TypeError(
-                        "If category is given, the unit must be specified too."
-                    )
+                    raise TypeError("If category is given, the unit must be specified too.")
 
                 return self.CreateWithQuantity(
                     ObtainQuantity(unit, category), value=value, **kwargs
@@ -220,15 +218,11 @@ class AbstractValueWithQuantityObject:
             elif unit is not None:
                 if self._quantity.GetCategory():
                     return self.CreateWithQuantity(
-                        ObtainQuantity(unit, self._quantity.GetCategory()),
-                        value=value,
-                        **kwargs
+                        ObtainQuantity(unit, self._quantity.GetCategory()), value=value, **kwargs
                     )
                 else:
                     # Handling empty quantity
-                    return self.CreateWithQuantity(
-                        ObtainQuantity(unit), value=value, **kwargs
-                    )
+                    return self.CreateWithQuantity(ObtainQuantity(unit), value=value, **kwargs)
 
             else:
                 raise RuntimeError("Execution should never get here!")

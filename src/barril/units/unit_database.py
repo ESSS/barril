@@ -96,9 +96,7 @@ class UnitInfo:
 
     ADD_STR_INFO_TO_UNIT_INFO = False
 
-    def __init__(
-        self, quantity_type, name, unit, frombase, tobase, default_category=None
-    ):
+    def __init__(self, quantity_type, name, unit, frombase, tobase, default_category=None):
         """
         :param str name:
             Name of the unit (e.g.: meter, millimiter).
@@ -242,10 +240,7 @@ class UnitDatabase(Singleton):
         )
 
         if fill_categories:
-            for (
-                quantity_alias,
-                quantity_type,
-            ) in cls._ADDITIONAL_CATEGORY_ALIASES.items():
+            for (quantity_alias, quantity_type) in cls._ADDITIONAL_CATEGORY_ALIASES.items():
                 unit_database.AddCategory(quantity_alias, quantity_type)
 
         return unit_database
@@ -330,13 +325,9 @@ class UnitDatabase(Singleton):
     @classmethod
     def FillSimple(cls, unit_database):
         unit_database.AddUnitBase("length", "meters", "m")
-        unit_database.AddUnit(
-            "length", "milimeters", "mm", "%f * 1000.0", "%f / 1000.0"
-        )
+        unit_database.AddUnit("length", "milimeters", "mm", "%f * 1000.0", "%f / 1000.0")
         unit_database.AddUnit("length", "centimeters", "cm", "%f * 100.0", "%f / 100.0")
-        unit_database.AddUnit(
-            "length", "kilometers", "km", "%f / 1000.0", "%f * 1000.0"
-        )
+        unit_database.AddUnit("length", "kilometers", "km", "%f / 1000.0", "%f * 1000.0")
 
         unit_database.AddUnitBase("time", "seconds", "s")
         unit_database.AddUnit("time", "minutes", "min", "%f * 60.0", " %f * 60.0")
@@ -414,8 +405,7 @@ class UnitDatabase(Singleton):
         if min_value is not None and max_value is not None:
             if max_value < min_value:
                 raise ValueError(
-                    "min_value (%s) must be >= than min_value (%s)"
-                    % (min_value, max_value)
+                    "min_value (%s) must be >= than min_value (%s)" % (min_value, max_value)
                 )
 
         if from_category:
@@ -444,12 +434,8 @@ class UnitDatabase(Singleton):
             quantity_units = set(self.GetUnits(quantity_type))
             for unit in valid_units:
                 if unit not in quantity_units:
-                    msg = (
-                        "unit %r is not valid for quantity type %r.\nQuantity units: %r"
-                    )
-                    raise ValueError(
-                        msg % (unit, quantity_type, sorted(quantity_units))
-                    )
+                    msg = "unit %r is not valid for quantity type %r.\nQuantity units: %r"
+                    raise ValueError(msg % (unit, quantity_type, sorted(quantity_units)))
 
         # if (min_value is not None or max_value is not None) and default_unit is None:
         if default_unit is None:
@@ -713,9 +699,7 @@ class UnitDatabase(Singleton):
 
     # --------------------- The interfaces below all work with the quantity type and not the category
 
-    def AddUnit(
-        self, quantity_type, name, unit, frombase, tobase, default_category=None
-    ):
+    def AddUnit(self, quantity_type, name, unit, frombase, tobase, default_category=None):
         """
         Registers a new unit type.
 
@@ -748,12 +732,7 @@ class UnitDatabase(Singleton):
         if unit is None:
             unit = name
         info = UnitInfo(
-            quantity_type,
-            name,
-            unit,
-            frombase,
-            tobase,
-            default_category=default_category,
+            quantity_type, name, unit, frombase, tobase, default_category=default_category
         )
         if unit in self.unit_to_unit_info:
             raise RuntimeError(
@@ -954,9 +933,7 @@ class UnitDatabase(Singleton):
         try:
             quantity_types = self.quantity_types[quantity_type]
         except KeyError:
-            raise InvalidQuantityTypeError(
-                quantity_type, sorted(self.quantity_types.keys())
-            )
+            raise InvalidQuantityTypeError(quantity_type, sorted(self.quantity_types.keys()))
         else:
             for info in quantity_types:
                 if info.unit == unit:
@@ -984,9 +961,7 @@ class UnitDatabase(Singleton):
                             return unit_info
 
                 raise InvalidUnitError(
-                    unit,
-                    quantity_type,
-                    valid_units=sorted([info.unit for info in quantity_types]),
+                    unit, quantity_type, valid_units=sorted([info.unit for info in quantity_types])
                 )
 
     def GetInfos(self, quantity_type=None):
@@ -1019,9 +994,7 @@ class UnitDatabase(Singleton):
         @raise InvalidUnitError
         """
         if quantity_type not in self.quantity_types:
-            raise InvalidQuantityTypeError(
-                quantity_type, "\n".join(sorted(self.quantity_types))
-            )
+            raise InvalidQuantityTypeError(quantity_type, "\n".join(sorted(self.quantity_types)))
 
     def CheckQuantityTypeUnit(self, quantity_type, unit):
         """
@@ -1115,10 +1088,9 @@ class UnitDatabase(Singleton):
         if class_ not in cls._additional_conversions:
             cls._additional_conversions[class_] = func
         else:
-            assert cls._additional_conversions[class_] == func, (
-                "The class %s already has a convertion function registered"
-                % (str(class_))
-            )
+            assert (
+                cls._additional_conversions[class_] == func
+            ), "The class %s already has a convertion function registered" % (str(class_))
 
     def Convert(self, category_or_quantity_type, from_unit, to_unit, value):
         """
@@ -1176,9 +1148,7 @@ class UnitDatabase(Singleton):
                 and len(category_or_quantity_type) == 1
             ):
                 category_or_quantity_type = category_or_quantity_type[0]
-            return self._ConvertWithExp(
-                category_or_quantity_type, from_unit, to_unit, value
-            )
+            return self._ConvertWithExp(category_or_quantity_type, from_unit, to_unit, value)
 
         # same unit: no conversion needed
         if from_unit == to_unit:
@@ -1221,9 +1191,7 @@ class UnitDatabase(Singleton):
         self._category_unit_valid.clear()
 
     # Operations with different quantities ---------------------------------------------------------
-    def _DoOperationWithSameQuantity(
-        self, quantity1, quantity2, value1, value2, operation
-    ):
+    def _DoOperationWithSameQuantity(self, quantity1, quantity2, value1, value2, operation):
         """
         Given 2 quantities, do an operation that DOES NOT accept the creation of a new composed
         quantity (e.g.: sum, subtraction)
@@ -1234,12 +1202,8 @@ class UnitDatabase(Singleton):
         else:
             # otherwise, we must transform the units in the quantity1 to their counterparts
             # in the quantity2 (without changing anything in the categories at this time)
-            category_to_unit_and_exp1 = copy.deepcopy(
-                quantity1.GetCategoryToUnitAndExps()
-            )
-            category_to_unit_and_exp2 = copy.deepcopy(
-                quantity2.GetCategoryToUnitAndExps()
-            )
+            category_to_unit_and_exp1 = copy.deepcopy(quantity1.GetCategoryToUnitAndExps())
+            category_to_unit_and_exp2 = copy.deepcopy(quantity2.GetCategoryToUnitAndExps())
 
             category_to_unit_and_exp1, category_to_unit_and_exp2, value1, value2 = self._MatchQuantities(
                 category_to_unit_and_exp1, category_to_unit_and_exp2, value1, value2
@@ -1285,12 +1249,7 @@ class UnitDatabase(Singleton):
 
     def FloorDivide(self, quantity1, quantity2, value1, value2):
         return self._DoOperationResultingInNewQuantity(
-            quantity1,
-            quantity2,
-            value1,
-            value2,
-            lambda a, b: a - b,
-            lambda a, b: a // b,
+            quantity1, quantity2, value1, value2, lambda a, b: a - b, lambda a, b: a // b
         )
 
     def Multiply(self, quantity1, quantity2, value1, value2):
@@ -1341,9 +1300,7 @@ class UnitDatabase(Singleton):
             for category, unit_exp in list(c.items()):
                 unit, _exp = unit_exp
                 quantity_type = self.GetCategoryQuantityType(category)
-                used_unit_for_quantity_type = quantity_types_found_to_used_unit.get(
-                    quantity_type
-                )
+                used_unit_for_quantity_type = quantity_types_found_to_used_unit.get(quantity_type)
                 if used_unit_for_quantity_type is None:
                     quantity_types_found_to_used_unit[quantity_type] = unit
                 else:
@@ -1381,10 +1338,7 @@ class UnitDatabase(Singleton):
         for category2, (unit2, exp2) in list(category_to_unit_and_exp2.items()):
             if category2 not in category_to_unit_and_exp1:
                 exp1 = 0
-                category_to_unit_and_exp1[category2] = [
-                    unit2,
-                    operation_exp(exp1, exp2),
-                ]
+                category_to_unit_and_exp1[category2] = [unit2, operation_exp(exp1, exp2)]
             else:
                 unit_exp1 = category_to_unit_and_exp1[category2]
                 unit1, exp1 = unit_exp1
@@ -1392,8 +1346,7 @@ class UnitDatabase(Singleton):
                     unit_exp1[1] = operation_exp(exp1, exp2)
                 else:
                     raise RuntimeError(
-                        "This should've been covered already (%s != %s)."
-                        % (unit1, unit2)
+                        "This should've been covered already (%s != %s)." % (unit1, unit2)
                     )
 
         # unit -> expoent

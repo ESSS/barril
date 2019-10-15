@@ -1,42 +1,25 @@
 import pytest
 
 from collections import OrderedDict
-from barril.units import (
-    InvalidOperationError,
-    InvalidUnitError,
-    ObtainQuantity,
-    Quantity,
-)
+from barril.units import InvalidOperationError, InvalidUnitError, ObtainQuantity, Quantity
 
 
 def testDerivedQuantities(unit_database_len_time):
     # define a simple quantity
     ObtainQuantity(unit="s", category="Time")  # see if it works
     ObtainQuantity(unit="m", category="Table size")  # see if it works
-    q3 = Quantity.CreateDerived(
-        OrderedDict([("Table size", ["m", 2]), ("Time", ["s", -1])])
-    )
-    q4 = Quantity.CreateDerived(
-        OrderedDict([("Table size", ["m", 2]), ("Time", ["s", -2])])
-    )
+    q3 = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 2]), ("Time", ["s", -1])]))
+    q4 = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 2]), ("Time", ["s", -2])]))
     q5 = Quantity.CreateDerived(
-        OrderedDict(
-            [("Table size", ["m", 1]), ("City size", ["m", 1]), ("Time", ["s", -2])]
-        )
+        OrderedDict([("Table size", ["m", 1]), ("City size", ["m", 1]), ("Time", ["s", -2])])
     )
     q6 = Quantity.CreateDerived(OrderedDict([("Time", ["s", -2])]))
-    q7 = Quantity.CreateDerived(
-        OrderedDict([("Table size", ["m", 1]), ("Time", ["s", 2])])
-    )
+    q7 = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 1]), ("Time", ["s", 2])]))
 
     with pytest.raises(InvalidUnitError):
         Quantity.CreateDerived(
             OrderedDict(
-                [
-                    ("Table size", ["invalid", 1]),
-                    ("City size", ["m", 1]),
-                    ("Time", ["s", -2]),
-                ]
+                [("Table size", ["invalid", 1]), ("City size", ["m", 1]), ("Time", ["s", -2])]
             )
         )
 
@@ -60,9 +43,7 @@ def testConvertionWithDerivedUnits(unit_database_len_time):
     km_city = Quantity.CreateDerived(OrderedDict([("City size", ["km", 1])]))
     m2 = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 2])]))
     s = Quantity.CreateDerived(OrderedDict([("Time", ["s", -1])]))
-    m2s = Quantity.CreateDerived(
-        OrderedDict([("Table size", ["m", 2]), ("Time", ["s", -1])])
-    )
+    m2s = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 2]), ("Time", ["s", -1])]))
     cat_mix_m2 = Quantity.CreateDerived(
         OrderedDict([("Table size", ["m", 1]), ("City size", ["m", 1])])
     )

@@ -113,10 +113,7 @@ class Curve:
     def __eq__(self, other):
         if not isinstance(other, Curve):
             return False
-        return (
-            self.GetImage() == other.GetImage()
-            and self.GetDomain() == other.GetDomain()
-        )
+        return self.GetImage() == other.GetImage() and self.GetDomain() == other.GetDomain()
 
     def __ne__(self, other):
         return not self == other

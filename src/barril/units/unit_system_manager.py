@@ -150,9 +150,7 @@ class UnitSystemManager(Singleton):
         # Check if existing unit systems match the given template
         for unit_system in list(self._unit_systems.values()):
             current_units_mapping = unit_system.GetUnitsMapping()
-            match = self._CheckUnitSystemMapping(
-                current_units_mapping, template_categories
-            )
+            match = self._CheckUnitSystemMapping(current_units_mapping, template_categories)
 
             if not match:
                 invalid_unit_systems.append(unit_system.GetId())
@@ -248,9 +246,7 @@ class UnitSystemManager(Singleton):
                 match = self._CheckUnitSystemMapping(units_mapping, template_categories)
 
                 if not match:
-                    raise UnitSystemCategoriesError(
-                        template_categories, list(units_mapping.keys())
-                    )
+                    raise UnitSystemCategoriesError(template_categories, list(units_mapping.keys()))
 
         else:
             # No template to check
@@ -259,9 +255,7 @@ class UnitSystemManager(Singleton):
                 # an empty unit system.
                 units_mapping = {}
 
-        unit_system = self._default_unit_system_class(
-            id, caption, units_mapping, read_only
-        )
+        unit_system = self._default_unit_system_class(id, caption, units_mapping, read_only)
         self._unit_systems[id] = unit_system
 
         if self._current is None:

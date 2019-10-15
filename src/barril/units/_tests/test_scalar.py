@@ -95,16 +95,9 @@ def testAddUnit(unit_database_empty):
     unit_database.AddUnitBase("length", "metre", "m")
     RATIO = 0.0254
     unit_database.AddUnit(
-        "length",
-        "inch",
-        "in",
-        lambda x: 0.0254 * RATIO,
-        lambda y: y / RATIO,
-        default_category=None,
+        "length", "inch", "in", lambda x: 0.0254 * RATIO, lambda y: y / RATIO, default_category=None
     )
-    unit_database.AddCategory(
-        "length", "length", override=True, valid_units=["m", "in"]
-    )
+    unit_database.AddCategory("length", "length", override=True, valid_units=["m", "in"])
     unit_database.AddCategory("depth", "length", override=True, valid_units=["m", "in"])
 
     a = units.Scalar("length", value=1.0, unit="m")
@@ -434,9 +427,7 @@ def testDefaultValue(unit_database_len_pressure):
     """
     db = unit_database_len_pressure
 
-    db.AddCategory(
-        category="my length", quantity_type="length", min_value=100.0, max_value=200.0
-    )
+    db.AddCategory(category="my length", quantity_type="length", min_value=100.0, max_value=200.0)
 
     # if the default value is not defined, the scalar should not try to set the initial/first
     # value of the new instance to 0.0, but it should assume the minimum allowed value.

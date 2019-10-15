@@ -54,8 +54,7 @@ class FixedArray(Array):
         elif hasattr(self, "_dimension"):
             if self._dimension is not None and dimension != self._dimension:
                 raise ValueError(
-                    "Dimension re-definition mismatch: %s != %s"
-                    % (self._dimension, dimension)
+                    "Dimension re-definition mismatch: %s != %s" % (self._dimension, dimension)
                 )
 
         if dimension < 2:
@@ -70,12 +69,7 @@ class FixedArray(Array):
 
     def CreateCopy(self, values=None, unit=None, category=None, **kwargs):
         return Array.CreateCopy(
-            self,
-            values=values,
-            unit=unit,
-            category=category,
-            dimension=self._dimension,
-            **kwargs
+            self, values=values, unit=unit, category=category, dimension=self._dimension, **kwargs
         )
 
     # Values ---------------------------------------------------------------------------------------
@@ -128,12 +122,7 @@ class FixedArray(Array):
         """
         return (
             FixedArray,
-            (
-                self._dimension,
-                self._quantity,
-                self.values,
-                None,  # Unit defined in quantity
-            ),
+            (self._dimension, self._quantity, self.values, None),  # Unit defined in quantity
         )
 
     def ChangingIndex(self, index, value, use_value_unit=True):

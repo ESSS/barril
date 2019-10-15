@@ -150,15 +150,11 @@ def testNumberInteractions():
 def testFixedArrayChangingIndex():
     fixed_array = units.FixedArray(3, [1, 2, 3], "m")
     assert fixed_array.ChangingIndex(0, 5) == units.FixedArray(3, [5, 2, 3], "m")
-    assert fixed_array.ChangingIndex(0, units.Scalar(5, "m")) == units.FixedArray(
-        3, [5, 2, 3], "m"
-    )
+    assert fixed_array.ChangingIndex(0, units.Scalar(5, "m")) == units.FixedArray(3, [5, 2, 3], "m")
     assert fixed_array.ChangingIndex(0, (5,)) == units.FixedArray(3, [5, 2, 3], "m")
 
     # Different unit
-    assert fixed_array.ChangingIndex(0, (5, "cm")) == units.FixedArray(
-        3, [5, 200, 300], "cm"
-    )
+    assert fixed_array.ChangingIndex(0, (5, "cm")) == units.FixedArray(3, [5, 200, 300], "cm")
     assert fixed_array.ChangingIndex(0, units.Scalar(5, "cm")) == units.FixedArray(
         3, [5, 200, 300], "cm"
     )

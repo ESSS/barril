@@ -1,7 +1,5 @@
 from barril.units import Scalar
-from barril.units.scalar_validation.scalar_min_max_validator import (
-    ScalarMinMaxValidator,
-)
+from barril.units.scalar_validation.scalar_min_max_validator import ScalarMinMaxValidator
 
 
 def _CreateTestCategories(db):
@@ -34,9 +32,7 @@ def _CreateTestCategories(db):
 def testScalarValidationMsgs(unit_database):
     def _Check(scalar, value, unit, expected_msg):
         some_scalar = scalar.CreateCopy(value=value, unit=unit)
-        obtained_msg = ScalarMinMaxValidator.CreateScalarCheckErrorMsg(
-            some_scalar, "Some Property"
-        )
+        obtained_msg = ScalarMinMaxValidator.CreateScalarCheckErrorMsg(some_scalar, "Some Property")
         assert obtained_msg == expected_msg
 
     _CreateTestCategories(unit_database)
@@ -59,11 +55,15 @@ def testScalarValidationMsgs(unit_database):
     some_scalar = Scalar("category exclusive", 10.0, "-")
 
     # Test value below minimum -----------------------------------------------------------------
-    expected_error_msg = "Error in Some Property. Invalid value for Category Exclusive: 1. Must be greater than 1.0."
+    expected_error_msg = (
+        "Error in Some Property. Invalid value for Category Exclusive: 1. Must be greater than 1.0."
+    )
     _Check(some_scalar, 1.0, "-", expected_error_msg)
 
     # Test value above maximum -----------------------------------------------------------------
-    expected_error_msg = "Error in Some Property. Invalid value for Category Exclusive: 50. Must be less than 50.0."
+    expected_error_msg = (
+        "Error in Some Property. Invalid value for Category Exclusive: 50. Must be less than 50.0."
+    )
     _Check(some_scalar, 50.0, "-", expected_error_msg)
 
     # Test no error with exclusive -------------------------------------------------------------

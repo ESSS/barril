@@ -12,13 +12,7 @@ def testOperation():
     unit_database.CheckDefaultUnitDatabase()
     q = ObtainQuantity(unit="m", category="length")
 
-    SCALAR_OPERATION = [
-        operator.add,
-        operator.sub,
-        operator.truediv,
-        operator.mul,
-        operator.mod,
-    ]
+    SCALAR_OPERATION = [operator.add, operator.sub, operator.truediv, operator.mul, operator.mod]
     SCALAR_TYPES = (int, float)
 
     for operation in SCALAR_OPERATION:

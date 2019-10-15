@@ -151,17 +151,10 @@ def testPoscAngularAcceleration(unit_database_posc):
 
     assert approx(abs(default.value - 1.0), 7) == 0
     assert approx(abs(default.GetValue("dega/s2") - 57.29578778556937), 7) == 0
-    assert (
-        approx(
-            abs(default.GetValue("dega/min2") - (1.0 * 3600.0) * 57.29578778556937), 7
-        )
-        == 0
-    )
+    assert approx(abs(default.GetValue("dega/min2") - (1.0 * 3600.0) * 57.29578778556937), 7) == 0
 
     assert approx(abs(default.GetValue("rev/s2") - 0.15915494309644432), 7) == 0
-    assert (
-        approx(abs(default.GetValue("rev/min2") - 0.15915494309644432 * 3600.0), 7) == 0
-    )
+    assert approx(abs(default.GetValue("rev/min2") - 0.15915494309644432 * 3600.0), 7) == 0
     assert approx(abs(default.GetValue("rpm/s") - 9.549296585786658), 7) == 0
 
 
@@ -181,9 +174,7 @@ def testPoscSpecificEnergy(unit_database_posc):
     assert approx(abs(default.value - 1.0), 7) == 0
     assert approx(abs(default.GetValue("J/g") - 1.0 / 1e3), 7) == 0
     assert approx(abs(default.GetValue("kW.h/kg") - 2.7777777777777776e-07), 7) == 0
-    assert (
-        approx(abs(default.GetValue("kW.h/t") - 2.7777777777777776e-07 * 1e3), 7) == 0
-    )
+    assert approx(abs(default.GetValue("kW.h/t") - 2.7777777777777776e-07 * 1e3), 7) == 0
 
     assert approx(abs(default.GetValue("kW.h/tonUS") - 3.06197599869e-10), 20) == 0
     assert approx(abs(default.GetValue("kW.h/tonUK") - 2.73390677574e-10), 20) == 0
@@ -200,18 +191,7 @@ def testPoscMassPerEnergy(unit_database_posc):
 def testCreateVolumeQuantityFromLengthQuantity(unit_database_posc):
     unit_database = unit_database_posc
     length_units = unit_database.GetValidUnits("length")
-    convertable_length_units = [
-        "m",
-        "cm",
-        "dm",
-        "ft",
-        "in",
-        "km",
-        "mi",
-        "mm",
-        "yd",
-        "um",
-    ]
+    convertable_length_units = ["m", "cm", "dm", "ft", "in", "km", "mi", "mm", "yd", "um"]
 
     for length_unit in length_units:
         length_quantity = ObtainQuantity(length_unit, "length")
@@ -230,18 +210,7 @@ def testCreateVolumeQuantityFromLengthQuantity(unit_database_posc):
 def testCreateAreaQuantityFromLengthQuantity(unit_database_posc):
     unit_database = unit_database_posc
     length_units = unit_database.GetValidUnits("length")
-    convertable_length_units = [
-        "m",
-        "cm",
-        "ft",
-        "in",
-        "km",
-        "mi",
-        "miUS",
-        "mm",
-        "um",
-        "yd",
-    ]
+    convertable_length_units = ["m", "cm", "ft", "in", "km", "mi", "miUS", "mm", "um", "yd"]
 
     for length_unit in length_units:
         length_quantity = ObtainQuantity(length_unit, "length")
@@ -392,10 +361,7 @@ def testSpringDashpotUnits(unit_database_posc):
 
     q = ObtainQuantity("Nms/rad")
     assert "moment per angular velocity" == q.GetQuantityType()
-    assert (
-        approx(abs(q.ConvertScalarValue(1, "lbf.ft.s/dega") - 0.017453292519943), 7)
-        == 0
-    )
+    assert approx(abs(q.ConvertScalarValue(1, "lbf.ft.s/dega") - 0.017453292519943), 7) == 0
 
 
 def testConcentrationRatio(unit_database_posc):

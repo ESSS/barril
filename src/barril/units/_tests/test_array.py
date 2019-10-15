@@ -92,9 +92,7 @@ def testCreateWithQuantity():
 
 def testCategoryParameters(unit_database_len, mocker):
     unit_database = unit_database_len
-    unit_database.AddUnit(
-        "temperature", "Kelvin Degrees", "degK", "%f - 273.5", "%f + 273.5"
-    )
+    unit_database.AddUnit("temperature", "Kelvin Degrees", "degK", "%f - 273.5", "%f + 273.5")
     unit_database.AddCategory(
         "my temperature",
         "temperature",

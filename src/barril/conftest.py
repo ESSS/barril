@@ -18,16 +18,10 @@ def CreateUnitDatabaseLenTime():
     unit_database.AddUnit("time", "minutes", "minutes", "%f / 60.0", "%f * 60.0")
 
     unit_database.AddCategory(
-        category="Table size",
-        quantity_type="length",
-        valid_units=["m", "cm"],
-        default_unit="m",
+        category="Table size", quantity_type="length", valid_units=["m", "cm"], default_unit="m"
     )
     unit_database.AddCategory(
-        category="City size",
-        quantity_type="length",
-        valid_units=["km", "m"],
-        default_unit="km",
+        category="City size", quantity_type="length", valid_units=["km", "m"], default_unit="km"
     )
     unit_database.AddCategory(category="Time", quantity_type="time", default_unit="s")
 
@@ -64,9 +58,7 @@ def CreateUnitDatabaseWellLength():
     unit_database.AddUnit("length", "kilometers", "km", "%f / 1000.0", "%f * 1000.0")
     unit_database.AddUnit("length", "miles", "mi", "%f / 1609.347", "%f * 1609.347")
     unit_database.AddUnit("length", "inches", "in", "%f / 0.0254", "%f * 0.0254")
-    unit_database.AddUnit(
-        "length", "micrometers", "um", "%f * 1000000.0", "%f / 1000000.0"
-    )
+    unit_database.AddUnit("length", "micrometers", "um", "%f * 1000000.0", "%f / 1000000.0")
     unit_database.AddCategory("length", "length")
     unit_database.AddCategory("well-length", "length")
     unit_database.AddCategory("well-length-with-min-and-max", "length", min_value=0.0)
@@ -103,9 +95,7 @@ def CreateUnitDatabaseLenPressure():
     unit_database.AddUnitBase("length", "meters", "m")
     unit_database.AddUnit("length", "kilometers", "km", "%f / 1000.0", "%f * 1000.0")
     unit_database.AddUnitBase("pressure", "pascal", "Pa")
-    unit_database.AddUnit(
-        "pressure", "pounds/square inch", "psi", "%f / 6894.757", "%f * 6894.757"
-    )
+    unit_database.AddUnit("pressure", "pounds/square inch", "psi", "%f / 6894.757", "%f * 6894.757")
 
     unit_database.AddCategory("length", "length")
     unit_database.AddCategory("pressure", "pressure")
@@ -125,9 +115,7 @@ def CreateUnitDatabaseCustomConversion():
     unit_database.AddUnit("length", "kilometers", "km", "%f / 1000.0", "%f * 1000.0")
     unit_database.AddUnit("length", "miles", "mi", "%f / 1609.347", "%f * 1609.347")
     unit_database.AddUnit("length", "inches", "in", "%f / 0.0254", "%f * 0.0254")
-    unit_database.AddUnit(
-        "length", "micrometers", "µm", "%f * 1000000.0", "%f / 1000000.0"
-    )
+    unit_database.AddUnit("length", "micrometers", "µm", "%f * 1000000.0", "%f / 1000000.0")
     unit_database.AddUnitBase("temperature", "Celcius", "ºC")
     unit_database.AddCategory("length", "length", valid_units=["m", "mm", "cm", "km"])
 
