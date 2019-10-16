@@ -1,5 +1,5 @@
 1.7.2 (2019-10-16)
-----------
+------------------
 
 * ``_foundation`` has been renamed to ``_util``, and a lot of functions which were not being
   used anymore have been removed.
