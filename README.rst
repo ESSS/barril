@@ -91,6 +91,7 @@ Here is a quick summary of the steps necessary to setup your environment to cont
 
 Release
 -------
+
 A reminder for the maintainers on how to make a new release.
 
 Note that the VERSION should folow the semantic versioning as X.Y.Z
