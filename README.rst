@@ -9,9 +9,6 @@ Barril
 .. image:: https://img.shields.io/pypi/pyversions/barril.svg
     :target: https://pypi.org/project/barril
 
-.. image:: https://img.shields.io/travis/ESSS/barril.svg
-    :target: https://travis-ci.org/ESSS/barril
-
 .. image:: https://github.com/ESSS/barril/workflows/main/badge.svg
     :target: https://github.com/ESSS/barril/actions
 
