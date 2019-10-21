@@ -12,8 +12,8 @@ Barril
 .. image:: https://img.shields.io/travis/ESSS/barril.svg
     :target: https://travis-ci.org/ESSS/barril
 
-.. image:: https://ci.appveyor.com/api/projects/status/2y9spccc6pk9gh96/branch/master?svg=true
-    :target: https://ci.appveyor.com/project/ESSS/barril/?branch=master&svg=true
+.. image:: https://github.com/ESSS/barril/workflows/main/badge.svg
+    :target: https://github.com/ESSS/barril/actions
 
 .. image:: https://codecov.io/gh/ESSS/barril/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/ESSS/barril
