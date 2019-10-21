@@ -1,7 +1,15 @@
 name: build
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+      - rb-*
 
+  pull_request:
+  schedule:
+  - cron: 0 2 * * *
+    
 jobs:
   build:
 
