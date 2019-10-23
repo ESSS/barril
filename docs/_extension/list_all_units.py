@@ -21,7 +21,7 @@ class ListAllUnits(SphinxDirective):
                 unit_database.GetCategoryInfo(category).valid_units_set, key=str.casefold
             ):
                 name = unit_database.unit_to_unit_info[unit].name
-                rst.append(f'- "{unit}" ({name})', source)
+                rst.append(f'- ``"{unit}"`` ({name})', source)
 
             rst.append(f" ", source)
 

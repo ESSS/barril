@@ -1,4 +1,4 @@
-List of physical units
+List of Physical Units
 ======================
 
 .. list_all_units::
