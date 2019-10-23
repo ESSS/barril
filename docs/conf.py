@@ -22,7 +22,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath(".."))
-
+sys.path.append(os.path.abspath("./_extension"))
 
 # -- General configuration ---------------------------------------------
 
@@ -32,7 +32,7 @@ sys.path.insert(0, os.path.abspath(".."))
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ["sphinx.ext.autodoc", "sphinx.ext.viewcode"]
+extensions = ["sphinx.ext.autodoc", "sphinx.ext.viewcode", "list_all_units"]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -48,7 +48,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "Barril"
-copyright = "2018, ESSS"
+copyright = "2019, ESSS"
 author = "ESSS"
 
 # The version info for the project you're documenting, acts as replacement

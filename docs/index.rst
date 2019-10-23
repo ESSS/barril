@@ -8,6 +8,7 @@ Welcome to Barril's documentation!
    readme
    installation
    usage
+   units
    api
    contributing
    changelog
