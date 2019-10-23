@@ -57,6 +57,9 @@ jobs:
     - name: Linting
       run: |
         tox -e linting
+    - name: Docs
+      run: |
+        tox -e docs
 
   deploy:
 
