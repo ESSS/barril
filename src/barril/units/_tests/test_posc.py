@@ -410,3 +410,18 @@ def testDensityDerivativePerTemperatureUnitConversion():
         "density derivative in respect to temperature", 1, "kg/m3.K"
     )
     assert density_derivative_per_temperature.GetValue("kg/m3.degC") == 1.0
+
+
+def testStandardVolumePerStandardVolumeSmoke():
+    standard_per_standard = units.Scalar(
+        "standard volume per standard volume", 1, "scm(15C)/scm(15C)"
+    )
+    assert standard_per_standard.GetValue("scm(15C)/scm(15C)") == approx(1.0)
+    assert standard_per_standard.GetValue("scf(60F)/stb") == approx(5.625408383313)
+    assert standard_per_standard.GetValue("scf(60F)/scf") == approx(1.001928010069)
+    assert standard_per_standard.GetValue("stb(60F)/stb") == approx(1.0)
+    assert standard_per_standard.GetValue("sm3/sm3") == approx(1.0)
+    assert standard_per_standard.GetValue("scm3/scm3") == approx(1.0)
+    assert standard_per_standard.GetValue("stb/stb") == approx(1.0)
+    assert standard_per_standard.GetValue("Mscf/stb") == approx(0.0056254083833)
+    assert standard_per_standard.GetValue("scf/stb") == approx(5.62540838331)
