@@ -1,3 +1,9 @@
+1.7.2 (2020-01-10)
+------------------
+
+* Add new category: "standard volume per standard volume"
+* Move unit ``sm3/sm3`` from "volume per volume" to "standard volume per standard volume"
+
 1.7.2 (2019-10-16)
 ------------------
 
