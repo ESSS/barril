@@ -1,4 +1,4 @@
-1.7.2 (2020-01-10)
+1.8.0 (2020-01-10)
 ------------------
 
 * Add new category: "standard volume per standard volume"

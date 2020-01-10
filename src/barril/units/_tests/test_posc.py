@@ -413,8 +413,10 @@ def testDensityDerivativePerTemperatureUnitConversion():
 
 
 def testStandardVolumePerStandardVolumeSmoke():
-    standard_per_standard = units.Scalar("standard volume per standard volume", 1, "scm(15C)/sm3")
-    assert standard_per_standard.GetValue("scm(15C)/sm3") == approx(1.0)
+    standard_per_standard = units.Scalar(
+        "standard volume per standard volume", 1, "scm(15C)/scm(15C)"
+    )
+    assert standard_per_standard.GetValue("scm(15C)/scm(15C)") == approx(1.0)
     assert standard_per_standard.GetValue("scf(60F)/stb") == approx(5.625408383313)
     assert standard_per_standard.GetValue("scf(60F)/scf") == approx(1.001928010069)
     assert standard_per_standard.GetValue("stb(60F)/stb") == approx(1.0)
