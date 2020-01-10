@@ -205,7 +205,9 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "standard volume per volume", "std cubic metres, 15 deg C/cubic metre", "scm(15C)/m3"
     )
     db.AddUnitBase(
-        "standard volume per standard volume", "std cubic metres, 15 deg C/std cubic metre", "scm(15C)/sm3"
+        "standard volume per standard volume",
+        "std cubic metres, 15 deg C/std cubic metre",
+        "scm(15C)/sm3",
     )
     db.AddUnitBase("standard volume per time", "std cubic metres, 15 deg C/second", "scm(15C)/s")
     db.AddUnitBase("solid angle", "steradian", "sr")
