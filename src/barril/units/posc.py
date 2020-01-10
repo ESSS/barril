@@ -204,6 +204,9 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnitBase(
         "standard volume per volume", "std cubic metres, 15 deg C/cubic metre", "scm(15C)/m3"
     )
+    db.AddUnitBase(
+        "standard volume per standard volume", "std cubic metres, 15 deg C/std cubic metre", "scm(15C)/sm3"
+    )
     db.AddUnitBase("standard volume per time", "std cubic metres, 15 deg C/second", "scm(15C)/s")
     db.AddUnitBase("solid angle", "steradian", "sr")
     db.AddUnitBase("dose equivalent", "sievert", "Sv")
@@ -9282,16 +9285,6 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category="volume per volume",
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 1, 1.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 1, 1.0, 0.0)
-    db.AddUnit(
-        "dimensionless",
-        "std cubic metres/ std cubic metres",
-        "sm3/sm3",
-        f_base_to_unit,
-        f_unit_to_base,
-        default_category="volume per volume",
-    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 0.09290304, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 0.09290304, 1.0, 0.0)
     db.AddUnit(
@@ -12094,6 +12087,86 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 0.028262357, 0.1589873, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 0.028262357, 0.1589873, 0.0)
+    db.AddUnit(
+        "standard volume per standard volume",
+        "std cubic feet at 60 deg F/stock tank barrel",
+        "scf(60F)/stb",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 0.9980757, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 0.9980757, 1.0, 0.0)
+    db.AddUnit(
+        "standard volume per standard volume",
+        "std cubic feet at 60 deg Ft/std cubic foot",
+        "scf(60F)/scf",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1, 1.0, 0.0)
+    db.AddUnit(
+        "standard volume per standard volume",
+        "stock tank barrels, 60 deg F/stock tank barrel",
+        "stb(60F)/stb",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1, 1.0, 0.0)
+    db.AddUnit(
+        "standard volume per standard volume",
+        "std cubic metres/std cubic metres",
+        "sm3/sm3",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1, 1.0, 0.0)
+    db.AddUnit(
+        "standard volume per standard volume",
+        "std cubic centimetres/std cubic centimetres",
+        "scm3/scm3",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1, 1.0, 0.0)
+    db.AddUnit(
+        "standard volume per standard volume",
+        "stock tank barrels/stock tank barrels",
+        "stb/stb",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 28.262357, 0.1589873, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 28.262357, 0.1589873, 0.0)
+    db.AddUnit(
+        "standard volume per standard volume",
+        "thousand std cubic feet/stock tank barrel",
+        "Mscf/stb",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 0.028262357, 0.1589873, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 0.028262357, 0.1589873, 0.0)
+    db.AddUnit(
+        "standard volume per standard volume",
+        "std cubic feet/stock tank barrel",
+        "scf/stb",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
     if fill_categories:
         db.AddCategory(
             "reluctance", "reluctance", override=override_categories, valid_units=["1/H"]
@@ -12586,7 +12659,6 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
                 "mL/mL",
                 "MMscf60/stb60",
                 "Mscf60/stb60",
-                "sm3/sm3",
                 "volpercent",
                 "volppm",
                 "m3/MMcf",
@@ -14789,6 +14861,22 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
                 "stb/bbl",
                 "Mscf/bbl",
                 "scf/bbl",
+            ],
+        )
+        db.AddCategory(
+            "standard volume per standard volume",
+            "standard volume per standard volume",
+            override=override_categories,
+            valid_units=[
+                "scm(15C)/sm3",
+                "scf(60F)/stb",
+                "scf(60F)/scf",
+                "stb(60F)/stb",
+                "sm3/sm3",
+                "scm3/scm3",
+                "stb/stb",
+                "Mscf/stb",
+                "scf/stb",
             ],
         )
         db.AddCategory(
