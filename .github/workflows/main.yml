@@ -5,6 +5,8 @@ on:
     branches:
       - master
       - rb-*
+    tags:
+      - v*
 
   pull_request:
   schedule:
