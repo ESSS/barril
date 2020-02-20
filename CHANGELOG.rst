@@ -1,3 +1,8 @@
+1.9.0 (2020-02-20)
+------------------
+
+* Add new method: "FromScalars" on Array to create an Array from a list of Scalar
+
 1.8.0 (2020-01-10)
 ------------------
 

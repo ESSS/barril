@@ -328,3 +328,29 @@ def testDefaultValues(unit_database_len):
 
     with pytest.raises(AssertionError):
         Array(ObtainQuantity("m"), unit="m")
+
+
+def testFromScalar():
+    from barril.units import Scalar
+
+    # Create an Array from a list of Scalars
+    list_of_scalars = [Scalar(1, "m"), Scalar(2, "m"), Scalar(3, "m")]
+    array_in_m = Array.FromScalars(values=list_of_scalars)
+    assert array_in_m.values == [1, 2, 3]
+    assert array_in_m.unit == "m"
+    assert array_in_m.category == "length"
+
+    # Create an Array from a list of Scalars informing the common unit for all Scalars
+    array_in_cm = Array.FromScalars(values=list_of_scalars, unit="cm")
+    assert array_in_cm.values == [100.0, 200.0, 300.0]
+    assert array_in_cm.unit == "cm"
+    assert array_in_m.category == "length"
+
+    list_of_scalars = [Scalar(1, "-"), Scalar(2, "-"), Scalar(3, "-")]
+    assert next(iter(list_of_scalars)).category == "dimensionless"
+
+    # Create an Array from a list of Scalars informing the common category for all Scalars
+    array_molar_fraction = Array.FromScalars(values=list_of_scalars, category="percentage")
+    assert array_molar_fraction.values == [1, 2, 3]
+    assert array_molar_fraction.unit == "-"
+    assert array_molar_fraction.category == "percentage"

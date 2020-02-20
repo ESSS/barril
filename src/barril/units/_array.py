@@ -1,3 +1,5 @@
+from typing import Optional, Iterable
+
 from barril._util.types_ import IsNumber
 from barril.basic.format_float import FormatFloat
 from barril.units.unit_database import UnitDatabase
@@ -6,6 +8,7 @@ from oop_ext.interface._interface import ImplementsInterface
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._quantity import Quantity
 from .interfaces import IArray
+from ._scalar import Scalar
 
 __all__ = ["Array"]
 
@@ -177,6 +180,32 @@ class Array(AbstractValueWithQuantityObject):
 
                             # Break the outer 'for' used just to get the min/max
                             break
+
+    @classmethod
+    def FromScalars(
+        cls, values: Iterable[Scalar], *, unit: Optional[str] = None, category: Optional[str] = None
+    ):
+        """
+        Create an Array from a sequence of Scalars.
+
+        When not defined, the unit and category assumed will be from the first Scalar on the sequence.
+
+        :param values:
+            A sequence of Scalars.
+
+        :param unit:
+            A string representing the unit, if not defined
+            the unit from the first Scalar on the sequence will be used.
+
+        :param category:
+            A string representing the category, if not defined
+            the category from the first Scalar on the sequence will be used.
+        """
+        scalar_value = next(iter(values))
+        _unit = unit or scalar_value.unit
+        _category = category or scalar_value.category
+        _values = [scalar.GetValue(_unit) for scalar in values]
+        return cls(values=_values, unit=_unit, category=_category)
 
     @classmethod
     def CreateEmptyArray(cls, values=None):
