@@ -2,6 +2,8 @@
 ------------------
 
 * New ``classmethod`` ``Array.FromScalars`` that creates an ``Array`` from a ``List[Scalar]``.
+* Add new unit: "barrel per second" (``bbl/s``).
+
 
 1.8.0 (2020-01-10)
 ------------------
