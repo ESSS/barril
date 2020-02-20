@@ -353,7 +353,7 @@ class TestFromScalar:
         assert array_in_m.category == "length"
 
     def test_check_empty_array(self):
-        assert Array.FromScalars(scalars=[] == Array.CreateEmptyArray())
+        assert Array.FromScalars(scalars=[]) == Array.CreateEmptyArray()
         assert Array.FromScalars(scalars=[], unit="m") == Array([], "m")
 
         expected_msg = "If category and value are given, the unit must be specified too."
