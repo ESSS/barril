@@ -3,6 +3,7 @@ from collections import OrderedDict
 from barril import units
 from barril.units import Array, InvalidUnitError, ObtainQuantity, Quantity
 from pytest import approx
+from barril.units import Scalar
 
 
 def testEmptyArray():
@@ -328,3 +329,37 @@ def testDefaultValues(unit_database_len):
 
     with pytest.raises(AssertionError):
         Array(ObtainQuantity("m"), unit="m")
+
+
+class TestFromScalar:
+    def test_create_array_informing_category(self):
+        array_molar_fraction = Array.FromScalars(
+            scalars=[Scalar(1, "-"), Scalar(2, "-")], category="percentage"
+        )
+        assert array_molar_fraction.values == [1, 2]
+        assert array_molar_fraction.unit == "-"
+        assert array_molar_fraction.category == "percentage"
+
+    def test_create_array_informing_unit(self):
+        array_in_cm = Array.FromScalars(scalars=[Scalar(1, "m"), Scalar(2, "m")], unit="cm")
+        assert array_in_cm.values == [100.0, 200.0]
+        assert array_in_cm.unit == "cm"
+        assert array_in_cm.category == "length"
+
+    def test_create_array_from_list_of_scalar(self):
+        array_in_m = Array.FromScalars(scalars=iter([Scalar(1, "m"), Scalar(2, "m")]))
+        assert array_in_m.values == [1, 2]
+        assert array_in_m.unit == "m"
+        assert array_in_m.category == "length"
+
+    def test_check_empty_array(self):
+        assert Array.FromScalars(scalars=[]) == Array.CreateEmptyArray()
+        assert Array.FromScalars(scalars=[], unit="m") == Array([], "m")
+
+        expected_msg = "If category and value are given, the unit must be specified too."
+        with pytest.raises(AssertionError, match=expected_msg):
+            Array.FromScalars(scalars=[], category="length")
+
+    def test_check_array_with_different_units(self):
+        with pytest.raises(InvalidUnitError):
+            Array.FromScalars(scalars=[Scalar(1, "m"), Scalar(1, "kg")])

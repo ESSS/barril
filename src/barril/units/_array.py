@@ -1,3 +1,5 @@
+from typing import Optional, Iterable
+
 from barril._util.types_ import IsNumber
 from barril.basic.format_float import FormatFloat
 from barril.units.unit_database import UnitDatabase
@@ -6,6 +8,7 @@ from oop_ext.interface._interface import ImplementsInterface
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._quantity import Quantity
 from .interfaces import IArray
+from ._scalar import Scalar
 
 __all__ = ["Array"]
 
@@ -177,6 +180,51 @@ class Array(AbstractValueWithQuantityObject):
 
                             # Break the outer 'for' used just to get the min/max
                             break
+
+    @classmethod
+    def FromScalars(
+        cls,
+        scalars: Iterable[Scalar],
+        *,
+        unit: Optional[str] = None,
+        category: Optional[str] = None
+    ):
+        """
+        Create an Array from a sequence of Scalars.
+
+        When not defined, the unit and category assumed will be from the first Scalar on the sequence.
+
+        :param values:
+            A sequence of Scalars. When the values parameter is an empty sequence and
+            the unit is not provided an Array with an empty quantity will be returned.
+
+        :param unit:
+            A string representing the unit, if not defined
+            the unit from the first Scalar on the sequence will be used.
+
+        :param category:
+            A string representing the category, if not defined
+            the category from the first Scalar on the sequence will be used.
+        """
+        scalars = iter(scalars)
+        try:
+            first_scalar = next(scalars)
+        except StopIteration:
+            if unit is None and category is None:
+                return cls.CreateEmptyArray()
+            elif category is None:
+                category = UnitDatabase.GetSingleton().GetDefaultCategory(unit)
+                return cls(values=[], unit=unit, category=category)
+            else:
+                assert unit is None
+                return cls(
+                    values=[], unit=unit, category=category
+                )  # This actually will raise an exception
+
+        unit = unit or first_scalar.unit
+        category = category or first_scalar.category
+        values = [first_scalar.GetValue(unit)] + [scalar.GetValue(unit) for scalar in scalars]
+        return cls(values=values, unit=unit, category=category)
 
     @classmethod
     def CreateEmptyArray(cls, values=None):
