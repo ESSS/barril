@@ -934,6 +934,16 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 0.1589873, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 0.1589873, 1.0, 0.0)
+    db.AddUnit(
+        "volume flow rate",
+        "barrel/second",
+        "bbl/s",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 0.1589873, 86400, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 0.1589873, 86400, 0.0)
     db.AddUnit(
@@ -14175,6 +14185,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
                 "Mcf/d",
                 "Mm3/d",
                 "Mm3/h",
+                "bbl/s",
                 "bbl/d",
                 "bbl/hr",
                 "bbl/min",

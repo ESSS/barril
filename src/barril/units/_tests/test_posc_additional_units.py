@@ -134,6 +134,10 @@ def testBblPerMeters(db):
     assert approx(db.Convert("volume per length", "bbl/ft", "bbl/m", 1)) == 1 / 0.3048
 
 
+def testBblPerSecond(db):
+    assert approx(db.Convert("volume flow rate", "bbl/hr", "bbl/s", 1)) == 1 / 3600
+
+
 def testConcentration(db):
     assert approx(db.Convert("concentration", "g/L", "mg/L", 1)) == 1000.0
 
