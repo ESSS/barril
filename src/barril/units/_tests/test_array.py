@@ -359,3 +359,7 @@ class TestFromScalar:
         expected_msg = "If category and value are given, the unit must be specified too."
         with pytest.raises(AssertionError, match=expected_msg):
             Array.FromScalars(scalars=[], category="length")
+
+    def test_check_array_with_different_units(self):
+        with pytest.raises(InvalidUnitError):
+            Array.FromScalars(scalars=[Scalar(1, "m"), Scalar(1, "kg")])
