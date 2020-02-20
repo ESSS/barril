@@ -191,7 +191,8 @@ class Array(AbstractValueWithQuantityObject):
         When not defined, the unit and category assumed will be from the first Scalar on the sequence.
 
         :param values:
-            A sequence of Scalars.
+            A sequence of Scalars. When the values parameter is an empty sequence and
+            the unit is not provided an Array with an empty quantity will be returned.
 
         :param unit:
             A string representing the unit, if not defined
@@ -201,10 +202,21 @@ class Array(AbstractValueWithQuantityObject):
             A string representing the category, if not defined
             the category from the first Scalar on the sequence will be used.
         """
-        scalar_value = next(iter(values))
-        _unit = unit or scalar_value.unit
-        _category = category or scalar_value.category
-        _values = [scalar.GetValue(_unit) for scalar in values]
+        if not values and unit is None and category is None:
+            return cls.CreateEmptyArray()
+
+        _values = []
+        _unit = unit
+        _category = category
+
+        for scalar in values:
+            _unit = _unit or scalar.unit
+            _category = _category or scalar.category
+            _values.append(scalar.GetValue(_unit))
+
+        if _category is None:
+            _category = UnitDatabase.GetSingleton().GetDefaultCategory(_unit)
+
         return cls(values=_values, unit=_unit, category=_category)
 
     @classmethod
