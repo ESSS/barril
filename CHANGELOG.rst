@@ -1,7 +1,7 @@
 1.9.0 (2020-02-20)
 ------------------
 
-* Add new method: "FromScalars" on Array to create an Array from a list of Scalar
+* New ``classmethod`` ``Array.FromScalars`` that creates an ``Array`` from a ``List[Scalar]``.
 
 1.8.0 (2020-01-10)
 ------------------
