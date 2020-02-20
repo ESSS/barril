@@ -332,16 +332,16 @@ def testDefaultValues(unit_database_len):
 
 
 class TestFromScalar:
-    def test_creat_array_informing_category(self):
+    def test_create_array_informing_category(self):
         array_molar_fraction = Array.FromScalars(
-            scalars=iter([Scalar(1, "-"), Scalar(2, "-")]), category="percentage"
+            scalars=[Scalar(1, "-"), Scalar(2, "-")], category="percentage"
         )
         assert array_molar_fraction.values == [1, 2]
         assert array_molar_fraction.unit == "-"
         assert array_molar_fraction.category == "percentage"
 
     def test_create_array_informing_unit(self):
-        array_in_cm = Array.FromScalars(scalars=iter([Scalar(1, "m"), Scalar(2, "m")]), unit="cm")
+        array_in_cm = Array.FromScalars(scalars=[Scalar(1, "m"), Scalar(2, "m")], unit="cm")
         assert array_in_cm.values == [100.0, 200.0]
         assert array_in_cm.unit == "cm"
         assert array_in_cm.category == "length"
@@ -353,9 +353,9 @@ class TestFromScalar:
         assert array_in_m.category == "length"
 
     def test_check_empty_array(self):
-        assert Array.FromScalars(scalars=iter([])) == Array.CreateEmptyArray()
-        assert Array.FromScalars(scalars=iter([]), unit="m") == Array([], "m")
+        assert Array.FromScalars(scalars=[] == Array.CreateEmptyArray())
+        assert Array.FromScalars(scalars=[], unit="m") == Array([], "m")
 
         expected_msg = "If category and value are given, the unit must be specified too."
         with pytest.raises(AssertionError, match=expected_msg):
-            Array.FromScalars(scalars=iter([]), category="length")
+            Array.FromScalars(scalars=[], category="length")
