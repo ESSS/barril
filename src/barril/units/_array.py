@@ -183,7 +183,11 @@ class Array(AbstractValueWithQuantityObject):
 
     @classmethod
     def FromScalars(
-        cls, values: Iterable[Scalar], *, unit: Optional[str] = None, category: Optional[str] = None
+        cls,
+        scalars: Iterable[Scalar],
+        *,
+        unit: Optional[str] = None,
+        category: Optional[str] = None
     ):
         """
         Create an Array from a sequence of Scalars.
@@ -202,22 +206,25 @@ class Array(AbstractValueWithQuantityObject):
             A string representing the category, if not defined
             the category from the first Scalar on the sequence will be used.
         """
-        if not values and unit is None and category is None:
-            return cls.CreateEmptyArray()
+        scalars = iter(scalars)
+        try:
+            first_scalar = next(scalars)
+        except StopIteration:
+            if unit is None and category is None:
+                return cls.CreateEmptyArray()
+            elif category is None:
+                category = UnitDatabase.GetSingleton().GetDefaultCategory(unit)
+                return cls(values=[], unit=unit, category=category)
+            else:
+                assert unit is None
+                return cls(
+                    values=[], unit=unit, category=category
+                )  # This actually will raise an exception
 
-        _values = []
-        _unit = unit
-        _category = category
-
-        for scalar in values:
-            _unit = _unit or scalar.unit
-            _category = _category or scalar.category
-            _values.append(scalar.GetValue(_unit))
-
-        if _category is None:
-            _category = UnitDatabase.GetSingleton().GetDefaultCategory(_unit)
-
-        return cls(values=_values, unit=_unit, category=_category)
+        unit = unit or first_scalar.unit
+        category = category or first_scalar.category
+        values = [first_scalar.GetValue(unit)] + [scalar.GetValue(unit) for scalar in scalars]
+        return cls(values=values, unit=unit, category=category)
 
     @classmethod
     def CreateEmptyArray(cls, values=None):
