@@ -2375,7 +2375,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "degF",
         f_base_to_unit,
         f_unit_to_base,
-        default_category="thermodynamic temperature",
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 0.1761102, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 0.1761102, 1.0, 0.0)
@@ -2465,7 +2465,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "degR",
         f_base_to_unit,
         f_unit_to_base,
-        default_category="thermodynamic temperature",
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 0.1, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 0.1, 1.0, 0.0)
@@ -13377,7 +13377,10 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
             valid_units=["K", "ddegC", "ddegF", "ddegK", "ddegR"],
         )
         db.AddCategory(
-            "temperature", "temperature", override=override_categories, valid_units=["degC"]
+            "temperature",
+            "temperature",
+            override=override_categories,
+            valid_units=["degC", "K", "degF", "degR"],
         )
         db.AddCategory(
             "thermodynamic temperature",

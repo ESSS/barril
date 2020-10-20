@@ -49,3 +49,15 @@ def testScfPerBblToM3ToM3():
     expected = 0.17776487178535644
     obtained = unit_database.Convert("standard volume per volume", "scf/bbl", "scm(15C)/m3", 1.0)
     assert approx(abs(obtained - expected), 7) == 0
+
+
+def testAllValidTemperatureUnitsHaveSameDefaultCategory():
+    """'temperature' units should have 'temperature' as defined category (#45)"""
+    unit_database = UnitDatabase.CreateDefaultSingleton()
+
+    expected_category = "temperature"
+    valid_temperature_units = unit_database.GetValidUnits(expected_category)
+
+    for unit in valid_temperature_units:
+        T = units.Scalar(1.0, unit)
+        assert T.category == expected_category

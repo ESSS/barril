@@ -1,15 +1,19 @@
+UNRELEASED
+------------------
+
+* Removing ``thermodynamic temperature`` as default category for ``degF`` and ``degR`` units.
+
 1.9.0 (2020-02-20)
 ------------------
 
 * New ``classmethod`` ``Array.FromScalars`` that creates an ``Array`` from a ``List[Scalar]``.
 * Add new unit: "barrel per second" (``bbl/s``).
 
-
 1.8.0 (2020-01-10)
 ------------------
 
-* Add new category: "standard volume per standard volume"
-* Move unit ``sm3/sm3`` from "volume per volume" to "standard volume per standard volume"
+* Add new category: "standard volume per standard volume".
+* Move unit ``sm3/sm3`` from "volume per volume" to "standard volume per standard volume".
 
 1.7.2 (2019-10-16)
 ------------------
