@@ -1,5 +1,5 @@
-UNRELEASED
-------------------
+1.10.0 (2020-10-22)
+-------------------
 
 * Removing ``thermodynamic temperature`` as default category for ``degF`` and ``degR`` units.
 
