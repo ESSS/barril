@@ -1,13 +1,6 @@
 name: build
 
-on:
-  push:
-    branches:
-      - "*"
-    tags:
-      - v*
-
-  pull_request:
+on: [push, pull_request]
 
 jobs:
   build:
@@ -61,6 +54,8 @@ jobs:
         tox -e docs
 
   deploy:
+
+    if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
 
     runs-on: ubuntu-latest
 
