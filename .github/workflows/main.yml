@@ -3,14 +3,11 @@ name: build
 on:
   push:
     branches:
-      - master
-      - rb-*
+      - "*"
     tags:
       - v*
 
   pull_request:
-  schedule:
-  - cron: 0 2 * * *
 
 jobs:
   build:
