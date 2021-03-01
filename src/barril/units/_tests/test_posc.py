@@ -188,6 +188,22 @@ def testPoscMassPerEnergy(unit_database_posc):
     assert approx(abs(default.GetValue("lbm/Btu") - 1.0 / 0.0004299226139295), 7) == 0
 
 
+def testKinematicViscosity(unit_database_posc):
+    default = units.Scalar("kinematic viscosity", 1, "m2/s")
+    assert default.GetQuantityType() == "volume per time per length"
+    assert approx(abs(default.value - 1.0), 7) == 0
+    assert approx(abs(default.GetValue("cm2/s") - 10000.0), 7) == 0
+    assert approx(abs(default.GetValue("St") - 10000.0), 7) == 0
+    assert approx(abs(default.GetValue("cSt") - 1000000.0), 7) == 0
+    assert approx(abs(default.GetValue("ft2/h") - 318750.077500155), 7) == 0
+    assert approx(abs(default.GetValue("ft2/s") - 10.763910416709722), 7) == 0
+    assert approx(abs(default.GetValue("in2/s") - 1550.0031000062002), 7) == 0
+    assert approx(abs(default.GetValue("m2/h") - 3600.0), 7) == 0
+    assert approx(abs(default.GetValue("mm2/s") - 1000000.0), 7) == 0
+    assert approx(abs(default.GetValue("m2/d") - 86400.0), 7) == 0
+    assert approx(abs(default.GetValue("ft2/d") - 930001.8600037199), 7) == 0
+
+
 def testCreateVolumeQuantityFromLengthQuantity(unit_database_posc):
     unit_database = unit_database_posc
     length_units = unit_database.GetValidUnits("length")

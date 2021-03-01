@@ -1923,6 +1923,16 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     db.AddUnit(
         "time", "ten milli second", "cs", f_base_to_unit, f_unit_to_base, default_category=None
     )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 0.0001, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 0.0001, 1.0, 0.0)
+    db.AddUnit(
+        "volume per time per length",
+        "Stoke",
+        "St",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 0.000001, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 0.000001, 1.0, 0.0)
     db.AddUnit(
@@ -13961,6 +13971,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
             valid_units=[
                 "m2/s",
                 "cm2/s",
+                "St",
                 "cSt",
                 "ft2/h",
                 "ft2/s",
@@ -13984,6 +13995,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
             valid_units=[
                 "m2/s",
                 "cm2/s",
+                "St",
                 "cSt",
                 "ft2/h",
                 "ft2/s",
