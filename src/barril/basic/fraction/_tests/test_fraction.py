@@ -72,14 +72,12 @@ def testCopy():
     assert not f == Fraction(3, 5)
 
 
-def testStrFormat():
+def testStrFormat(mocker):
     """
     Scalar field behavior. In this test we make sure that the
     Fraction.__str__ method calls FormatFloat, which handles
     the locale properly.
     """
-    import barril.basic.format_float
-
     # By default, the numbers are formatted using "%g"
     f = Fraction(5, 3)
     assert str(f), "5/3"
@@ -88,11 +86,5 @@ def testStrFormat():
     f = Fraction(5.6, 3)
     assert str(f) == "28/15"
 
-    original_format_float = barril.basic.format_float.FormatFloat
-    barril.basic.format_float.FormatFloat = lambda x, y: "X%.2fX" % y
-    try:
-        assert str(f) == "X28.00X/X15.00X"
-    finally:
-        barril.basic.format_float.FormatFloat = original_format_float
-
-    assert str(f) == "28/15"
+    mocker.patch("barril.basic.format_float.FormatFloat", side_effect=lambda x, y: "X%.2fX" % y)
+    assert str(f) == "X28.00X/X15.00X"
