@@ -20,7 +20,15 @@ Note: The naming conventions were gathered from posc:
 from oop_ext.interface import Interface
 
 
-__all__ = ["IQuantity", "IScalar", "IQuantity2", "IQuantity3", "IObjectWithQuantity", "IArray"]
+__all__ = [
+    "IQuantity",
+    "IScalar",
+    "IQuantity2",
+    "IQuantity3",
+    "IQuantity6",
+    "IObjectWithQuantity",
+    "IArray",
+]
 
 
 class IQuantity(Interface):

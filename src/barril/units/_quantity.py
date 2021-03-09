@@ -12,7 +12,7 @@ from oop_ext.interface import ImplementsInterface
 from ._unit_constants import UNKNOWN_UNIT
 from .interfaces import IQuantity, IQuantity2, IQuantity3, IQuantity6
 
-__all__ = ["Quantity"]
+__all__ = ["Quantity", "ObtainQuantity"]
 
 
 def _ObtainReduced(state):

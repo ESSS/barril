@@ -15,6 +15,7 @@ __all__ = [
     "InvalidQuantityTypeError",
     "InvalidUnitError",
     "UnitDatabase",
+    "UnitInfo",
     "UnitsError",
 ]
 
