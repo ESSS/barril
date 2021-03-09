@@ -1,9 +1,9 @@
-from oop_ext.interface import Interface
+from oop_ext.interface import Interface, TypeCheckingSupport
 
 __all__ = ["ICurve"]
 
 
-class ICurve(Interface):
+class ICurve(Interface, TypeCheckingSupport):
     """
         The curve is an element that has values and domain for those values.
     """

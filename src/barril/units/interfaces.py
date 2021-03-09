@@ -17,8 +17,7 @@ Note: The naming conventions were gathered from posc:
     http://www.posc.org/ebiz/pefxml/patternsobjects.html http://www.posc.org/refs/poscUnits20.xml
 """
 
-from oop_ext.interface import Interface
-
+from oop_ext.interface import Interface, TypeCheckingSupport
 
 __all__ = [
     "IQuantity",
@@ -31,7 +30,7 @@ __all__ = [
 ]
 
 
-class IQuantity(Interface):
+class IQuantity(Interface, TypeCheckingSupport):
     """
     The quantity is an object that has its associated category, quantity type and unit.
 
@@ -62,7 +61,7 @@ class IQuantity(Interface):
         """
 
 
-class IQuantity2(Interface):
+class IQuantity2(Interface, TypeCheckingSupport):
     """
     Optional interface to the IQuantity used to deal with operations dealing with different
     units which result in derived units.
@@ -129,7 +128,7 @@ class IQuantity2(Interface):
         """
 
 
-class IQuantity3(Interface):
+class IQuantity3(Interface, TypeCheckingSupport):
     def GetUnitDatabase(self):
         """
         :rtype: UnitDatabase
@@ -138,7 +137,7 @@ class IQuantity3(Interface):
         """
 
 
-class IQuantity6(Interface):
+class IQuantity6(Interface, TypeCheckingSupport):
     """
     Interface that defines a way to get the unit caption properly. This means that the
     translation will be applied (without changing the internal unit, just its representation
@@ -169,7 +168,7 @@ class IQuantity6(Interface):
         """
 
 
-class IObjectWithQuantity(Interface):
+class IObjectWithQuantity(Interface, TypeCheckingSupport):
     """
     Interface provided for an object that has an associated quantity.
     """

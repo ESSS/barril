@@ -1,8 +1,8 @@
 from oop_ext.foundation import callback
-from oop_ext.interface import Attribute, Interface
+from oop_ext.interface import Attribute, Interface, TypeCheckingSupport
 
 
-class IUnitSystem(Interface):
+class IUnitSystem(Interface, TypeCheckingSupport):
     """
     Interface for unit systems. A unit system defines the default unit for all the categories in the
     application (a units mapping).
