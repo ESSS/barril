@@ -30,16 +30,16 @@ def MakeCustomaryToBase(a, b, c, d):
 
 def MakeBaseToCustomary(a, b, c, d):
     """
-    Formula to convert some value from Derivate Unit to Base Unit
-   (A - CY) / (DY - B)
-   Y can be any single numeric value or a numpy array
-   Integer values are correctly handled, once a, b, c and d parameters
-   are always floats
+     Formula to convert some value from Derivate Unit to Base Unit
+    (A - CY) / (DY - B)
+    Y can be any single numeric value or a numpy array
+    Integer values are correctly handled, once a, b, c and d parameters
+    are always floats
 
-    :rtype: callable
-    :returns:
-        Returns a callable with the conversion from the base to a unit (depending on the
-        coefficients).
+     :rtype: callable
+     :returns:
+         Returns a callable with the conversion from the base to a unit (depending on the
+         coefficients).
     """
 
     def ret(y):

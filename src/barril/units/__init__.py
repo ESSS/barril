@@ -25,32 +25,18 @@ following B{requisites}:
 Usage:
 
     >>> from barril import units
-    >>> from barril.units import scalar
-    >>>
-    >>> unit_manager = units.UnitDatabase()
-    >>> unit_manager.AddUnitBase('length', 'meters', 'm')
-    >>> unit_manager.AddUnit('length', 'milimeters', 'mm', 'x * 1000.0', 'x / 1000.0')
-    >>> unit_manager.AddUnit('length', 'centimeters', 'cm', 'x * 100.0', 'x / 100.0')
-    >>> unit_manager.AddCategory('well-diameter', 'length')
-    >>> s = scalar.Scalar.Create('well-diameter', 10, 'm', unit_manager)
+    >>> from barril.units import Scalar
+    >>> s = Scalar(10, 'm')
     >>> repr(s)
-    "'Scalar'('length', 10, 'm')"
-    >>> print s.value
-    10
-    >>> print s.unit
-    m
+    "Scalar(10.0, 'm', 'length')"
+    >>> s.value, s.unit
+    (10.0, 'm')
     >>> s.GetCategory()
-    'well-diameter'
+    'length'
     >>> s.GetQuantityType()
     'length'
-    >>> s.unit = 'cm'
-    >>> repr(s)
-    "'Scalar'('length', 1000.0, 'cm')"
-    >>> print s
-    1000.00 centimeters
-    >>> print s.GetValue(unit='mm')
-    10000.0
-
+    >>> s.CreateCopy(unit="cm")
+    Scalar(1000.0, 'cm', 'length')
 
 B{Design decisions}:
 
@@ -67,6 +53,8 @@ B{Design decisions}:
 
 
 from weakref import WeakValueDictionary
+
+from typing import TYPE_CHECKING
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject  # noqa
 from ._array import Array  # noqa
@@ -99,6 +87,13 @@ from .unit_database import (  # noqa
     UnitsError,
 )
 
+# Needed for Python<3.9: WeakValueDictionary doesn't support
+# the subscription operator.
+if TYPE_CHECKING:
+    QuantityWeakDictionary = WeakValueDictionary[str, Quantity]
+else:
+    QuantityWeakDictionary = WeakValueDictionary
+
 __all__ = [
     "AbstractValueWithQuantityObject",
     "Array",
@@ -124,7 +119,7 @@ __all__ = [
 UNKNOWN_QUANTITY = ObtainQuantity(UNKNOWN_UNIT, UNKNOWN_QUANTITY_TYPE)
 
 # Unknown quantity weak value cache
-UNKNOWN_QUANTITY_WEAK_CACHE = WeakValueDictionary()
+UNKNOWN_QUANTITY_WEAK_CACHE: QuantityWeakDictionary = QuantityWeakDictionary()
 
 
 def GetUnknownQuantity(unknown_caption=None):

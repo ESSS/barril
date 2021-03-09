@@ -143,7 +143,7 @@ def testInvalidUnit():
 
 def testGetValues():
     """
-        Tests GetValues method return type when passing a 'unit'
+    Tests GetValues method return type when passing a 'unit'
     """
     array = units.Array("temperature", values=[0, 100], unit="degC")
     assert isinstance(array.GetValues(), list)

@@ -336,7 +336,7 @@ def testPow(unit_database_len_time):
 
 def testFormatedUnitsOnScalar(unit_database_empty):
     """
-        Allow present units on get formatted Scalar
+    Allow present units on get formatted Scalar
     """
     unit_database = unit_database_empty
     unit_database.AddUnitBase("length", "meters", "m")
@@ -379,7 +379,7 @@ def testFormatedUnitsOnScalar(unit_database_empty):
 
 def testEmptyScalar():
     """
-        ScalarMultiData exception when some of its scalars don't have a quantity_type
+    ScalarMultiData exception when some of its scalars don't have a quantity_type
     """
     # An empty scalar doesn't have a category defined
     scalar_1 = Scalar.CreateEmptyScalar(20.0)
@@ -391,7 +391,7 @@ def testEmptyScalar():
 
 def testCopyProperties(unit_database_well_length):
     """
-        Test if the mehod SetValue is not called when copying the Scalar's properties.
+    Test if the mehod SetValue is not called when copying the Scalar's properties.
     """
     category = "well-length"
     unit = "m"
@@ -422,8 +422,8 @@ def testCopyPropertiesAndValidation(unit_database_well_length):
 
 def testDefaultValue(unit_database_len_pressure):
     """
-        Scalar constructor considers the minimum and maximum values
-        when default_value is not defined
+    Scalar constructor considers the minimum and maximum values
+    when default_value is not defined
     """
     db = unit_database_len_pressure
 

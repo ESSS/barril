@@ -3,7 +3,7 @@ from typing import Optional, Iterable
 from barril._util.types_ import IsNumber
 from barril.basic.format_float import FormatFloat
 from barril.units.unit_database import UnitDatabase
-from oop_ext.interface._interface import ImplementsInterface
+from oop_ext.interface import ImplementsInterface
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._quantity import Quantity
@@ -22,13 +22,13 @@ class Array(AbstractValueWithQuantityObject):
 
     .. code-block:: python
 
-        Array(numpy.array([0, 1, 2, 3, 4], numpy.float64), 'm')
+        Array(numpy.array([0, 1, 2, 3, 4], numpy.float64), "m")
 
-        Array([0, 1, 2, 3, 4], 'm')
+        Array([0, 1, 2, 3, 4], "m")
 
-        Array('length', [0, 1, 2, 3, 4], 'm')
+        Array("length", [0, 1, 2, 3, 4], "m")
 
-        Array(ObtainQuantity('m', 'length'), [0, 1, 2, 3, 4])
+        Array(ObtainQuantity("m", "length"), [0, 1, 2, 3, 4])
     """
 
     def __init__(self, category, values=None, unit=None):
@@ -229,10 +229,10 @@ class Array(AbstractValueWithQuantityObject):
     @classmethod
     def CreateEmptyArray(cls, values=None):
         """
-            Allows the creation of a array that does not have any associated
-            category nor unit.
+        Allows the creation of a array that does not have any associated
+        category nor unit.
 
-            :rtype: Array
+        :rtype: Array
         """
         if values is None:
             values = []
@@ -318,8 +318,8 @@ class Array(AbstractValueWithQuantityObject):
 
     def _DoOperation(self, p1, p2, operation):
         """
-            Actually go on and do an operation considering the data we have to transform considering
-            any combination of: number, list and numpy
+        Actually go on and do an operation considering the data we have to transform considering
+        any combination of: number, list and numpy
         """
         from ._value_generator import _ValueGenerator
         import numpy

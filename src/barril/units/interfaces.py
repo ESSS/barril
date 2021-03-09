@@ -17,13 +17,20 @@ Note: The naming conventions were gathered from posc:
     http://www.posc.org/ebiz/pefxml/patternsobjects.html http://www.posc.org/refs/poscUnits20.xml
 """
 
-from oop_ext.interface import Interface
+from oop_ext.interface import Interface, TypeCheckingSupport
+
+__all__ = [
+    "IQuantity",
+    "IScalar",
+    "IQuantity2",
+    "IQuantity3",
+    "IQuantity6",
+    "IObjectWithQuantity",
+    "IArray",
+]
 
 
-__all__ = ["IQuantity", "IScalar", "IQuantity2", "IQuantity3", "IObjectWithQuantity", "IArray"]
-
-
-class IQuantity(Interface):
+class IQuantity(Interface, TypeCheckingSupport):
     """
     The quantity is an object that has its associated category, quantity type and unit.
 
@@ -54,7 +61,7 @@ class IQuantity(Interface):
         """
 
 
-class IQuantity2(Interface):
+class IQuantity2(Interface, TypeCheckingSupport):
     """
     Optional interface to the IQuantity used to deal with operations dealing with different
     units which result in derived units.
@@ -111,17 +118,17 @@ class IQuantity2(Interface):
 
     def GetCategoryToUnitAndExps(self):
         """
-            :rtype: an ordered dictionary with the name of a category -> list with 2 elements:
-            [unit, exp] that determines the information about categories, quantities and their
-            relations to an expoent.
+        :rtype: an ordered dictionary with the name of a category -> list with 2 elements:
+        [unit, exp] that determines the information about categories, quantities and their
+        relations to an expoent.
 
-            .. note:: The same INTERNAL REFERENCE should be returned, and not a copy (so, clients that
-            change it WILL cause side-effects in the internal dict -- so, creating a deepcopy is
-            the clients responsibility)
+        .. note:: The same INTERNAL REFERENCE should be returned, and not a copy (so, clients that
+        change it WILL cause side-effects in the internal dict -- so, creating a deepcopy is
+        the clients responsibility)
         """
 
 
-class IQuantity3(Interface):
+class IQuantity3(Interface, TypeCheckingSupport):
     def GetUnitDatabase(self):
         """
         :rtype: UnitDatabase
@@ -130,7 +137,7 @@ class IQuantity3(Interface):
         """
 
 
-class IQuantity6(Interface):
+class IQuantity6(Interface, TypeCheckingSupport):
     """
     Interface that defines a way to get the unit caption properly. This means that the
     translation will be applied (without changing the internal unit, just its representation
@@ -161,7 +168,7 @@ class IQuantity6(Interface):
         """
 
 
-class IObjectWithQuantity(Interface):
+class IObjectWithQuantity(Interface, TypeCheckingSupport):
     """
     Interface provided for an object that has an associated quantity.
     """
@@ -212,8 +219,8 @@ class IScalar(IObjectWithQuantity, IQuantity):
 
 class IArray(IObjectWithQuantity):
     """
-        The Array defines a list of values with a quantity (so, it implements the IObjectWithQuantity
-        interface)
+    The Array defines a list of values with a quantity (so, it implements the IObjectWithQuantity
+    interface)
     """
 
     def GetValues(self, unit=None):

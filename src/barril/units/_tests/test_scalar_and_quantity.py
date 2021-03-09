@@ -1,3 +1,5 @@
+from typing import List
+
 from barril.units import Scalar
 from barril.units.unit_database import UnitDatabase
 import pytest
@@ -63,7 +65,7 @@ class _LightweightScalar(tuple):  # Could derive from _LightweightQuantity, but 
         - The category and the unit must be valid (will not be checked at initialization)
     """
 
-    __slots__ = []
+    __slots__: List[str] = []
 
     def __new__(cls, value, unit, category):
         return tuple.__new__(cls, (value, unit, category))

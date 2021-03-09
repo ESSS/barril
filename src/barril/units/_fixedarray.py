@@ -5,8 +5,7 @@ __all__ = ["FixedArray"]
 
 
 class FixedArray(Array):
-    """Represents an Array with fixed number of elements.
-    """
+    """Represents an Array with fixed number of elements."""
 
     _dimension = None
 
@@ -82,8 +81,7 @@ class FixedArray(Array):
         return [0.0] * self._dimension
 
     def CheckValues(self, values, dimension=None):
-        """Checks whether the dimensions consistent with the dimensions in this unit point
-        """
+        """Checks whether the dimensions consistent with the dimensions in this unit point"""
         if dimension is None:
             dimension = self.dimension
 
