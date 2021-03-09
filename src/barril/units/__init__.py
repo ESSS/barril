@@ -68,6 +68,8 @@ B{Design decisions}:
 
 from weakref import WeakValueDictionary
 
+from typing import TYPE_CHECKING
+
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject  # noqa
 from ._array import Array  # noqa
 from .interfaces import (
@@ -99,6 +101,13 @@ from .unit_database import (  # noqa
     UnitsError,
 )
 
+# Needed for Python<3.9: WeakValueDictionary doesn't support
+# the subscription operator.
+if TYPE_CHECKING:
+    QuantityWeakDictionary = WeakValueDictionary[str, Quantity]
+else:
+    QuantityWeakDictionary = WeakValueDictionary
+
 __all__ = [
     "AbstractValueWithQuantityObject",
     "Array",
@@ -124,7 +133,7 @@ __all__ = [
 UNKNOWN_QUANTITY = ObtainQuantity(UNKNOWN_UNIT, UNKNOWN_QUANTITY_TYPE)
 
 # Unknown quantity weak value cache
-UNKNOWN_QUANTITY_WEAK_CACHE = WeakValueDictionary()
+UNKNOWN_QUANTITY_WEAK_CACHE: QuantityWeakDictionary = QuantityWeakDictionary()
 
 
 def GetUnknownQuantity(unknown_caption=None):

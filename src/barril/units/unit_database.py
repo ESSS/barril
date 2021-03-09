@@ -1,3 +1,5 @@
+from typing import TypeVar, Callable, Dict, Type, Any
+
 import attr
 import copy
 import math
@@ -6,7 +8,7 @@ import traceback
 from barril._util.types_ import CheckType
 from oop_ext.foundation.singleton import Singleton
 
-# Contains the registry for all the avaiable unit types.
+# Contains the registry for all the available unit types.
 __all__ = [
     "CategoryInfo",
     "InvalidOperationError",
@@ -187,6 +189,10 @@ class CategoryInfo:
     caption = attr.ib(default="")
 
 
+T = TypeVar("T")
+ConversionFunc = Callable[["UnitDatabase", str, str, str, T], T]
+
+
 class UnitDatabase(Singleton):
     """
     Registry with all the available quantity types and units that represent the physical units.
@@ -283,7 +289,7 @@ class UnitDatabase(Singleton):
     #
     # dict of class supported -> conversion function
     # see RegisterAdditionalConversionType
-    _additional_conversions = {}
+    _additional_conversions: Dict[Type, ConversionFunc] = {}
 
     def __init__(self, default_singleton=False):
         """
@@ -1072,7 +1078,7 @@ class UnitDatabase(Singleton):
         return ret
 
     @classmethod
-    def RegisterAdditionalConversionType(cls, class_, func):
+    def RegisterAdditionalConversionType(cls, class_: Type, func: ConversionFunc) -> None:
         """
         This function may be used to register conversions for additional classes, not originally
         treated (e.g.: IGridFunction)

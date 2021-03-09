@@ -1,3 +1,5 @@
+from typing import Dict, Tuple
+
 from barril.units.unit_database import InvalidUnitError, UnitDatabase
 
 
@@ -25,7 +27,7 @@ class _SimpleScalar:
         self._value = value
 
 
-_quantities_cache = {}
+_quantities_cache: Dict[Tuple[str, str], "_SimpleQuantity"] = {}
 
 
 def _ObtainQuantity(unit, category=None):

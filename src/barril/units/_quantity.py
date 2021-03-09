@@ -3,6 +3,8 @@ This module provides the implementation of an Quantity object.
 """
 
 from collections import OrderedDict
+from typing import List
+
 from barril.units.exceptions import QuantityValidationError
 from barril.units.unit_database import InvalidUnitError, UnitDatabase, UnitsError, FixUnitIfIsLegacy
 from oop_ext.interface._interface import ImplementsInterface
@@ -127,7 +129,7 @@ class Quantity:
     Quantity(category, unit) was maintained for backward-compatibility.
     """
 
-    __slots__ = []
+    __slots__: List[str] = []
 
     def __new__(cls, category, unit, unknown_unit_caption=None):
         """
