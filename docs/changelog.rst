@@ -1,5 +1,5 @@
-=======
-History
-=======
+=========
+CHANGELOG
+=========
 
 .. include:: ../CHANGELOG.rst

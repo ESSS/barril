@@ -3,7 +3,7 @@ from barril.units import Array, ObtainQuantity, UnitDatabase
 import pytest
 
 
-@pytest.yield_fixture
+@pytest.fixture
 def unit_database():
     unit_database = UnitDatabase()
     unit_database.AddUnit("length", "milimeters", "mm", "%f * 1000.0", "%f / 1000.0")
