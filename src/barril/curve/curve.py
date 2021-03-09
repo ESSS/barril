@@ -55,8 +55,10 @@ class Curve:
         image_length = len(image.GetValues())
         domain_length = len(domain.GetValues())
         if image_length != domain_length:
-            msg = "The length of the image ({}) is different from the size of the domain ({})".format(
-                image_length, domain_length
+            msg = (
+                "The length of the image ({}) is different from the size of the domain ({})".format(
+                    image_length, domain_length
+                )
             )
             raise ValueError(msg)
 
@@ -65,11 +67,11 @@ class Curve:
 
     def SetDomain(self, domain):
         """
-            Define the curve domain.
+        Define the curve domain.
 
-            :type domain: L{Array}
-            :param domain:
-                the domain of this curve
+        :type domain: L{Array}
+        :param domain:
+            the domain of this curve
         """
         self._CheckImageAndDomainLength(self._image, domain)
         self._domain = domain

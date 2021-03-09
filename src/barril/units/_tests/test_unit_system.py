@@ -43,7 +43,7 @@ def testEquality(units_mapping_1, units_mapping_2):
 
 def testSetDefaultUnitCallback(units_mapping_1):
     """
-        Implements on_default_unit on unit system, called when the default unit changes.
+    Implements on_default_unit on unit system, called when the default unit changes.
     """
 
     class MockClass:

@@ -5,7 +5,7 @@ __all__ = ["ICurve"]
 
 class ICurve(Interface, TypeCheckingSupport):
     """
-        The curve is an element that has values and domain for those values.
+    The curve is an element that has values and domain for those values.
     """
 
     def GetImage(self):

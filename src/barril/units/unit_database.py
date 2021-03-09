@@ -1212,7 +1212,12 @@ class UnitDatabase(Singleton):
             category_to_unit_and_exp1 = copy.deepcopy(quantity1.GetCategoryToUnitAndExps())
             category_to_unit_and_exp2 = copy.deepcopy(quantity2.GetCategoryToUnitAndExps())
 
-            category_to_unit_and_exp1, category_to_unit_and_exp2, value1, value2 = self._MatchQuantities(
+            (
+                category_to_unit_and_exp1,
+                category_to_unit_and_exp2,
+                value1,
+                value2,
+            ) = self._MatchQuantities(
                 category_to_unit_and_exp1, category_to_unit_and_exp2, value1, value2
             )
 
@@ -1337,7 +1342,12 @@ class UnitDatabase(Singleton):
         category_to_unit_and_exp1 = quantity1.GetCategoryToUnitAndExpsCopy()
         category_to_unit_and_exp2 = quantity2.GetCategoryToUnitAndExpsCopy()
 
-        category_to_unit_and_exp1, category_to_unit_and_exp2, value1, value2 = self._MatchQuantities(
+        (
+            category_to_unit_and_exp1,
+            category_to_unit_and_exp2,
+            value1,
+            value2,
+        ) = self._MatchQuantities(
             category_to_unit_and_exp1, category_to_unit_and_exp2, value1, value2
         )
 

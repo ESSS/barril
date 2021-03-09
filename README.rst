@@ -29,9 +29,9 @@ Quick example:
 
     from barril.units import Scalar
 
-    s1 = Scalar(10, 'm')
-    s2 = Scalar(500, 'cm')
-    assert s1 + s2 == Scalar(15, 'm')
+    s1 = Scalar(10, "m")
+    s2 = Scalar(500, "cm")
+    assert s1 + s2 == Scalar(15, "m")
 
 
 Features

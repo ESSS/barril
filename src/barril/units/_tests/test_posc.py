@@ -19,7 +19,7 @@ def testPoscFrequency(unit_database_posc):
 
 def testPoscTime(unit_database_posc):
     """
-        These are the time-units available on posc.
+    These are the time-units available on posc.
     """
     units.Scalar("time", 100, "s")
     units.Scalar("time", 100, "min")

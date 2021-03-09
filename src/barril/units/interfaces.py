@@ -118,13 +118,13 @@ class IQuantity2(Interface, TypeCheckingSupport):
 
     def GetCategoryToUnitAndExps(self):
         """
-            :rtype: an ordered dictionary with the name of a category -> list with 2 elements:
-            [unit, exp] that determines the information about categories, quantities and their
-            relations to an expoent.
+        :rtype: an ordered dictionary with the name of a category -> list with 2 elements:
+        [unit, exp] that determines the information about categories, quantities and their
+        relations to an expoent.
 
-            .. note:: The same INTERNAL REFERENCE should be returned, and not a copy (so, clients that
-            change it WILL cause side-effects in the internal dict -- so, creating a deepcopy is
-            the clients responsibility)
+        .. note:: The same INTERNAL REFERENCE should be returned, and not a copy (so, clients that
+        change it WILL cause side-effects in the internal dict -- so, creating a deepcopy is
+        the clients responsibility)
         """
 
 
@@ -219,8 +219,8 @@ class IScalar(IObjectWithQuantity, IQuantity):
 
 class IArray(IObjectWithQuantity):
     """
-        The Array defines a list of values with a quantity (so, it implements the IObjectWithQuantity
-        interface)
+    The Array defines a list of values with a quantity (so, it implements the IObjectWithQuantity
+    interface)
     """
 
     def GetValues(self, unit=None):

@@ -30,10 +30,10 @@ class Scalar(AbstractValueWithQuantityObject):
 
     .. code-block:: python
 
-        Scalar('length')
-        Scalar(10.0, 'm', 'length')
-        Scalar(10.0, 'm')
-        Scalar((10.0, 'm')) # tuple of (value, unit)
+        Scalar("length")
+        Scalar(10.0, "m", "length")
+        Scalar(10.0, "m")
+        Scalar((10.0, "m"))  # tuple of (value, unit)
 
     The last form is useful if you want to make a convenient interface for users of a class or method,
     accepting either a tuple or Scalar:
@@ -47,13 +47,15 @@ class Scalar(AbstractValueWithQuantityObject):
 
     .. code-block:: python
 
-        Compute(x=(10, 'm'), y=(15, 'm')) # is equivalent to Compute(x=Scalar(10, 'm'), y=Scalar(15, 'm'))
+        Compute(
+            x=(10, "m"), y=(15, "m")
+        )  # is equivalent to Compute(x=Scalar(10, 'm'), y=Scalar(15, 'm'))
 
     Note that the following form is invalid, because if category and value is given, unit is mandatory.
 
     .. code-block:: python
 
-        Scalar('length', 1.0)
+        Scalar("length", 1.0)
 
     :type _internal_unit: This is the unit in which the value has been set (but not necessarily the
     :ivar _internal_unit:
