@@ -25,32 +25,18 @@ following B{requisites}:
 Usage:
 
     >>> from barril import units
-    >>> from barril.units import scalar
-    >>>
-    >>> unit_manager = units.UnitDatabase()
-    >>> unit_manager.AddUnitBase('length', 'meters', 'm')
-    >>> unit_manager.AddUnit('length', 'milimeters', 'mm', 'x * 1000.0', 'x / 1000.0')
-    >>> unit_manager.AddUnit('length', 'centimeters', 'cm', 'x * 100.0', 'x / 100.0')
-    >>> unit_manager.AddCategory('well-diameter', 'length')
-    >>> s = scalar.Scalar.Create('well-diameter', 10, 'm', unit_manager)
+    >>> from barril.units import Scalar
+    >>> s = Scalar(10, 'm')
     >>> repr(s)
-    "'Scalar'('length', 10, 'm')"
-    >>> print s.value
-    10
-    >>> print s.unit
-    m
+    "Scalar(10.0, 'm', 'length')"
+    >>> s.value, s.unit
+    (10.0, 'm')
     >>> s.GetCategory()
-    'well-diameter'
+    'length'
     >>> s.GetQuantityType()
     'length'
-    >>> s.unit = 'cm'
-    >>> repr(s)
-    "'Scalar'('length', 1000.0, 'cm')"
-    >>> print s
-    1000.00 centimeters
-    >>> print s.GetValue(unit='mm')
-    10000.0
-
+    >>> s.CreateCopy(unit="cm")
+    Scalar(1000.0, 'cm', 'length')
 
 B{Design decisions}:
 
