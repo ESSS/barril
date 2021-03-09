@@ -1,6 +1,6 @@
 from barril.curve.curve_interface import ICurve
 from barril.units.interfaces import IArray
-from oop_ext.interface._interface import ImplementsInterface, AssertImplements
+from oop_ext.interface import ImplementsInterface, AssertImplements
 from oop_ext.foundation.decorators import Implements, Deprecated
 
 __all__ = ["Curve"]

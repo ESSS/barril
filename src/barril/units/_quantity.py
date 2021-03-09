@@ -7,7 +7,7 @@ from typing import List
 
 from barril.units.exceptions import QuantityValidationError
 from barril.units.unit_database import InvalidUnitError, UnitDatabase, UnitsError, FixUnitIfIsLegacy
-from oop_ext.interface._interface import ImplementsInterface
+from oop_ext.interface import ImplementsInterface
 
 from ._unit_constants import UNKNOWN_UNIT
 from .interfaces import IQuantity, IQuantity2, IQuantity3, IQuantity6

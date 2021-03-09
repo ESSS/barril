@@ -3,7 +3,7 @@ from typing import Optional, Iterable
 from barril._util.types_ import IsNumber
 from barril.basic.format_float import FormatFloat
 from barril.units.unit_database import UnitDatabase
-from oop_ext.interface._interface import ImplementsInterface
+from oop_ext.interface import ImplementsInterface
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._quantity import Quantity

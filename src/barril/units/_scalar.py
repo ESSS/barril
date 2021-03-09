@@ -5,7 +5,7 @@ This module provides the implementation of an Scalar object.
 from functools import total_ordering
 
 from barril._util.types_ import IsNumber
-from oop_ext.interface._interface import ImplementsInterface
+from oop_ext.interface import ImplementsInterface
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._quantity import ObtainQuantity, Quantity

@@ -1,6 +1,6 @@
 from barril.units._quantity import _Quantity
 from barril.units.unit_database import UnitDatabase
-from oop_ext.interface._interface import ImplementsInterface
+from oop_ext.interface import ImplementsInterface
 
 from .interfaces import IObjectWithQuantity, IQuantity
 from ._quantity import ObtainQuantity
