@@ -138,7 +138,7 @@ def CreateUnitDatabaseCustomConversion():
     return unit_database
 
 
-@pytest.yield_fixture
+@pytest.fixture
 def unit_database():
     """
     Fixture to be used whenever a test needs a clean UnitDatabase. When using this fixture, it's
@@ -150,7 +150,7 @@ def unit_database():
     UnitDatabase.PopSingleton()
 
 
-@pytest.yield_fixture
+@pytest.fixture
 def unit_database_posc():
     """
     Fixture to be used whenever a test needs a clean UnitDatabase. When using this fixture, it's
