@@ -30,3 +30,4 @@ repos:
     -   id: mypy
         files: ^(src/)
         args: []
+        additional_dependencies: [types-all]
