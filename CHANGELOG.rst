@@ -1,5 +1,5 @@
-UNRELEASED
-------------------
+1.11.0 (2021-06-18)
+-------------------
 
 * Add new unit: "Stokes" (``St``).
 * Use ``TypeCheckingSupport`` from ``oop-ext 1.1``.
