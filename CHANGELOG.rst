@@ -3,6 +3,11 @@ UNRELEASED
 
 * Add new unit: "Stokes" (``St``).
 * Use ``TypeCheckingSupport`` from ``oop-ext 1.1``.
+* Add ``cubic feet per day per psi`` (``ft3/psi.d``) unit to ``productivity index`` category.
+* Add ``calories/metre hour degree Celsius`` (``cal/m.h.degC``) unit to ``thermal conductivity`` category.
+* Add ``calorie/hour square metre deg C`` (``cal/h.m2.degC``) unit to ``heat transfer coefficient`` category.
+* Add ``std cubic metres/second`` (``sm3/s``) unit to ``standard volume per time`` category.
+* Add ``million std cubic feet/stock tank barrel`` (``MMscf/stb``), ``stock tank barrel/std cubic feet`` (``stb/scf``) and ``stock tank barrel/million std cubic feet`` (``stb/MMscf``) units to ``standard volume per standard volume`` category.
 
 1.10.0 (2020-10-22)
 -------------------
