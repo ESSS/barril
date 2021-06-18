@@ -439,4 +439,77 @@ def testStandardVolumePerStandardVolumeSmoke():
     assert standard_per_standard.GetValue("scm3/scm3") == approx(1.0)
     assert standard_per_standard.GetValue("stb/stb") == approx(1.0)
     assert standard_per_standard.GetValue("Mscf/stb") == approx(0.0056254083833)
+    assert standard_per_standard.GetValue("MMscf/stb") == approx(0.0000056254083833)
     assert standard_per_standard.GetValue("scf/stb") == approx(5.62540838331)
+    assert standard_per_standard.GetValue("stb/scf") == approx(0.17776487178535644)
+    assert standard_per_standard.GetValue("stb/MMscf") == approx(177764.87178535643)
+
+
+def testHeatTransferCoefficient():
+    default = units.Scalar("heat transfer coefficient", 1, "W/m2.K")
+    assert default.value == 1.0
+    assert default.GetValue("Btu/hr.ft2.degF") == approx(0.17611019426187197)
+    assert default.GetValue("Btu/hr.ft2.degR") == approx(0.17611019426187197)
+    assert default.GetValue("Btu/hr.m2.degC") == approx(3.412141285851795)
+    assert default.GetValue("Btu/s.ft2.degF") == approx(4.891949074810131e-05)
+    assert default.GetValue("cal/h.cm2.degC") == approx(0.08604208146120104)
+    assert default.GetValue("cal/s.cm2.degC") == approx(2.390057361376673e-05)
+    assert default.GetValue("J/s.m2.degC") == approx(1.0)
+    assert default.GetValue("kcal/h.m2.degC") == approx(0.8604208146120104)
+    assert default.GetValue("cal/h.m2.degC") == approx(860.4208146120104)
+    assert default.GetValue("kJ/h.m2.K") == approx(3.6)
+    assert default.GetValue("kW/m2.K") == approx(0.001)
+
+
+def testProductivityIndex():
+    default = units.Scalar("productivity index", 1, "m3/Pa.s")
+    assert default.value == 1.0
+    assert default.GetValue("Mcf/psi.d") == approx(21037191.806292012)
+    assert default.GetValue("ft3/psi.d") == approx(21037191806.292012)
+    assert default.GetValue("bbl/d.psi") == approx(3746884212.8623204)
+    assert default.GetValue("bbl/kPa.d") == approx(543439633.228566)
+    assert default.GetValue("bbl/psi.d") == approx(3746884215.280088)
+    assert default.GetValue("L/bar.min") == approx(6000000000.0)
+    assert default.GetValue("m3/bar.d") == approx(8640000000.0)
+    assert default.GetValue("m3/bar.h") == approx(360000000.0)
+    assert default.GetValue("m3/bar.min") == approx(6000000.0)
+    assert default.GetValue("m3/d.kPa") == approx(86400000.0)
+    assert default.GetValue("m3/kPa.d") == approx(86400000.0)
+    assert default.GetValue("m3/kPa.h") == approx(3600000.0)
+    assert default.GetValue("m3/psi.d") == approx(595707004.8)
+
+
+def testThermalConductivity():
+    default = units.Scalar("thermal conductivity", 1, "W/m.K")
+    assert default.GetValue("Btu/hr.ft.degF") == approx(0.5777892051642799)
+    assert default.GetValue("cal/h.cm.degC") == approx(8.604208146120104)
+    assert default.GetValue("cal/s.cm.degC") == approx(0.002390057361376673)
+    assert default.GetValue("cal/m.h.degC") == approx(860.4208146120104)
+    assert default.GetValue("kcal/h.m.degC") == approx(0.8604208146120104)
+    assert default.GetValue("Btu/d.ft.degF") == approx(13.867702121758425)
+    assert default.GetValue("kJ/d.m.K") == approx(86.4304235090752)
+    assert default.GetValue("W/m.degC") == approx(1.0)
+
+
+def testStandardVolumePerTime():
+    default = units.Scalar("standard volume per time", 1, "scm(15C)/s")
+    assert default.GetValue("ksm3/d") == approx(86.4)
+    assert default.GetValue("MMscf(60F)/d") == approx(3.0570698685888087)
+    assert default.GetValue("MMscm(15C)/d") == approx(0.0864)
+    assert default.GetValue("MMstb(60F)/d") == approx(0.5434396332285661)
+    assert default.GetValue("Mscf(60F)/d") == approx(3057.0698685888087)
+    assert default.GetValue("Mscm(15C)/d") == approx(86.4)
+    assert default.GetValue("Mstb(60F)/d") == approx(543.4396332285661)
+    assert default.GetValue("scf(60F)/d") == approx(3057069.868588809)
+    assert default.GetValue("scm(15C)/d") == approx(86400.0)
+    assert default.GetValue("stb(60F)/d") == approx(543439.6332285661)
+    assert default.GetValue("MMscf/d") == approx(3.0570698685888087)
+    assert default.GetValue("MMsm3/d") == approx(0.0864)
+    assert default.GetValue("MMstb/d") == approx(0.5434396332285661)
+    assert default.GetValue("Mscf/d") == approx(3057.069868588809)
+    assert default.GetValue("Msm3/d") == approx(0086.4)
+    assert default.GetValue("Mstb/d") == approx(543.4396332285661)
+    assert default.GetValue("scf/d") == approx(3057069.868588809)
+    assert default.GetValue("sm3/d") == approx(86400.0)
+    assert default.GetValue("stb/d") == approx(543439.6332285661)
+    assert default.GetValue("sm3/s") == approx(1.0)

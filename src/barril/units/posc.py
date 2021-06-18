@@ -596,6 +596,16 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 0.02831685, 595707004.8, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 0.02831685, 595707004.8, 0.0)
+    db.AddUnit(
+        "productivity index",
+        "cubic feet per day per psi",
+        "ft3/psi.d",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 1000, 86400, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 1000, 86400, 0.0)
     db.AddUnit(
@@ -4579,12 +4589,32 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 0.001162222, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 0.001162222, 1.0, 0.0)
+    db.AddUnit(
+        "thermal conductivity",
+        "calories/metre hour degree Celsius",
+        "cal/m.h.degC",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 1.162222, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 1.162222, 1.0, 0.0)
     db.AddUnit(
         "heat transfer coefficient",
         "kilocalorie/hour square metre deg C",
         "kcal/h.m2.degC",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 0.001162222, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 0.001162222, 1.0, 0.0)
+    db.AddUnit(
+        "heat transfer coefficient",
+        "calorie/hour square metre deg C",
+        "cal/h.m2.degC",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -8217,6 +8247,16 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         "standard volume per time",
         "std cubic metres/day",
         "sm3/d",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1, 1, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1, 1, 0.0)
+    db.AddUnit(
+        "standard volume per time",
+        "std cubic metres/second",
+        "sm3/s",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -12179,12 +12219,42 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
         f_unit_to_base,
         default_category=None,
     )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 28262.357, 0.1589873, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 28262.357, 0.1589873, 0.0)
+    db.AddUnit(
+        "standard volume per standard volume",
+        "million std cubic feet/stock tank barrel",
+        "MMscf/stb",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 0.028262357, 0.1589873, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 0.028262357, 0.1589873, 0.0)
     db.AddUnit(
         "standard volume per standard volume",
         "std cubic feet/stock tank barrel",
         "scf/stb",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 0.1589873, 0.028262357, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 0.1589873, 0.028262357, 0.0)
+    db.AddUnit(
+        "standard volume per standard volume",
+        "stock tank barrel/std cubic feet",
+        "stb/scf",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 0.1589873, 28262.357, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 0.1589873, 28262.357, 0.0)
+    db.AddUnit(
+        "standard volume per standard volume",
+        "stock tank barrel/million std cubic feet",
+        "stb/MMscf",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -14172,6 +14242,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
             valid_units=[
                 "m3/Pa.s",
                 "Mcf/psi.d",
+                "ft3/psi.d",
                 "bbl/d.psi",
                 "bbl/kPa.d",
                 "bbl/psi.d",
@@ -14904,7 +14975,10 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
                 "scm3/scm3",
                 "stb/stb",
                 "Mscf/stb",
+                "MMscf/stb",
                 "scf/stb",
+                "stb/scf",
+                "stb/MMscf",
             ],
         )
         db.AddCategory(
@@ -14932,6 +15006,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
                 "scf/d",
                 "sm3/d",
                 "stb/d",
+                "sm3/s",
             ],
         )
         db.AddCategory(
@@ -15053,6 +15128,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
                 "Btu/hr.ft.degF",
                 "cal/h.cm.degC",
                 "cal/s.cm.degC",
+                "cal/m.h.degC",
                 "kcal/h.m.degC",
                 "Btu/d.ft.degF",
                 "kJ/d.m.K",
@@ -15225,6 +15301,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
                 "cal/s.cm2.degC",
                 "J/s.m2.degC",
                 "kcal/h.m2.degC",
+                "cal/h.m2.degC",
                 "kJ/h.m2.K",
                 "kW/m2.K",
             ],
