@@ -4681,9 +4681,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 0.01, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 0.01, 1.0, 0.0)
-    db.AddUnit(
-        "force", "kilkodynes", "kdyne", f_base_to_unit, f_unit_to_base, default_category=None
-    )
+    db.AddUnit("force", "kilodynes", "kdyne", f_base_to_unit, f_unit_to_base, default_category=None)
     f_unit_to_base = MakeCustomaryToBase(0.0, 1000, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 1000, 1.0, 0.0)
     db.AddUnit(
@@ -5500,7 +5498,7 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     f_base_to_unit = MakeBaseToCustomary(0.0, 1000, 1.0, 0.0)
     db.AddUnit(
         "volumetric heat transfer coefficient",
-        "killowatts/cubic metre degree Kelvin",
+        "kilowatts/cubic metre degree Kelvin",
         "kW/m3.K",
         f_base_to_unit,
         f_unit_to_base,

@@ -1,3 +1,8 @@
+1.11.1 (2021-10-08)
+-------------------
+
+* Fixed typos in unit names: ``kilkodynes`` (unit=kdyne) fixed to ``kilodynes``, ``killowatts/cubic metre degree Kelvin`` (unit=kW/m3.K) fixed to ``kilowatts/cubic metre degree Kelvin``.
+
 1.11.0 (2021-06-18)
 -------------------
 
