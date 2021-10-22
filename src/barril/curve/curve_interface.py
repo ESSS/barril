@@ -1,3 +1,7 @@
+from typing import Tuple, Union, overload, Any
+
+from barril.units import Array
+from barril.units._array import ValuesType
 from oop_ext.interface import Interface, TypeCheckingSupport
 
 __all__ = ["ICurve"]
@@ -8,29 +12,33 @@ class ICurve(Interface, TypeCheckingSupport):
     The curve is an element that has values and domain for those values.
     """
 
-    def GetImage(self):
+    def GetImage(self) -> Array:
         """
-        :rtype: IArray
         :returns:
             An IArray -- which is an IObjectWithQuantity with the image for this curve
         """
 
-    def GetDomain(self):
+    def GetDomain(self) -> Array:
         """
-        :rtype: IArray
         :returns:
             An {IArray} -- which is an IObjectWithQuantity with the domain for this curve
         """
 
-    def __getitem__(self, index):
+    @overload
+    def __getitem__(self, index: int) -> Tuple[float, float]:
+        ...
+
+    @overload
+    def __getitem__(self, index: slice) -> Tuple[ValuesType, ValuesType]:
+        ...
+
+    def __getitem__(self, index: Union[int, slice]) -> Any:
         """
         [] operator, supporting slices.
 
-        :type index: int or slice
         :param index:
             The index of the curve to return
 
-        :rtype: Curve
         :returns:
-            Returns a new curve with the pair (domain, image) for the passed slice.
+            Returns the pair (domain, image) for the passed slice.
         """

@@ -3,7 +3,7 @@ import copy
 from barril.basic.fraction import Fraction
 
 
-def testBasicUsage():
+def testBasicUsage() -> None:
     f = Fraction(5, 3)
     assert tuple(f) == (5, 3)
     assert len(f) == 2
@@ -17,20 +17,20 @@ def testBasicUsage():
     assert tuple(f) == (5, 2)
 
 
-def testStr():
+def testStr() -> None:
     assert str(Fraction(5, 3)) == "5/3"
     assert repr(Fraction(5, 3)) == "Fraction(5, 3)"
 
     assert str(Fraction(3 / 1000, 4)) == "3/4000"
 
 
-def testReduce():
+def testReduce() -> None:
     f = Fraction(5, 3)
     f[0] = 15
     assert tuple(f) == (5, 1)
 
 
-def testOperations():
+def testOperations() -> None:
     # float operator
     assert float(Fraction(5, 3)) == 5.0 / 3.0
 
@@ -61,7 +61,7 @@ def testOperations():
     assert -Fraction(5, 3) == Fraction(-5, 3)
 
 
-def testCopy():
+def testCopy() -> None:
     f = Fraction(5, 3)
     cf = copy.copy(f)
     assert f == cf
@@ -72,7 +72,7 @@ def testCopy():
     assert not f == Fraction(3, 5)
 
 
-def testStrFormat(mocker):
+def testStrFormat(mocker) -> None:
     """
     Scalar field behavior. In this test we make sure that the
     Fraction.__str__ method calls FormatFloat, which handles

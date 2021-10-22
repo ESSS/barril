@@ -1,9 +1,11 @@
+from typing import Iterator
+
 import pytest
 
 from barril import units
 
 
-def CreateUnitDatabaseLenTime():
+def CreateUnitDatabaseLenTime() -> units.UnitDatabase:
     """
     :rtype: UnitDatabase
     :returns:
@@ -28,7 +30,7 @@ def CreateUnitDatabaseLenTime():
     return unit_database
 
 
-def CreateUnitDatabaseStartUnits():
+def CreateUnitDatabaseStartUnits() -> units.UnitDatabase:
     """
     :rtype: UnitDatabase
     :returns:
@@ -44,7 +46,7 @@ def CreateUnitDatabaseStartUnits():
     return unit_database
 
 
-def CreateUnitDatabaseWellLength():
+def CreateUnitDatabaseWellLength() -> units.UnitDatabase:
     """
     :rtype: UnitDatabase
     :returns:
@@ -66,7 +68,7 @@ def CreateUnitDatabaseWellLength():
     return unit_database
 
 
-def CreateUnitDatabasePoscLen(fill_categories=True):
+def CreateUnitDatabasePoscLen(fill_categories: bool = True) -> units.UnitDatabase:
     """
     :rtype: UnitDatabase
     :returns:
@@ -84,7 +86,7 @@ def CreateUnitDatabasePoscLen(fill_categories=True):
     return unit_database
 
 
-def CreateUnitDatabaseLenPressure():
+def CreateUnitDatabaseLenPressure() -> units.UnitDatabase:
     """
     :rtype: UnitDatabase
     :returns:
@@ -103,7 +105,7 @@ def CreateUnitDatabaseLenPressure():
     return unit_database
 
 
-def CreateUnitDatabaseCustomConversion():
+def CreateUnitDatabaseCustomConversion() -> units.UnitDatabase:
     from barril.units import UNKNOWN_QUANTITY_TYPE, UNKNOWN_UNIT
 
     unit_database = units.UnitDatabase()
@@ -139,19 +141,17 @@ def CreateUnitDatabaseCustomConversion():
 
 
 @pytest.fixture
-def unit_database():
+def unit_database() -> Iterator[units.UnitDatabase]:
     """
     Fixture to be used whenever a test needs a clean UnitDatabase. When using this fixture, it's
     safe to call UnitDatabase.GetSingleton().
     """
-    from barril.units.unit_database import UnitDatabase
-
-    yield UnitDatabase.PushSingleton()
-    UnitDatabase.PopSingleton()
+    yield units.UnitDatabase.PushSingleton()
+    units.UnitDatabase.PopSingleton()
 
 
 @pytest.fixture
-def unit_database_posc():
+def unit_database_posc() -> Iterator[units.UnitDatabase]:
     """
     Fixture to be used whenever a test needs a clean UnitDatabase. When using this fixture, it's
     safe to call UnitDatabase.GetSingleton().
@@ -166,7 +166,7 @@ def unit_database_posc():
 
 
 @pytest.fixture
-def unit_database_empty():
+def unit_database_empty() -> Iterator[units.UnitDatabase]:
     database = units.UnitDatabase()
     units.UnitDatabase.PushSingleton(database)
 
@@ -176,7 +176,7 @@ def unit_database_empty():
 
 
 @pytest.fixture
-def unit_database_len():
+def unit_database_len() -> Iterator[units.UnitDatabase]:
     database = units.UnitDatabase()
     units.UnitDatabase.PushSingleton(database)
     database.AddUnitBase("length", "meters", "m")
@@ -193,7 +193,7 @@ def unit_database_len():
 
 
 @pytest.fixture
-def unit_database_len_time():
+def unit_database_len_time() -> Iterator[units.UnitDatabase]:
     database = CreateUnitDatabaseLenTime()
     units.UnitDatabase.PushSingleton(database)
 
@@ -203,7 +203,7 @@ def unit_database_len_time():
 
 
 @pytest.fixture
-def unit_database_start_units():
+def unit_database_start_units() -> Iterator[units.UnitDatabase]:
     database = CreateUnitDatabaseStartUnits()
     units.UnitDatabase.PushSingleton(database)
 
@@ -213,7 +213,7 @@ def unit_database_start_units():
 
 
 @pytest.fixture
-def unit_database_well_length():
+def unit_database_well_length() -> Iterator[units.UnitDatabase]:
     database = CreateUnitDatabaseWellLength()
     units.UnitDatabase.PushSingleton(database)
 
@@ -223,7 +223,7 @@ def unit_database_well_length():
 
 
 @pytest.fixture
-def unit_database_len_pressure():
+def unit_database_len_pressure() -> Iterator[units.UnitDatabase]:
     database = CreateUnitDatabaseLenPressure()
     units.UnitDatabase.PushSingleton(database)
 
@@ -233,7 +233,7 @@ def unit_database_len_pressure():
 
 
 @pytest.fixture
-def unit_database_custom_conversion():
+def unit_database_custom_conversion() -> Iterator[units.UnitDatabase]:
     database = CreateUnitDatabaseCustomConversion()
     units.UnitDatabase.PushSingleton(database)
 
@@ -243,7 +243,7 @@ def unit_database_custom_conversion():
 
 
 @pytest.fixture
-def unit_database_posc_len_no_category():
+def unit_database_posc_len_no_category() -> Iterator[units.UnitDatabase]:
     database = CreateUnitDatabasePoscLen(fill_categories=False)
     units.UnitDatabase.PushSingleton(database)
 
@@ -253,7 +253,7 @@ def unit_database_posc_len_no_category():
 
 
 @pytest.fixture
-def unit_database_posc_len():
+def unit_database_posc_len() -> Iterator[units.UnitDatabase]:
     database = CreateUnitDatabasePoscLen(fill_categories=True)
     units.UnitDatabase.PushSingleton(database)
 

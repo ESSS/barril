@@ -6,7 +6,7 @@ from barril import units
 from barril.basic.fraction import FractionValue
 
 
-def testFractionScalar():
+def testFractionScalar() -> None:
     # create our scalar
     f = units.FractionScalar("length", value=FractionValue(250, (3, 4)), unit="m")
 
@@ -38,13 +38,13 @@ def testFractionScalar():
         setattr(f, "value", 10)
 
 
-def testCopy():
+def testCopy() -> None:
     f = units.FractionScalar("length", value=FractionValue(250.0, (3, 4)), unit="m")
     c = copy.copy(f)
     assert c.value == FractionValue(250.0, (3, 4))
 
 
-def testEquality():
+def testEquality() -> None:
     def Create(number, fraction):
         return units.FractionScalar("length", value=FractionValue(number, fraction), unit="m")
 
@@ -69,16 +69,16 @@ def testEquality():
     assert a == f
 
 
-def testRepr():
+def testRepr() -> None:
     assert repr(FractionValue(250, (3, 4))) == "FractionValue(250, 3/4)"
 
 
-def testFormatValue():
+def testFormatValue() -> None:
     f = units.FractionScalar("length", value=FractionValue(250.0, (3, 4)), unit="m")
     assert f.GetFormattedValue() == "250 3/4"
 
 
-def testComparison():
+def testComparison() -> None:
 
     f1 = units.FractionScalar("length", value=FractionValue(10), unit="in")
     f3 = units.FractionScalar("volume", value=FractionValue(4), unit="m3")
@@ -93,7 +93,7 @@ def testComparison():
     assert f2 < f1
 
 
-def testFractionScalarConversion():
+def testFractionScalarConversion() -> None:
     db = units.UnitDatabase()
     db.AddUnit("length", "milimeters", "mm", "%f * 1000.0", "%f / 1000.0")
     db.AddUnitBase("length", "meters", "m")
@@ -104,7 +104,7 @@ def testFractionScalarConversion():
     assert converted == FractionValue(3500)
 
 
-def testFractionScalarInvalidValue(unit_database_len):
+def testFractionScalarInvalidValue(unit_database_len) -> None:
     db = unit_database_len
 
     db.AddCategory("another-length", "length", min_value=5, max_value=15)
@@ -140,7 +140,7 @@ def testFractionScalarInvalidValue(unit_database_len):
     assert copied.GetFormatted() == "3000 [m]"
 
 
-def testSetFloatValue():
+def testSetFloatValue() -> None:
     """
     The fraction scalar should accept a float-convertible value. Since the fraction is a subclass
     from scalar, it should be able to respect the same interface.
@@ -150,7 +150,7 @@ def testSetFloatValue():
     assert f.GetValue("in") == FractionValue(0.75)
 
 
-def testFractionScalarWithDefaultValueOnCategory(unit_database_len):
+def testFractionScalarWithDefaultValueOnCategory(unit_database_len) -> None:
     """
     FractionScalar is not considering the default value from category on initialization
     """

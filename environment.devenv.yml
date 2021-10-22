@@ -1,15 +1,18 @@
 name: barril
 
 dependencies:
-  - python>=3.6
   - attrs>=18.1.0
+  - black>=19.3b0
+  - data-science-types
+  - mypy
   - numpy>=1.11.0
   - oop-ext>=1.1
+  - pre-commit>=1.11.0
   - pre_commit
   - pytest
   - pytest-mock>=1.10
-  - black>=19.3b0
-  - pre-commit>=1.11.0
+  - python>=3.6
+  - tox
 
 environment:
   PYTHONPATH:

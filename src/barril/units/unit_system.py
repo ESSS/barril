@@ -1,3 +1,5 @@
+from typing import Dict, Optional, Any
+
 from oop_ext.foundation import callback
 from oop_ext.foundation.decorators import Implements
 from oop_ext.interface import ImplementsInterface, IsImplementation
@@ -12,35 +14,41 @@ class UnitSystem:
     """
 
     @Implements(IUnitSystem.__init__)
-    def __init__(self, id, caption, units_mapping, read_only=False):
+    def __init__(
+        self,
+        id: Optional[str],
+        caption: str,
+        units_mapping: Dict[str, str],
+        read_only: bool = False,
+    ) -> None:
         self._id = id
         self._caption = caption
         self._units_mapping = units_mapping
         self._read_only = read_only
-        self.on_default_unit = callback.Callback()
+        self.on_default_unit: callback.Callback2[str, Optional[str]] = callback.Callback2()
 
     @Implements(IUnitSystem.GetId)
-    def GetId(self):
+    def GetId(self) -> Optional[str]:
         return self._id
 
     @Implements(IUnitSystem.GetCaption)
-    def GetCaption(self):
+    def GetCaption(self) -> str:
         return self._caption
 
     @Implements(IUnitSystem.SetCaption)
-    def SetCaption(self, caption):
+    def SetCaption(self, caption: str) -> None:
         self._caption = caption
 
     @Implements(IUnitSystem.GetUnitsMapping)
-    def GetUnitsMapping(self):
+    def GetUnitsMapping(self) -> Dict[str, str]:
         return self._units_mapping
 
     @Implements(IUnitSystem.IsReadOnly)
-    def IsReadOnly(self):
+    def IsReadOnly(self) -> bool:
         return self._read_only
 
     @Implements(IUnitSystem.SetReadOnly)
-    def SetReadOnly(self, read_only):
+    def SetReadOnly(self, read_only: bool) -> None:
         self._read_only = read_only
 
     # : duplicated signature to comply with Get/Set standard
@@ -48,14 +56,14 @@ class UnitSystem:
     read_only = property(GetReadOnly, SetReadOnly)
 
     @Implements(IUnitSystem.GetDefaultUnit)
-    def GetDefaultUnit(self, category):
+    def GetDefaultUnit(self, category: str) -> Optional[str]:
         if not category:
             return None
 
         return self._units_mapping.get(category, None)
 
     @Implements(IUnitSystem.RemoveCategory)
-    def RemoveCategory(self, category):
+    def RemoveCategory(self, category: str) -> None:
         try:
             del self._units_mapping[category]
             self.on_default_unit(category, None)
@@ -64,12 +72,12 @@ class UnitSystem:
             pass
 
     @Implements(IUnitSystem.SetDefaultUnit)
-    def SetDefaultUnit(self, category, unit):
+    def SetDefaultUnit(self, category: str, unit: str) -> None:
         self._units_mapping[category] = unit
         self.on_default_unit(category, unit)
 
     @Implements(IUnitSystem.__eq__)
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         if not IsImplementation(other, IUnitSystem):
             return False
 
@@ -79,7 +87,3 @@ class UnitSystem:
             and self.GetUnitsMapping() == other.GetUnitsMapping()
             and self.IsReadOnly() == other.IsReadOnly()
         )
-
-    @Implements(IUnitSystem.__ne__)
-    def __ne__(self, other):
-        return not self == other

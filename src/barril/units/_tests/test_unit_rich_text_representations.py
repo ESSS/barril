@@ -6,7 +6,7 @@ def AssertRTFCaption(received_representation, expected_caption):
     assert received_representation == html_mask % expected_caption
 
 
-def testUnitRichTextRepresentations():
+def testUnitRichTextRepresentations() -> None:
 
     # Some unit representation should be initially set
     expected_units_initially_set = [

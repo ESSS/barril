@@ -3,28 +3,67 @@ This module provides the implementation of an Quantity object.
 """
 
 from collections import OrderedDict
-from typing import List
+from typing import (
+    List,
+    Optional,
+    ClassVar,
+    Dict,
+    Union,
+    Any,
+    Tuple,
+    Sequence,
+    overload,
+    NoReturn,
+    TypeVar,
+)
 
 from barril.units.exceptions import QuantityValidationError
-from barril.units.unit_database import InvalidUnitError, UnitDatabase, UnitsError, FixUnitIfIsLegacy
+from barril.units.unit_database import (
+    InvalidUnitError,
+    UnitDatabase,
+    UnitsError,
+    FixUnitIfIsLegacy,
+    CategoryInfo,
+)
 from oop_ext.interface import ImplementsInterface
 
 from ._unit_constants import UNKNOWN_UNIT
-from .interfaces import IQuantity, IQuantity2, IQuantity3, IQuantity6
+from .interfaces import IQuantity, IQuantity2, IQuantity3, IQuantity6, UnitExponentTuple
 
 __all__ = ["Quantity", "ObtainQuantity"]
 
 
-def _ObtainReduced(state):
-    """
-    :param list state:
-        The value returned from _Quantity.__reduce__ (used in pickle protocol).
-    """
-    unknown_unit_caption = state.pop(-1)
-    return ObtainQuantity(OrderedDict(state), None, unknown_unit_caption)
+@overload
+def ObtainQuantity(
+    unit: str,
+    category: Optional[str] = None,
+    unknown_unit_caption: Optional[str] = None,
+) -> "Quantity":
+    ...
 
 
-def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
+@overload
+def ObtainQuantity(
+    unit: str,
+    category: Union[Tuple[str, ...], str],
+) -> "Quantity":
+    ...
+
+
+@overload
+def ObtainQuantity(
+    unit: Union[None, List[UnitExponentTuple], Dict[str, Sequence[Union[str, int]]]],
+    category: Optional[str] = None,
+    unknown_unit_caption: Optional[str] = None,
+) -> "Quantity":
+    ...
+
+
+def ObtainQuantity(
+    unit: Union[str, None, List[UnitExponentTuple], Dict[str, Sequence[Union[str, int]]]],
+    category: Optional[Union[Tuple[str, ...], str]] = None,
+    unknown_unit_caption: Optional[str] = None,
+) -> "Quantity":
     """
     :type unit: str or OrderedDict(str -> list(str, int))
     :param unit:
@@ -43,24 +82,24 @@ def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
     unit_database = UnitDatabase.GetSingleton()
     quantities_cache = unit_database.quantities_cache
 
-    if unit.__class__ in (list, tuple):
+    if isinstance(unit, (list, tuple)):
         # It may be a derived unit with list(tuple(str, int)) -- in which case the category
         # must also be a list (of the same size)
         if len(unit) == 1 and unit[0][1] == 1:
             # Although passed as composing, it's a simple case
             unit = unit[0][0]
-            if category.__class__ in (list, tuple):
+            if isinstance(category, (list, tuple)):
                 category = category[0]
         else:
-            assert category.__class__ in (list, tuple)
+            assert isinstance(category, (list, tuple))
             unit = OrderedDict((cat, unit_and_exp) for (cat, unit_and_exp) in zip(category, unit))
             category = None
 
-    if hasattr(unit, "items"):
+    if isinstance(unit, dict):
         assert category is None
-        if len(unit) == 1 and next(iter(unit.values()))[1] == 1:
+        if len(unit) == 1 and next(iter(unit.values()))[1] == 1:  # type:ignore[comparison-overlap]
             # Although passed as composing, it's a simple case
-            category, (unit, _exp) = next(iter(unit.items()))
+            category, (unit, _exp) = next(iter(unit.items()))  # type:ignore[assignment]
         else:
             key = tuple(
                 (category, tuple(unit_and_exp)) for (category, unit_and_exp) in unit.items()
@@ -70,23 +109,22 @@ def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
             try:
                 return quantities_cache[key]
             except KeyError:
-                quantity = quantities_cache[key] = _Quantity(unit, None, unknown_unit_caption)
+                quantity = quantities_cache[key] = Quantity(unit, None, unknown_unit_caption)
                 return quantity
 
-    key = (category, unit, unknown_unit_caption)
+    key = (category, unit, unknown_unit_caption)  # type:ignore[assignment]
     try:
         return quantities_cache[key]
     except KeyError:
         pass  # Just go on with the regular flow.
 
-    assert unit.__class__ != bytes, "unit must be given as str string always"
-    if unit.__class__ != str:
+    if not isinstance(unit, str):
         if category is None:
             raise AssertionError("Currently only supporting unit as a string.")
         else:
             # Unit is given by the category
             unit = unit_database.GetDefaultUnit(category)
-        quantity = quantities_cache[key] = _Quantity(category, unit, unknown_unit_caption)
+        quantity = quantities_cache[key] = Quantity(category, unit, unknown_unit_caption)
         return quantity
 
     elif category is None:
@@ -102,7 +140,7 @@ def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
         try:
             return quantities_cache[key_with_resolved_category]
         except KeyError:
-            quantity = quantities_cache[key_with_resolved_category] = _Quantity(
+            quantity = quantities_cache[key_with_resolved_category] = Quantity(
                 category, unit, unknown_unit_caption
             )
             # Cache it with None category too.
@@ -110,7 +148,7 @@ def ObtainQuantity(unit, category=None, unknown_unit_caption=None):
             return quantity
 
     else:
-        quantities_cache[key] = quantity = _Quantity(category, unit, unknown_unit_caption)
+        quantities_cache[key] = quantity = Quantity(category, unit, unknown_unit_caption)
         return quantity
 
 
@@ -120,30 +158,25 @@ class ReadOnlyError(NotImplementedError):
     """
 
 
+T = TypeVar("T")
+
+
+@ImplementsInterface(IQuantity, IQuantity2, IQuantity3, IQuantity6, no_check=True)
 class Quantity:
     """
-    .. note:: This class has nothing but factory methods. The real Quantity implementation is at
-    _Quantity (which is what's returned from ObtainQuantity).
+    The quantity is an object that has its associated category, quantity type and unit.
+
+    Internally we represent the information as a dict with the information needed for derived
+    units in the following way:
 
     .. note:: The preferred way to get a Quantity is through ObtainQuantity, although
     Quantity(category, unit) was maintained for backward-compatibility.
     """
 
-    __slots__: List[str] = []
-
-    def __new__(cls, category, unit, unknown_unit_caption=None):
-        """
-        Backward-compatible way of obtaining a quantity through the 'default' constructor.
-
-        Redirects values to ObtainQuantity.
-        .. see:: ObtainQuantity for parameters.
-        """
-        return ObtainQuantity(unit, category, unknown_unit_caption)
-
-    _EMPTY_QUANTITY = None
+    _EMPTY_QUANTITY: ClassVar[Optional["Quantity"]] = None
 
     @classmethod
-    def CreateEmpty(cls):
+    def CreateEmpty(cls) -> "Quantity":
         """
         Create a quantity without any internal unit.
 
@@ -158,25 +191,26 @@ class Quantity:
 
     @classmethod
     def CreateDerived(
-        cls, category_to_unit_and_exps, resulting_class=None, unknown_unit_caption=None
-    ):
+        cls,
+        category_to_unit_and_exps: Dict[str, Sequence[Union[str, int]]],
+        unknown_unit_caption: Optional[str] = None,
+    ) -> "Quantity":
         """
         Same as _CreateDerived, but always validating the category and units.
 
         .. see:: _CreateDerived for parameters.
         """
         return cls._CreateDerived(
-            category_to_unit_and_exps, resulting_class, unknown_unit_caption=unknown_unit_caption
+            category_to_unit_and_exps, unknown_unit_caption=unknown_unit_caption
         )
 
     @classmethod
     def _CreateDerived(
         cls,
-        category_to_unit_and_exps,
-        resulting_class=None,
-        validate_category_and_units=True,
-        unknown_unit_caption=None,
-    ):
+        category_to_unit_and_exps: Dict[str, Sequence[Union[str, int]]],
+        validate_category_and_units: bool = True,
+        unknown_unit_caption: Optional[str] = None,
+    ) -> "Quantity":
         """
         Create a category that represents a derived quantity (usually resulting from operations
         among quantities).
@@ -184,9 +218,6 @@ class Quantity:
         :type category_to_unit_and_exps: OrderedDict(str->(list(str, int)))
         :param category_to_unit_and_exps:
             This odict defines the category as well as the unit in a way that we can specify exponents.
-
-        :param type resulting_class:
-            Deprecated (no longer used).
 
         :param bool validate_category_and_units:
             If True, the category and units will be validated (otherwise, it'll just create it
@@ -220,7 +251,7 @@ class Quantity:
                 if unit is None:
                     unit = category_info.default_unit
                 else:
-                    if unit.__class__ != str:
+                    if not isinstance(unit, str):
                         raise TypeError("Only str is accepted. %s is not." % unit.__class__)
                     unit_database.CheckQuantityTypeUnit(category_info.quantity_type, unit)
 
@@ -231,21 +262,6 @@ class Quantity:
             ),
             unknown_unit_caption=unknown_unit_caption,
         )
-
-
-@ImplementsInterface(IQuantity, IQuantity2, IQuantity3, IQuantity6, no_check=True)
-class _Quantity(Quantity):
-    """
-    The quantity is an object that has its associated category, quantity type and unit.
-
-    Internally we represent the information as a dict with the information needed for derived
-    units in the following way:
-
-    category -> [unit,exp]
-
-    Note that in this way we may have the same unit appearing in different places (so, the expoent
-    may not be gotten directly only from one place, it must be checked against its multiple places)
-    """
 
     __slots__ = [
         "__weakref__",
@@ -266,26 +282,32 @@ class _Quantity(Quantity):
         "_configured",
     ]
 
-    def __new__(cls, category, unit, unknown_unit_caption=None):
+    _category_to_unit_and_exps: Dict[str, Sequence[Union[str, int]]]
+    _unknown_unit_caption: Optional[str]
+    _category_info: CategoryInfo
+
+    def __new__(
+        cls, category: str, unit: str, unknown_unit_caption: Optional[str] = None
+    ) -> "Quantity":
         """
         Overridden because we don't want to call the Quantity.__new__ (which would result
         in a StackOverflowError).
         """
         return object.__new__(cls)
 
-    def __copy__(self):
+    def __copy__(self) -> "Quantity":
         """
         As we're now immutable, always return itself.
         """
         return self
 
-    def __deepcopy__(self, *args, **kwargs):
+    def __deepcopy__(self, *args: object, **kwargs: object) -> "Quantity":
         """
         As we're now immutable, always return itself.
         """
         return self
 
-    def __reduce__(self):
+    def __reduce__(self) -> Union[str, Tuple[Any, ...]]:
         """
         Used in pickle protocol
 
@@ -294,7 +316,7 @@ class _Quantity(Quantity):
             Used during the pickle so that we can restore it as the same instance it was before
             (i.e.: don't create a new instance).
         """
-        lst = list(
+        lst: List[Any] = list(
             (category, unit_and_exp)
             for (category, unit_and_exp) in self._category_to_unit_and_exps.items()
         )
@@ -304,9 +326,10 @@ class _Quantity(Quantity):
             lst.append(None)
         return _ObtainReduced, (lst,)
 
-    def __init__(self, category, unit, unknown_unit_caption=None):
+    def __init__(
+        self, category: Any, unit: Any, unknown_unit_caption: Optional[str] = None
+    ) -> None:
         """
-        :type category: str or odict
         :param category:
             The category to which the new quantity should be bound or an odict with information on
             the derived category/unit (in which case the unit parameter is ignored).
@@ -340,7 +363,7 @@ class _Quantity(Quantity):
             self._category_to_unit_and_exps = category
             self._is_derived = True
 
-            rep_and_exp = OrderedDict()
+            rep_and_exp: OrderedDict[Any, Any] = OrderedDict()
             for category, (_unit, exp) in self._category_to_unit_and_exps.items():
                 quantity_type = unit_database.GetCategoryQuantityType(category)
                 existing = rep_and_exp.get(quantity_type, 0)
@@ -358,7 +381,7 @@ class _Quantity(Quantity):
                 (unit, exp) for _category, (unit, exp) in self._category_to_unit_and_exps.items()
             )
             self._composing_categories = tuple(self._category_to_unit_and_exps.keys())
-            self._category_info = None
+            self._category_info = None  # type:ignore[assignment]
             return
 
         self._is_derived = False
@@ -392,7 +415,7 @@ class _Quantity(Quantity):
         # an operation.
         category_to_unit_and_exps = OrderedDict()
         category_to_unit_and_exps[category] = [unit, 1]
-        self._category_to_unit_and_exps = category_to_unit_and_exps
+        self._category_to_unit_and_exps = category_to_unit_and_exps  # type:ignore[assignment]
 
         self._category = category
         self._quantity_type = unit_database.GetCategoryQuantityType(category)
@@ -403,16 +426,13 @@ class _Quantity(Quantity):
         self._composing_units = unit
         self._composing_categories = category
 
-    def MakeCopy(self, resulting_class=None, category_to_unit_and_exps=None):
+    def MakeCopy(
+        self, category_to_unit_and_exps: Optional[Dict[str, Sequence[Union[str, int]]]] = None
+    ) -> "Quantity":
         """
         Creates a new copy of this instance
 
-        :param type resulting_class:
-            Deprecated (no longer used).
-
         .. see:: _CreateDerived for parameter.
-
-        :rtype: cls or resulting_class
         :returns:
             An copy of the current instance.
         """
@@ -422,13 +442,14 @@ class _Quantity(Quantity):
         # when creating it, a deepcopy of _category_to_unit_and_exps is done
         ret = Quantity._CreateDerived(
             category_to_unit_and_exps,
-            resulting_class=resulting_class,
             validate_category_and_units=False,
             unknown_unit_caption=self._unknown_unit_caption,
         )
         return ret
 
-    def CreateCopyInstance(self, category_to_unit_and_exps=None):
+    def CreateCopyInstance(
+        self, category_to_unit_and_exps: Optional[Dict[str, Sequence[Union[str, int]]]] = None
+    ) -> "Quantity":
         """
         Creates a copy of this quantity with a new category/unit.
 
@@ -436,15 +457,15 @@ class _Quantity(Quantity):
         """
         if category_to_unit_and_exps is None:
             return self  # As it's immutable, we can just return itself!
-        return self.MakeCopy(None, category_to_unit_and_exps)
+        return self.MakeCopy(category_to_unit_and_exps)
 
-    def Copy(self):
+    def Copy(self) -> "Quantity":
         """
         Create a copy of this class.
         """
         return self  # As it's immutable, we can just return itself!
 
-    def __repr__(self, *args, **kwargs):
+    def __repr__(self) -> str:
         if self._unknown_unit_caption:
             return "Quantity({!r}, {!r}, {!r})".format(
                 self.GetCategory(), self._unit, self._unknown_unit_caption
@@ -452,13 +473,13 @@ class _Quantity(Quantity):
 
         return "Quantity({!r}, {!r})".format(self.GetCategory(), self._unit)
 
-    def SetUnknownCaption(self, caption):
+    def SetUnknownCaption(self, caption: str) -> NoReturn:
         raise ReadOnlyError("Quantity is now read-only.")
 
-    def GetUnknownCaption(self):
+    def GetUnknownCaption(self) -> Optional[str]:
         return self._unknown_unit_caption
 
-    def GetUnitCaption(self):
+    def GetUnitCaption(self) -> str:
         unit = self._unit
         if unit == UNKNOWN_UNIT and self._unknown_unit_caption:
             # For now let's leave both (may need further discussions)
@@ -466,10 +487,10 @@ class _Quantity(Quantity):
 
         return unit
 
-    def GetCategory(self):
+    def GetCategory(self) -> str:
         return self._category
 
-    def _MakeStr(self, repr_and_exp):
+    def _MakeStr(self, repr_and_exp: Any) -> str:
         """
         Used to make a string representation given a string and its exponents
 
@@ -513,15 +534,14 @@ class _Quantity(Quantity):
 
         return ret
 
-    def GetQuantityType(self):
+    def GetQuantityType(self) -> str:
         return self._quantity_type
 
-    def _CreateUnitsWithJoinedExponentsString(self):
+    def _CreateUnitsWithJoinedExponentsString(self) -> str:
         """
         Create a string with the joined units and exponents of the units to be shown to the
         user.
 
-        :rtype: str
         :returns:
             A string with the units with the joined exponents.
             E.g.: m2, 1/m and so on (dependent on the unit it has internally)
@@ -554,12 +574,12 @@ class _Quantity(Quantity):
 
         return ret
 
-    def GetUnit(self):
+    def GetUnit(self) -> str:
         return self._unit
 
     unit = property(GetUnit)
 
-    def GetUnitName(self):
+    def GetUnitName(self) -> str:
         """
         :rtype: str
         :returns:
@@ -570,7 +590,7 @@ class _Quantity(Quantity):
             'm', each with exponent 1, it would appear 2 times in this method and would appear
             'm2' in the GetUnit).
         """
-        repr_and_exp = OrderedDict()
+        repr_and_exp: OrderedDict[Any, Any] = OrderedDict()
         unit_database = self._unit_database
 
         for category, (unit, exp) in self._category_to_unit_and_exps.items():
@@ -581,44 +601,39 @@ class _Quantity(Quantity):
 
         return self._MakeStr(list(repr_and_exp.items()))
 
-    def GetValidUnits(self):
+    def GetValidUnits(self) -> List[str]:
         """
         Shortcut for getting the valid units
 
-        :rtype: list(str)
         :returns:
             The valid units.
         """
         return self.GetUnitDatabase().GetValidUnits(self.GetCategory())
 
-    def IsDerived(self):
+    def IsDerived(self) -> bool:
         """
-        :rtype: bool
         :returns:
             Returns whether this quantity has derived units.
         """
         return self._is_derived
 
-    def GetCategoryInfo(self):
+    def GetCategoryInfo(self) -> CategoryInfo:
         """
-        :rtype: CategoryInfo
         :returns:
             Returns the category info associated with this quantity.
         """
         return self._category_info
 
-    def ConvertScalarValue(self, value, to_unit):
+    def ConvertScalarValue(self, value: T, to_unit: str) -> T:
         """
-        Convert a float to another unit (note: Convert may be used to convert non-float values).
+        Convert a value to another unit.
 
-        :param float value:
+        :param value:
             The value to be converted.
 
-        :type to_unit: str or list((str, int))
         :param to_unit:
             The target unit for the value.
 
-        :rtype: float
         :returns:
             Returns the scalar converted to the passed unit.
         """
@@ -635,7 +650,7 @@ class _Quantity(Quantity):
         else:
             return self.Convert(value, to_unit)
 
-    def Convert(self, value, to_unit):
+    def Convert(self, value: T, to_unit: str) -> T:
         """
         Convert any value object which has a conversion registered (note: ConvertScalarValue may
         be used to convert a float value in a more optimized way).
@@ -643,11 +658,9 @@ class _Quantity(Quantity):
         :param object value:
             The value to be converted (array, numpy, etc.)
 
-        :type to_unit: str or list((str, int))
         :param to_unit:
             The target unit for the value.
 
-        :rtype: object
         :returns:
             An object with values to the passed unit.
         """
@@ -656,15 +669,15 @@ class _Quantity(Quantity):
         )
 
     @classmethod
-    def _GetComparison(cls, operator, use_literals=False):
+    def _GetComparison(cls, operator: str, use_literals: bool = False) -> str:
         """
         Method for getting different representations of comparisons for messages, using operator or
         literals.
 
-        :param str operator:
+        :param operator:
             The key to the operator.
 
-        :param Boolean use_literals:
+        :param use_literals:
             If literals are to be used.
 
         :returns str:
@@ -682,23 +695,26 @@ class _Quantity(Quantity):
 
         return OPERATOR_COMPARISON[operator]
 
-    def _RaiseValueError(self, value, operator, limit_value, use_literals):
+    def _RaiseValueError(
+        self, value: float, operator: str, limit_value: float, use_literals: bool
+    ) -> None:
         """
         Raises a QuantityValidationError exception with a formatted message about the comparison of the value
         with it's limit and it's values as attributes.
 
-        :param float value:
+        :param value:
             Value with boundary error.
 
-        :param str operator:
+        :param operator:
             The key to the operator.
 
-        :param float limit_value:
+        :param limit_value:
             Value that defines the limit of the category.
 
-        :param Boolean use_literals:
+        :param use_literals:
             If literals are to be used in the error message.
         """
+        assert self._category_info
         invalid_value_message = "Invalid value for {}: {:g}. Must be {} {!r}.".format(
             self._category_info.caption,
             value,
@@ -714,11 +730,11 @@ class _Quantity(Quantity):
             limit_value,
         )
 
-    def CheckValue(self, value, use_literals=False):
+    def CheckValue(self, value: Any, use_literals: bool = False) -> None:
         """
         Checks if the passed value is valid for this quantity.
 
-        :param float value:
+        :param value:
             The value to be checked.
 
         :raises QuantityValidationError:
@@ -734,7 +750,9 @@ class _Quantity(Quantity):
         if category_info.min_value is not None or category_info.max_value is not None:
             # convert value to check limit
             if unit != category_info.default_unit:
-                value = self.ConvertScalarValue(value, category_info.default_unit)
+                value = self.ConvertScalarValue(
+                    value, category_info.default_unit  # type:ignore[arg-type]
+                )
 
             if category_info.min_value is not None:
                 if category_info.is_min_exclusive:
@@ -753,30 +771,33 @@ class _Quantity(Quantity):
                     if not value <= category_info.max_value:
                         self._RaiseValueError(value, "<=", category_info.max_value, use_literals)
 
-    def GetUnitDatabase(self):
+    def GetUnitDatabase(self) -> UnitDatabase:
         return self._unit_database
 
-    def GetCategoryToUnitAndExps(self):
+    def GetCategoryToUnitAndExps(self) -> Dict[str, Sequence[Union[str, int]]]:
         return self._category_to_unit_and_exps
 
-    def GetComposingCategories(self):
+    def GetComposingCategories(self) -> Union[Tuple[str, ...], str]:
         return self._composing_categories
 
-    def GetComposingUnits(self):
-        return self._composing_units
+    def GetComposingUnits(self) -> Union[Tuple[UnitExponentTuple, ...], str]:
+        return self._composing_units  # type:ignore[return-value]
 
-    def GetComposingUnitsJoiningExponents(self):
+    def GetComposingUnitsJoiningExponents(self) -> Tuple[UnitExponentTuple, ...]:
+        self._composing_units_joining_exponents: Tuple[UnitExponentTuple, ...]
         try:
             return self._composing_units_joining_exponents
         except AttributeError:
-            ret = OrderedDict()
+            ret: OrderedDict[Any, Any] = OrderedDict()
             for _category, (unit, exp) in self._category_to_unit_and_exps.items():
                 existing = ret.get(unit, 0)
                 ret[unit] = existing + exp
             self._composing_units_joining_exponents = tuple(ret.items())
         return self._composing_units_joining_exponents
 
-    def GetCategoryToUnitAndExpsCopy(self, unit_and_exps=None):
+    def GetCategoryToUnitAndExpsCopy(
+        self, unit_and_exps: Optional[Dict[str, Sequence[Union[str, int]]]] = None
+    ) -> Dict[str, Sequence[Union[str, int]]]:
         """
         Same as Quantity.GetCategoryToUnitAndExps but returns a copy instead of the internal
         instance.
@@ -790,7 +811,8 @@ class _Quantity(Quantity):
             (category, unit_and_exp[:]) for (category, unit_and_exp) in unit_and_exps.items()
         )
 
-    def __hash__(self):
+    def __hash__(self) -> int:
+        self._hash: int
         try:
             return self._hash
         except AttributeError:
@@ -798,11 +820,11 @@ class _Quantity(Quantity):
                 (category, tuple(unit_and_exp))
                 for (category, unit_and_exp) in self._category_to_unit_and_exps.items()
             )
-            lst.append(self._unknown_unit_caption)
+            lst.append(self._unknown_unit_caption)  # type:ignore[arg-type]
             self._hash = hash(tuple(lst))
         return self._hash
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         """
         Compares if this instance is equivalent to another quantity
 
@@ -813,7 +835,7 @@ class _Quantity(Quantity):
         :returns:
             True if they're equal and False otherwise
         """
-        if not other.__class__ == _Quantity:
+        if not isinstance(other, Quantity):
             return False
 
         return (
@@ -822,63 +844,58 @@ class _Quantity(Quantity):
             and self._unknown_unit_caption == other._unknown_unit_caption
         )
 
-    def __ne__(self, other):
-        """
-        The negation on __eq__
-
-        .. see:: __eq__
-        """
-        return not self == other
-
     # Used to cast a constant value
     BASE_NUMBER = (int, float)
 
+    OPERATION_ADD = "Sum"
     OPERATION_DIVIDE = "Divide"
     OPERATION_MULTIPLY = "Multiply"
     OPERATION_SUBTRACT = "Subtract"
-    OPERATION_ADD = "Sum"
 
     # lonly ----------------------------------------------------------------------------------------
-    def __abs__(self):
+    def __abs__(self) -> "Quantity":
         return self
 
     # right ----------------------------------------------------------------------------------------
 
-    def __rmod__(self, other):
+    def __rmod__(self, other: Any) -> "Quantity":
         return self.__truediv__(other)
 
-    def __rmul__(self, other):
+    def __rmul__(self, other: Any) -> "Quantity":
         return self._DoOperation(other, self, self.OPERATION_MULTIPLY)
 
-    def __rsub__(self, other):
+    def __rsub__(self, other: Any) -> "Quantity":
         return self._DoOperation(other, self, self.OPERATION_SUBTRACT)
 
-    def __radd__(self, other):
+    def __radd__(self, other: Any) -> "Quantity":
         return self._DoOperation(other, self, self.OPERATION_ADD)
 
     # basic ----------------------------------------------------------------------------------------
-    def __truediv__(self, other):
+    def __truediv__(self, other: Any) -> "Quantity":
         return self._DoOperation(self, other, self.OPERATION_DIVIDE)
 
-    __mod__ = __truediv__
-    __rtruediv__ = __truediv__
+    def __mod__(self, other: Any) -> "Quantity":
+        return self.__truediv__(other)
 
-    def __mul__(self, other):
+    def __rtruediv__(self, other: Any) -> "Quantity":
+        return self.__truediv__(other)
+
+    def __mul__(self, other: Any) -> "Quantity":
         return self._DoOperation(self, other, self.OPERATION_MULTIPLY)
 
-    def __sub__(self, other):
+    def __sub__(self, other: Any) -> "Quantity":
         return self._DoOperation(self, other, self.OPERATION_SUBTRACT)
 
-    def __add__(self, other):
+    def __add__(self, other: Any) -> "Quantity":
         return self._DoOperation(self, other, self.OPERATION_ADD)
 
-    def __pow__(self, exponent):
+    def __pow__(self, exponent: int) -> "Quantity":
         result = self
         for _ in range(exponent - 1):
             result = self._DoOperation(self, result, self.OPERATION_MULTIPLY)
         return result
 
-    def _DoOperation(self, q1, q2, operation):
+    def _DoOperation(self, q1: "Quantity", q2: "Quantity", operation: str) -> "Quantity":
         """
         Performs the given operation on the quantities returning the result
 
@@ -902,8 +919,17 @@ class _Quantity(Quantity):
             return q1
         elif isinstance(q1, Quantity) and isinstance(q2, Quantity):
             unit_database = self.GetUnitDatabase()
-            operation = getattr(unit_database, operation)
-            q, _v = operation(q1, q2, 1.0, 1.0)
+            op_func = getattr(unit_database, operation)
+            q, _v = op_func(q1, q2, 1.0, 1.0)
             return q
         else:
             return NotImplemented
+
+
+def _ObtainReduced(state: Any) -> Any:
+    """
+    :param list state:
+        The value returned from Quantity.__reduce__ (used in pickle protocol).
+    """
+    unknown_unit_caption = state.pop(-1)
+    return ObtainQuantity(OrderedDict(state), None, unknown_unit_caption)

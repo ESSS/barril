@@ -4,7 +4,7 @@ from barril.basic.format_float import FormatFloat, MINUS_INFINITY, NAN, PLUS_INF
 from barril.units import Scalar
 
 
-def testFormatFloat():
+def testFormatFloat() -> None:
     """
     Convert unit of scalar where value is "0.0".
     """

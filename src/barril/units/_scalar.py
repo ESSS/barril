@@ -3,6 +3,7 @@ This module provides the implementation of an Scalar object.
 """
 
 from functools import total_ordering
+from typing import overload, Optional, Union, Tuple, Any, cast
 
 from barril._util.types_ import IsNumber
 from oop_ext.interface import ImplementsInterface
@@ -10,7 +11,7 @@ from oop_ext.interface import ImplementsInterface
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._quantity import ObtainQuantity, Quantity
 from .interfaces import IQuantity, IScalar
-from .unit_database import UnitDatabase
+from .unit_database import UnitDatabase, CategoryInfo
 
 __all__ = ["Scalar"]
 
@@ -66,7 +67,25 @@ class Scalar(AbstractValueWithQuantityObject):
         system (i.e.: callback.After) won't work with it.
     """
 
-    def __init__(self, category, value=None, unit=None):
+    @overload
+    def __init__(self, category: Quantity, value: Optional[float] = None) -> None:
+        ...
+
+    @overload
+    def __init__(self, category: str, value: Optional[float] = None, unit: Optional[str] = None):
+        ...
+
+    @overload
+    def __init__(self, value: float, unit: str, category: Optional[str] = None):
+        ...
+
+    @overload
+    def __init__(self, value_and_unit: Tuple[float, str]):
+        ...
+
+    def __init__(  # type:ignore[misc]
+        self, category: Any, value: Any = None, unit: Any = None
+    ) -> None:
         if category.__class__ is tuple:
             # Support for creating a scalar as:
             # Scalar((10, 'm'))
@@ -78,15 +97,18 @@ class Scalar(AbstractValueWithQuantityObject):
                 self, category=category, value=value, unit=unit
             )
 
-    def _InternalCreateWithQuantity(self, quantity, value=None, unit_database=None):
+    def _InternalCreateWithQuantity(
+        self,
+        quantity: Quantity,
+        value: Optional[float] = None,
+        unit_database: Optional[UnitDatabase] = None,
+    ) -> None:
         """
         For internal use only. Is used to initialize the actual quantity.
 
-        :type quantity: str or IQuantity
         :param quantity:
             The quantity of this scalar.
 
-        :type value: int, float, etc
         :param value:
             The initial value.
 
@@ -103,7 +125,9 @@ class Scalar(AbstractValueWithQuantityObject):
         self._quantity = quantity
 
     # Value ----------------------------------------------------------------------------------------
-    def GetAbstractValue(self, unit=None):
+    _value: float
+
+    def GetAbstractValue(self, unit: Optional[str] = None) -> float:
         """
 
         :param unit:
@@ -116,7 +140,7 @@ class Scalar(AbstractValueWithQuantityObject):
     GetValue = GetAbstractValue
     value = property(GetAbstractValue)
 
-    def _GetDefaultValue(self, category_info, unit=None):
+    def _GetDefaultValue(self, category_info: CategoryInfo, unit: Optional[str] = None) -> Any:
         """
 
         :param category_info:
@@ -135,10 +159,10 @@ class Scalar(AbstractValueWithQuantityObject):
 
         return value
 
-    def GetValueAndUnit(self):
-        return (self._value, self.GetUnit())
+    def GetValueAndUnit(self) -> Tuple[float, str]:
+        return self._value, self.GetUnit()
 
-    def CheckValidity(self):
+    def CheckValidity(self) -> None:
         """
         :raises ValueError: when current value is wrong somehow (out of limits, for example).
         """
@@ -147,7 +171,7 @@ class Scalar(AbstractValueWithQuantityObject):
     # Handling 'empty' scalar ----------------------------------------------------------------------
 
     @classmethod
-    def CreateEmptyScalar(cls, value=0.0):
+    def CreateEmptyScalar(cls, value: float = 0.0) -> "Scalar":
         """
         Allows the creation of a scalar that does not have any associated
         category nor unit.
@@ -161,12 +185,12 @@ class Scalar(AbstractValueWithQuantityObject):
 
     # Repr -----------------------------------------------------------------------------------------
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "{}({}, '{}', '{}')".format(
             self.__class__.__name__, self._value, self.GetUnit(), self.GetCategory()
         )
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Should return a user-friendly representation of this object.
 
@@ -181,11 +205,11 @@ class Scalar(AbstractValueWithQuantityObject):
     FORMATTED_VALUE_FORMAT = "%g"
 
     @classmethod
-    def GetFormattedValueFormat(cls):
+    def GetFormattedValueFormat(cls) -> str:
         return cls.FORMATTED_VALUE_FORMAT
 
     @classmethod
-    def SetFormattedValueFormat(cls, value_format):
+    def SetFormattedValueFormat(cls, value_format: str) -> None:
         """
         Sets the format for the numeric part of the scalar.
         """
@@ -197,7 +221,9 @@ class Scalar(AbstractValueWithQuantityObject):
             ) from e
         cls.FORMATTED_VALUE_FORMAT = value_format
 
-    def GetFormattedValue(self, unit=None, value_format=None):
+    def GetFormattedValue(
+        self, unit: Optional[str] = None, value_format: Optional[str] = None
+    ) -> str:
         """
         Returns the scalar value formated using the given format or the default format.
 
@@ -206,14 +232,13 @@ class Scalar(AbstractValueWithQuantityObject):
 
         .. note:: The unit is NOT returned in this method.
 
-        :param str unit:
+        :param unit:
             The unit in which the value should be gotten.
 
-        :param str value_format:
+        :param value_format:
             If not None (default), replaces the default value_format defined in
             Scalar.FORMATTED_VALUE_FORMAT
 
-        :rtype: str
         :returns:
             A string with the value of this scalar formatted.
         """
@@ -223,40 +248,39 @@ class Scalar(AbstractValueWithQuantityObject):
             value_format = self.FORMATTED_VALUE_FORMAT
         return FormatFloat(value_format, self.GetValue(unit))
 
-    def GetFormatted(self, unit=None, value_format=None):
+    def GetFormatted(self, unit: Optional[str] = None, value_format: Optional[str] = None) -> str:
         """
         Returns this scalar in a formatted format (i.e.: formatted value + unit).
 
         :param unit:
             The unit in which the value should be gotten.
 
-        :type unit: str or list(tuple(str, int)) for derived units.
 
         :param value_format:
-            @see Scalar.GetFormattedValue
+            See Scalar.GetFormattedValue
         """
         return self.GetFormattedValue(unit, value_format) + self.GetFormattedSuffix(unit)
 
     # Compare --------------------------------------------------------------------------------------
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         return (
             type(self) is type(other)
             and self._value == other.value
             and self._quantity == other._quantity
         )
 
-    def AlmostEqual(self, other, precision):
+    def AlmostEqual(self, other: "Scalar", precision: int) -> bool:
         return (
             type(self) is type(other)
             and round(self._value - other.value, precision) == 0
             and self._quantity == other._quantity
         )
 
-    def __hash__(self, *args, **kwargs):
+    def __hash__(self) -> int:  # type:ignore[override]
         return hash((self._value, self._quantity))
 
-    def __lt__(self, other):
+    def __lt__(self, other: Any) -> bool:
         if self.quantity_type != other.quantity_type:
             msg = "can not compare scalars of different quantity types: %r != %r"
             raise TypeError(msg % (self.quantity_type, other.quantity_type))
@@ -266,44 +290,44 @@ class Scalar(AbstractValueWithQuantityObject):
         return v1 < v2
 
     # right ----------------------------------------------------------------------------------------
-    def __rtruediv__(self, other):
+    def __rtruediv__(self, other: Any) -> "Scalar":
         return self._DoOperation(other, self, "Divide", lambda a, b: a / b)
 
-    def __rfloordiv__(self, other):
+    def __rfloordiv__(self, other: Any) -> "Scalar":
         return self._DoOperation(other, self, "FloorDivide", lambda a, b: a // b)
 
-    def __rmul__(self, other):
+    def __rmul__(self, other: Any) -> "Scalar":
         return self._DoOperation(other, self, "Multiply", lambda a, b: a * b)
 
-    def __rsub__(self, other):
+    def __rsub__(self, other: Any) -> "Scalar":
         return self._DoOperation(other, self, "Subtract", lambda a, b: a - b)
 
-    def __radd__(self, other):
+    def __radd__(self, other: Any) -> "Scalar":
         return self._DoOperation(other, self, "Sum", lambda a, b: a + b)
 
     # basic ----------------------------------------------------------------------------------------
-    def __truediv__(self, other):
+    def __truediv__(self, other: Any) -> "Scalar":
         return self._DoOperation(self, other, "Divide", lambda a, b: a / b)
 
-    def __floordiv__(self, other):
+    def __floordiv__(self, other: Any) -> "Scalar":
         return self._DoOperation(self, other, "FloorDivide", lambda a, b: a // b)
 
-    def __mul__(self, other):
+    def __mul__(self, other: Any) -> "Scalar":
         return self._DoOperation(self, other, "Multiply", lambda a, b: a * b)
 
-    def __sub__(self, other):
+    def __sub__(self, other: Any) -> "Scalar":
         return self._DoOperation(self, other, "Subtract", lambda a, b: a - b)
 
-    def __add__(self, other):
+    def __add__(self, other: Any) -> "Scalar":
         return self._DoOperation(self, other, "Sum", lambda a, b: a + b)
 
-    def __pow__(self, exponent):
+    def __pow__(self, exponent: int) -> "Scalar":
         result = self
         for _ in range(exponent - 1):
             result = result * self
         return result
 
-    def _DoOperation(self, p1, p2, operation, callback_operation):
+    def _DoOperation(self, p1: Any, p2: Any, operation: Any, callback_operation: Any) -> Any:
         p1_is_number = IsNumber(p1)
         if p1_is_number and operation not in ["Divide", "FloorDivide"]:
             return self.__class__.CreateWithQuantity(
@@ -327,7 +351,7 @@ class Scalar(AbstractValueWithQuantityObject):
             q, v = operation_func(p1.GetQuantity(), p2.GetQuantity(), self._value, p2.value)
         return self.__class__.CreateWithQuantity(q, v)
 
-    def __reduce__(self):
+    def __reduce__(self) -> Any:
         """
         Defining reduce so that we can pickle scalars.
         """

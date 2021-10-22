@@ -7,7 +7,7 @@ from barril.units import ObtainQuantity
 from barril.units.unit_database import UnitDatabase
 
 
-def testOperation():
+def testOperation() -> None:
     unit_database = UnitDatabase.GetSingleton()
     unit_database.CheckDefaultUnitDatabase()
     q = ObtainQuantity(unit="m", category="length")
@@ -107,7 +107,7 @@ def MakeFixedArray(values):
     ],
 )
 @pytest.mark.parametrize("array_maker", [MakeArray, MakeFixedArray])
-def testScalarOperations(left, op, right, expected, array_maker):
+def testScalarOperations(left, op, right, expected, array_maker) -> None:
     if isinstance(left, list):
         left = array_maker(left)
     if isinstance(right, list):

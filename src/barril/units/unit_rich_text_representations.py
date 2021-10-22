@@ -708,7 +708,7 @@ class UnitRichTextRepresentations:
     HTML_TEXT_MASK = "<html>%s</html>"
 
     @classmethod
-    def GetUnitHtmlRepresentation(cls, unit):
+    def GetUnitHtmlRepresentation(cls, unit: str) -> str:
         """
         :param str unit:
             The unit to get the html representation
@@ -721,7 +721,7 @@ class UnitRichTextRepresentations:
 
         unit_repr = unit
         if unit in cls.DEFAULT_UNITS_RICH_TEXT_REPRESENTATIONS:
-            unit_repr = cls.DEFAULT_UNITS_RICH_TEXT_REPRESENTATIONS.get(unit)
+            unit_repr = cls.DEFAULT_UNITS_RICH_TEXT_REPRESENTATIONS[unit]
             unit_repr = cls.HTML_TEXT_MASK % unit_repr
 
         return unit_repr

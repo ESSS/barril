@@ -1,6 +1,7 @@
 import locale
 import math
 import re
+from typing import Tuple, Union, Callable, Optional, Any
 
 from barril._util.types_ import CheckType
 from barril.basic.format_float import FloatFromString
@@ -26,14 +27,15 @@ class FractionValue:
            need arises.
     """
 
-    def __init__(self, number=0.0, fraction=(0.0, 1.0)):
+    def __init__(
+        self, number: float = 0.0, fraction: Union[Fraction, Tuple[float, float]] = (0.0, 1.0)
+    ) -> None:
         """
         Constructor.
 
-        :param float number:
+        :param number:
             The number part for the FractionValue
 
-        :type fraction: Fraction or tuple(float, float)
         :param fraction:
             The fraction for this FractionValue object. A pair (numerator, denominator)
             is also accepted.
@@ -46,20 +48,18 @@ class FractionValue:
 
     # Number ---------------------------------------------------------------------------------------
 
-    def SetNumber(self, number):
+    def SetNumber(self, number: float) -> None:
         """
         Sets the number part.
 
-        :type number: float or int
         :param number:
             The integer part.
         """
         CheckType(number, (int, float))
         self._number = number
 
-    def GetNumber(self):
+    def GetNumber(self) -> float:
         """
-        :rtype: float or int
         :returns:
             Returns the number part.
         """
@@ -69,11 +69,10 @@ class FractionValue:
 
     # Fraction -------------------------------------------------------------------------------------
 
-    def SetFraction(self, fraction):
+    def SetFraction(self, fraction: Union[Fraction, Tuple[float, float]]) -> None:
         """
         Sets the fractional part of this object.
 
-        :type fraction: Fraction or tuple(float, float)
         :param fraction:
             The fraction for this FractionValue object. A pair (numerator, denominator)
             is also accepted.
@@ -88,7 +87,7 @@ class FractionValue:
 
         self._fraction = fraction
 
-    def GetFraction(self):
+    def GetFraction(self) -> Fraction:
         """
         Returns the fractional part for this object.
 
@@ -102,42 +101,38 @@ class FractionValue:
 
     # Str/Repr -------------------------------------------------------------------------------------
 
-    def GetLocalizedString(self):
+    def GetLocalizedString(self) -> str:
         """
-        :rtype: str
         :returns:
             Returns a locale-dependent and user-friendly string representation.
         """
         from barril.basic.format_float import FormatFloat
 
-        return self.__FormatToString(FormatFloat)
+        return self.__FormatToString(FormatFloat)  # type:ignore[arg-type]
 
-    def GetLocalizedFraction(self):
+    def GetLocalizedFraction(self) -> str:
         """
-        :rtype: str
         :returns:
             Returns a locale-dependent and user-friendly string representation only of fraction
             part.
         """
         from barril.basic.format_float import FormatFloat
 
-        return self.__FormatFractionToString(FormatFloat)
+        return self.__FormatFractionToString(FormatFloat)  # type:ignore[arg-type]
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
-        :rtype: str
         :returns:
             Returns a locale-agnostic and user-friendly string representation.
         """
         return self.__FormatToString(lambda pattern, value: pattern % value)
 
-    def __FormatToString(self, formatter):
+    def __FormatToString(self, formatter: Callable[[str, Union[Fraction, float]], str]) -> str:
         """
-        :param callable formatter:
+        :param formatter:
             A function that receives, respectively, string format to convert value and a float
             value. Must return a string representation of value.
 
-        :rtype: str
         :returns:
             Fraction values follow format "%(number)g %(fraction)s".
         """
@@ -146,13 +141,14 @@ class FractionValue:
             formatted = "{} {}".format(formatted, self.__FormatFractionToString(formatter))
         return formatted
 
-    def __FormatFractionToString(self, formatter):
+    def __FormatFractionToString(
+        self, formatter: Callable[[str, Union[Fraction, float]], str]
+    ) -> str:
         """
         :param callable formatter:
             A function that receives, respectively, string format to convert value and a float
             value. Must return a string representation of fractional part.
 
-        :rtype: str
         :returns:
             Fractional part follows format "%(fraction)s". Whenever fractional part is equivalent to
             zero it is omitted from string to be more user-friendly.
@@ -162,9 +158,8 @@ class FractionValue:
             formatted = formatter("%s", self._fraction)
         return formatted
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """
-        :rtype: str
         :returns:
             Returns the programmer-friendly string representation.
         """
@@ -172,7 +167,7 @@ class FractionValue:
 
     # Equality -------------------------------------------------------------------------------------
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         """
         Implements '==' binary operator.
 
@@ -183,7 +178,7 @@ class FractionValue:
             return False
         return self._number == other._number and self._fraction == other._fraction
 
-    def __ne__(self, other):
+    def __ne__(self, other: Any) -> bool:
         """
         Implements '!=' binary operator.
 
@@ -194,7 +189,7 @@ class FractionValue:
 
     # Comparisons ----------------------------------------------------------------------------------
 
-    def __lt__(self, other):
+    def __lt__(self, other: Any) -> bool:
         """
         Implements '<' binary operator.
 
@@ -203,7 +198,7 @@ class FractionValue:
         """
         return float(self) < float(other)
 
-    def __le__(self, other):
+    def __le__(self, other: Any) -> bool:
         """
         Implements '<=' binary operator.
 
@@ -212,7 +207,7 @@ class FractionValue:
         """
         return float(self) <= float(other)
 
-    def __gt__(self, other):
+    def __gt__(self, other: Any) -> bool:
         """
         Implements '>' binary operator.
 
@@ -221,7 +216,7 @@ class FractionValue:
         """
         return float(self) > float(other)
 
-    def __ge__(self, other):
+    def __ge__(self, other: Any) -> bool:
         """
         Implements '>' binary operator.
 
@@ -232,11 +227,10 @@ class FractionValue:
 
     # Float ----------------------------------------------------------------------------------------
 
-    def __float__(self):
+    def __float__(self) -> float:
         """
         Implements float() operator.
 
-        :rtype: float
         :returns:
             The float value of this FractionValue
         """
@@ -244,7 +238,7 @@ class FractionValue:
 
     # Copy -----------------------------------------------------------------------------------------
 
-    def __copy__(self):
+    def __copy__(self) -> "FractionValue":
         """
         Returns a copy of this fraction value object.
 
@@ -295,19 +289,18 @@ class FractionValue:
     )
 
     @classmethod
-    def CreateFromString(cls, text, consider_locale=True):
+    def CreateFromString(cls, text: str, consider_locale: bool = True) -> "FractionValue":
         """
         Create a FractionValue from a string.
 
-        :param str text:
+        :param text:
             The text with a fraction-value, that is, three integers separated by space and slash
             respectively.
             <value> <value>/<value>
 
-        :param bool consider_locale:
+        :param consider_locale:
             Consider the locale on converting string to float
 
-        :rtype: FractionValue
         :returns:
             The fraction value
 
@@ -316,6 +309,7 @@ class FractionValue:
         """
         text = str(text).strip()
 
+        string_to_float_callable: Callable[[str], float]
         if consider_locale:
             string_to_float_callable = FloatFromString
         else:
@@ -323,19 +317,20 @@ class FractionValue:
 
         # First try to match only the fractional part.
         m = cls._FRACTION_PARTIAL_RE.match(text)
+        number_match: Optional[str]
         if m is not None:
-            number = None
+            number_match = None
         else:
             # If can't match a fraction try a mixed number
             m = cls._FRACTION_RE.match(text)
             if m is None:
                 raise ValueError('Please enter a text in the form: "5 3/4"')
-            number = m.group("float")
+            number_match = m.group("float")
 
-        if number is None:
+        if number_match is None:
             number = 0.0
         else:
-            number = string_to_float_callable(number)
+            number = string_to_float_callable(number_match)
 
         if m.group("numerator") is not None and m.group("denominator") is not None:
             numerator = string_to_float_callable(m.group("numerator"))
@@ -347,11 +342,11 @@ class FractionValue:
         return FractionValue(number, fraction)
 
     @classmethod
-    def MatchFractionPart(cls, text):
+    def MatchFractionPart(cls, text: str) -> None:
         """
         Verify if the given text matchs only the fractional part of a fraction value.
 
-        :param str text:
+        :param text:
             The given text to verify matching
 
         @raise: ValueError
@@ -363,18 +358,16 @@ class FractionValue:
             raise ValueError('Please enter a text in the form: "3/4"')
 
     @classmethod
-    def CreateFromFloat(cls, value):
+    def CreateFromFloat(cls, value: float) -> "FractionValue":
         """
         Convert a float or integer value to their representation in fraction.
 
         Example:
             result = FractionValue.CreateFromFloat(0.375) // returns FractionValue(fraction=(3,8))
 
-        :type value: float or int
         :param value:
             The value that will be converted to fraction.
 
-        :rtype: FractionValue
         :returns:
             The fractional number.
 
@@ -382,14 +375,16 @@ class FractionValue:
         and changed to work with negative inputs.
         """
 
-        def FindNumerator(number_of_digits_past_decimal, dividend, divisor):
+        def FindNumerator(
+            number_of_digits_past_decimal: int, dividend: float, divisor: float
+        ) -> float:
             result = dividend
             while number_of_digits_past_decimal > 0 and result % divisor == 0:
                 result /= divisor
                 number_of_digits_past_decimal -= 1
             return result
 
-        def GetMaxNumerator(value):
+        def GetMaxNumerator(value: float) -> int:
             str_value = str(value)
             ixe = str_value.lower().find("e")
 
@@ -426,11 +421,11 @@ class FractionValue:
 
             return int(result)
 
-        def GetNaN():
+        def GetNaN() -> float:
             infinity = 1e10000
             return infinity / infinity
 
-        def GetFractionalPart(value):
+        def GetFractionalPart(value: float) -> float:
             str_value = str(value)
             pos = str_value.find(".")
             return float("0." + str_value[pos + 1 :])

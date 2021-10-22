@@ -4,7 +4,7 @@ from collections import OrderedDict
 from barril.units import InvalidOperationError, InvalidUnitError, ObtainQuantity, Quantity
 
 
-def testDerivedQuantities(unit_database_len_time):
+def testDerivedQuantities(unit_database_len_time) -> None:
     # define a simple quantity
     ObtainQuantity(unit="s", category="Time")  # see if it works
     ObtainQuantity(unit="m", category="Table size")  # see if it works
@@ -35,7 +35,7 @@ def testDerivedQuantities(unit_database_len_time):
     assert (("m", 1), ("m", 1), ("s", -2)) == q5.GetComposingUnits()
 
 
-def testConvertionWithDerivedUnits(unit_database_len_time):
+def testConvertionWithDerivedUnits(unit_database_len_time) -> None:
     empty = Quantity.CreateDerived(OrderedDict())
     m = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 1])]))
     m_city = Quantity.CreateDerived(OrderedDict([("City size", ["m", 1])]))
@@ -77,7 +77,7 @@ def testConvertionWithDerivedUnits(unit_database_len_time):
         unit_database.Subtract(m, s, 1, 1)
 
 
-def testDeepcopy(unit_database_len_time):
+def testDeepcopy(unit_database_len_time) -> None:
     import copy
 
     # Note: the part below is flaky for a test because it relies on getting a refcount to None
@@ -110,7 +110,7 @@ def testDeepcopy(unit_database_len_time):
     assert m is m0  # Check if our cache is working.
 
 
-def testReadOnlyOperation(unit_database_len_time):
+def testReadOnlyOperation(unit_database_len_time) -> None:
     unit_database = unit_database_len_time
     m_ro = ObtainQuantity("m", "Table size")
     m_rw = ObtainQuantity("m", "Table size")

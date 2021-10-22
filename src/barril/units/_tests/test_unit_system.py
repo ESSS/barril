@@ -1,3 +1,5 @@
+from typing import Any
+
 import pytest
 
 from barril.units.unit_system import UnitSystem
@@ -15,7 +17,7 @@ def units_mapping_2():
     return units_mapping
 
 
-def testUnitSystemManager(units_mapping_1):
+def testUnitSystemManager(units_mapping_1) -> None:
     system1 = UnitSystem("system1", "My System", units_mapping_1)
     system1.SetReadOnly(True)
     assert system1.GetId() == "system1"
@@ -27,7 +29,7 @@ def testUnitSystemManager(units_mapping_1):
     assert system1.GetDefaultUnit("") is None
 
 
-def testEquality(units_mapping_1, units_mapping_2):
+def testEquality(units_mapping_1, units_mapping_2) -> None:
     system1 = UnitSystem("system1", "My System", units_mapping_1, True)
     system2 = UnitSystem("system1", "My System", units_mapping_1, True)
     system3 = UnitSystem("system3", "My System 3", units_mapping_2, False)
@@ -41,13 +43,13 @@ def testEquality(units_mapping_1, units_mapping_2):
     assert system1 is not None
 
 
-def testSetDefaultUnitCallback(units_mapping_1):
+def testSetDefaultUnitCallback(units_mapping_1) -> None:
     """
     Implements on_default_unit on unit system, called when the default unit changes.
     """
 
     class MockClass:
-        callback_params = None
+        callback_params: Any = None
 
         def OnDefaultUnit(self, category, unit):
             self.callback_params = (category, unit)
@@ -63,9 +65,9 @@ def testSetDefaultUnitCallback(units_mapping_1):
     assert obj.callback_params == ("viscosity", "P")
 
 
-def testRemoveCategory(units_mapping_1):
+def testRemoveCategory(units_mapping_1) -> None:
     class MockClass:
-        update_notified = None
+        update_notified: Any = None
 
         def CallbackUnit(self, category, new_unit):
             if category == "length":

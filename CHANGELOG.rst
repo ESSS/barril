@@ -1,3 +1,9 @@
+UNRELEASED
+----------
+
+* ``barril`` is now fully type annotated, being tested with ``mypy``.
+* ``Array`` and ``FixedArray`` are ``Generic`` subclasses, parametrized by the container type.
+
 1.11.1 (2021-10-08)
 -------------------
 

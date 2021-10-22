@@ -1,7 +1,10 @@
+from typing import overload, Tuple, Union, Any
+
 from barril.curve.curve_interface import ICurve
+from barril.units.interfaces import ValuesType
 from barril.units.interfaces import IArray
 from oop_ext.interface import ImplementsInterface, AssertImplements
-from oop_ext.foundation.decorators import Implements, Deprecated
+from oop_ext.foundation.decorators import Deprecated
 
 __all__ = ["Curve"]
 
@@ -17,19 +20,19 @@ class Curve:
     Image: it is defined as 'image set' the set of values which effectively f(x) takes -- from
     Wikipedia (pt)
 
-    :ivar IArray _image:
+    :ivar _image:
         The array with the image for this curve
 
-    :ivar IArray _domain:
+    :ivar _domain:
         The array with the domain for this curve
     """
 
-    def __init__(self, image, domain):
+    def __init__(self, image: IArray, domain: IArray) -> None:
         """
-        :param IArray image:
+        :param image:
             This is the image of this curve
 
-        :param IArray domain:
+        :param domain:
             This is the domain of this curve
         """
         AssertImplements(image, IArray)
@@ -39,14 +42,14 @@ class Curve:
         self._image = image
         self._domain = domain
 
-    def _CheckImageAndDomainLength(self, image, domain):
+    def _CheckImageAndDomainLength(self, image: IArray, domain: IArray) -> None:
         """
         Check if image and domain have different lengths, if is True raises ValueError.
 
-        :param IArray image:
+        :param image:
             This is the image of this curve
 
-        :param IArray domain:
+        :param domain:
             This is the domain of this curve
 
         :raises ValueError:
@@ -62,14 +65,13 @@ class Curve:
             )
             raise ValueError(msg)
 
-    def GetDomain(self):
+    def GetDomain(self) -> IArray:
         return self._domain
 
-    def SetDomain(self, domain):
+    def SetDomain(self, domain: IArray) -> None:
         """
         Define the curve domain.
 
-        :type domain: L{Array}
         :param domain:
             the domain of this curve
         """
@@ -78,18 +80,17 @@ class Curve:
 
     domain = property(GetDomain, SetDomain)
 
-    def GetLength(self):
+    def GetLength(self) -> int:
         """
-        :rtype: int
         :returns:
             The length of the curve
         """
         return len(self._image.GetValues())
 
-    def GetImage(self):
+    def GetImage(self) -> IArray:
         return self._image
 
-    def SetImage(self, image):
+    def SetImage(self, image: IArray) -> None:
         """
         Define the curve image.
 
@@ -102,37 +103,45 @@ class Curve:
     image = property(GetImage, SetImage)
 
     @Deprecated("SetImage")
-    def SetValues(self, values):
+    def SetValues(self, values: IArray) -> None:
         return self.SetImage(values)
 
     @Deprecated("GetImage")
-    def GetValues(self):
+    def GetValues(self) -> IArray:
         """
         @see ICurve.GetImage.
         """
         return self.GetImage()
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         if not isinstance(other, Curve):
             return False
         return self.GetImage() == other.GetImage() and self.GetDomain() == other.GetDomain()
 
-    def __ne__(self, other):
-        return not self == other
+    @overload
+    def __getitem__(self, index: int) -> Tuple[float, float]:
+        ...
 
-    @Implements(ICurve.__getitem__)
-    def __getitem__(self, index):
-        return self.GetDomain().values[index], self.GetImage().values[index]
+    @overload
+    def __getitem__(self, index: slice) -> Tuple[ValuesType, ValuesType]:
+        ...
 
-    def __repr__(self, *args, **kwargs):
+    def __getitem__(self, index: Union[int, slice]) -> Tuple[Any, Any]:
+        d = self.GetDomain().GetValues()[index]  # type:ignore[index]
+        i = self.GetImage().GetValues()[index]  # type:ignore[index]
+        return d, i
+
+    def __repr__(self) -> str:
         image = self.GetImage()
         domain = self.GetDomain()
 
         xy = []
-        for i, (x, y) in enumerate(zip(image, domain)):
+        for i, (x, y) in enumerate(zip(image, domain)):  # type:ignore[call-overload]
             if i > 20:
                 xy.append(" ... ")
                 break
             xy.append(f"({x}, {y})")
 
-        return "Curve({}, {})[{}]".format(image.unit, domain.unit, " ".join(xy))
+        return "Curve({}, {})[{}]".format(
+            image.unit, domain.unit, " ".join(xy)  # type:ignore[attr-defined]
+        )

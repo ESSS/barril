@@ -14,7 +14,7 @@ from barril.units.unit_database import InvalidUnitError, UnitDatabase
 import pytest
 
 
-def testQuantityInit(mocker):
+def testQuantityInit(mocker) -> None:
 
     # 1: cache it
     ObtainQuantity("m", "length")
@@ -27,19 +27,19 @@ def testQuantityInit(mocker):
         calls[0] += 1
         return original()
 
-    mocker.patch.object(UnitDatabase, "GetSingleton")
-    UnitDatabase.GetSingleton.return_value = _New()
+    m = mocker.patch.object(UnitDatabase, "GetSingleton")
+    m.return_value = _New()
 
     ObtainQuantity("m", "length")
     assert calls[0] == 1
 
 
-def testQuantitySharedInstances():
+def testQuantitySharedInstances() -> None:
     quantity = ObtainQuantity("m", "length")
     assert quantity is ObtainQuantity("m", "length")
 
 
-def testQuantityCaption(unit_database_posc_len):
+def testQuantityCaption(unit_database_posc_len) -> None:
     unit_database = unit_database_posc_len
     unit_database.AddUnitBase(UNKNOWN_QUANTITY_TYPE, UNKNOWN_QUANTITY_TYPE, UNKNOWN_UNIT)
     unit_database.AddCategory(UNKNOWN_QUANTITY_TYPE, UNKNOWN_QUANTITY_TYPE)
@@ -57,7 +57,7 @@ def testQuantityCaption(unit_database_posc_len):
     assert "m" == q.GetUnitCaption()
 
 
-def testUnknownQuantity():
+def testUnknownQuantity() -> None:
     global_unknown = UNKNOWN_QUANTITY
 
     # Global
@@ -68,7 +68,7 @@ def testUnknownQuantity():
     assert my_unknown is GetUnknownQuantity("my_unknown")
 
 
-def testHash():
+def testHash() -> None:
     quantity1 = ObtainQuantity("m")
     quantity2 = ObtainQuantity("m", "length")
     assert hash(quantity1) == hash(quantity2)
@@ -83,24 +83,24 @@ def testHash():
     assert unknown1 != unknown2
 
 
-def testPickle():
+def testPickle() -> None:
     quantity1 = ObtainQuantity("m")
     quantity2 = quantity1.__reduce__()
-    assert quantity1 is quantity2[0](*quantity2[1])
+    assert quantity1 is quantity2[0](*quantity2[1])  # type:ignore[operator]
     obtained = pickle.loads(pickle.dumps(quantity1))
     assert obtained is quantity1, f"{obtained} != {quantity1}"
 
 
-def testConvert():
+def testConvert() -> None:
     assert [1000.0, 3000.0] == ObtainQuantity("m").Convert([10, 30], "cm")
 
 
-def testUnknown():
+def testUnknown() -> None:
     with pytest.raises(InvalidUnitError):
         ObtainQuantity("m3", UNKNOWN_QUANTITY_TYPE)
 
 
-def testDivision():
+def testDivision() -> None:
     meters = ObtainQuantity("m")
     seconds = ObtainQuantity("s")
     speed = meters / seconds

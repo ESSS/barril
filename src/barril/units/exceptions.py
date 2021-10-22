@@ -1,17 +1,19 @@
 class QuantityValidationError(ValueError):
-    def __init__(self, message, caption, value, operator, limit_value):
+    def __init__(
+        self, message: str, caption: str, value: float, operator: str, limit_value: float
+    ) -> None:
         """
-            QuantityValidationError inherits from ValueError
-            with helpers attributes (message, caption, value, operator, limit_value)
-        :param str message:
+        Value error subclass with helpers attributes.
+
+        :param message:
             the full formatted message
-        :param str caption:
+        :param caption:
             caption of the category info
-        :param float value:
+        :param value:
             value validated
-        :param str operator:
+        :param operator:
             operator (literal or not)
-        :param float limit_value:
+        :param limit_value:
             limit value
         """
         super().__init__(message)

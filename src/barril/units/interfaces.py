@@ -16,8 +16,25 @@ Unit: the unit itself. E.g.: m, m/s, kg
 Note: The naming conventions were gathered from posc:
     http://www.posc.org/ebiz/pefxml/patternsobjects.html http://www.posc.org/refs/poscUnits20.xml
 """
+from typing import (
+    Optional,
+    Any,
+    Union,
+    Tuple,
+    List,
+    TYPE_CHECKING,
+    Dict,
+    TypeVar,
+    Iterator,
+    overload,
+    Generic,
+)
 
 from oop_ext.interface import Interface, TypeCheckingSupport
+from typing_extensions import Protocol
+
+if TYPE_CHECKING:
+    from barril.units import UnitDatabase
 
 __all__ = [
     "IQuantity",
@@ -27,6 +44,7 @@ __all__ = [
     "IQuantity6",
     "IObjectWithQuantity",
     "IArray",
+    "ValuesType",
 ]
 
 
@@ -38,27 +56,27 @@ class IQuantity(Interface, TypeCheckingSupport):
     otherwise, a value may be meaningless).
     """
 
-    def GetCategory(self):
+    def GetCategory(self) -> str:
         """
-        :rtype: str
         :returns:
             The constant category for this quantity.
         """
 
-    def GetQuantityType(self):
+    def GetQuantityType(self) -> str:
         """
-        :rtype: str
         :returns:
             The constant name of the quantity type for this quantity.
             This method may be slow.
         """
 
-    def GetUnit(self):
+    def GetUnit(self) -> str:
         """
-        :rtype: str
         :returns:
             The unit for this quantity.
         """
+
+
+UnitExponentTuple = Tuple[str, int]
 
 
 class IQuantity2(Interface, TypeCheckingSupport):
@@ -79,9 +97,8 @@ class IQuantity2(Interface, TypeCheckingSupport):
     a derived quantity.
     """
 
-    def GetComposingCategories(self):
+    def GetComposingCategories(self) -> Union[Tuple[str, ...], str]:
         """
-        :rtype: tuple(str) or str
         :returns:
             A tuple with the categories used.
 
@@ -92,7 +109,7 @@ class IQuantity2(Interface, TypeCheckingSupport):
         .. see:: GetComposingUnits to return the actual units/exponents for the categories
         """
 
-    def GetComposingUnits(self):
+    def GetComposingUnits(self) -> Union[Tuple[UnitExponentTuple, ...], str]:
         """
         :rtype: tuple(tuple(str, int)) or str
         :returns:
@@ -106,7 +123,7 @@ class IQuantity2(Interface, TypeCheckingSupport):
         .. see:: GetComposingUnitsJoiningExponents
         """
 
-    def GetComposingUnitsJoiningExponents(self):
+    def GetComposingUnitsJoiningExponents(self) -> Tuple[UnitExponentTuple, ...]:
         """
         :rtype: tuple(tuple(str, int))
         :returns:
@@ -116,11 +133,11 @@ class IQuantity2(Interface, TypeCheckingSupport):
         .. see:: GetComposingUnits
         """
 
-    def GetCategoryToUnitAndExps(self):
+    def GetCategoryToUnitAndExps(self) -> Dict[str, List[UnitExponentTuple]]:
         """
-        :rtype: an ordered dictionary with the name of a category -> list with 2 elements:
+        Return an ordered dictionary with the name of a category -> list with 2 elements:
         [unit, exp] that determines the information about categories, quantities and their
-        relations to an expoent.
+        relations to an exponent.
 
         .. note:: The same INTERNAL REFERENCE should be returned, and not a copy (so, clients that
         change it WILL cause side-effects in the internal dict -- so, creating a deepcopy is
@@ -129,9 +146,8 @@ class IQuantity2(Interface, TypeCheckingSupport):
 
 
 class IQuantity3(Interface, TypeCheckingSupport):
-    def GetUnitDatabase(self):
+    def GetUnitDatabase(self) -> "UnitDatabase":
         """
-        :rtype: UnitDatabase
         :returns:
             The UnitDatabase to which this quantity is associated.
         """
@@ -144,14 +160,13 @@ class IQuantity6(Interface, TypeCheckingSupport):
     for the user) and additional info may be set for when an unknown unit is available.
     """
 
-    def GetUnitCaption(self):
+    def GetUnitCaption(self) -> str:
         """
-        :rtype: str
         :returns:
             The text related to this quantity that should be shown to the user.
         """
 
-    def SetUnknownCaption(self, caption):
+    def SetUnknownCaption(self, caption: str) -> None:
         """
         :param str caption:
             The caption to be shown to the user when it's an unknown unit.
@@ -160,7 +175,7 @@ class IQuantity6(Interface, TypeCheckingSupport):
             when unknown.
         """
 
-    def GetUnknownCaption(self):
+    def GetUnknownCaption(self) -> str:
         """
         :rtype: str
         :returns:
@@ -173,9 +188,8 @@ class IObjectWithQuantity(Interface, TypeCheckingSupport):
     Interface provided for an object that has an associated quantity.
     """
 
-    def GetQuantity(self):
+    def GetQuantity(self) -> IQuantity:
         """
-        :rtype: IQuantity
         :returns:
             The quantity that is associated with this object.
             The quantity may be writable or read-only, depending on the object.
@@ -189,46 +203,72 @@ class IScalar(IObjectWithQuantity, IQuantity):
     unit conversion.
     """
 
-    def GetValue(self, unit=None):
+    def GetValue(self, unit: Optional[str] = None) -> float:
         """
-        :param str unit:
+        :param unit:
             The unit we want to get the value back.
-            Note that, for lightweight scalars, this parameter will be used *only* for verification
-            that the stored unit is the expected one.
-            For full scalars, it will be used to convert the value into the specified unit.
 
-        :rtype: int, float, FractionValue, etc
         :returns:
-            The value stored in this scalar. May be an int, float, etc.
+            The value stored in this scalar.
         """
 
-    def GetValueAndUnit(self):
+    def GetValueAndUnit(self) -> Tuple[float, str]:
         """
-        :rtype: (float, str)
         :returns:
             Tuple with value and current unit name.
         """
 
-    def IsValid(self):
+    def IsValid(self) -> bool:
         """
-        :rtype: bool
         :returns:
             True if the current value is valid, False otherwise.
         """
 
 
-class IArray(IObjectWithQuantity):
+class IArray(IObjectWithQuantity, TypeCheckingSupport):
     """
     The Array defines a list of values with a quantity (so, it implements the IObjectWithQuantity
     interface)
     """
 
-    def GetValues(self, unit=None):
+    def GetValues(self, unit: Optional[str] = None) -> "MinimalSequence":
         """
-        :param str unit:
-            This is the unit in which we want the value
+        :param unit:
+            This is the unit in which we want the value.
 
-        :rtype: sequence or numpy array.
         :returns:
-            A sequence of values (int, double, float, etc)
+            The values of this array.
         """
+
+
+ValueType = TypeVar("ValueType", covariant=True)
+
+
+ValuesType = TypeVar("ValuesType", bound="MinimalSequence")
+
+
+class MinimalSequence(Protocol[ValueType]):
+    """
+    Protocol containing the minimum methods an object must implement to be
+    considered a Sequence for IArray.
+
+    We cannot use ``typing.Sequence`` as that defines many methods which
+    ``numpy`` doesn't implement.
+    """
+
+    def __iter__(self) -> Iterator[ValueType]:
+        ...
+
+    def __len__(self) -> int:
+        ...
+
+    @overload
+    def __getitem__(self, item: int) -> ValueType:
+        ...
+
+    @overload
+    def __getitem__(self, item: slice) -> "MinimalSequence[ValueType]":
+        ...
+
+    def __getitem__(self, item: Any) -> Any:
+        ...

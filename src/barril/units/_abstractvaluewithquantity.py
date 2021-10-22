@@ -1,11 +1,15 @@
-from barril.units._quantity import _Quantity
-from barril.units.unit_database import UnitDatabase
+from typing import Type, TypeVar, cast, overload, Optional, List, NoReturn, ClassVar, Any, Union
+
+from barril.units.unit_database import UnitDatabase, CategoryInfo
 from oop_ext.interface import ImplementsInterface
 
 from .interfaces import IObjectWithQuantity, IQuantity
-from ._quantity import ObtainQuantity
+from ._quantity import ObtainQuantity, Quantity
 
 __all__ = ["AbstractValueWithQuantityObject"]
+
+
+T = TypeVar("T", bound="AbstractValueWithQuantityObject")
 
 
 @ImplementsInterface(IObjectWithQuantity, IQuantity)
@@ -21,10 +25,15 @@ class AbstractValueWithQuantityObject:
     .. see:: L{Scalar} for an implementation example
     """
 
-    def __init__(self, category, value=None, unit=None):
+    def __init__(
+        self, category: Union[str, Quantity], value: Any = None, unit: Optional[str] = None
+    ):
+        # NOTE: we don't even try to add overloads here because each subclass defines their own
+        # overloads, often in confusing ways; adding them here would just add to the
+        # confusion.
 
         unit_database = UnitDatabase.GetSingleton()
-        if category.__class__ == _Quantity:
+        if isinstance(category, Quantity):
             quantity = category
 
             assert unit is None, "If quantity is given, the unit must not!"
@@ -33,11 +42,11 @@ class AbstractValueWithQuantityObject:
                 value = self._GetDefaultValue(quantity.GetCategoryInfo())
 
         else:
-            if category.__class__ != str:
+            if not isinstance(category, str):
                 # Support for creating a scalar as:
                 # Scalar(10, 'm')
                 # Scalar(10, 'm', 'length')
-                value, unit, category = category, value, unit
+                value, unit, category = category, value, unit  # type:ignore[assignment]
 
             if value is None or unit is None:
                 if value is None:
@@ -53,13 +62,20 @@ class AbstractValueWithQuantityObject:
                         unit is not None
                     ), "If category and value are given, the unit must be specified too."
 
-            assert type(unit) is not bytes
-            assert type(category) is not bytes
-            quantity = ObtainQuantity(unit, category)
+            quantity = ObtainQuantity(unit, category)  # type:ignore[arg-type, assignment]
 
+        self._quantity = quantity
         self._InternalCreateWithQuantity(quantity, value, unit_database)
 
-    def IsValid(self):
+    def _GetDefaultValue(self, category_info: CategoryInfo, unit: Optional[str] = None) -> Any:
+        raise NotImplementedError
+
+    def _InternalCreateWithQuantity(
+        self, quantity: Quantity, value: Any, unit_database: Optional[UnitDatabase] = None
+    ) -> None:
+        raise NotImplementedError
+
+    def IsValid(self) -> bool:
         """
         :rtype: bool
         :returns:
@@ -74,18 +90,23 @@ class AbstractValueWithQuantityObject:
             return False
         return True
 
-    def HasCategory(self):
+    def CheckValidity(self) -> None:
+        raise NotImplementedError
+
+    def ConvertScalarValue(self, value: Any, to_unit: str) -> Any:
+        raise NotImplementedError
+
+    def HasCategory(self) -> bool:
         """
         Returns whether this instance has any associated category
 
-        :rtype: bool
         :returns:
             If there's some category composing this object
         """
         return len(self._quantity.GetComposingCategories()) > 0
 
     # UnitDatabase ---------------------------------------------------------------------------------
-    def GetUnitDatabase(self):
+    def GetUnitDatabase(self) -> UnitDatabase:
         """
         :rtype: UnitDatabase
         :returns:
@@ -94,7 +115,7 @@ class AbstractValueWithQuantityObject:
         return self._quantity.GetUnitDatabase()
 
     # Quantity -------------------------------------------------------------------------------------
-    def GetQuantity(self):
+    def GetQuantity(self) -> Quantity:
         """
         :rtype: Quantity
         :returns:
@@ -103,25 +124,25 @@ class AbstractValueWithQuantityObject:
         return self._quantity
 
     # Category -------------------------------------------------------------------------------------
-    def GetCategory(self):
+    def GetCategory(self) -> str:
         return self._quantity.GetCategory()
 
     category = property(GetCategory)
 
     # QuantityType ---------------------------------------------------------------------------------
-    def GetQuantityType(self):
+    def GetQuantityType(self) -> str:
         return self._quantity.GetQuantityType()
 
     quantity_type = property(GetQuantityType)
 
     # Unit -----------------------------------------------------------------------------------------
-    def GetUnit(self):
+    def GetUnit(self) -> str:
         return self._quantity.GetUnit()
 
     unit = property(GetUnit)
 
     # UnitDatabase Shortcuts -----------------------------------------------------------------------
-    def GetUnitName(self):
+    def GetUnitName(self) -> str:
         """
         :rtype: str
         :returns:
@@ -129,7 +150,7 @@ class AbstractValueWithQuantityObject:
         """
         return self._quantity.GetUnitName()
 
-    def GetValidUnits(self):
+    def GetValidUnits(self) -> List[str]:
         """
         :rtype: list(str)
         :returns:
@@ -143,13 +164,8 @@ class AbstractValueWithQuantityObject:
             valid_units.append(current_unit)
         return valid_units
 
-    class __Stub:
-        """
-        Helper class for used in CreateWithQuantity.
-        """
-
     @classmethod
-    def CreateWithQuantity(cls, quantity, *args, **kwargs):
+    def CreateWithQuantity(cls: Type[T], quantity: Quantity, *args: object, **kwargs: object) -> T:
         """
         This is a secondary interface for creating the object with an existing quantity.
 
@@ -160,21 +176,23 @@ class AbstractValueWithQuantityObject:
             are passed directly to _InternalCreateWithQuantity.
         """
 
-        stub = cls.__Stub()
-        stub.__class__ = cls
-        stub._InternalCreateWithQuantity(quantity, *args, **kwargs)
-        return stub
+        class Stub:
+            pass
+
+        stub = Stub()  # type:ignore[assignment]
+        stub.__class__ = cls  # type:ignore[assignment]
+        stub._InternalCreateWithQuantity(quantity, *args, **kwargs)  # type:ignore[attr-defined]
+        return cast(T, stub)
 
     # Copy -----------------------------------------------------------------------------------------
-    def Copy(self):
+    def Copy(self: T) -> T:
         """
-        :rtype: Scalar
         :returns:
-            Returns self, since Scalar is immutable
+            Returns self, it is immutable.
         """
         return self
 
-    def CreateCopyInstance(self):
+    def CreateCopyInstance(self: T) -> T:
         """
         :rtype: Scalar
         :returns:
@@ -182,24 +200,28 @@ class AbstractValueWithQuantityObject:
         """
         return self
 
-    def __copy__(self):
+    def __copy__(self: T) -> T:
         """
         Copy protocol.
         """
         return self.Copy()
 
-    def __deepcopy__(self, memo):
+    def __deepcopy__(self: T, memo: object) -> T:
         """
         Copy protocol.
         """
         return self.Copy()
 
-    def CreateCopy(self, value=None, unit=None, category=None, **kwargs):
-        """
-        :rtype: Scalar
-        :returns:
-            Returns a new scalar that's a copy of this scalar.
-        """
+    def GetAbstractValue(self, unit: Optional[str] = None) -> Any:
+        raise NotImplementedError
+
+    def CreateCopy(
+        self: T,
+        value: Any = None,
+        unit: Optional[str] = None,
+        category: Optional[str] = None,
+        **kwargs: object
+    ) -> T:
         try:
             if value is None:
                 value = self.GetAbstractValue(unit)
@@ -234,10 +256,10 @@ class AbstractValueWithQuantityObject:
                 % (self.__class__.__name__, e, self.__class__.__name__)
             )
 
-    def __ne__(self, other):
+    def __ne__(self, other: object) -> bool:
         return not self == other
 
-    def __hash__(self, *args, **kwargs):
+    def __hash__(self) -> NoReturn:
         raise NotImplementedError(
             "Objects with a quantity are not hashable (as they're usually mutable)."
         )
@@ -247,23 +269,22 @@ class AbstractValueWithQuantityObject:
     FORMATTED_SUFFIX_FORMAT = " [%s]"
 
     @classmethod
-    def GetFormattedSuffixFormat(cls):
+    def GetFormattedSuffixFormat(cls) -> str:
         """
         Returns the formatted suffix for the unit.
 
-        :rtype: str
         :returns:
             The formatted suffix
         """
         return cls.FORMATTED_SUFFIX_FORMAT
 
     @classmethod
-    def SetFormattedSuffixFormat(cls, pattern):
+    def SetFormattedSuffixFormat(cls, pattern: str) -> None:
         """
         Sets the format for the formatted text suffix, which may include the unit (Use "%s" to
         place the unit.).
 
-        :param str pattern:
+        :param pattern:
             A format-like string containing one C{%s} format code
         """
         try:
@@ -274,7 +295,7 @@ class AbstractValueWithQuantityObject:
             ) from e
         cls.FORMATTED_SUFFIX_FORMAT = pattern
 
-    def GetFormattedSuffix(self, unit=None):
+    def GetFormattedSuffix(self, unit: Optional[str] = None) -> str:
         """
         Returns the suffix for the formatted string using the current unit.
 
@@ -286,7 +307,7 @@ class AbstractValueWithQuantityObject:
             unit = self.GetUnit()
         return self.FORMATTED_SUFFIX_FORMAT % unit
 
-    # : sentinel used to change the category of the object (see ChangeCategory in subclasses)
-    DEFAULT_CATEGORY_VALUE = object()
-    # : sentinel used to change the category of the object (see ChangeCategory in subclasses)
-    CURRENT_VALUE = object()
+    #: sentinel used to change the category of the object (see ChangeCategory in subclasses)
+    DEFAULT_CATEGORY_VALUE: ClassVar[Any] = object()
+    #: sentinel used to change the category of the object (see ChangeCategory in subclasses)
+    CURRENT_VALUE: ClassVar[Any] = object()

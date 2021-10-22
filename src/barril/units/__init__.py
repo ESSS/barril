@@ -54,10 +54,10 @@ B{Design decisions}:
 
 from weakref import WeakValueDictionary
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional, Tuple, Any
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject  # noqa
-from ._array import Array  # noqa
+from ._array import Array, ValuesType  # noqa
 from .interfaces import (
     IArray,
     IObjectWithQuantity,
@@ -71,7 +71,6 @@ from ._fixedarray import FixedArray  # noqa
 from ._fraction_scalar import FractionScalar  # noqa
 from ._quantity import ObtainQuantity, Quantity, ReadOnlyError  # noqa
 from ._scalar import Scalar  # noqa
-from ._scalar_factory import ScalarFactory  # noqa
 from ._unit_constants import (  # noqa
     LENGTH_QUANTITY_TYPE,
     UNKNOWN_QUANTITY_TYPE,
@@ -102,17 +101,18 @@ __all__ = [
     "FractionScalar",
     "GetUnknownQuantity",
     "IArray",
-    "IQuantity",
     "IObjectWithQuantity",
+    "IQuantity",
     "IScalar",
     "InvalidQuantityTypeError",
     "InvalidUnitError",
+    "ObtainQuantity",
     "Quantity",
     "ReadOnlyError",
     "Scalar",
-    "ScalarFactory",
     "UnitDatabase",
     "UnitsError",
+    "ValuesType",
 ]
 
 # Unknown quantity instance
@@ -122,7 +122,7 @@ UNKNOWN_QUANTITY = ObtainQuantity(UNKNOWN_UNIT, UNKNOWN_QUANTITY_TYPE)
 UNKNOWN_QUANTITY_WEAK_CACHE: QuantityWeakDictionary = QuantityWeakDictionary()
 
 
-def GetUnknownQuantity(unknown_caption=None):
+def GetUnknownQuantity(unknown_caption: Optional[str] = None) -> Quantity:
     """
     Returns the quantity object for Unknown units.
 
@@ -134,11 +134,11 @@ def GetUnknownQuantity(unknown_caption=None):
     return UNKNOWN_QUANTITY
 
 
-def ChangeScalars(owner, **scalars):
+def ChangeScalars(owner: object, **scalars: Tuple[Any, Any]) -> None:
     """
     Change the given set of scalars for the owner
 
-    :param owner: object
+    :param owner:
         The object with scalar instances to be changed.
 
     :param kwargs scalars:

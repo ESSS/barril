@@ -68,7 +68,7 @@ class _ComposingQuantity:
         self._category_to_unit_and_exps = category_to_unit_and_exps
 
 
-def testScalarRefactor():
+def testScalarRefactor() -> None:
     quantity = _ObtainQuantity("m")
     quantity2 = _ObtainQuantity("m")
     assert "Quantity(length, m)" == str(quantity)

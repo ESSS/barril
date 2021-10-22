@@ -19,17 +19,17 @@ from barril.units.exceptions import QuantityValidationError
 from barril.units.unit_database import UnitDatabase
 
 
-def testNotDefaultUnitDatabase():
+def testNotDefaultUnitDatabase() -> None:
     unit_database = units.UnitDatabase()
     with pytest.raises(AssertionError):
         unit_database.CheckDefaultUnitDatabase()
 
 
-def testDefaultUnitDatabase(unit_database):
+def testDefaultUnitDatabase(unit_database) -> None:
     unit_database.CheckDefaultUnitDatabase()
 
 
-def testConv(unit_database_empty):
+def testConv(unit_database_empty) -> None:
     unit_database = unit_database_empty
 
     # add some units for testing
@@ -50,7 +50,7 @@ def testConv(unit_database_empty):
     assert (10, 10, 10) == unit_database.Convert("temperature", "F", "ºC", (50, 50, 50))
 
 
-def testPrecision():
+def testPrecision() -> None:
     unit_database = units.UnitDatabase()
     unit_database.AddUnitBase("Compressibility", "1/Bars", "1/Bars")
     unit_database.AddUnit(
@@ -82,26 +82,26 @@ def testPrecision():
     )
 
 
-def testQuantityTypes(unit_database_custom_conversion):
+def testQuantityTypes(unit_database_custom_conversion) -> None:
     unit_database = unit_database_custom_conversion
     real = unit_database.GetQuantityTypes()
     real.sort()
     assert real == [UNKNOWN_QUANTITY_TYPE, "length", "temperature"]
 
 
-def testUnitQuantityType(unit_database_custom_conversion):
+def testUnitQuantityType(unit_database_custom_conversion) -> None:
     unit_database = unit_database_custom_conversion
     assert "length" == unit_database.GetQuantityType("m")
 
 
-def testDistanceUnits(unit_database_custom_conversion):
+def testDistanceUnits(unit_database_custom_conversion) -> None:
     unit_database = unit_database_custom_conversion
     available_units = ["m", "mm", "cm", "km", "mi", "in", "µm"]
     real = unit_database.GetUnits("length")
     assert available_units == real
 
 
-def testFindCase(unit_database_custom_conversion):
+def testFindCase(unit_database_custom_conversion) -> None:
     unit_database = units.UnitDatabase()
     # add some units for testing
     unit_database.AddUnitBase("temperature", "mang1", "mA")
@@ -116,7 +116,7 @@ def testFindCase(unit_database_custom_conversion):
     assert "C" == unit_database.FindUnitCase("my", "C")
 
 
-def testUnits(unit_database_custom_conversion):
+def testUnits(unit_database_custom_conversion) -> None:
     unit_database = unit_database_custom_conversion
     real = unit_database.GetUnits()
     real.sort()
@@ -125,26 +125,26 @@ def testUnits(unit_database_custom_conversion):
     assert available_units == real
 
 
-def testBaseUnit(unit_database_custom_conversion):
+def testBaseUnit(unit_database_custom_conversion) -> None:
     unit_database = unit_database_custom_conversion
     assert "m" == unit_database.GetBaseUnit("length")
 
 
-def testUnitNames(unit_database_custom_conversion):
+def testUnitNames(unit_database_custom_conversion) -> None:
     unit_database = unit_database_custom_conversion
     names = {"meters", "milimeters", "centimeters", "kilometers", "miles", "inches", "micrometers"}
     onames = set(unit_database.GetUnitNames("length"))
     assert names == onames
 
 
-def testClear(unit_database_custom_conversion):
+def testClear(unit_database_custom_conversion) -> None:
     unit_database = unit_database_custom_conversion
     unit_database.Clear()
     with pytest.raises(units.InvalidQuantityTypeError):
         unit_database.CheckQuantityType("length")
 
 
-def testCategory(unit_database_custom_conversion):
+def testCategory(unit_database_custom_conversion) -> None:
     unit_database = unit_database_custom_conversion
     unit_database.AddCategory(
         "my length",
@@ -196,14 +196,14 @@ def testCategory(unit_database_custom_conversion):
     unit_database.GetInfo(UNKNOWN_QUANTITY_TYPE, "I know it is m3", fix_unknown=True)
 
 
-def testUniqueness(unit_database_custom_conversion):
+def testUniqueness(unit_database_custom_conversion) -> None:
     # trying to re-register milimeters (mm)
     unit_database = unit_database_custom_conversion
     with pytest.raises(RuntimeError):
         unit_database.AddUnit("length", "milimeters", "mm", "%f * 1000.0", "%f / 1000.0")
 
 
-def testDefaultUnitWhenNoneIsPassed(unit_database_custom_conversion):
+def testDefaultUnitWhenNoneIsPassed(unit_database_custom_conversion) -> None:
     unit_database = unit_database_custom_conversion
     unit_database.AddCategory("my category", "length", ["mm"], default_unit="mm")
     # Quantity without specifying unit, must use category's default unit and not raise
@@ -211,7 +211,7 @@ def testDefaultUnitWhenNoneIsPassed(unit_database_custom_conversion):
     assert ObtainQuantity("mm", "my category") == default_when_none
 
 
-def testDefaultUnitValid(unit_database_custom_conversion):
+def testDefaultUnitValid(unit_database_custom_conversion) -> None:
     """
     Test the situation where a category does not have the base unit among its valid units
     """
@@ -220,7 +220,7 @@ def testDefaultUnitValid(unit_database_custom_conversion):
     assert unit_database.GetCategoryInfo("my category").default_unit == "mm"
 
 
-def testConvertionWithExponent(unit_database_custom_conversion):
+def testConvertionWithExponent(unit_database_custom_conversion) -> None:
     """
     Test conversions with different exponents.
     """
@@ -233,7 +233,7 @@ def testConvertionWithExponent(unit_database_custom_conversion):
         unit_database.Convert("length", [("m", 2)], [("m", 1)], 1)
 
 
-def testAddCategory(unit_database_custom_conversion):
+def testAddCategory(unit_database_custom_conversion) -> None:
     """
     Testing if AddCategory gives an error if trying to register twice.
     """
@@ -251,7 +251,7 @@ def testAddCategory(unit_database_custom_conversion):
     assert unit_database.GetValidUnits("derived category") == ["m", "mm", "cm", "km"]
 
 
-def testValidUnits(unit_database_custom_conversion):
+def testValidUnits(unit_database_custom_conversion) -> None:
     """
     Test while registering a category that passing None as valid_units returns the
     units of the quantity type.
@@ -264,7 +264,7 @@ def testValidUnits(unit_database_custom_conversion):
     assert unit_database.GetValidUnits("my category") == length_units
 
 
-def testConvertQuantityTypeCheck(unit_database_custom_conversion):
+def testConvertQuantityTypeCheck(unit_database_custom_conversion) -> None:
     """
     Check for bug when trying to convert a unit to the same unit, but passing
     an invalid quantity type as argument.
@@ -278,7 +278,7 @@ def testConvertQuantityTypeCheck(unit_database_custom_conversion):
         unit_database.Convert("length", "m", "XXX", 100)
 
 
-def testCheckValidUnits(unit_database_custom_conversion):
+def testCheckValidUnits(unit_database_custom_conversion) -> None:
     """
     Make sure we check if the given valid_units are actually valid for that quantity_type
     """
@@ -287,20 +287,20 @@ def testCheckValidUnits(unit_database_custom_conversion):
         unit_database.AddCategory("my category", "length", default_unit="mm", valid_units="foooo")
 
 
-def testDiscoverCloseUnitMatches():
+def testDiscoverCloseUnitMatches() -> None:
     unit_database = UnitDatabase.CreateDefaultSingleton()
     assert unit_database.FindSimilarUnitMatches("kg/day") == ["kg/d"]
     assert unit_database.FindSimilarUnitMatches("bbls/d") == ["bbl/d", "bbl/d2"]
     assert unit_database.FindSimilarUnitMatches("mg/l") == ["mg/L"]
 
 
-def testDefaultCaption():
+def testDefaultCaption() -> None:
     unit_database = UnitDatabase.CreateDefaultSingleton()
     category_info = unit_database.GetCategoryInfo("angle per volume")
     assert category_info.caption == "Angle per Volume"
 
 
-def testAddCategoryBasedOnCategory(unit_database_custom_conversion):
+def testAddCategoryBasedOnCategory(unit_database_custom_conversion) -> None:
     unit_database = unit_database_custom_conversion
     unit_database.AddCategory(
         "my category", "length", valid_units=["mm", "m"], default_unit="mm", default_value=0.5
@@ -317,7 +317,7 @@ def testAddCategoryBasedOnCategory(unit_database_custom_conversion):
     assert unit_database.GetValidUnits("my category 4") == ["mm", "m"]
 
 
-def testConvertFractionValues(unit_database_custom_conversion):
+def testConvertFractionValues(unit_database_custom_conversion) -> None:
     """
     Test unit database handling fraction values.
     """
@@ -330,7 +330,7 @@ def testConvertFractionValues(unit_database_custom_conversion):
     assert float(value) == 50
 
 
-def testRegisterTwoFunctionsForTheSameClass(unit_database_custom_conversion):
+def testRegisterTwoFunctionsForTheSameClass(unit_database_custom_conversion) -> None:
     """
     Test the behavior when we attempt to register two convert functions for the same class
     """
@@ -349,7 +349,7 @@ def testRegisterTwoFunctionsForTheSameClass(unit_database_custom_conversion):
         db.RegisterAdditionalConversionType(FractionValue, ConvertFunction1)
 
 
-def testNumpyConversion(unit_database_custom_conversion):
+def testNumpyConversion(unit_database_custom_conversion) -> None:
     unit_database = unit_database_custom_conversion
 
     from barril.units.posc import MakeBaseToCustomary, MakeCustomaryToBase
@@ -403,7 +403,7 @@ def testNumpyConversion(unit_database_custom_conversion):
     assert approx(obtained) == expected
 
 
-def testNumpyWithMinMax(unit_database_custom_conversion):
+def testNumpyWithMinMax(unit_database_custom_conversion) -> None:
     unit_database = unit_database_custom_conversion
     unit_database.AddCategory(
         "my length",
@@ -453,7 +453,7 @@ def testNumpyWithMinMax(unit_database_custom_conversion):
     assert not another.IsValid()
 
 
-def testInvalidUnitCategoryDoesntGenerateError(unit_database_custom_conversion):
+def testInvalidUnitCategoryDoesntGenerateError(unit_database_custom_conversion) -> None:
     unit_database = unit_database_custom_conversion
     with pytest.raises(ValueError):
         unit_database.AddCategory(
@@ -470,7 +470,7 @@ def testInvalidUnitCategoryDoesntGenerateError(unit_database_custom_conversion):
         )
 
 
-def testGetValidUnitsEmptyQuantity(unit_database_custom_conversion):
+def testGetValidUnitsEmptyQuantity(unit_database_custom_conversion) -> None:
     """
     Test that retrieving the valid units for the category of the empty quantity (as created
     by Quantity.CreateEmpty() correctly returns an empty list.
