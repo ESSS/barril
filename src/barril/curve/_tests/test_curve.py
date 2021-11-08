@@ -1,6 +1,9 @@
-from barril.curve.curve import Curve
-from barril.units import Array, ObtainQuantity, UnitDatabase
 import pytest
+
+from barril.curve.curve import Curve
+from barril.units import Array
+from barril.units import ObtainQuantity
+from barril.units import UnitDatabase
 
 
 @pytest.fixture

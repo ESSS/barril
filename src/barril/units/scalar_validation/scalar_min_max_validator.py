@@ -1,6 +1,7 @@
 from typing import Optional
 
-from barril.units import ObtainQuantity, Scalar
+from barril.units import ObtainQuantity
+from barril.units import Scalar
 
 
 class ScalarMinMaxValidator:

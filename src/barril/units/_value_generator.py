@@ -1,4 +1,6 @@
-from typing import Any, Iterator, Tuple
+from typing import Any
+from typing import Iterator
+from typing import Tuple
 
 import numpy
 

@@ -1,17 +1,24 @@
 """
 This module provides the implementation of an Scalar object.
 """
-
 from functools import total_ordering
-from typing import overload, Optional, Union, Tuple, Any, cast
+from typing import Any
+from typing import cast
+from typing import Optional
+from typing import overload
+from typing import Tuple
+from typing import Union
 
-from barril._util.types_ import IsNumber
 from oop_ext.interface import ImplementsInterface
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
-from ._quantity import ObtainQuantity, Quantity
-from .interfaces import IQuantity, IScalar
-from .unit_database import UnitDatabase, CategoryInfo
+from ._quantity import ObtainQuantity
+from ._quantity import Quantity
+from .interfaces import IQuantity
+from .interfaces import IScalar
+from .unit_database import CategoryInfo
+from .unit_database import UnitDatabase
+from barril._util.types_ import IsNumber
 
 __all__ = ["Scalar"]
 

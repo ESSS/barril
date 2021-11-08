@@ -1,11 +1,13 @@
+from collections import OrderedDict
 from typing import List
 
 import pytest
 from pytest import approx
 
-from collections import OrderedDict
 from barril import units
-from barril.units import InvalidUnitError, ObtainQuantity, Quantity
+from barril.units import InvalidUnitError
+from barril.units import ObtainQuantity
+from barril.units import Quantity
 
 
 def testFormatting(unit_database_start_units) -> None:

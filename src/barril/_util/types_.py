@@ -1,7 +1,11 @@
 """
 Extensions to python native types.
 """
-from typing import Any, Set, Optional, Tuple, Union
+from typing import Any
+from typing import Optional
+from typing import Set
+from typing import Tuple
+from typing import Union
 
 _TRUE_VALUES = ["TRUE", "YES", "1"]
 _FALSE_VALUES = ["FALSE", "NO", "0"]

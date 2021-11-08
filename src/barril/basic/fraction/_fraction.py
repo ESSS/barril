@@ -1,6 +1,8 @@
 from fractions import Fraction as StdFraction
 from functools import total_ordering
-from typing import Iterator, Optional, Any
+from typing import Any
+from typing import Iterator
+from typing import Optional
 
 SMALL = 1e-8
 

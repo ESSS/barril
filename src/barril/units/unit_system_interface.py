@@ -1,7 +1,11 @@
-from typing import Dict, Optional, Any
+from typing import Any
+from typing import Dict
+from typing import Optional
 
 from oop_ext.foundation import callback
-from oop_ext.interface import Attribute, Interface, TypeCheckingSupport
+from oop_ext.interface import Attribute
+from oop_ext.interface import Interface
+from oop_ext.interface import TypeCheckingSupport
 
 
 class IUnitSystem(Interface, TypeCheckingSupport):

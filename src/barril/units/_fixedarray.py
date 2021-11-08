@@ -1,8 +1,16 @@
-from typing import Any, overload, Union, Optional, Tuple, TYPE_CHECKING, cast, Generic
+from typing import Any
+from typing import cast
+from typing import Generic
+from typing import Optional
+from typing import overload
+from typing import Tuple
+from typing import TYPE_CHECKING
+from typing import Union
 
-from barril.units.unit_database import CategoryInfo, UnitDatabase
-
-from ._array import Array, ValuesType
+from ._array import Array
+from ._array import ValuesType
+from barril.units.unit_database import CategoryInfo
+from barril.units.unit_database import UnitDatabase
 
 if TYPE_CHECKING:
     from ._quantity import Quantity

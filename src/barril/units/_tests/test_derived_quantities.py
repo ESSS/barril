@@ -1,7 +1,11 @@
+from collections import OrderedDict
+
 import pytest
 
-from collections import OrderedDict
-from barril.units import InvalidOperationError, InvalidUnitError, ObtainQuantity, Quantity
+from barril.units import InvalidOperationError
+from barril.units import InvalidUnitError
+from barril.units import ObtainQuantity
+from barril.units import Quantity
 
 
 def testDerivedQuantities(unit_database_len_time) -> None:

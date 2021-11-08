@@ -1,8 +1,9 @@
-from barril.units import UnitDatabase
 from docutils import nodes
 from docutils.statemachine import ViewList
 from sphinx.util import nested_parse_with_titles
 from sphinx.util.docutils import SphinxDirective
+
+from barril.units import UnitDatabase
 
 
 class ListAllUnits(SphinxDirective):

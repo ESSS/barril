@@ -1,8 +1,13 @@
-from typing import Tuple, Union, overload, Any
+from typing import Any
+from typing import overload
+from typing import Tuple
+from typing import Union
+
+from oop_ext.interface import Interface
+from oop_ext.interface import TypeCheckingSupport
 
 from barril.units import Array
 from barril.units._array import ValuesType
-from oop_ext.interface import Interface, TypeCheckingSupport
 
 __all__ = ["ICurve"]
 

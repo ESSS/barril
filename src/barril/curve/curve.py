@@ -1,10 +1,15 @@
-from typing import overload, Tuple, Union, Any
+from typing import Any
+from typing import overload
+from typing import Tuple
+from typing import Union
+
+from oop_ext.foundation.decorators import Deprecated
+from oop_ext.interface import AssertImplements
+from oop_ext.interface import ImplementsInterface
 
 from barril.curve.curve_interface import ICurve
-from barril.units.interfaces import ValuesType
 from barril.units.interfaces import IArray
-from oop_ext.interface import ImplementsInterface, AssertImplements
-from oop_ext.foundation.decorators import Deprecated
+from barril.units.interfaces import ValuesType
 
 __all__ = ["Curve"]
 

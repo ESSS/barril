@@ -1,6 +1,8 @@
-from typing import Dict, Tuple
+from typing import Dict
+from typing import Tuple
 
-from barril.units.unit_database import InvalidUnitError, UnitDatabase
+from barril.units.unit_database import InvalidUnitError
+from barril.units.unit_database import UnitDatabase
 
 
 class _SimpleScalar:

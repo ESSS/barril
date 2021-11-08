@@ -1,30 +1,27 @@
-from typing import (
-    TypeVar,
-    Callable,
-    Dict,
-    Type,
-    Any,
-    Optional,
-    List,
-    Union,
-    Set,
-    Hashable,
-    TYPE_CHECKING,
-    Tuple,
-    Sequence,
-    Iterator,
-    cast,
-)
-
-import attr
 import copy
 import math
 import traceback
+from typing import Any
+from typing import Callable
+from typing import cast
+from typing import Dict
+from typing import Hashable
+from typing import Iterator
+from typing import List
+from typing import Optional
+from typing import Sequence
+from typing import Set
+from typing import Tuple
+from typing import Type
+from typing import TYPE_CHECKING
+from typing import TypeVar
+from typing import Union
+
+import attr
+from oop_ext.foundation.singleton import Singleton
 
 from barril._util.types_ import CheckType
 from barril.units.interfaces import UnitExponentTuple
-
-from oop_ext.foundation.singleton import Singleton
 
 
 if TYPE_CHECKING:

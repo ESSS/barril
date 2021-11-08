@@ -1,10 +1,22 @@
-from typing import Type, TypeVar, cast, overload, Optional, List, NoReturn, ClassVar, Any, Union
+from typing import Any
+from typing import cast
+from typing import ClassVar
+from typing import List
+from typing import NoReturn
+from typing import Optional
+from typing import overload
+from typing import Type
+from typing import TypeVar
+from typing import Union
 
-from barril.units.unit_database import UnitDatabase, CategoryInfo
 from oop_ext.interface import ImplementsInterface
 
-from .interfaces import IObjectWithQuantity, IQuantity
-from ._quantity import ObtainQuantity, Quantity
+from ._quantity import ObtainQuantity
+from ._quantity import Quantity
+from .interfaces import IObjectWithQuantity
+from .interfaces import IQuantity
+from barril.units.unit_database import CategoryInfo
+from barril.units.unit_database import UnitDatabase
 
 __all__ = ["AbstractValueWithQuantityObject"]
 

@@ -3,14 +3,16 @@ from typing import Dict
 
 import pytest
 
-from barril.units import Array, FixedArray, FractionScalar, ObtainQuantity, Scalar
+from barril.units import Array
+from barril.units import FixedArray
+from barril.units import FractionScalar
+from barril.units import ObtainQuantity
+from barril.units import Scalar
 from barril.units.unit_system import UnitSystem
-from barril.units.unit_system_manager import (
-    InvalidTemplateError,
-    UnitSystemCategoriesError,
-    UnitSystemIDError,
-    UnitSystemManager,
-)
+from barril.units.unit_system_manager import InvalidTemplateError
+from barril.units.unit_system_manager import UnitSystemCategoriesError
+from barril.units.unit_system_manager import UnitSystemIDError
+from barril.units.unit_system_manager import UnitSystemManager
 
 
 @pytest.fixture

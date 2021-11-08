@@ -1,5 +1,7 @@
+from pytest import approx
+from pytest import raises
+
 from barril.units import Scalar
-from pytest import approx, raises
 
 
 def testConvertLegacyUnit() -> None:
