@@ -4,6 +4,7 @@ from typing import Any
 from typing import Optional
 from typing import overload
 from typing import Tuple
+from typing import TYPE_CHECKING
 from typing import Union
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
@@ -13,7 +14,9 @@ from .unit_database import CategoryInfo
 from .unit_database import UnitDatabase
 from barril._util.types_ import CheckType
 from barril.basic.fraction import FractionValue
-from barril.units import IQuantity
+
+if TYPE_CHECKING:
+    from barril.units import IQuantity
 
 
 @total_ordering
@@ -33,7 +36,7 @@ class FractionScalar(AbstractValueWithQuantityObject):
         ...
 
     @overload
-    def __init__(self, quantity: IQuantity, value: Union[FractionValue, float]):
+    def __init__(self, quantity: "IQuantity", value: Union[FractionValue, float]):
         ...
 
     @overload
