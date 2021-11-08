@@ -1,15 +1,10 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-"""The setup script."""
-import io
-
 from setuptools import find_packages
 from setuptools import setup
 
-with io.open("README.rst", encoding="UTF-8") as readme_file:
+with open("README.rst", encoding="UTF-8") as readme_file:
     readme = readme_file.read()
 
-with io.open("CHANGELOG.rst", encoding="UTF-8") as changelog_file:
+with open("CHANGELOG.rst", encoding="UTF-8") as changelog_file:
     history = changelog_file.read()
 
 requirements = ["attrs>=18.1.0", "numpy>=1.11.0", "oop-ext>=1.1"]
@@ -38,6 +33,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
     ],
     description="Python package to manage units for physical quantities",
     extras_require=extras_require,
