@@ -16,31 +16,31 @@ from barril.units import (
 from pytest import approx
 
 
-def testScalarInterface(unit_database_well_length):
+def testScalarInterface(unit_database_well_length) -> None:
     s = Scalar("well-length")
     assert 0 == s.value
     assert "m" == s.unit
 
 
-def testQuantity(unit_database_well_length):
+def testQuantity(unit_database_well_length) -> None:
     Quantity("well-length", "m")
     with pytest.raises(units.InvalidQuantityTypeError):
         Quantity("foo", "m")
 
 
-def testQuantityEq(unit_database_well_length):
+def testQuantityEq(unit_database_well_length) -> None:
     q0 = ObtainQuantity("m", "well-length")
     q1 = ObtainQuantity("m", "well-length")
     assert q0 == q1
 
 
-def testReadOnlyQuantityCopy(unit_database_well_length):
+def testReadOnlyQuantityCopy(unit_database_well_length) -> None:
     q0 = ObtainQuantity("m", "well-length")
     q1 = q0.Copy()
     assert q0 == q1
 
 
-def testScalar(unit_database_well_length):
+def testScalar(unit_database_well_length) -> None:
     q = ObtainQuantity("m", "well-length")
     s = Scalar.CreateWithQuantity(q, 10)
 
@@ -60,13 +60,13 @@ def GetQuantity(unit="cm"):
     return units.ObtainQuantity(unit, "well-length")
 
 
-def testBadUnit(unit_database_well_length):
+def testBadUnit(unit_database_well_length) -> None:
     x = units.Scalar.CreateWithQuantity(GetQuantity(), 500)
     with pytest.raises(units.InvalidUnitError):
         x.CreateCopy(unit="invalidUnit")
 
 
-def testOperations(unit_database_well_length):
+def testOperations(unit_database_well_length) -> None:
     x = units.Scalar.CreateWithQuantity(GetQuantity(), 500)
     assert x.value == 500
     assert x.unit == "cm"
@@ -82,7 +82,7 @@ def unit(value, unit="m"):
     return units.Scalar.CreateWithQuantity(GetQuantity(unit), value)
 
 
-def testEq(unit_database_well_length):
+def testEq(unit_database_well_length) -> None:
     u1 = units.Scalar.CreateWithQuantity(GetQuantity(), 1.0)
     u2 = units.Scalar.CreateWithQuantity(GetQuantity(), 1.0)
     assert u1 == u2
@@ -90,7 +90,7 @@ def testEq(unit_database_well_length):
     assert "cm" == u2.unit
 
 
-def testAddUnit(unit_database_empty):
+def testAddUnit(unit_database_empty) -> None:
     unit_database = unit_database_empty
     unit_database.AddUnitBase("length", "metre", "m")
     RATIO = 0.0254
@@ -115,7 +115,7 @@ def testAddUnit(unit_database_empty):
     assert a == f
 
 
-def testValidUnits(unit_database_empty):
+def testValidUnits(unit_database_empty) -> None:
     # let'scalar clear up the unit manager
     unit_database = unit_database_empty
 
@@ -145,7 +145,7 @@ def testValidUnits(unit_database_empty):
     assert scalar.GetValidUnits() == ["m", "cm", "mm", "mi"]
 
 
-def testScalarCopyAndRepresentation(unit_database_empty):
+def testScalarCopyAndRepresentation(unit_database_empty) -> None:
     unit_database = unit_database_empty
 
     unit_database.AddUnitBase("length", "meters", "m")
@@ -165,7 +165,7 @@ def testScalarCopyAndRepresentation(unit_database_empty):
     assert "1000 [cm]" == str(s)
 
 
-def testSort(unit_database_empty):
+def testSort(unit_database_empty) -> None:
     db = unit_database_empty
 
     db.AddUnitBase("length", "meters", "m")
@@ -182,7 +182,7 @@ def testSort(unit_database_empty):
     assert x == [s1, s2, s3, s4]
 
 
-def testCategoryParameters(unit_database_empty):
+def testCategoryParameters(unit_database_empty) -> None:
     db = unit_database_empty
 
     db.AddUnitBase("length", "meters", "m")
@@ -230,7 +230,7 @@ def testCategoryParameters(unit_database_empty):
     assert not another.IsValid()
 
 
-def testInvalidUnit(unit_database_empty):
+def testInvalidUnit(unit_database_empty) -> None:
     unit_database = unit_database_empty
 
     unit_database.AddUnitBase("length", "meters", "m")
@@ -241,7 +241,7 @@ def testInvalidUnit(unit_database_empty):
         Scalar("well-diameter", 10, "days")
 
 
-def testDerivedUnits(unit_database_empty):
+def testDerivedUnits(unit_database_empty) -> None:
     unit_database = unit_database_empty
 
     unit_database.AddUnitBase("length", "meters", "m")
@@ -265,7 +265,7 @@ def testDerivedUnits(unit_database_empty):
         s1.__sub__(s3)
 
 
-def testCreationWithDerivedQuantity(unit_database_len_time):
+def testCreationWithDerivedQuantity(unit_database_len_time) -> None:
     unit_database = unit_database_len_time
 
     m = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 1])]))
@@ -280,7 +280,7 @@ def testCreationWithDerivedQuantity(unit_database_len_time):
     assert calculated1 == s1 * s2
 
 
-def testNumberInteractions(unit_database_len_time):
+def testNumberInteractions(unit_database_len_time) -> None:
     scalar = Scalar("Table size", 1, "m")
     scalar2 = Scalar.CreateWithQuantity(Quantity.CreateDerived(OrderedDict()), 0)
 
@@ -299,7 +299,7 @@ def testNumberInteractions(unit_database_len_time):
     assert 1 / 10.0 == (scalar / 10.0).value
 
 
-def testDivision(unit_database_len_time):
+def testDivision(unit_database_len_time) -> None:
     unit_database = unit_database_len_time
 
     m = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 1])]))
@@ -311,7 +311,7 @@ def testDivision(unit_database_len_time):
     assert calculated1 == s1 / s2
 
 
-def testFloorDivision():
+def testFloorDivision() -> None:
     a = Scalar(3.5, "m")
     b = Scalar(100.0, "cm")
     assert (a // b).GetValueAndUnit() == (3.0, "")
@@ -319,7 +319,7 @@ def testFloorDivision():
     assert (a // 1.0).GetValueAndUnit() == (3.0, "m")
 
 
-def testNumberOverScalar():
+def testNumberOverScalar() -> None:
     a = Scalar(2.0, "m")
     b = Scalar(3.0, "m")
     assert (1.0 / a).GetValueAndUnit() == (0.5, "1/m")
@@ -327,14 +327,14 @@ def testNumberOverScalar():
     assert b / a == b * 1 / a == b * (1.0 / a)
 
 
-def testPow(unit_database_len_time):
+def testPow(unit_database_len_time) -> None:
     s = Scalar(2, "s", "Time")
     spow = s ** 3
     assert spow.unit == "s3"
     assert spow.value == 8
 
 
-def testFormatedUnitsOnScalar(unit_database_empty):
+def testFormatedUnitsOnScalar(unit_database_empty) -> None:
     """
     Allow present units on get formatted Scalar
     """
@@ -373,11 +373,11 @@ def testFormatedUnitsOnScalar(unit_database_empty):
     # Make sure we didn't affect the Scalar class, only the local MyScalar
     MyScalar.SetFormattedValueFormat("<<< %f")
     MyScalar.SetFormattedSuffixFormat(" [%s] >>>")
-    scalar = Scalar("length", 1.18, "m")
-    assert scalar.GetFormatted() == "1.18 [m]"
+    scalar2 = Scalar("length", 1.18, "m")
+    assert scalar2.GetFormatted() == "1.18 [m]"
 
 
-def testEmptyScalar():
+def testEmptyScalar() -> None:
     """
     ScalarMultiData exception when some of its scalars don't have a quantity_type
     """
@@ -389,7 +389,7 @@ def testEmptyScalar():
     assert scalar_1.GetUnit() == ""
 
 
-def testCopyProperties(unit_database_well_length):
+def testCopyProperties(unit_database_well_length) -> None:
     """
     Test if the mehod SetValue is not called when copying the Scalar's properties.
     """
@@ -405,7 +405,7 @@ def testCopyProperties(unit_database_well_length):
     assert scalar_dest.GetValue() == value
 
 
-def testCopyPropertiesAndValidation(unit_database_well_length):
+def testCopyPropertiesAndValidation(unit_database_well_length) -> None:
     category = "well-length-with-min-and-max"  # the minimum value is zero
     unit = "m"
     value = -1
@@ -420,7 +420,7 @@ def testCopyPropertiesAndValidation(unit_database_well_length):
     assert not another.IsValid()
 
 
-def testDefaultValue(unit_database_len_pressure):
+def testDefaultValue(unit_database_len_pressure) -> None:
     """
     Scalar constructor considers the minimum and maximum values
     when default_value is not defined
@@ -509,7 +509,7 @@ def testDefaultValue(unit_database_len_pressure):
         )
 
 
-def testScalarInvalidValue(unit_database_len_time):
+def testScalarInvalidValue(unit_database_len_time) -> None:
     db = unit_database_len_time
 
     db.AddCategory("another-length", "length", min_value=0, max_value=15)
@@ -543,7 +543,7 @@ def testScalarInvalidValue(unit_database_len_time):
     assert copied.GetFormatted() == "300000 [cm]"
 
 
-def testScalarValidUnits(unit_database_empty):
+def testScalarValidUnits(unit_database_empty) -> None:
     db = unit_database_empty
     db.AddUnit("length", "milimeters", "mm", "%f * 1000.0", "%f / 1000.0")
     db.AddUnitBase("length", "meters", "m")
@@ -559,7 +559,7 @@ def testScalarValidUnits(unit_database_empty):
     assert s2 is not None
 
 
-def testScalarRepresentation(unit_database_posc):
+def testScalarRepresentation(unit_database_posc) -> None:
     s1 = Scalar(0.5, "kg/kg", "dimensionless")
     s2 = Scalar(0.125, "g/g", "mass concentration")
 
@@ -570,7 +570,7 @@ def testScalarRepresentation(unit_database_posc):
     assert repr(s2) == "Scalar(0.125, 'g/g', 'mass concentration')"
 
 
-def testScalarCreationModes():
+def testScalarCreationModes() -> None:
     base = Scalar(10, "m")
 
     assert Scalar("length", 10, "m") == base
@@ -580,7 +580,7 @@ def testScalarCreationModes():
         Scalar("length", 1.0)  # missing unit
 
 
-def testScalarPickle(unit_database_posc):
+def testScalarPickle(unit_database_posc) -> None:
 
     import pickle
 
@@ -593,7 +593,7 @@ def testScalarPickle(unit_database_posc):
     assert complex_scalar == complex_scalar2
 
 
-def testScalarHashEq():
+def testScalarHashEq() -> None:
     scalar1 = Scalar("length", 10, "m")
     scalar2 = Scalar("length", 10, "m")
     scalar3 = Scalar("length", 10, "cm")
@@ -608,7 +608,7 @@ def testScalarHashEq():
     assert hash(scalar4) != hash(scalar3)
 
 
-def testChangeScalars():
+def testChangeScalars() -> None:
     class Fluid:
         density = Scalar(0, "lbm/galUS")
         concentration = Scalar(0, "%")

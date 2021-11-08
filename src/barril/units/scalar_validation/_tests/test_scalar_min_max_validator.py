@@ -29,7 +29,7 @@ def _CreateTestCategories(db):
     )
 
 
-def testScalarValidationMsgs(unit_database):
+def testScalarValidationMsgs(unit_database) -> None:
     def _Check(scalar, value, unit, expected_msg):
         some_scalar = scalar.CreateCopy(value=value, unit=unit)
         obtained_msg = ScalarMinMaxValidator.CreateScalarCheckErrorMsg(some_scalar, "Some Property")

@@ -1,4 +1,6 @@
-from barril.units import ObtainQuantity
+from typing import Optional
+
+from barril.units import ObtainQuantity, Scalar
 
 
 class ScalarMinMaxValidator:
@@ -9,7 +11,7 @@ class ScalarMinMaxValidator:
     """
 
     @classmethod
-    def CreateScalarCheckWarningMsg(cls, scalar, name):
+    def CreateScalarCheckWarningMsg(cls, scalar: Scalar, name: str) -> Optional[str]:
         """
         :param Scalar scalar:
             The scalar to be checked against its limits
@@ -27,11 +29,12 @@ class ScalarMinMaxValidator:
         return None
 
     @classmethod
-    def CreateScalarCheckErrorMsg(cls, scalar, name):
+    def CreateScalarCheckErrorMsg(cls, scalar: Scalar, name: str) -> Optional[str]:
         """
-         :param Scalar scalar:
+         :param scalar:
             The scalar to be checked against its limits
-        :param str name:
+
+        :param name:
             The scalar property name
 
         :returns str:
@@ -45,7 +48,7 @@ class ScalarMinMaxValidator:
         return None
 
     @classmethod
-    def _ScalarCheckMsgPredicate(cls, scalar):
+    def _ScalarCheckMsgPredicate(cls, scalar: Scalar) -> Optional[str]:
         """
         :param Scalar scalar:
             The scalar to be checked against its limits

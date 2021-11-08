@@ -1,5 +1,6 @@
 from fractions import Fraction as StdFraction
 from functools import total_ordering
+from typing import Iterator, Optional, Any
 
 SMALL = 1e-8
 
@@ -16,7 +17,7 @@ class Fraction:
     rounding and representation issues for numbers.
     """
 
-    def __init__(self, a, b=None):
+    def __init__(self, a: float, b: Optional[float] = None):
         if a == float("inf") or a == float("-inf"):
             raise ValueError("Numerator cannot be an infinite value")
 
@@ -37,56 +38,57 @@ class Fraction:
         a = round(a)
 
         if isinstance(a, float) or isinstance(b, float):
-            a = StdFraction(a)
-            b = StdFraction(b)
-            self.x = a / b
+            self.x = StdFraction(a) / StdFraction(b)
         else:
             self.x = StdFraction(a, b)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return 2
 
-    def __getitem__(self, key):
-        x = tuple([self.numerator, self.denominator])
-        return x[key]
+    def __getitem__(self, key: int) -> float:
+        t = (self.numerator, self.denominator)
+        return t[key]
 
-    def __setitem__(self, key, value):
+    def __iter__(self) -> Iterator[float]:
+        return iter((self.numerator, self.denominator))
+
+    def __setitem__(self, key: int, value: float) -> None:
         assert isinstance(value, NumberType) and (value or key != 1), value
         x = list([self.numerator, self.denominator])
         x[key] = value
         self.x = StdFraction(*x)
 
-    def __str__(self):
+    def __str__(self) -> str:
         from barril.basic.format_float import FormatFloat
 
         return FormatFloat("%g", self.numerator) + "/" + FormatFloat("%g", self.denominator)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return repr(self.x)
 
-    def __float__(self):
+    def __float__(self) -> float:
         return float(self.x)
 
-    def __add__(self, other):
+    def __add__(self, other: Any) -> "Fraction":
         if isinstance(other, NumberType):
             other = Fraction(other)
         x = self.x + other.x
         return Fraction(x.numerator, x.denominator)
 
-    def __radd__(self, other):
+    def __radd__(self, other: Any) -> "Fraction":
         return self + other
 
-    def __neg__(self):
+    def __neg__(self) -> "Fraction":
         x = -self.x
         return Fraction(x.numerator, x.denominator)
 
-    def __sub__(self, other):
+    def __sub__(self, other: Any) -> "Fraction":
         return self + (-other)
 
-    def __rsub__(self, other):
+    def __rsub__(self, other: Any) -> "Fraction":
         return -(self - other)
 
-    def __mul__(self, other):
+    def __mul__(self, other: Any) -> "Fraction":
         if classify(other) == -1:
             return other * self  # hope a list structure can sort itself out
         if isinstance(other, NumberType):
@@ -95,20 +97,20 @@ class Fraction:
         x.reduce()
         return x
 
-    def __rmul__(self, other):
+    def __rmul__(self, other: Any) -> "Fraction":
         if classify(other) == -1:
             raise ValueError(self, other)
         return self * other
 
-    def __truediv__(self, other):
+    def __truediv__(self, other: Any) -> "Fraction":
         if isinstance(other, NumberType):
             other = Fraction(other)
         return self * other.inv()
 
-    def __rtruediv__(self, other):
+    def __rtruediv__(self, other: Any) -> "Fraction":
         return self.inv() * other
 
-    def __pow__(self, other):
+    def __pow__(self, other: Any) -> "Fraction":
         if abs(other - other) < SMALL:
             if other < 0:
                 return Fraction(self.denominator ** -other, self.numerator ** -other)
@@ -117,7 +119,7 @@ class Fraction:
         else:
             return Fraction(float(self) ** other)
 
-    def __old_cmp__(self, other):
+    def __old_cmp__(self, other: Any) -> int:
         if other == float("inf"):
             return -1
         if other == float("-inf"):
@@ -132,49 +134,47 @@ class Fraction:
             return 1
         return 0
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         return self.__old_cmp__(other) == 0
 
-    def __lt__(self, other):
+    def __lt__(self, other: Any) -> bool:
         return self.__old_cmp__(other) == -1
 
-    def __abs__(self):
+    def __abs__(self) -> "Fraction":
         return Fraction(abs(self.numerator), self.denominator)
 
-    def __mod__(self, other):
+    def __mod__(self, other: Any) -> "Fraction":
         if isinstance(other, NumberType):
             other = Fraction(other)
         x = self.x % other.x
         return Fraction(x.numerator, x.denominator)
 
-    def reduce(self):
+    def reduce(self) -> None:
         "Express the fraction in it's lowest form.  Changes the object, no return."
         self.x = StdFraction(self.numerator, self.denominator)
 
-    def inv(self):
+    def inv(self) -> "Fraction":
         "return 1/self as a fraction"
         x = 1 / self.x
         return Fraction(x.numerator, x.denominator)
 
-    def copy(self):
+    def copy(self) -> "Fraction":
         "Returns a copy of the fraction"
         return Fraction(self.numerator, self.denominator)
 
-    def get_numerator(self):
+    def get_numerator(self) -> float:
         """
         Returns the numerator of the fraction.
 
-        :rtype: C{float}
         :returns:
             the numerator
         """
         return self.x.numerator
 
-    def set_numerator(self, numerator):
+    def set_numerator(self, numerator: float) -> None:
         """
         Sets the numerator of the fraction.
 
-        :type numerator: C{float}
         :param numerator:
             the numerator
         """
@@ -190,17 +190,16 @@ class Fraction:
 
     numerator = property(get_numerator, set_numerator)
 
-    def get_denominator(self):
+    def get_denominator(self) -> float:
         """
         Returns the denominator of the fraction.
 
-        :rtype: C{float}
         :returns:
             the numerator
         """
         return self.x.denominator
 
-    def set_denominator(self, denominator):
+    def set_denominator(self, denominator: float) -> None:
         """
         Sets the denominator of the fraction.
 
@@ -221,7 +220,7 @@ class Fraction:
     denominator = property(get_denominator, set_denominator)
 
 
-def classify(instance):
+def classify(instance: Any) -> int:
     "Decide if instance is a sequence or a number. Returns 1 for number, -1 for sequence"
     if isinstance(instance, NumberType) or isinstance(instance, Fraction):
         return 1

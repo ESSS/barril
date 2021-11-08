@@ -1,4 +1,20 @@
-from typing import TypeVar, Callable, Dict, Type, Any
+from typing import (
+    TypeVar,
+    Callable,
+    Dict,
+    Type,
+    Any,
+    Optional,
+    List,
+    Union,
+    Set,
+    Hashable,
+    TYPE_CHECKING,
+    Tuple,
+    Sequence,
+    Iterator,
+    cast,
+)
 
 import attr
 import copy
@@ -6,7 +22,13 @@ import math
 import traceback
 
 from barril._util.types_ import CheckType
+from barril.units.interfaces import UnitExponentTuple
+
 from oop_ext.foundation.singleton import Singleton
+
+
+if TYPE_CHECKING:
+    from barril.units import Quantity
 
 # Contains the registry for all the available unit types.
 __all__ = [
@@ -29,7 +51,7 @@ _LEGACY_TO_CURRENT = {
 }
 
 
-def FixUnitIfIsLegacy(unit):
+def FixUnitIfIsLegacy(unit: str) -> Tuple[bool, str]:
     fixed_unit = unit
     try:
         for legacy, current in _LEGACY_TO_CURRENT:
@@ -50,10 +72,10 @@ class InvalidQuantityTypeError(UnitsError):
     Error raised when an invalid quantity type is found
     """
 
-    def __init__(self, quantity_type, available=None):
+    def __init__(self, quantity_type: str, available: Optional[List[str]] = None):
         msg = f"Invalid quantity_type: {quantity_type}"
         if available is not None:
-            msg += "\nAvailable:\n%s" % available
+            msg += "\nAvailable:\n" + "\n".join(available)
         UnitsError.__init__(self, msg)
 
 
@@ -62,7 +84,13 @@ class InvalidUnitError(UnitsError):
     Error raised when an invalid unit is found
     """
 
-    def __init__(self, unit, quantity_type=None, category=None, valid_units=None):
+    def __init__(
+        self,
+        unit: str,
+        quantity_type: Optional[str] = None,
+        category: Optional[str] = None,
+        valid_units: Optional[List[str]] = None,
+    ):
         if quantity_type is not None:
             msg = f"Invalid unit for quantity_type {quantity_type}: {unit}"
 
@@ -92,6 +120,9 @@ class ComposedUnitError(UnitsError):
     """
 
 
+UnaryConversionFunc = Callable[[float], float]
+
+
 class UnitInfo:
     """
     Holds information about a unit type
@@ -99,26 +130,33 @@ class UnitInfo:
 
     ADD_STR_INFO_TO_UNIT_INFO = False
 
-    def __init__(self, quantity_type, name, unit, frombase, tobase, default_category=None):
+    def __init__(
+        self,
+        quantity_type: str,
+        name: str,
+        unit: str,
+        frombase: Union[str, UnaryConversionFunc],
+        tobase: Union[str, UnaryConversionFunc],
+        default_category: Optional[str] = None,
+    ):
         """
-        :param str name:
+        :param name:
             Name of the unit (e.g.: meter, millimiter).
 
-        :param str unit:
+        :param unit:
             String that represents the unit (symbol - e.g.: m, mm).
 
-        :type frombase: callable or str
         :param frombase:
             the formula to convert from the base to this unit.
 
-        :param  tobase:
+        :param tobase:
             The formula to convert from the this unit to the base.
 
         .. note:: frombase or tobase must be defined having the part that should be transformed as
             a %f, %s or just x
         """
 
-        def MakeLambda(s):
+        def MakeLambda(s: str) -> UnaryConversionFunc:
             s = s.replace("%s", "x").replace("%f", "x")
             assert "x" in s
             s.replace("x", "float(x)")
@@ -144,10 +182,10 @@ class UnitInfo:
 
         # If not identified, that means that they do have conversions associated
         if not hasattr(tobase_func, "__has_conversion__"):
-            tobase_func.__has_conversion__ = True
+            tobase_func.__has_conversion__ = True  # type:ignore[attr-defined]
 
         if not hasattr(frombase_func, "__has_conversion__"):
-            frombase_func.__has_conversion__ = True
+            frombase_func.__has_conversion__ = True  # type:ignore[attr-defined]
 
         self.name = name
         self.unit = unit
@@ -161,33 +199,32 @@ class UnitInfo:
             self.frombase_str = frombase
             self.tobase_str = tobase
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(self.unit)
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(self, UnitInfo):
+            return False
         return self.unit == other.unit
 
-    def __ne__(self, other):
-        return not self == other
 
-
-@attr.s
+@attr.s(auto_attribs=True)
 class CategoryInfo:
     """
     Holds information about a category
     """
 
-    category = attr.ib(default="")
-    quantity_type = attr.ib(default="")
-    valid_units = attr.ib(factory=list)
-    valid_units_set = attr.ib(factory=set)
-    default_unit = attr.ib(default="")
-    default_value = attr.ib(default=0.0)
-    min_value = attr.ib(default=None)
-    max_value = attr.ib(default=None)
-    is_min_exclusive = attr.ib(default=False)
-    is_max_exclusive = attr.ib(default=False)
-    caption = attr.ib(default="")
+    category: str = ""
+    quantity_type: str = ""
+    valid_units: Optional[List[str]] = attr.Factory(list)  # type:ignore[assignment]
+    valid_units_set: Set[str] = attr.Factory(set)
+    default_unit: Optional[str] = ""
+    default_value: float = 0.0
+    min_value: Optional[float] = None
+    max_value: Optional[float] = None
+    is_min_exclusive: bool = False
+    is_max_exclusive: bool = False
+    caption: str = ""
 
 
 T = TypeVar("T")
@@ -205,10 +242,10 @@ class UnitDatabase(Singleton):
     for length.
     """
 
-    PREPOSITIONS_IN_CATEGORY_NAME = ["per", "of"]
+    PREPOSITIONS_IN_CATEGORY_NAME = ("per", "of")
 
     @classmethod
-    def CreateDefaultSingleton(cls):
+    def CreateDefaultSingleton(cls) -> "UnitDatabase":
         result = cls(default_singleton=True)
         cls.FillUnitDatabaseWithPosc(result)
         return result
@@ -225,7 +262,9 @@ class UnitDatabase(Singleton):
     }
 
     @classmethod
-    def FillUnitDatabaseWithPosc(cls, unit_database, fill_categories=True):
+    def FillUnitDatabaseWithPosc(
+        cls, unit_database: "UnitDatabase", fill_categories: bool = True
+    ) -> "UnitDatabase":
         """
         Fills a unit database with the posc values.
 
@@ -252,15 +291,17 @@ class UnitDatabase(Singleton):
 
         return unit_database
 
-    def CheckValueForCategory(self, category, value, unit=None):
+    def CheckValueForCategory(
+        self, category: str, value: float, unit: Optional[str] = None
+    ) -> None:
         """
-        :param str category:
+        :param category:
             The category to be checked.
 
-        :param float value:
+        :param value:
             The value to be checked for the given category.
 
-        :param str unit:
+        :param unit:
             The unit of the value passed (if not available, the default value is considered).
         """
         from ._quantity import ObtainQuantity
@@ -268,7 +309,7 @@ class UnitDatabase(Singleton):
         quantity = ObtainQuantity(unit, category)
         quantity.CheckValue(value)
 
-    def CheckDefaultUnitDatabase(self):
+    def CheckDefaultUnitDatabase(self) -> None:
         """
         Checks if this is the default unit-database. If it's not a 'default' unit-database, an
         error is raised together with the stack trace from where it was originally created.
@@ -292,7 +333,7 @@ class UnitDatabase(Singleton):
     # see RegisterAdditionalConversionType
     _additional_conversions: Dict[Type, ConversionFunc] = {}
 
-    def __init__(self, default_singleton=False):
+    def __init__(self, default_singleton: bool = False):
         """
         Initializes the unit manager without any quantity types.
 
@@ -312,25 +353,23 @@ class UnitDatabase(Singleton):
             self._database_created_from = s.getvalue()
 
         # Quantities must be cached accordingly to the current unit-database.
-        self.quantities_cache = {}
+        self.quantities_cache: Dict[Hashable, "Quantity"] = {}
 
         # Dictionary to cache whether a unit is valid in a category.
-        # dict(tuple(str, str) -> bool)
-        # dict(tuple(category, unit) -> is_valid)
-        self._category_unit_valid = {}
+        self._category_unit_valid: Dict[Tuple[str, str], bool] = {}
 
         # dict of quantity_type => list of UnitInfo (the first unit in this list is the base unit for
         # the given quantity type)
-        self.quantity_types = {}
+        self.quantity_types: Dict[str, List[UnitInfo]] = {}
 
         # dict of unit name => UnitInfo
-        self.unit_to_unit_info = {}
-        self.categories_to_quantity_types = {}
+        self.unit_to_unit_info: Dict[str, UnitInfo] = {}
+        self.categories_to_quantity_types: Dict[str, CategoryInfo] = {}
 
     # ----------------------------------------------- The interfaces below all work with the category
 
     @classmethod
-    def FillSimple(cls, unit_database):
+    def FillSimple(cls, unit_database: "UnitDatabase") -> None:
         unit_database.AddUnitBase("length", "meters", "m")
         unit_database.AddUnit("length", "milimeters", "mm", "%f * 1000.0", "%f / 1000.0")
         unit_database.AddUnit("length", "centimeters", "cm", "%f * 100.0", "%f / 100.0")
@@ -346,56 +385,56 @@ class UnitDatabase(Singleton):
 
     def AddCategory(
         self,
-        category,
-        quantity_type=None,
-        valid_units=None,
-        override=False,
-        default_unit=None,
-        default_value=None,
-        min_value=None,
-        max_value=None,
-        is_min_exclusive=False,
-        is_max_exclusive=False,
-        caption="",
-        from_category=None,
-    ):
+        category: str,
+        quantity_type: Optional[str] = None,
+        valid_units: Optional[List[str]] = None,
+        override: bool = False,
+        default_unit: Optional[str] = None,
+        default_value: Optional[float] = None,
+        min_value: Optional[float] = None,
+        max_value: Optional[float] = None,
+        is_min_exclusive: bool = False,
+        is_max_exclusive: bool = False,
+        caption: str = "",
+        from_category: Optional[str] = None,
+    ) -> CategoryInfo:
         """Adds a category to the unit-management. If it already exists, throws an error
         if override is not set to True
 
-        :param str category:
+        :param category:
             The category to be added to the unit-management.
 
-        :param str quantity_type:
+        :param quantity_type:
             The quantity type that this category maps to.
 
-        :param set(str) valid_units:
+        :param valid_units:
             A set of the valid units for the given category.
 
-        :param bool override:
+        :param override:
             Whether to replace the quantity type for the category.
 
-        :param str default_unit:
+        :param default_unit:
             The default unit for the category
 
-        :param float default_value:
+        :param default_value:
             The default value for the category
 
-        :param float min_value:
+        :param min_value:
             Minimum value acceptable. If None, any value can be set.
 
-        :param float max_value:
+        :param max_value:
             Maximum value acceptable. If None, any value can be set.
 
-        :param bool is_min_exclusive:
+        :param is_min_exclusive:
             If the min_value given is exclusive.
 
-        :param bool is_max_exclusive:
+        :param is_max_exclusive:
             If the max_value given is exclusive.
 
-        :param str caption:
+        :param caption:
             User friendly caption for this category.
 
-        :param str from_category:
+        :param from_category:
             Category to copy other parameters from.
 
         :raises UnitsError:
@@ -434,6 +473,8 @@ class UnitDatabase(Singleton):
                 is_max_exclusive = category_info.is_max_exclusive
             if caption is None:
                 caption = category_info.caption
+
+        assert quantity_type is not None
 
         # check if valid_units should inherit from the quantity_type
         if valid_units is not None:
@@ -516,15 +557,11 @@ class UnitDatabase(Singleton):
                         max_value,
                     )
 
-        valid_units_set = set()
-        if valid_units is not None:
-            valid_units_set = set(valid_units)
-
         info = CategoryInfo(
             category=category,
             quantity_type=quantity_type,
             valid_units=valid_units,
-            valid_units_set=valid_units_set,
+            valid_units_set=set(valid_units) if valid_units is not None else set(),
             default_unit=default_unit,
             default_value=default_value,
             min_value=min_value,
@@ -537,35 +574,32 @@ class UnitDatabase(Singleton):
         self.categories_to_quantity_types[category] = info
         return info
 
-    def IsValidCategory(self, category):
+    def IsValidCategory(self, category: str) -> bool:
         """
         Check if the given category is valid into the unit database.
 
-        :param str category:
+        :param category:
             The category to check the validity.
 
-        :rtype: bool
         :returns:
             True is it is a valid category; otherwise False.
         """
         return category in self.categories_to_quantity_types
 
-    def IterCategories(self):
+    def IterCategories(self) -> Iterator[str]:
         """
         Iterator for all the categories.
 
-        :rtype: iter(str)
         :returns:
             An iterator that'll provide all the categories.
         """
-        return self.categories_to_quantity_types.keys()
+        return iter(self.categories_to_quantity_types.keys())
 
-    def GetCategoryInfo(self, category):
+    def GetCategoryInfo(self, category: str) -> CategoryInfo:
         """
-        :param str category:
+        :param category:
             The category we're interested in.
 
-        :rtype: CategoryInfo
         :returns:
             The category info for the category passed.
         """
@@ -582,26 +616,24 @@ class UnitDatabase(Singleton):
                 "--- Available ---:\n%s" % (category, categories_str)
             )
 
-    def GetCategoryQuantityType(self, category):
+    def GetCategoryQuantityType(self, category: str) -> str:
         """
-        :rtype: str
         :returns:
             The quantity type of some category.
         """
         return self.GetCategoryInfo(category).quantity_type
 
-    def FindUnitCase(self, category, unit):
+    def FindUnitCase(self, category: str, unit: str) -> str:
         """
         Given a unit in any case, returns a unit that is a match with the correct case within
         the unit-database.
 
-        :param str category:
+        :param category:
             The category for the given unit
 
-        :param str unit:
+        :param unit:
             The unit that should be used to match the case.
 
-        :rtype: str
         :returns:
             the unit considering the actual case used within the unit database.
 
@@ -627,7 +659,7 @@ class UnitDatabase(Singleton):
                 % (unit, [u for u in matched])
             )
 
-    def CheckCategoryUnit(self, category, unit):
+    def CheckCategoryUnit(self, category: str, unit: str) -> None:
         """
         Check if the given category accepts the passed unit.
 
@@ -660,7 +692,7 @@ class UnitDatabase(Singleton):
             if not valid:
                 raise InvalidUnitError(unit, None, category)
 
-    def GetValidUnits(self, category):
+    def GetValidUnits(self, category: str) -> List[str]:
         """
         :rtype: list(str)
         :returns:
@@ -682,18 +714,16 @@ class UnitDatabase(Singleton):
             # the units for the quantity type)
             return self.GetUnits(category_info.quantity_type)
 
-    def GetDefaultValue(self, category):
+    def GetDefaultValue(self, category: str) -> float:
         """
-        :rtype: float
         :returns:
             The default value for the given category.
         """
         category_info = self.GetCategoryInfo(category)
         return category_info.default_value
 
-    def GetDefaultUnit(self, category):
+    def GetDefaultUnit(self, category: str) -> str:
         """
-        :rtype: str
         :returns:
             The default unit for the given category.
 
@@ -702,34 +732,42 @@ class UnitDatabase(Singleton):
             the quantity type base unit is used.
         """
         category_info = self.GetCategoryInfo(category)
-        return category_info.default_unit
+        return category_info.default_unit or ""
 
     # --------------------- The interfaces below all work with the quantity type and not the category
 
-    def AddUnit(self, quantity_type, name, unit, frombase, tobase, default_category=None):
+    def AddUnit(
+        self,
+        quantity_type: str,
+        name: str,
+        unit: str,
+        frombase: Union[str, UnaryConversionFunc],
+        tobase: Union[str, UnaryConversionFunc],
+        default_category: Optional[str] = None,
+    ) -> None:
         """
         Registers a new unit type.
 
-        :param str quantity_type:
+        :param quantity_type:
             The quantity type for the added unit.
 
-        :param str name:
+        :param name:
             A user-friendly name for this unit.
 
-        :param str unit:
+        :param unit:
             The unit to be added.
 
-        :type  frombase: string or callable
+        :param frombase:
             If string, an expression to convert from the base unit of this quantity_type to this
             unit. If callable, must accept a float value that applies the conversion.
 
-        :type  tobase: string or callable
+        :param tobase:
             If a string, an expression to convert from this unit to the base unit. If callable, must
             accept a float value that applies the conversion.
 
         .. note:: Each expression must refer to %f or x as the current value of the unit.
 
-        :param Union(str, None) default_category:
+        :param default_category:
             The default category for the added unit (if any).
         """
         assert quantity_type is not None
@@ -751,21 +789,21 @@ class UnitDatabase(Singleton):
         quantity_type_list = self.quantity_types.setdefault(quantity_type, [])
 
         if unit in [q.unit for q in quantity_type_list]:
-            raise RuntimeError("Unit already registered: %s (%s)") % (name, unit)
+            raise RuntimeError("Unit already registered: %s (%s)" % (name, unit))
 
         quantity_type_list.append(info)
 
-    def AddUnitBase(self, quantity_type, name, unit):
+    def AddUnitBase(self, quantity_type: str, name: str, unit: str) -> None:
         """
         Add a base unit type. Inside each quantity_type, there must be at least one Base unit.
 
         Parameters have the same meaning as in AddUnit().
         """
 
-        def identity(x):
+        def identity(x: Any) -> Any:
             return x
 
-        identity.__has_conversion__ = False
+        identity.__has_conversion__ = False  # type:ignore[attr-defined]
         self.AddUnit(quantity_type, name, unit, identity, identity)
         # move the base info to the first position
         # (that's a convention: the base is always in the first position)
@@ -774,12 +812,11 @@ class UnitDatabase(Singleton):
         del infos[-1]
         infos.insert(0, base)
 
-    def GetBaseUnit(self, quantity_type):
+    def GetBaseUnit(self, quantity_type: str) -> Optional[str]:
         """
-        :param str quantity_type:
+        :param quantity_type:
             The quantity type for which we want a base unit.
 
-        :rtype: str
         :returns:
             The base unit of the given quantity_type.
 
@@ -791,10 +828,11 @@ class UnitDatabase(Singleton):
             return infos[0].unit
         except KeyError:
             self.CheckQuantityType(quantity_type)
+        return None
 
-    def GetDefaultCategory(self, unit):
+    def GetDefaultCategory(self, unit: str) -> Optional[str]:
         """
-        :param str unit:
+        :param unit:
             The unit for which we want the category.
 
         :rtype: str or None
@@ -814,10 +852,10 @@ class UnitDatabase(Singleton):
         category = unit_info.quantity_type
         if category in self.categories_to_quantity_types:
             return category
+        return None
 
-    def GetQuantityType(self, unit):
+    def GetQuantityType(self, unit: str) -> Optional[str]:
         """
-        :rtype: str
         :returns:
             A quantity_type that contains the respective unit.
         """
@@ -826,15 +864,14 @@ class UnitDatabase(Singleton):
         except KeyError:
             return None
 
-    def FindSimilarUnitMatches(self, unit):
+    def FindSimilarUnitMatches(self, unit: str) -> List[str]:
         """
         This function will use heuristics to find similar units in the unit database to the
         passed unit.
 
-        :param str unit:
+        :param unit:
             The unit which doesn't have a direct match in the unit dabatase.
 
-        :rtype: list(str)
         :returns:
             Returns a list with possible matches for the passed unit, sorted.
         """
@@ -849,44 +886,37 @@ class UnitDatabase(Singleton):
             if len(existing_unit_split) == len(unit_split):
                 for a, b in zip(existing_unit_split, unit_split):
                     if not a.startswith(b) and not b.startswith(a):
-                        # Print left for debugging purposes.
-                        # print 'skip', unit, '!=', existing_unit
                         break
                 else:
                     close_match.append(existing_unit)
 
         return sorted(close_match)
 
-    def GetQuantityTypes(self):
+    def GetQuantityTypes(self) -> List[str]:
         """
-        :rtype: list(str)
         :returns:
             A list of the available categories, sorted.
         """
         return sorted(self.quantity_types.keys())
 
-    def GetUnits(self, quantity_type=None):
+    def GetUnits(self, quantity_type: Optional[str] = None) -> List[str]:
         """
-        @return: list(string)
+        :return:
             The units of that quantity_type (if quantity_type is given) otherwise, returns all
             available units.
-
-        @raise InvalidQuantityTypeError:
         """
         return [x.unit for x in self.GetInfos(quantity_type)]
 
-    def GetUnitName(self, quantity_type, unit):
+    def GetUnitName(self, quantity_type: str, unit: str) -> str:
         """
-        :rtype: str
         :returns:
             The user-friendly name for the given unit.
         """
         info = self.GetInfo(quantity_type, unit)
         return info.name
 
-    def GetUnitNames(self, quantity_type):
+    def GetUnitNames(self, quantity_type: str) -> List[str]:
         """
-        :rtype: list(string)
         :returns:
             The user-friendly names for all the units in the given quantity_type.
 
@@ -894,7 +924,9 @@ class UnitDatabase(Singleton):
         """
         return [x.name for x in self.GetInfos(quantity_type)]
 
-    def GetInfo(self, quantity_type, unit, fix_unknown=False, fix_legacy=True):
+    def GetInfo(
+        self, quantity_type: str, unit: str, fix_unknown: bool = False, fix_legacy: bool = True
+    ) -> UnitInfo:
         """
         :param bool fix_unknown:
             If True won't raise error if quantity_type is unkwnown (and unit may be anything).
@@ -912,7 +944,7 @@ class UnitDatabase(Singleton):
         @raise InvalidUnitError
         """
 
-        def TryToGetUnitInfoFromUnit(unit):
+        def TryToGetUnitInfoFromUnit(unit: str) -> Optional[UnitInfo]:
             """
             This is the common case, where the unit matches the quantity type registered.
             """
@@ -971,9 +1003,8 @@ class UnitDatabase(Singleton):
                     unit, quantity_type, valid_units=sorted([info.unit for info in quantity_types])
                 )
 
-    def GetInfos(self, quantity_type=None):
+    def GetInfos(self, quantity_type: Optional[str] = None) -> List[UnitInfo]:
         """
-        :rtype: list(UnitInfo)
         :returns:
             All UnitInfos from that quantity_type (if quantity_type is given), otherwise return all
             UnitInfos.
@@ -989,11 +1020,9 @@ class UnitDatabase(Singleton):
             try:
                 return self.quantity_types[quantity_type]
             except KeyError:
-                raise InvalidQuantityTypeError(
-                    quantity_type, "\n".join(list(self.quantity_types.keys()))
-                )
+                raise InvalidQuantityTypeError(quantity_type, list(self.quantity_types.keys()))
 
-    def CheckQuantityType(self, quantity_type):
+    def CheckQuantityType(self, quantity_type: str) -> None:
         """
         Checks if the quantity type is valid. If it is not, raise an InvalidQuantityTypeError.
 
@@ -1001,9 +1030,9 @@ class UnitDatabase(Singleton):
         @raise InvalidUnitError
         """
         if quantity_type not in self.quantity_types:
-            raise InvalidQuantityTypeError(quantity_type, "\n".join(sorted(self.quantity_types)))
+            raise InvalidQuantityTypeError(quantity_type, sorted(self.quantity_types))
 
-    def CheckQuantityTypeUnit(self, quantity_type, unit):
+    def CheckQuantityTypeUnit(self, quantity_type: str, unit: str) -> None:
         """
         Check if the given quantity type has the given unit.
 
@@ -1014,21 +1043,25 @@ class UnitDatabase(Singleton):
         # legacy
         self.GetInfo(quantity_type, unit, fix_legacy=False)
 
-    def _ConvertWithExp(self, quantity_type, from_unit, to_unit, value):
+    def _ConvertWithExp(
+        self,
+        quantity_type: str,
+        from_unit_exps: Sequence[UnitExponentTuple],
+        to_unit_exps: Sequence[UnitExponentTuple],
+        value: float,
+    ) -> float:
         """
         Converts a value from one unit to another unit considering that the units from and
         to have exponents.
 
-        :param str quantity_type:
+        :param quantity_type:
             The quantity type that has the from and to units.
 
-        :type from_unit: str or list(tuple(str, int))
-        :param from_unit:
-            The unit we're converting from or the string and exponent from the unit.
+        :param from_unit_exps:
+            The unit and exponent of the "from" unit.
 
-        :type to_unit: str or list(tuple(str, int))
-        :param to_unit:
-            The unit we're converting to or the string and exponent from the unit.
+        :param to_unit_exps:
+            The unit and exponent of the "to" unit.
 
         :param float value:
             The value to be converted.
@@ -1037,8 +1070,8 @@ class UnitDatabase(Singleton):
         :returns:
             Returns the converted value.
         """
-        len_to_unit = len(to_unit)
-        len_from_unit = len(from_unit)
+        len_from_unit = len(from_unit_exps)
+        len_to_unit = len(to_unit_exps)
 
         if len_to_unit == 0 or len_from_unit == 0:
             return value
@@ -1053,8 +1086,8 @@ class UnitDatabase(Singleton):
                 "Can only convert one unit to another (not a composed unit at this point)"
             )
 
-        from_unit, from_exp = from_unit[0]
-        to_unit, to_exp = to_unit[0]
+        from_unit, from_exp = from_unit_exps[0]
+        to_unit, to_exp = to_unit_exps[0]
 
         if from_exp != to_exp:
             raise ValueError(
@@ -1099,55 +1132,55 @@ class UnitDatabase(Singleton):
                 cls._additional_conversions[class_] == func
             ), "The class %s already has a convertion function registered" % (str(class_))
 
-    def Convert(self, category_or_quantity_type, from_unit, to_unit, value):
+    def Convert(
+        self,
+        category_or_quantity_type: str,
+        from_unit: Union[str, Sequence[UnitExponentTuple]],
+        to_unit: Union[str, Sequence[UnitExponentTuple]],
+        value: Any,
+    ) -> Any:
         """
         Converts a value from one unit to another unit (given the quantity type that contains
         both units), so, note that the quantity type at this point is always the same (can't convert
         units with quantity types that don't match).
 
-        :param str category_or_quantity_type:
+        :param category_or_quantity_type:
             The category or quantity type for doing the conversion (if it's a category it's
             converted into the quantity type inside this method).
 
-        :param str from_unit:
-            A string determining the unit from the value we want to convert or a dict
-            with the units with their given exponents to convert.
+        :param from_unit:
+            A string determining the unit from the value we want to convert or a list of exponents.
 
-        :param str to_unit:
-            A string determining the unit to which the value should be converted or a dict with the
-            units with their given exponents to convert.
+        :param to_unit:
+            A string determining to convert the value to or a list of exponents.
 
-        :param object value:
-            The object that should be converted.
+        :param value:
+            The value that should be converted.
 
-        .. note:: that from_unit and to_unit must only have 1 key if they are a dict pointing to
-            exponents.
+        .. note:: that from_unit and to_unit must only have 1 item at this point.
 
-        :rtype: object
         :returns:
             The converted value
         """
         supported_types = tuple(self._additional_conversions)
+        convert_function: Optional[ConversionFunc] = None
         if isinstance(value, supported_types):
             for key, convert_function in self._additional_conversions.items():
                 if isinstance(value, key):
                     break  # keep convert_function for later use
             else:
                 assert False
-        else:
-            convert_function = None
+
         # operations with exponents...
         from_is_list = from_unit.__class__ in (list, tuple)
         to_is_list = to_unit.__class__ in (list, tuple)
 
         if from_is_list or to_is_list:
-            if not from_is_list:
-                from_unit = (from_unit, 1)
-            if not to_is_list:
-                to_unit = (to_unit, 1)
+            from_unit_exps = cast(list, from_unit) if from_is_list else [(cast(str, from_unit), 1)]
+            to_unit_exps = cast(list, to_unit) if to_is_list else [(cast(str, to_unit), 1)]
 
             # same unit: no conversion needed
-            if from_unit == to_unit:
+            if from_unit_exps == to_unit_exps:
                 return value
 
             if (
@@ -1155,7 +1188,12 @@ class UnitDatabase(Singleton):
                 and len(category_or_quantity_type) == 1
             ):
                 category_or_quantity_type = category_or_quantity_type[0]
-            return self._ConvertWithExp(category_or_quantity_type, from_unit, to_unit, value)
+            return self._ConvertWithExp(
+                category_or_quantity_type, from_unit_exps, to_unit_exps, value
+            )
+
+        from_unit = cast(str, from_unit)
+        to_unit = cast(str, to_unit)
 
         # same unit: no conversion needed
         if from_unit == to_unit:
@@ -1176,18 +1214,19 @@ class UnitDatabase(Singleton):
         this = self.GetInfo(quantity_type, from_unit, fix_unknown=True)
         other = self.GetInfo(quantity_type, to_unit, fix_unknown=True)
 
-        if isinstance(value, (float, int)):  # , numpy.ndarray)):
+        if isinstance(value, (float, int)):
             return other.frombase(this.tobase(value))
         else:  # list / tuple
             frombase = other.frombase
             tobase = this.tobase
-            class_ = list
+            values_gen = (frombase(tobase(v)) for v in value)
+
             if isinstance(value, tuple):
-                class_ = tuple
+                return tuple(values_gen)
+            else:
+                return list(values_gen)
 
-            return class_(frombase(tobase(v)) for v in value)
-
-    def Clear(self):
+    def Clear(self) -> None:
         """
         Removes all the quantity types registered.
         """
@@ -1198,7 +1237,14 @@ class UnitDatabase(Singleton):
         self._category_unit_valid.clear()
 
     # Operations with different quantities ---------------------------------------------------------
-    def _DoOperationWithSameQuantity(self, quantity1, quantity2, value1, value2, operation):
+    def _DoOperationWithSameQuantity(
+        self,
+        quantity1: "Quantity",
+        quantity2: "Quantity",
+        value1: T,
+        value2: T,
+        operation: Callable[[T, T], T],
+    ) -> Tuple["Quantity", T]:
         """
         Given 2 quantities, do an operation that DOES NOT accept the creation of a new composed
         quantity (e.g.: sum, subtraction)
@@ -1244,27 +1290,35 @@ class UnitDatabase(Singleton):
 
             return quantity1, operation(value1, value2)
 
-    def Sum(self, quantity1, quantity2, value1, value2):
-        return self._DoOperationWithSameQuantity(
-            quantity1, quantity2, value1, value2, lambda a, b: a + b
-        )
+    def Sum(
+        self, quantity1: "Quantity", quantity2: "Quantity", value1: T, value2: T
+    ) -> Tuple["Quantity", T]:
+        func = lambda a, b: a + b
+        return self._DoOperationWithSameQuantity(quantity1, quantity2, value1, value2, func)
 
-    def Subtract(self, quantity1, quantity2, value1, value2):
-        return self._DoOperationWithSameQuantity(
-            quantity1, quantity2, value1, value2, lambda a, b: a - b
-        )
+    def Subtract(
+        self, quantity1: "Quantity", quantity2: "Quantity", value1: T, value2: T
+    ) -> Tuple["Quantity", T]:
+        func = lambda a, b: a - b
+        return self._DoOperationWithSameQuantity(quantity1, quantity2, value1, value2, func)
 
-    def Divide(self, quantity1, quantity2, value1, value2):
+    def Divide(
+        self, quantity1: "Quantity", quantity2: "Quantity", value1: T, value2: T
+    ) -> Tuple["Quantity", T]:
         return self._DoOperationResultingInNewQuantity(
             quantity1, quantity2, value1, value2, lambda a, b: a - b, lambda a, b: a / b
         )
 
-    def FloorDivide(self, quantity1, quantity2, value1, value2):
+    def FloorDivide(
+        self, quantity1: "Quantity", quantity2: "Quantity", value1: T, value2: T
+    ) -> Tuple["Quantity", T]:
         return self._DoOperationResultingInNewQuantity(
             quantity1, quantity2, value1, value2, lambda a, b: a - b, lambda a, b: a // b
         )
 
-    def Multiply(self, quantity1, quantity2, value1, value2):
+    def Multiply(
+        self, quantity1: "Quantity", quantity2: "Quantity", value1: T, value2: T
+    ) -> Tuple["Quantity", T]:
         """
         Multiplication with different quantities.
 
@@ -1296,8 +1350,12 @@ class UnitDatabase(Singleton):
         )
 
     def _MatchQuantities(
-        self, category_to_unit_and_exp1, category_to_unit_and_exp2, value1, value2
-    ):
+        self,
+        category_to_unit_and_exp1: Any,
+        category_to_unit_and_exp2: Any,
+        value1: Any,
+        value2: Any,
+    ) -> Tuple[Any, Any, Any, Any]:
         """
         Matches all the units for a given quantity type (so, if a unit 'm' is found, if
         a 'cm' is later found, convert it to 'm' -- as well as it's composing value).
@@ -1305,7 +1363,7 @@ class UnitDatabase(Singleton):
         :rtype: the dicts passed with the quantity types matched to the same units and the corresponding
         values converted to match those changes.
         """
-        quantity_types_found_to_used_unit = {}
+        quantity_types_found_to_used_unit: Dict[Any, Any] = {}
 
         # 1st thing is putting the same unit for a given quantity type (both sides)
         for c in (category_to_unit_and_exp1, category_to_unit_and_exp2):
@@ -1329,8 +1387,14 @@ class UnitDatabase(Singleton):
         return category_to_unit_and_exp1, category_to_unit_and_exp2, value1, value2
 
     def _DoOperationResultingInNewQuantity(
-        self, quantity1, quantity2, value1, value2, operation_exp, operation
-    ):
+        self,
+        quantity1: "Quantity",
+        quantity2: "Quantity",
+        value1: Any,
+        value2: Any,
+        operation_exp: Any,
+        operation: Any,
+    ) -> Any:
         """
         Given 2 quantities, do an operation that accepts the creation of a new quantity that is
         composed of the quantities passed (e.g.: division, multiplication).
@@ -1358,16 +1422,16 @@ class UnitDatabase(Singleton):
                 category_to_unit_and_exp1[category2] = [unit2, operation_exp(exp1, exp2)]
             else:
                 unit_exp1 = category_to_unit_and_exp1[category2]
-                unit1, exp1 = unit_exp1
+                unit1, exp1 = unit_exp1  # type:ignore[assignment]
                 if unit1 == unit2:
-                    unit_exp1[1] = operation_exp(exp1, exp2)
+                    unit_exp1[1] = operation_exp(exp1, exp2)  # type:ignore[index]
                 else:
                     raise RuntimeError(
                         "This should've been covered already (%s != %s)." % (unit1, unit2)
                     )
 
         # unit -> expoent
-        only_units_expoents = {}
+        only_units_expoents: Dict[Any, Any] = {}
         for c, (unit, exp) in list(category_to_unit_and_exp1.items()):
             existing = only_units_expoents.get(unit, 0)
             only_units_expoents[unit] = existing + exp
@@ -1387,7 +1451,7 @@ class RegisterConversion:
     _registered = False
 
     @classmethod
-    def RegisterNumpyConversion(cls):
+    def RegisterNumpyConversion(cls) -> None:
         """
         Register a special unit conversion for numpy arrays.
 
@@ -1396,7 +1460,9 @@ class RegisterConversion:
         """
         import numpy
 
-        def ConvertNumpyArray(db, quantity_type, from_unit, to_unit, array):
+        def ConvertNumpyArray(
+            db: UnitDatabase, quantity_type: str, from_unit: str, to_unit: str, array: Any
+        ) -> Any:
             """
             Converts the given numpy array by applying the conversion as if it was a scalar,
             since arrays support the numeric operators, which are applied element-wise.

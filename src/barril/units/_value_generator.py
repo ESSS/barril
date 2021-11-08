@@ -1,3 +1,5 @@
+from typing import Any, Iterator, Tuple
+
 import numpy
 
 
@@ -13,22 +15,21 @@ class _ValueGenerator:
     Internal API used to convert array values.
     """
 
-    def __init__(self, p1, p2):
+    def __init__(self, p1: Any, p2: Any):
         self.p1 = p1
         self.p2 = p2
 
         self.iterate_1st = isinstance(p1, (tuple, list))
         self.iterate_2nd = isinstance(p2, (tuple, list))
 
-    def IsNumpy(self):
+    def IsNumpy(self) -> bool:
         """
-        :rtype: bool
         :returns:
             If either one of the contained elements is a numpy array.
         """
         return isinstance(self.p1, numpy.ndarray) or isinstance(self.p2, numpy.ndarray)
 
-    def IsTuple(self):
+    def IsTuple(self) -> bool:
         """
         :rtype: bool
         :returns:
@@ -45,7 +46,7 @@ class _ValueGenerator:
 
         return False
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Tuple[Any, Any]]:
         """
         Yield the individual values we should convert (which may mean the same number all the time
         and the value being iterated in a list). Numpy is a special case (see classdocs)

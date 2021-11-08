@@ -1,6 +1,8 @@
 import weakref
 from copy import deepcopy
+from typing import Optional, Sequence, List, Set, Type, Mapping, Dict, Tuple, TYPE_CHECKING
 
+from barril.units import AbstractValueWithQuantityObject, IQuantity
 from oop_ext.foundation import callback
 from oop_ext.foundation.decorators import Override
 from collections import OrderedDict
@@ -12,12 +14,16 @@ from .unit_system import UnitSystem
 from .unit_system_interface import IUnitSystem
 
 
+if TYPE_CHECKING:
+    from barril.units import Scalar
+
+
 class NoTemplateError(RuntimeError):
     """
     Error raised when trying to create a new unit system and no template was defined.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         msg = "Error creating unit system. There is no template defined."
         RuntimeError.__init__(self, msg)
 
@@ -28,9 +34,9 @@ class InvalidTemplateError(RuntimeError):
     match the given template
     """
 
-    def __init__(self, invalid_unit_system_ids=None):
+    def __init__(self, invalid_unit_system_ids: Optional[List[Optional[str]]] = None):
         """
-        :param iterable(unicode) invalid_unit_system_ids:
+        :param invalid_unit_system_ids:
             The ids of the unit system that do not match a given template
         """
         if invalid_unit_system_ids:
@@ -48,7 +54,7 @@ class UnitSystemCategoriesError(KeyError):
     template.
     """
 
-    def __init__(self, default_categories, current_categories):
+    def __init__(self, default_categories: List[str], current_categories: List[str]):
         msg = "Error creating new unit system. The default categories are %s but %s were defined."
         KeyError.__init__(self, msg % (default_categories, current_categories))
 
@@ -58,9 +64,9 @@ class UnitSystemIDError(KeyError):
     Error raised when trying to create a new unit system given an already used ID.
     """
 
-    def __init__(self, id):
-        msg = "Error creating new unit system. The ID %s is already in use."
-        KeyError.__init__(self, msg % (id))
+    def __init__(self, id: str):
+        msg = f"Error creating new unit system. The ID {id} is already in use."
+        KeyError.__init__(self, msg)
 
 
 class UnitSystemManager(Singleton):
@@ -68,46 +74,44 @@ class UnitSystemManager(Singleton):
     A service that manages the unit systems. It handles the unit system objects creation and
     selection.
 
-    :ivar list _object_refs:
-        List of weakref for all objects which represents a value+unit.
+    :ivar _object_refs:
+        Set of weakref for all objects which represents a value+unit.
 
-    :type current: IUnitSystem instance
     :ivar current:
         The current unit system.
 
-    :ivar Callback on_current:
+    :ivar on_current:
         Callback called when the current unit system changes (the unit system is given as parameter).
 
-    :ivar Callback on_unit_changed:
+    :ivar on_unit_changed:
         Callback called when the the unit of a category changes (the category and unit is given as
         parameter).
 
-    :type _unit_systems: dict(unicode, IUnitSystem instance)
     :ivar _unit_systems:
         A dict that holds the available unit systems.
     """
 
-    def __init__(self):
-        # list with valueable objects with a unit associated with
-        self._object_refs = set()
+    def __init__(self) -> None:
+        # list with objects with a unit associated with it.
+        self._object_refs: Set[_IdentityWrap] = set()
 
         # someone would want to listen to changes in the current unit system
-        self.on_current = callback.Callback()
+        self.on_current = callback.Callback1[IUnitSystem]()
 
         # someone would want to listen to changes in unit system categories unit.
-        self.on_unit_changed = callback.Callback()
+        self.on_unit_changed = callback.Callback2[str, Optional[str]]()
 
         # the current unit system which is being used by the application
-        self._current = None
+        self._current: Optional[IUnitSystem] = None
 
         # container for registered unit systems (strong references)
-        self._unit_systems = OrderedDict()
+        self._unit_systems: OrderedDict[str, IUnitSystem] = OrderedDict()
 
         # unit system template.
-        self._unit_system_template = None
+        self._unit_system_template: Optional[IUnitSystem] = None
 
         # default unit system class.
-        self._default_unit_system_class = UnitSystem
+        self._default_unit_system_class: Type[IUnitSystem] = UnitSystem
 
         # This unit system is returned when no current unit system is selected
         self.__null_unit_system = UnitSystem(
@@ -115,33 +119,31 @@ class UnitSystemManager(Singleton):
         )
 
     @Override(Singleton.ResetInstance)
-    def ResetInstance(self):
+    def ResetInstance(self) -> None:
         self.on_current.UnregisterAll()
         self.on_unit_changed.UnregisterAll()
 
-    def SetDefaultUnitSystemClass(self, class_):
+    def SetDefaultUnitSystemClass(self, class_: Type[IUnitSystem]) -> None:
         """
         Set the default unit system class.
 
-        :type class_: IUnitSystem class
         :param class_:
-            The unit system class that wiil be used when creating new unit systems.
+            The unit system class that will be used when creating new unit systems.
         """
         AssertImplements(class_, IUnitSystem)
         self._default_unit_system_class = class_
 
-    def SetTemplateUnitSystemByUnitsMapping(self, units_mapping):
+    def SetTemplateUnitSystemByUnitsMapping(self, units_mapping: Dict[str, str]) -> None:
         """
         Set the unit system template based on the given units mapping.
 
         This template will be used to validate new unit systems.
 
-        :type units_mapping: dict( unicode, unicode )
         :param units_mapping:
             A dict that maps each category to a related unit (which will be set as default).
             The valid categories are defined by the coilib50.units.UnitDatabase.
 
-        @raise: TemplateDefinedAfterUnitSystemError
+        :raise: TemplateDefinedAfterUnitSystemError
             See TemplateDefinedAfterUnitSystemError documentation.
         """
         template_categories = list(units_mapping.keys())
@@ -165,34 +167,39 @@ class UnitSystemManager(Singleton):
             "template", "Unit system template", units_mapping, True
         )
 
-    def GetUnitSystemTemplate(self):
+    def GetUnitSystemTemplate(self) -> Optional[IUnitSystem]:
         """
-        :rtype: IUnitSystem instance
         :returns:
             Return the template unit system.
         """
         return self._unit_system_template
 
-    def _CheckUnitSystemMapping(self, units_mapping, required_categories):
+    def _CheckUnitSystemMapping(
+        self, units_mapping: Dict[str, str], required_categories: List[str]
+    ) -> bool:
         """
         Checks if the given units mapping have a default unit for all required categories
 
-        :type units_mapping: dict( unicode, unicode )
         :param units_mapping units_mapping:
             A dict that maps each category to a related unit. the dict should contain mapping for
             each category defined in the template.
 
-        :param required_categoris list(unicode)
+        :param required_categories:
             The categories required in the given unit system.
         """
         required_categories_set = set(required_categories)
 
         current_categories = list(units_mapping.keys())
-        current_categories = set(current_categories)
 
-        return current_categories.issuperset(required_categories_set)
+        return set(current_categories).issuperset(required_categories_set)
 
-    def AddUnitSystem(self, id, caption, units_mapping=None, read_only=False):
+    def AddUnitSystem(
+        self,
+        id: str,
+        caption: str,
+        units_mapping: Optional[Dict[str, str]] = None,
+        read_only: bool = False,
+    ) -> IUnitSystem:
         """
         Create a new unit system based on the given parameters.
 
@@ -202,19 +209,18 @@ class UnitSystemManager(Singleton):
         It is expected that a unit system template is already set. The template will be used to
         validate the categories from the given units mapping.
 
-        :param unicode id:
+        :param id:
             The unique id of the unit system.
 
-        :param unicode caption:
+        :param caption:
             The user-friendly name of the unit system.
 
-        :type units_mapping: dict( unicode, unicode ) or None
         :param units_mapping:
             A dict that maps each category to a related unit (which will be set as default).
             The valid categories are defined by the coilib50.units.UnitDatabase.
             If None is given the units mapping from the template will be taken.
 
-        :param bool read_only:
+        :param read_only:
             Flag that sets the read-only state of the new unit system.
 
         :raises NoTemplateError:
@@ -226,7 +232,6 @@ class UnitSystemManager(Singleton):
         :raises UnitSystemCategoriesError:
             See UnitSystemCategoriesError documentation.
 
-        :rtype: IUnitSystem instance
         :returns:
             The created unit system.
         """
@@ -263,19 +268,19 @@ class UnitSystemManager(Singleton):
 
         return unit_system
 
-    def _CategoryUnitChange(self, category, unit):
+    def _CategoryUnitChange(self, category: str, unit: Optional[str]) -> None:
         """
         Triggers on_unit_changed callback when default unit change on a category in a unit system.
 
-        :param unicode category:
+        :param category:
             The changed category.
 
-        :param unicode unit:
+        :param unit:
             The new unit.
         """
         self.on_unit_changed(category, unit)
 
-    def RemoveUnitSystem(self, unit_system_id):
+    def RemoveUnitSystem(self, unit_system_id: str) -> None:
         """
         Remove the unit system with the given id.
 
@@ -285,6 +290,7 @@ class UnitSystemManager(Singleton):
         del self._unit_systems[unit_system_id]
 
         # If the current unit system was removed, set another system as current
+        assert self._current is not None
         if self._current.GetId() == unit_system_id:
             available = list(self.GetUnitSystems().values())
 
@@ -293,9 +299,8 @@ class UnitSystemManager(Singleton):
             else:
                 self.SetCurrent(None)
 
-    def GetUnitSystems(self):
+    def GetUnitSystems(self) -> Dict[str, IUnitSystem]:
         """
-        :rtype: dict{unicode, IUnitSystem instance)
         :returns:
             The dict containing all the registered unit systems indexed by their ids.
         """
@@ -303,11 +308,10 @@ class UnitSystemManager(Singleton):
 
     # Current --------------------------------------------------------------------------------------
 
-    def SetCurrent(self, unit_system):
+    def SetCurrent(self, unit_system: Optional[IUnitSystem]) -> None:
         """
         Sets a new current unit system, updating all registered objects. If None, no object is changed.
 
-        :type unit_system: IUnitSystem instance
         :param unit_system:
             The new current unit system.
         """
@@ -318,14 +322,14 @@ class UnitSystemManager(Singleton):
 
         if self._current is not None:
             self._current.on_default_unit.Register(self._CategoryUnitChange)
-            self.on_current(unit_system)
+            self.on_current(self._current)
         else:
             # Notifying that an empty unit system was set for the clients
             self.on_current(self.__null_unit_system)
 
         self.UpdateObjects()
 
-    def GetCurrent(self):
+    def GetCurrent(self) -> IUnitSystem:
         """
         Retrieves the unit system currently in use.
 
@@ -345,7 +349,7 @@ class UnitSystemManager(Singleton):
 
     # Objects --------------------------------------------------------------------------------------
 
-    def UpdateObjects(self):
+    def UpdateObjects(self) -> None:
         """
         Updates the units of all the registered objects. Also, remove dead objects from the list
         """
@@ -363,49 +367,19 @@ class UnitSystemManager(Singleton):
                     if unit is not None:
                         obj.unit = unit
 
-    class IdentityWrap:
-        """
-        Helper class to remove an object from the unit system references.
-
-        It's used so that we create a wrapper that'll give the __hash__ and __eq__ based on
-        the object id.
-        """
-
-        __slots__ = ["unit_system", "ref"]
-
-        def __init__(self, obj, unit_system):
-            """
-            :param object obj:
-                The object we'll be wrapping.
-
-            :param UnitSystem unit_system:
-                The unit system with the tracked object.
-            """
-            self.unit_system = unit_system
-            self.ref = weakref.ref(obj, self._OnRefKilled)
-
-        def _OnRefKilled(self, ref):
-            """
-            Called when a reference to an object with a unit is killed.
-
-            :param weakref ref:
-                The weak-ref that was killed
-            """
-            self.unit_system._object_refs.remove(self)
-
-    def Register(self, obj):
+    def Register(self, obj: AbstractValueWithQuantityObject) -> None:
         """
         Keeps a weak reference to the object in an internal list.
         Whatever change in the unit system will be propagated for all objects in the list.
 
-        :param AbstractValueWithQuantityObject obj:
+        :param obj:
             An object which represents a value associated with a unit.
 
         .. note:: This code should in general only be called from the constructor of an object to be
         tracked and only once (although adding an object more than once won't give any errors, it'll
         incur in more overhead because the object will be added more than once to the internal list).
         """
-        self._object_refs.add(self.IdentityWrap(obj, self))
+        self._object_refs.add(_IdentityWrap(obj, self))
         current = self._current
         if current is not None:
             # Update the object to match the current unit-system.
@@ -413,14 +387,13 @@ class UnitSystemManager(Singleton):
             if unit is not None:
                 obj.unit = unit
 
-    def GetUnitSystemById(self, id):
+    def GetUnitSystemById(self, id: str) -> IUnitSystem:
         """
         Returns the UnitSystem with the given id.
 
-        :param unicode id:
+        :param id:
             The wished unit system id.
 
-        :rtype: IUnitSystem instance
         :returns:
             The unit system with the given id.
 
@@ -432,11 +405,10 @@ class UnitSystemManager(Singleton):
         else:
             raise ValueError("No UnitSystem with id %r found" % id)
 
-    def GetNewId(self):
+    def GetNewId(self) -> str:
         """
         Returns an unit system id that is not being used.
 
-        :rtype: unicode
         :returns:
             The available id.
         """
@@ -448,24 +420,25 @@ class UnitSystemManager(Singleton):
             new_id = "%s %d" % ("system", count)
         return new_id
 
-    def ConvertToCurrent(self, category, unit, value, unit_database=None):
+    def ConvertToCurrent(
+        self, category: str, unit: str, value: float, unit_database: Optional[UnitDatabase] = None
+    ) -> Tuple[float, str]:
         """
         Converts the given value from the given unit to the default unit of the current unit system.
         If there is no current unit system, no conversion is performed.
 
-        :param unicode category:
+        :param category:
             The unit's category.
 
-        :param unicode unit:
+        :param unit:
             The source unit.
 
-        :param float value:
+        :param value:
             The value to convert.
 
-        :param UnitDatabase unit_database:
+        :param unit_database:
             The unit database to perform the conversion. If not given, use the singleton.
 
-        :rtype: (float, unicode)
         :returns:
             The pair (value, unit), containing the converted value and target unit. Note that
             if there is no current unit system, the returned value and unit are the same as
@@ -476,18 +449,17 @@ class UnitSystemManager(Singleton):
 
         current = self.current
         if current is None or current.GetDefaultUnit(category) is None:
-            return (value, unit)
+            return value, unit
 
         to_unit = current.GetDefaultUnit(category)
         converted_value = unit_database.Convert(category, unit, to_unit, value)
         return converted_value, to_unit
 
-    def GetCategoryDefaultUnit(self, category):
+    def GetCategoryDefaultUnit(self, category: str) -> Optional[str]:
         """
-        :param unicode category:
+        :param category:
             The category to obtain the default unit
 
-        :rtype: unicode or None
         :returns:
             The default unit to display the given category or None if there is no default unit set.
         """
@@ -502,16 +474,16 @@ class UnitSystemManager(Singleton):
 
         return result
 
-    def GetQuantityDefaultUnit(self, quantity):
+    def GetQuantityDefaultUnit(self, quantity: IQuantity) -> str:
         """
         Get the default unit to use with a given quantity. If there is any map explictly defined for
         the quantity category, then that map will be used. Otherwise we will use the quantity default
         unit.
 
-        :param IQuantity quantity:
+        :param quantity:
             The quantity to obtain the default unit
 
-        :return unicode
+        :return:
             The default unit to use with the given quantity
         """
         current_system = self.GetCurrent()
@@ -527,7 +499,9 @@ class UnitSystemManager(Singleton):
 
         return result
 
-    def ConvertScalarToCurrent(self, scalar, unit_database=None):
+    def ConvertScalarToCurrent(
+        self, scalar: "Scalar", unit_database: Optional[UnitDatabase] = None
+    ) -> "Scalar":
         """
         Same as ConvertToCurrent but receives and returns a scalar instead of category, unit and value
 
@@ -549,3 +523,34 @@ class UnitSystemManager(Singleton):
             scalar.GetCategory(), scalar.GetUnit(), scalar.GetValue(), unit_database
         )
         return Scalar(*ret_tuple)
+
+
+class _IdentityWrap:
+    """
+    Helper class to remove an object from the unit system references.
+
+    It's used so that we create a wrapper that'll give the __hash__ and __eq__ based on
+    the object id.
+    """
+
+    __slots__ = ["unit_system", "ref"]
+
+    def __init__(self, obj: AbstractValueWithQuantityObject, unit_system: UnitSystemManager):
+        """
+        :param obj:
+            The object we'll be wrapping.
+
+        :param unit_system:
+            The unit system manager with the tracked object.
+        """
+        self.unit_system = unit_system
+        self.ref = weakref.ref(obj, self._OnRefKilled)
+
+    def _OnRefKilled(self, ref: object) -> None:
+        """
+        Called when a reference to an object with a unit is killed.
+
+        :param ref:
+            The weak-ref that was killed
+        """
+        self.unit_system._object_refs.remove(self)

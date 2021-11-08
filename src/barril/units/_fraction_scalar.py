@@ -1,12 +1,14 @@
 import copy
 from functools import total_ordering
+from typing import overload, Union, Optional, Any, Tuple
 
 from barril._util.types_ import CheckType
 from barril.basic.fraction import FractionValue
+from barril.units import IQuantity
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
-from ._quantity import ObtainQuantity
-from .unit_database import UnitDatabase
+from ._quantity import ObtainQuantity, Quantity
+from .unit_database import UnitDatabase, CategoryInfo
 
 
 @total_ordering
@@ -17,15 +19,41 @@ class FractionScalar(AbstractValueWithQuantityObject):
     pipes and wells in a more natural way to the user (for instance, "5 3/4 inches").
     """
 
-    def _InternalCreateWithQuantity(self, quantity, value, unit_database=None):
+    @overload
+    def __init__(self, quantity: str):
+        ...
+
+    @overload
+    def __init__(self, quantity: str, value: Union[FractionValue, float], unit: str):
+        ...
+
+    @overload
+    def __init__(self, quantity: IQuantity, value: Union[FractionValue, float]):
+        ...
+
+    @overload
+    def __init__(self, quantity: str, unit: str):
+        ...
+
+    @overload
+    def __init__(
+        self, value: Union[FractionValue, float], unit: str, category: Optional[str] = None
+    ):
+        ...
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+
+    def _InternalCreateWithQuantity(
+        self, quantity: Quantity, value: FractionValue, unit_database: Optional[UnitDatabase] = None
+    ) -> None:
         """
         For internal use only. Is used to initialize the actual quantity.
 
-        :type quantity: str or IQuantity
         :param quantity:
             The quantity of this scalar.
 
-        :param FractionValue value:
+        :param value:
             The initial value
         """
         # Considering fraction values values are easily coerced from float values (though it is
@@ -44,16 +72,17 @@ class FractionScalar(AbstractValueWithQuantityObject):
         self._quantity = quantity
         self._unit_database = unit_database or UnitDatabase.GetSingleton()
 
-    def CheckValidity(self):
+    def CheckValidity(self) -> None:
         """
         :raises ValueError: when current value is wrong somehow (out of limits, for example).
         """
         self._quantity.CheckValue(float(self._value))
 
     # Value ----------------------------------------------------------------------------------------
-    def GetAbstractValue(self, unit=None):
+    def GetAbstractValue(
+        self, unit: Optional[str] = None
+    ) -> FractionValue:  # type:ignore[override]
         """
-
         :param unit:
         """
         if unit is None:
@@ -61,15 +90,12 @@ class FractionScalar(AbstractValueWithQuantityObject):
 
         return self.ConvertFractionValue(self._value, self._quantity, self.unit, unit)
 
-    GetValue = GetAbstractValue
+    def GetValue(self, unit: Optional[str] = None) -> FractionValue:
+        return self.GetAbstractValue(unit)
+
     value = property(GetAbstractValue)
 
-    def _GetDefaultValue(self, category_info, unit=None):
-        """
-
-        :param category_info:
-        :param unit:
-        """
+    def _GetDefaultValue(self, category_info: CategoryInfo, unit: Optional[str] = None) -> Any:
         value = category_info.default_value
         if unit is not None:
             # needs to convert value to default unit
@@ -79,36 +105,37 @@ class FractionScalar(AbstractValueWithQuantityObject):
 
         return value
 
-    def GetValueAndUnit(self):
-        return (self.GetValue(), self.GetUnit())
+    def GetValueAndUnit(self) -> Tuple[FractionValue, str]:
+        return self.GetValue(), self.GetUnit()
 
     @classmethod
-    def ConvertFractionValue(cls, fraction_value, quantity, from_unit, to_unit):
+    def ConvertFractionValue(
+        cls,
+        fraction_value: FractionValue,
+        quantity: Union[str, Quantity],
+        from_unit: str,
+        to_unit: str,
+    ) -> FractionValue:
         """
         Converts the given fraction value to the given unit.
 
-        :type fraction_value: L{FractionValue}
         :param fraction_value:
             the fraction value to convert
 
-        :type quantity: IQuantity or str
         :param quantity:
             the IQuantity object to use in the conversion, or the quantity type itself
 
-        :type from_unit: L{FractionValue}
         :param from_unit:
             current unit of the given fraction value
 
-        :type to_unit: L{FractionValue}
         :param to_unit:
             the unit to convert the fraction value to
 
-        :rtype: L{FractionValue}
         :returns:
             the converted fraction value
         """
         # check if a quantity type str was passed
-        if quantity.__class__ == str:
+        if isinstance(quantity, str):
             # Note: actually ignoring the initial quantity type in this case because we
             # do the operation just using the from unit which may have any category (i.e.
             # the important thing is the quantity type, so, it can be created with the
@@ -134,41 +161,40 @@ class FractionScalar(AbstractValueWithQuantityObject):
         return result
 
     # GetFormatted ------------------------------------------------------------------------------------
-    def GetFormattedValue(self, unit=None, value_format=None):
+    def GetFormattedValue(
+        self, unit: Optional[str] = None, value_format: Optional[str] = None
+    ) -> str:
         """
         Returns the value part, that is, the number and fraction.
 
-        :rtype: str
         :returns:
             the formatted string
         """
         return self.GetValue(unit).GetLocalizedString()
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         str() operator.
 
-        :rtype: str
         :returns:
             the string representation
         """
         return self.GetFormatted()
 
-    def GetFormatted(self, unit=None):
+    def GetFormatted(self, unit: Optional[str] = None) -> str:
         """
         Returns the string representation for this FractionScalar.
 
-        :param str unit:
+        :param unit:
             If None, returns the current unit, otherwise, returns the string representation of the
             value converted to the given unit.
 
-        :rtype: str
         :returns:
             The string representation
         """
         return self.GetFormattedValue(unit) + self.GetFormattedSuffix(unit)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """
         repr() operator.
 
@@ -181,15 +207,13 @@ class FractionScalar(AbstractValueWithQuantityObject):
         )
 
     # Equality -------------------------------------------------------------------------------------
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         """
         == operator.
 
-        :type other: L{FractionScalar}
         :param other:
             other fraction scalar
 
-        :rtype: C{bool}
         :returns:
             if other is equal to self
         """
@@ -199,11 +223,11 @@ class FractionScalar(AbstractValueWithQuantityObject):
             and self._quantity == other._quantity
         )
 
-    def __lt__(self, other):
+    def __lt__(self, other: Any) -> bool:
         """
         Comparison between objects.
 
-        :param FractionScalar other:
+        :param other:
             The object to be compared to
 
         :rtype: 1 if this object is greater than the other, -1 it is less than, 0 if they are equal.
@@ -221,7 +245,7 @@ class FractionScalar(AbstractValueWithQuantityObject):
 
     # RegisterFractionScalarConversion -----------------------------------------
     @classmethod
-    def RegisterFractionScalarConversion(cls):
+    def RegisterFractionScalarConversion(cls) -> None:
         """
         Register a special unit conversion for FractionScalar.
 
@@ -229,7 +253,9 @@ class FractionScalar(AbstractValueWithQuantityObject):
             The unit-database instance to register the conversion into.
         """
 
-        def ConvertFractionScalar(db_unit, quantity_type, from_unit, to_unit, value):
+        def ConvertFractionScalar(
+            db_unit: UnitDatabase, quantity_type: str, from_unit: str, to_unit: str, value: Any
+        ) -> Any:
             """
             Converts the given Fraction Scalar by applying the converts method of this class.
             """

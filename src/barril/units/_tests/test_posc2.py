@@ -6,7 +6,7 @@ from barril.units import UnitsError
 from barril.units.unit_database import UnitDatabase
 
 
-def testPoscWithoutFillCategories(unit_database_posc_len_no_category):
+def testPoscWithoutFillCategories(unit_database_posc_len_no_category) -> None:
     unit_database = unit_database_posc_len_no_category
 
     unit_database.AddCategory("my_len", "length")
@@ -20,17 +20,18 @@ def testPoscWithoutFillCategories(unit_database_posc_len_no_category):
     assert approx(abs(u1.value - u2.GetValue("km")), 7) == 0
 
 
-def testMegagramPerCubicMeterToKilogramPerCubicMeter():
+def testMegagramPerCubicMeterToKilogramPerCubicMeter() -> None:
     unit_database = UnitDatabase.CreateDefaultSingleton()
     expected = 1000
     obtained = unit_database.Convert("density", "Mg/m3", "kg/m3", 1)
     assert obtained == expected
 
 
-def testDivisionError():
+def testDivisionError() -> None:
     unit_database = UnitDatabase.CreateDefaultSingleton()
     for category, category_info in unit_database.categories_to_quantity_types.items():
         base_unit = category_info.default_unit
+        assert base_unit is not None
         for unit in unit_database.GetValidUnits(category):
             for i in [-1, 0, 1]:
                 try:
@@ -44,14 +45,14 @@ def testDivisionError():
                     raise TypeError(f"Error converting: from: {unit} to: {base_unit}") from e
 
 
-def testScfPerBblToM3ToM3():
+def testScfPerBblToM3ToM3() -> None:
     unit_database = UnitDatabase.CreateDefaultSingleton()
     expected = 0.17776487178535644
     obtained = unit_database.Convert("standard volume per volume", "scf/bbl", "scm(15C)/m3", 1.0)
     assert approx(abs(obtained - expected), 7) == 0
 
 
-def testAllValidTemperatureUnitsHaveSameDefaultCategory():
+def testAllValidTemperatureUnitsHaveSameDefaultCategory() -> None:
     """'temperature' units should have 'temperature' as defined category (#45)"""
     unit_database = UnitDatabase.CreateDefaultSingleton()
 

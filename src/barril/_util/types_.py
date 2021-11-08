@@ -1,15 +1,15 @@
 """
 Extensions to python native types.
 """
-
+from typing import Any, Set, Optional, Tuple, Union
 
 _TRUE_VALUES = ["TRUE", "YES", "1"]
 _FALSE_VALUES = ["FALSE", "NO", "0"]
 _TRUE_FALSE_VALUES = _TRUE_VALUES + _FALSE_VALUES
-_KNOWN_NUMBER_TYPES = None
+_KNOWN_NUMBER_TYPES: Any = None
 
 
-def _GetKnownNumberTypes():
+def _GetKnownNumberTypes() -> Tuple[type, ...]:
     """
     Dynamically obtain the tuple with the types considered number, including numpy.number if
     possible.
@@ -27,22 +27,20 @@ def _GetKnownNumberTypes():
     return tuple(result)
 
 
-def CheckType(object_, type_, message=None):
+def CheckType(
+    object_: Any, type_: Union[type, Tuple[type, ...]], message: Optional[str] = None
+) -> None:
     """
     Check if the given object is of the given type, raising a descriptive "TypeError" if it is
     not.
 
-    :type object_: Any object
     :param object_:
         The object to check the type
 
-    :type type_: type, tuple of types, type name, tuple of type names
     :param type_:
         The type or types to check.
-        This can be a actual type or the name of the type.
-        This can be one type or a list of types.
 
-    :param str message:
+    :param message:
         The error message shown if the check does not pass.
         By default, generates the following message:
 
@@ -53,8 +51,8 @@ def CheckType(object_, type_, message=None):
     """
     if not isinstance(object_, type_):
         # 001) The list of the types names.
-        type_names = [x if isinstance(x, str) else x.__name__ for x in MakeTuple(type_)]
-        type_names = '" or "'.join(type_names)
+        type_names_parts = [x if isinstance(x, str) else x.__name__ for x in MakeTuple(type_)]
+        type_names = '" or "'.join(type_names_parts)
 
         # 002) Build the error message
         exception_message = 'CheckType: Expecting "{}", got "{}": {}'.format(
@@ -69,7 +67,7 @@ def CheckType(object_, type_, message=None):
         raise TypeError(exception_message)
 
 
-def CheckFormatString(pattern, *arguments):
+def CheckFormatString(pattern: str, *arguments: Any) -> None:
     """
     Checks if the given format string (for instance, "%.g") is valid for the given arguments.
     :param pattern: a string in "%" format
@@ -83,11 +81,11 @@ def CheckFormatString(pattern, *arguments):
         raise ValueError("%r is not a valid format string." % pattern)
 
 
-def IsNumber(v) -> bool:
+def IsNumber(v: object) -> bool:
     """
     Checks if the given value is a number
 
-    :return bool:
+    :return:
         True if the given value is a number, False otherwise
     """
     global _KNOWN_NUMBER_TYPES
@@ -97,11 +95,11 @@ def IsNumber(v) -> bool:
     return isinstance(v, _KNOWN_NUMBER_TYPES)
 
 
-def MakeTuple(object_):
+def MakeTuple(object_: Any) -> Tuple[Any, ...]:
     """
     Returns the given object as a tuple, if it is not, creates one with it inside.
 
-    @param: Any object or tuple
+    @param:
         The object to tupleIZE
     """
     if isinstance(object_, tuple):

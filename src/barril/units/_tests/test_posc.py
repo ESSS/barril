@@ -9,7 +9,7 @@ from barril.units.unit_database import UnitDatabase
 from pytest import approx
 
 
-def testPoscFrequency(unit_database_posc):
+def testPoscFrequency(unit_database_posc) -> None:
     u1 = units.Scalar("frequency", 1, "Hz")
     assert u1.GetValue("GHz") == 1.0e-9
 
@@ -17,7 +17,7 @@ def testPoscFrequency(unit_database_posc):
     assert u1.GetValue("Hz") == 1e9
 
 
-def testPoscTime(unit_database_posc):
+def testPoscTime(unit_database_posc) -> None:
     """
     These are the time-units available on posc.
     """
@@ -30,7 +30,7 @@ def testPoscTime(unit_database_posc):
     assert hs.GetValue("d") == d.GetValue("d")
 
 
-def testPoscTemperature(unit_database_posc):
+def testPoscTemperature(unit_database_posc) -> None:
     u1 = units.Scalar("thermodynamic temperature", 100, "degC")
     u2 = units.Scalar("thermodynamic temperature", 100, "degF")
     u3 = units.Scalar("thermodynamic temperature", 0, "degC")
@@ -55,7 +55,7 @@ def testPoscTemperature(unit_database_posc):
     assert u3.GetValue("degC") == u4.value
 
 
-def testPoscRankine(unit_database_posc):
+def testPoscRankine(unit_database_posc) -> None:
     rankine = [0.0, 100, 550, 1300]
     kelvin = [0.0, 55.55555, 305.55555, 722.22222]
     unit_database = unit_database_posc
@@ -64,7 +64,7 @@ def testPoscRankine(unit_database_posc):
     assert approx(obtained) == kelvin
 
 
-def testPoscLength(unit_database_posc):
+def testPoscLength(unit_database_posc) -> None:
     # 'length'
     u1 = units.Scalar("length", 10, "ft")
     u2 = units.Scalar("length", 100, "km")
@@ -84,7 +84,7 @@ def testPoscLength(unit_database_posc):
     assert u3.GetValue("yd") == u4.value
 
 
-def testPoscVolume(unit_database_posc):
+def testPoscVolume(unit_database_posc) -> None:
     million_cubic_meters = units.Scalar("volume", 1, "M(m3)")
     assert million_cubic_meters.value == 1.0
     assert million_cubic_meters.GetValue("m3") == 1.0e6
@@ -96,7 +96,7 @@ def testPoscVolume(unit_database_posc):
     assert cubic_meters.GetValue("1000m3") == 1.0e3
 
 
-def testPoscVolumeFlowRate(unit_database_posc):
+def testPoscVolumeFlowRate(unit_database_posc) -> None:
     million_cubic_meters = units.Scalar("volume flow rate", 1, "M(m3)/d")
     assert million_cubic_meters.value == 1.0
     assert million_cubic_meters.GetValue("m3/d") == 1.0e6
@@ -108,13 +108,13 @@ def testPoscVolumeFlowRate(unit_database_posc):
     assert cubic_meters.GetValue("1000m3/d") == 1.0e3
 
 
-def testPoscPermeabilityLength(unit_database_posc):
+def testPoscPermeabilityLength(unit_database_posc) -> None:
     unit_database = UnitDatabase.GetSingleton()
     assert "volume" == unit_database.GetQuantityType("mD.ft")
     assert "permeability length" == unit_database.GetDefaultCategory("mD.ft")
 
 
-def testPoscPermeability(unit_database_posc):
+def testPoscPermeability(unit_database_posc) -> None:
     # 'length'
     u1 = units.Scalar("permeability rock", 1, "D")
     u2 = units.Scalar("permeability rock", 1000, "mD")
@@ -127,7 +127,7 @@ def testPoscPermeability(unit_database_posc):
     assert approx(abs(u2.GetValue("D") - 1.0), 7) == 0
 
 
-def testPoscMolePerTime(unit_database_posc):
+def testPoscMolePerTime(unit_database_posc) -> None:
     default = units.Scalar(1, "mol/s")
     assert default.GetQuantityType() == "mole per time"
 
@@ -136,7 +136,7 @@ def testPoscMolePerTime(unit_database_posc):
     assert approx(abs(default.GetValue("mol/d") - 1.0 * 86400.0), 7) == 0
 
 
-def testPoscRotationalFrequency(unit_database_posc):
+def testPoscRotationalFrequency(unit_database_posc) -> None:
     default = units.Scalar(1, "rad/s")
     assert default.GetQuantityType() == "frequency"
 
@@ -145,7 +145,7 @@ def testPoscRotationalFrequency(unit_database_posc):
     assert approx(abs(default.GetValue("rev/s") - 0.15915494309644432), 7) == 0
 
 
-def testPoscAngularAcceleration(unit_database_posc):
+def testPoscAngularAcceleration(unit_database_posc) -> None:
     default = units.Scalar(1, "rad/s2")
     assert default.GetQuantityType() == "angular acceleration"
 
@@ -158,7 +158,7 @@ def testPoscAngularAcceleration(unit_database_posc):
     assert approx(abs(default.GetValue("rpm/s") - 9.549296585786658), 7) == 0
 
 
-def testPoscDensity(unit_database_posc):
+def testPoscDensity(unit_database_posc) -> None:
     default = units.Scalar(1, "kg/m3")
     assert default.GetQuantityType() == "density"
 
@@ -167,7 +167,7 @@ def testPoscDensity(unit_database_posc):
     assert approx(abs(default.GetValue("mg/cm3") - 1e6 / 1e6), 7) == 0
 
 
-def testPoscSpecificEnergy(unit_database_posc):
+def testPoscSpecificEnergy(unit_database_posc) -> None:
     default = units.Scalar(1, "J/kg")
     assert default.GetQuantityType() == "specific energy"
 
@@ -180,7 +180,7 @@ def testPoscSpecificEnergy(unit_database_posc):
     assert approx(abs(default.GetValue("kW.h/tonUK") - 2.73390677574e-10), 20) == 0
 
 
-def testPoscMassPerEnergy(unit_database_posc):
+def testPoscMassPerEnergy(unit_database_posc) -> None:
     default = units.Scalar(1, "kg/J")
     assert default.GetQuantityType() == "mass per energy"
 
@@ -188,7 +188,7 @@ def testPoscMassPerEnergy(unit_database_posc):
     assert approx(abs(default.GetValue("lbm/Btu") - 1.0 / 0.0004299226139295), 7) == 0
 
 
-def testKinematicViscosity(unit_database_posc):
+def testKinematicViscosity(unit_database_posc) -> None:
     default = units.Scalar("kinematic viscosity", 1, "m2/s")
     assert default.GetQuantityType() == "volume per time per length"
     assert approx(abs(default.value - 1.0), 7) == 0
@@ -204,7 +204,7 @@ def testKinematicViscosity(unit_database_posc):
     assert approx(abs(default.GetValue("ft2/d") - 930001.8600037199), 7) == 0
 
 
-def testCreateVolumeQuantityFromLengthQuantity(unit_database_posc):
+def testCreateVolumeQuantityFromLengthQuantity(unit_database_posc) -> None:
     unit_database = unit_database_posc
     length_units = unit_database.GetValidUnits("length")
     convertable_length_units = ["m", "cm", "dm", "ft", "in", "km", "mi", "mm", "yd", "um"]
@@ -223,7 +223,7 @@ def testCreateVolumeQuantityFromLengthQuantity(unit_database_posc):
         assert volume_quantity.GetUnit() == "%s3" % length_unit
 
 
-def testCreateAreaQuantityFromLengthQuantity(unit_database_posc):
+def testCreateAreaQuantityFromLengthQuantity(unit_database_posc) -> None:
     unit_database = unit_database_posc
     length_units = unit_database.GetValidUnits("length")
     convertable_length_units = ["m", "cm", "ft", "in", "km", "mi", "miUS", "mm", "um", "yd"]
@@ -242,7 +242,7 @@ def testCreateAreaQuantityFromLengthQuantity(unit_database_posc):
         assert area_quantity.GetUnit() == "%s2" % length_unit
 
 
-def testDefaultCategories(unit_database_posc):
+def testDefaultCategories(unit_database_posc) -> None:
     """
     Check all units with categories defined
     """
@@ -297,7 +297,7 @@ def testDefaultCategories(unit_database_posc):
     ]
 
 
-def testPoscValidUnitsNotRepeated(unit_database_posc):
+def testPoscValidUnitsNotRepeated(unit_database_posc) -> None:
     unit_database = unit_database_posc
     for category in unit_database.IterCategories():
         valid_units = unit_database.GetValidUnits(category)
@@ -306,7 +306,7 @@ def testPoscValidUnitsNotRepeated(unit_database_posc):
         ), f'There is a duplicate unit defined in "{category}": {valid_units}'
 
 
-def testPoscKVmm(unit_database_posc):
+def testPoscKVmm(unit_database_posc) -> None:
     """
     V/m to KV/mm (multiply by 1e6)
     """
@@ -314,7 +314,7 @@ def testPoscKVmm(unit_database_posc):
     assert q.ConvertScalarValue(1, "KV/mm") == 1e6
 
 
-def testPoscBytes(unit_database_posc):
+def testPoscBytes(unit_database_posc) -> None:
     """
     Bytes, kBytes, MBytes, ....
     """
@@ -325,12 +325,12 @@ def testPoscBytes(unit_database_posc):
     assert q.ConvertScalarValue(1024 * 1024 * 1024 * 1024, "TByte") == 1
 
 
-def testOhmUnits(unit_database_posc):
+def testOhmUnits(unit_database_posc) -> None:
     q = ObtainQuantity("ohm/m")
     assert q.ConvertScalarValue(1, "ohm/km") == 1000
 
 
-def testPower(unit_database_posc):
+def testPower(unit_database_posc) -> None:
     unit_database = unit_database_posc
     assert "volt ampere" == ObtainQuantity("VA").GetQuantityType()
     assert "volt ampere reactive" == ObtainQuantity("VAr").GetQuantityType()
@@ -348,7 +348,7 @@ def testPower(unit_database_posc):
     )
 
 
-def testFluidGasConcentration(unit_database_posc):
+def testFluidGasConcentration(unit_database_posc) -> None:
     """
     Total Gas Unit requested for PWDA as concentration
     """
@@ -361,7 +361,7 @@ def testFluidGasConcentration(unit_database_posc):
     assert approx(abs(q.ConvertScalarValue(1, "Euc") - 0.00033333), 7) == 0
 
 
-def testSpringDashpotUnits(unit_database_posc):
+def testSpringDashpotUnits(unit_database_posc) -> None:
     """
     Units used to define Spring-Dashpot movements
     """
@@ -379,7 +379,7 @@ def testSpringDashpotUnits(unit_database_posc):
     assert approx(abs(q.ConvertScalarValue(1, "lbf.ft.s/dega") - 0.017453292519943), 7) == 0
 
 
-def testConcentrationRatio(unit_database_posc):
+def testConcentrationRatio(unit_database_posc) -> None:
     """
     Units used to express a ratio of concentrations
     """
@@ -387,7 +387,7 @@ def testConcentrationRatio(unit_database_posc):
     assert concentration_ratio_units == ["mg/l/mg/l", "kg/m3/kg/m3"]
 
 
-def testJouleThomsonCoefficientUnits():
+def testJouleThomsonCoefficientUnits() -> None:
     """
     Results gathered from NIST.
     """
@@ -414,7 +414,7 @@ def testJouleThomsonCoefficientUnits():
     assert joule_thomson_si_units_mega.GetValue("degF/bar") == approx(9 / 5 * 1e1)
 
 
-def testDensityDerivativePerTemperatureUnitConversion():
+def testDensityDerivativePerTemperatureUnitConversion() -> None:
     density_derivative_per_temperature = units.Scalar(
         "density derivative in respect to temperature", 1, "kg/m3.degC"
     )
@@ -427,7 +427,7 @@ def testDensityDerivativePerTemperatureUnitConversion():
     assert density_derivative_per_temperature.GetValue("kg/m3.degC") == 1.0
 
 
-def testStandardVolumePerStandardVolumeSmoke():
+def testStandardVolumePerStandardVolumeSmoke() -> None:
     standard_per_standard = units.Scalar(
         "standard volume per standard volume", 1, "scm(15C)/scm(15C)"
     )
@@ -445,7 +445,7 @@ def testStandardVolumePerStandardVolumeSmoke():
     assert standard_per_standard.GetValue("stb/MMscf") == approx(177764.87178535643)
 
 
-def testHeatTransferCoefficient():
+def testHeatTransferCoefficient() -> None:
     default = units.Scalar("heat transfer coefficient", 1, "W/m2.K")
     assert default.value == 1.0
     assert default.GetValue("Btu/hr.ft2.degF") == approx(0.17611019426187197)
@@ -461,7 +461,7 @@ def testHeatTransferCoefficient():
     assert default.GetValue("kW/m2.K") == approx(0.001)
 
 
-def testProductivityIndex():
+def testProductivityIndex() -> None:
     default = units.Scalar("productivity index", 1, "m3/Pa.s")
     assert default.value == 1.0
     assert default.GetValue("Mcf/psi.d") == approx(21037191.806292012)
@@ -479,7 +479,7 @@ def testProductivityIndex():
     assert default.GetValue("m3/psi.d") == approx(595707004.8)
 
 
-def testThermalConductivity():
+def testThermalConductivity() -> None:
     default = units.Scalar("thermal conductivity", 1, "W/m.K")
     assert default.GetValue("Btu/hr.ft.degF") == approx(0.5777892051642799)
     assert default.GetValue("cal/h.cm.degC") == approx(8.604208146120104)
@@ -491,7 +491,7 @@ def testThermalConductivity():
     assert default.GetValue("W/m.degC") == approx(1.0)
 
 
-def testStandardVolumePerTime():
+def testStandardVolumePerTime() -> None:
     default = units.Scalar("standard volume per time", 1, "scm(15C)/s")
     assert default.GetValue("ksm3/d") == approx(86.4)
     assert default.GetValue("MMscf(60F)/d") == approx(3.0570698685888087)

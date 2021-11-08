@@ -1,9 +1,11 @@
-from barril.units.unit_database import UnitDatabase
+from typing import Any, Optional
 
-from ._quantity import ObtainQuantity
+from barril.units.unit_database import UnitDatabase, UnaryConversionFunc
+
+from ._quantity import ObtainQuantity, Quantity
 
 
-def MakeCustomaryToBase(a, b, c, d):
+def MakeCustomaryToBase(a: Any, b: Any, c: Any, d: Any) -> UnaryConversionFunc:
     """
     Formula to convert some value from Customary Unit to Base Unit
     (A + BX) / (C + DX)
@@ -16,19 +18,19 @@ def MakeCustomaryToBase(a, b, c, d):
         Returns a callable with the conversion to the base.
     """
 
-    def ret(x):
+    def ret(x: Any) -> Any:
         return (a + b * x) / (c + d * x)
 
-    ret.__a__ = a
-    ret.__b__ = b
-    ret.__c__ = c
-    ret.__d__ = d
-    ret.__has_conversion__ = True
+    ret.__a__ = a  # type:ignore[attr-defined]
+    ret.__b__ = b  # type:ignore[attr-defined]
+    ret.__c__ = c  # type:ignore[attr-defined]
+    ret.__d__ = d  # type:ignore[attr-defined]
+    ret.__has_conversion__ = True  # type:ignore[attr-defined]
 
     return ret
 
 
-def MakeBaseToCustomary(a, b, c, d):
+def MakeBaseToCustomary(a: Any, b: Any, c: Any, d: Any) -> UnaryConversionFunc:
     """
      Formula to convert some value from Derivate Unit to Base Unit
     (A - CY) / (DY - B)
@@ -42,19 +44,23 @@ def MakeBaseToCustomary(a, b, c, d):
          coefficients).
     """
 
-    def ret(y):
+    def ret(y: Any) -> Any:
         return (a - c * y) / (d * y - b)
 
-    ret.__a__ = a
-    ret.__b__ = b
-    ret.__c__ = c
-    ret.__d__ = d
-    ret.__has_conversion__ = True
+    ret.__a__ = a  # type:ignore[attr-defined]
+    ret.__b__ = b  # type:ignore[attr-defined]
+    ret.__c__ = c  # type:ignore[attr-defined]
+    ret.__d__ = d  # type:ignore[attr-defined]
+    ret.__has_conversion__ = True  # type:ignore[attr-defined]
 
     return ret
 
 
-def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=False):
+def FillUnitDatabaseWithPosc(
+    db: Optional[UnitDatabase] = None,
+    fill_categories: bool = True,
+    override_categories: bool = False,
+) -> UnitDatabase:
     """
     Fills the given database with the posc units and the additional units defined in barril.
 
@@ -15680,17 +15686,13 @@ def FillUnitDatabaseWithPosc(db=None, fill_categories=True, override_categories=
     return db
 
 
-def CreateVolumeQuantityFromLengthQuantity(length_quantity):
+def CreateVolumeQuantityFromLengthQuantity(length_quantity: "Quantity") -> "Quantity":
     """
     Creates a volume quantity based on the given length quantity.
 
-    :param Quantity length_quantity:
+    :param length_quantity:
         The length quantity that must be taken as base to create the volume quantity.
 
-    :param UnitDatabase unit_database:
-        The unit database that will be assigned to the created quantity.
-
-    :rtype: Quantity
     :returns:
         THe created volume quantity.
     """
@@ -15708,22 +15710,17 @@ def CreateVolumeQuantityFromLengthQuantity(length_quantity):
 
     if volume_unit not in volume_units:
         return Quantity.CreateDerived(OrderedDict([("length", (length_quantity.GetUnit(), 3))]))
-
     else:
         return ObtainQuantity(volume_unit, "volume")
 
 
-def CreateAreaQuantityFromLengthQuantity(length_quantity):
+def CreateAreaQuantityFromLengthQuantity(length_quantity: "Quantity") -> "Quantity":
     """
     Creates a area quantity based on the given length quantity.
 
-    :param Quantity length_quantity:
+    :param length_quantity:
         The length quantity that must be taken as base to create the volume quantity.
 
-    :param UnitDatabase unit_database:
-        The unit database that will be assigned to the created quantity.
-
-    :rtype: Quantity
     :returns:
         THe created area quantity.
     """
@@ -15741,6 +15738,5 @@ def CreateAreaQuantityFromLengthQuantity(length_quantity):
 
     if area_unit not in area_units:
         return Quantity.CreateDerived(OrderedDict([("length", (length_quantity.GetUnit(), 2))]))
-
     else:
         return ObtainQuantity(area_unit, "area")

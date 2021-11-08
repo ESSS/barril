@@ -80,7 +80,7 @@ class _LightweightScalar(tuple):  # Could derive from _LightweightQuantity, but 
         return (self[0], self[1])
 
     def IsValid(self):
-        return self.CheckValue(self[0])
+        return self.CheckValue(self[0])  # type:ignore[attr-defined]
 
     def GetCategory(self):
         return self[2]
@@ -105,7 +105,7 @@ class _LightweightScalar(tuple):  # Could derive from _LightweightQuantity, but 
         return iter((self[0], self[1]))
 
 
-def testCreation():
+def testCreation() -> None:
     x = _LightweightScalar(value=1.0, unit="kg/m3", category="density")
 
     assert x.GetValue() == 1.0
@@ -119,7 +119,7 @@ def testCreation():
     assert x.GetQuantity().GetQuantityType() == "density"
 
 
-def testConversionToFullScalar():
+def testConversionToFullScalar() -> None:
     y = _LightweightScalar(value=1.0, unit="kg/m3", category="density")
     x = Scalar(value=y.GetValue(), unit=y.GetUnit(), category=y.GetCategory())
 
@@ -137,7 +137,7 @@ def testConversionToFullScalar():
     assert x.GetValue(unit="g/cm3") == 0.001
 
 
-def testLazyChecking():
+def testLazyChecking() -> None:
     from barril.units.unit_database import InvalidQuantityTypeError
 
     # Category 'meta density' does not exist
@@ -154,7 +154,7 @@ def testLazyChecking():
         x.GetQuantityType()
 
 
-def testGettingValueWithDifferentUnit():
+def testGettingValueWithDifferentUnit() -> None:
     x = _LightweightScalar(value=0.001, unit="g/cm3", category="concentration")
 
     # But the creation of _LightweightScalar does not check this...
@@ -172,7 +172,7 @@ def testGettingValueWithDifferentUnit():
         x.GetValue("kg/cm3")
 
 
-def testUnpackingToValueAndUnit():
+def testUnpackingToValueAndUnit() -> None:
     x = _LightweightScalar(value=0.001, unit="g/cm3", category="concentration")
 
     value, unit = x
@@ -181,7 +181,7 @@ def testUnpackingToValueAndUnit():
     assert unit == "g/cm3"
 
 
-def testQuantityCreationAndInterface():
+def testQuantityCreationAndInterface() -> None:
     x = _LightweightQuantity(unit="kg/m3", category="concentration")
 
     assert x.GetUnit() == "kg/m3"
@@ -193,7 +193,7 @@ def testQuantityCreationAndInterface():
     assert x.GetQuantity().GetQuantityType() == "density"
 
 
-def testQuantityLazyChecking():
+def testQuantityLazyChecking() -> None:
     from barril.units.unit_database import InvalidQuantityTypeError
 
     # Category 'meta density' does not exist

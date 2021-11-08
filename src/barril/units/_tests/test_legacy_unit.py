@@ -2,7 +2,7 @@ from barril.units import Scalar
 from pytest import approx, raises
 
 
-def testConvertLegacyUnit():
+def testConvertLegacyUnit() -> None:
     from barril.units.unit_database import _LEGACY_TO_CURRENT
 
     # test creating scalar using legacy representation and default category
@@ -26,14 +26,14 @@ def testConvertLegacyUnit():
         assert Scalar(1.0, legacy).GetUnit() == current
 
 
-def testCreateScalarUnitsError():
+def testCreateScalarUnitsError() -> None:
     from barril.units.unit_database import UnitsError
 
     with raises(UnitsError, match="Unable to get default category for: foo/d"):
         _ = Scalar(1.0, "foo/d")
 
 
-def testGetValueInvalidUnitError():
+def testGetValueInvalidUnitError() -> None:
     from barril.units.unit_database import InvalidUnitError
 
     with raises(
@@ -43,19 +43,19 @@ def testGetValueInvalidUnitError():
         q.GetValue("1000ft3/foo")
 
 
-def testFixUnitIfIsLegacyExcept():
+def testFixUnitIfIsLegacyExcept() -> None:
     from barril.units.unit_database import FixUnitIfIsLegacy
 
     class SomeNonExpectedObject:
         pass
 
     unknown = SomeNonExpectedObject()
-    is_legacy, unit = FixUnitIfIsLegacy(unknown)
+    is_legacy, unit = FixUnitIfIsLegacy(unknown)  # type:ignore[arg-type]
     assert is_legacy == False
-    assert unit is unknown
+    assert unit is unknown  # type:ignore[comparison-overlap]
 
 
-def testUnitDatabaseConvert(unit_database_posc):
+def testUnitDatabaseConvert(unit_database_posc) -> None:
     import numpy as np
 
     # Test against float
@@ -72,21 +72,21 @@ def testUnitDatabaseConvert(unit_database_posc):
     assert approx(converted) == 28316.85
 
 
-def testUnitDatabaseGetUnitNameLegacy(unit_database_posc):
+def testUnitDatabaseGetUnitNameLegacy(unit_database_posc) -> None:
     assert (
         unit_database_posc.GetUnitName(quantity_type="volume flow rate", unit="M(ft3)/d")
         == "million cubic feet per day"
     )
 
 
-def testUnitDatabaseCheckQuantityTypeUnitLegacy(unit_database_posc):
+def testUnitDatabaseCheckQuantityTypeUnitLegacy(unit_database_posc) -> None:
     from barril.units.unit_database import InvalidUnitError
 
     with raises(InvalidUnitError, match="Invalid unit for quantity_type volume flow rate"):
         unit_database_posc.CheckQuantityTypeUnit(quantity_type="volume flow rate", unit="M(ft3)/d")
 
 
-def testUnitDatabaseGetDefaultCategory(unit_database_posc):
+def testUnitDatabaseGetDefaultCategory(unit_database_posc) -> None:
     category = unit_database_posc.GetDefaultCategory("1000ft3/d")
     assert category == "volume flow rate"
 

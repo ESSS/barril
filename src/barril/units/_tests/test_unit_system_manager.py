@@ -1,4 +1,5 @@
 import weakref
+from typing import Dict
 
 import pytest
 
@@ -36,7 +37,7 @@ def units_mapping_2():
 
 @pytest.fixture
 def units_mapping_3():
-    units_mapping = {}
+    units_mapping: Dict[str, str] = {}
     return units_mapping
 
 
@@ -45,7 +46,7 @@ def CreateUnitSystemTemplate(manager):
     manager.SetTemplateUnitSystemByUnitsMapping(units_mapping_template)
 
 
-def testUnitSystemManager(unit_manager, units_mapping_1, units_mapping_2, units_mapping_3):
+def testUnitSystemManager(unit_manager, units_mapping_1, units_mapping_2, units_mapping_3) -> None:
     CreateUnitSystemTemplate(unit_manager)
     unit_manager.AddUnitSystem("system1", "system1", units_mapping_1, False)
     unit_manager.AddUnitSystem("system2", "system2", units_mapping_2, False)
@@ -86,7 +87,7 @@ def testUnitSystemManager(unit_manager, units_mapping_1, units_mapping_2, units_
     assert fraction_scalar_ref() is None
 
 
-def testGetNewId(unit_manager, units_mapping_1):
+def testGetNewId(unit_manager, units_mapping_1) -> None:
     CreateUnitSystemTemplate(unit_manager)
 
     new_id = unit_manager.GetNewId()
@@ -98,7 +99,7 @@ def testGetNewId(unit_manager, units_mapping_1):
     assert unit_manager.GetNewId() == "system 1"
 
 
-def testCurrentUnitSystemUpdate(unit_manager, units_mapping_1):
+def testCurrentUnitSystemUpdate(unit_manager, units_mapping_1) -> None:
     """
     If the current unit system is removed, another should be set
     """
@@ -132,7 +133,7 @@ def testCurrentUnitSystemUpdate(unit_manager, units_mapping_1):
     assert current_id is None
 
 
-def testConvertToCurrent(unit_manager, units_mapping_1, units_mapping_2):
+def testConvertToCurrent(unit_manager, units_mapping_1, units_mapping_2) -> None:
     CreateUnitSystemTemplate(unit_manager)
 
     units_mapping_3 = {"length": "cm"}
@@ -166,7 +167,7 @@ def testConvertToCurrent(unit_manager, units_mapping_1, units_mapping_2):
     assertConversion((100.0, "m"), (10000.0, "cm"))
 
 
-def testCreateUnitSystemWithoutTemplate(unit_manager, units_mapping_1):
+def testCreateUnitSystemWithoutTemplate(unit_manager, units_mapping_1) -> None:
     """
     It should be possible to create unit systems without a units template.
     """
@@ -183,7 +184,7 @@ def testCreateUnitSystemWithoutTemplate(unit_manager, units_mapping_1):
         unit_manager.SetTemplateUnitSystemByUnitsMapping(units_mapping_template)
 
 
-def testGetQuantityDefaultUnit(unit_manager, units_mapping_1):
+def testGetQuantityDefaultUnit(unit_manager, units_mapping_1) -> None:
     system1 = unit_manager.AddUnitSystem("system1", "", units_mapping_1)
 
     system1.SetDefaultUnit("length", "cm")
@@ -193,7 +194,7 @@ def testGetQuantityDefaultUnit(unit_manager, units_mapping_1):
     assert default_unit == "cm"
 
 
-def testEmptyUnitSystemManager():
+def testEmptyUnitSystemManager() -> None:
     """
     When no current unit system is selected the method GetCurrent should return an empty unit
     system.

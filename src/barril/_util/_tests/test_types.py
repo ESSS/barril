@@ -3,7 +3,7 @@ import pytest
 from barril._util.types_ import CheckFormatString, CheckType, IsNumber, _GetKnownNumberTypes
 
 
-def testPassing():
+def testPassing() -> None:
     class Foo:
         pass
 
@@ -12,7 +12,7 @@ def testPassing():
     CheckType(99, (int, Foo))
 
 
-def testRaising():
+def testRaising() -> None:
     with pytest.raises(TypeError):
         CheckType("hellou", int)
 
@@ -23,7 +23,7 @@ def testRaising():
         CheckType(99, (str, float))
 
 
-def testCheckFormatString():
+def testCheckFormatString() -> None:
     CheckFormatString("%s", 1)
     CheckFormatString("%s m", 1)
 
@@ -34,7 +34,7 @@ def testCheckFormatString():
         CheckFormatString("%s m %s", 1, 3, 3)
 
 
-def testIfCustomMessageIsAppendedToDefaultMessage():
+def testIfCustomMessageIsAppendedToDefaultMessage() -> None:
     message = "Zero is not unicode!"
 
     with pytest.raises(TypeError) as exception:
@@ -43,10 +43,10 @@ def testIfCustomMessageIsAppendedToDefaultMessage():
     assert message in str(exception.value)
 
 
-def testCheckNumber():
+def testCheckNumber() -> None:
     numpy = pytest.importorskip("numpy")
 
-    for number_class in [float] + list((int,)):
+    for number_class in (float, int):
         converted = number_class(1)
         assert IsNumber(converted)
 
@@ -55,7 +55,7 @@ def testCheckNumber():
     assert IsNumber(collection[0])
 
 
-def testGetKnownNumberTypes(monkeypatch):
+def testGetKnownNumberTypes(monkeypatch) -> None:
     import sys
 
     numpy = pytest.importorskip("numpy")

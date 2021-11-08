@@ -1,3 +1,5 @@
+from typing import List, Tuple
+
 import pytest
 from collections import OrderedDict
 from barril import units
@@ -6,7 +8,7 @@ from pytest import approx
 from barril.units import Scalar
 
 
-def testEmptyArray():
+def testEmptyArray() -> None:
     arr = Array.CreateEmptyArray()
     assert not arr.HasCategory()
 
@@ -14,7 +16,7 @@ def testEmptyArray():
     assert arr.HasCategory()
 
 
-def testValues():
+def testValues() -> None:
     array = units.Array("length", values=[100, 150, 200], unit="m")
     assert array.unit == "m"
     assert array.values == [100, 150, 200]
@@ -28,7 +30,7 @@ def testValues():
         array.values = 10
 
 
-def testArrayWithNaNs(unit_database_len):
+def testArrayWithNaNs(unit_database_len) -> None:
     import numpy
 
     TEST_VALUES = [[numpy.nan, 0, 15, numpy.nan], [numpy.nan] * 5]
@@ -38,12 +40,12 @@ def testArrayWithNaNs(unit_database_len):
         )  # check that this does not raise exceptions
 
 
-def testStr():
+def testStr() -> None:
     array = units.Array("length", values=[100, 150, 200], unit="m")
     assert str(array) == "100 150 200 [m]"
 
 
-def testConvertValuesFromArray():
+def testConvertValuesFromArray() -> None:
     def CheckConversion(values):
         _array = units.Array("length", values=values, unit="m")
         for converted, original in zip(_array.GetValues("km"), values):
@@ -55,13 +57,13 @@ def testConvertValuesFromArray():
     CheckConversion(array([0.0, 0.0]))
 
 
-def testValues2():
+def testValues2() -> None:
     array = units.Array("length", values=[100, 150, 200], unit="m")
     array2 = units.Array("length", values=(100, 150, 200), unit="m")
     assert array == array2
 
 
-def testEquality():
+def testEquality() -> None:
     a1 = units.Array("length", values=list(range(100)), unit="m")
 
     assert a1 == units.Array("length", values=list(range(100)), unit="m")
@@ -70,7 +72,7 @@ def testEquality():
     assert a1 != units.Array("length", values=list(range(100)), unit="km")
 
 
-def testMultiDimensional():
+def testMultiDimensional() -> None:
     a1 = units.Array("length", values=[(1000, 1000), (300, 300)], unit="m")
     assert a1.GetValues("km") == [(1, 1), (0.3, 0.3)]
 
@@ -82,7 +84,7 @@ def testMultiDimensional():
     assert (0.3, 0.3) == a1[1]
 
 
-def testCreateWithQuantity():
+def testCreateWithQuantity() -> None:
     q = ObtainQuantity("m", "length")
     a1 = units.Array(q, values=[(1000, 1000), (300, 300)])
     a2 = a1.CreateCopy(unit="km")
@@ -91,7 +93,7 @@ def testCreateWithQuantity():
     assert a2.values == [(1, 1), (0.3, 0.3)]
 
 
-def testCategoryParameters(unit_database_len, mocker):
+def testCategoryParameters(unit_database_len, mocker) -> None:
     unit_database = unit_database_len
     unit_database.AddUnit("temperature", "Kelvin Degrees", "degK", "%f - 273.5", "%f + 273.5")
     unit_database.AddCategory(
@@ -113,8 +115,9 @@ def testCategoryParameters(unit_database_len, mocker):
     assert a2._is_valid is None
     assert a2._validity_exception is None
 
-    mocker.patch.object(a2, "_DoValidateValues", autospec=True)
-    a2._DoValidateValues.side_effect = ValueError("my value error")
+    mocker.patch.object(
+        a2, "_DoValidateValues", autospec=True, side_effect=ValueError("my value error")
+    )
 
     assert not a2.IsValid()
     assert a2._is_valid is False
@@ -131,7 +134,7 @@ def testCategoryParameters(unit_database_len, mocker):
     assert not a3.IsValid()
 
 
-def testInvalidUnit():
+def testInvalidUnit() -> None:
     a1 = units.Array("length", values=[(1000, 1000), (300, 300)], unit="m")
     try:
         a1 = a1.CreateCopy(values=[(100, 200)], unit="foo")
@@ -141,7 +144,7 @@ def testInvalidUnit():
     assert a1.unit == "m"
 
 
-def testGetValues():
+def testGetValues() -> None:
     """
     Tests GetValues method return type when passing a 'unit'
     """
@@ -149,16 +152,16 @@ def testGetValues():
     assert isinstance(array.GetValues(), list)
     assert isinstance(array.GetValues("degC"), list)
 
-    array = units.Array("temperature", values=(0, 100), unit="degC")
-    assert isinstance(array.GetValues(), tuple)
-    assert isinstance(array.GetValues("degC"), tuple)
-    assert array[1] == 100
+    array2 = units.Array("temperature", values=(0, 100), unit="degC")
+    assert isinstance(array2.GetValues(), tuple)
+    assert isinstance(array2.GetValues("degC"), tuple)
+    assert array2[1] == 100
 
-    array = units.Array("temperature", values=[], unit="degC")
-    assert isinstance(array.GetValues("degC"), list)
+    array3 = units.Array[List[float]]("temperature", values=[], unit="degC")
+    assert isinstance(array3.GetValues("degC"), list)
 
 
-def testCopy():
+def testCopy() -> None:
     array = units.Array("length", values=[0, 100], unit="m")
     copy = array.Copy()
     assert copy is array
@@ -172,14 +175,14 @@ def testCopy():
     assert isinstance(copy, MyArray)
 
 
-def testArrayOperations(unit_database_len_time):
+def testArrayOperations(unit_database_len_time) -> None:
     unit_database = unit_database_len_time
 
     m = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 1])]))
     km_city = Quantity.CreateDerived(OrderedDict([("City size", ["km", 1])]))
 
-    s1 = Array.CreateWithQuantity(m, [1])
-    s2 = Array.CreateWithQuantity(km_city, [0.01])
+    s1: Array[List[float]] = Array.CreateWithQuantity(m, [1])
+    s2: Array[List[float]] = Array.CreateWithQuantity(km_city, [0.01])
     initial1 = s1.GetQuantity().GetComposingUnits()
     initial2 = s2.GetQuantity().GetComposingUnits()
     # Check that they doesn't raise ComposedUnitError
@@ -189,7 +192,7 @@ def testArrayOperations(unit_database_len_time):
     quantity, value = unit_database.Multiply(m, km_city, 1, 0.01)
     assert initial1 == s1.GetQuantity().GetComposingUnits()
     assert initial2 == s2.GetQuantity().GetComposingUnits()
-    calculated1 = Array.CreateWithQuantity(quantity, [value])
+    calculated1: Array[List[float]] = Array.CreateWithQuantity(quantity, [value])
 
     array = s1 * s2
     str(array)  # just to see if it works...
@@ -202,18 +205,18 @@ def testArrayOperations(unit_database_len_time):
     assert Array.CreateWithQuantity(quantity, [value]) == s1 - s2
 
 
-def testDivision(unit_database_len_time):
+def testDivision(unit_database_len_time) -> None:
     unit_database = unit_database_len_time
     m = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 1])]))
     km_city = Quantity.CreateDerived(OrderedDict([("City size", ["km", 1])]))
     quantity, value = unit_database.Divide(m, km_city, 1, 0.01)
-    calculated1 = Array.CreateWithQuantity(quantity, [value])
-    s1 = Array.CreateWithQuantity(m, [1])
-    s2 = Array.CreateWithQuantity(km_city, [0.01])
+    calculated1: Array[List[float]] = Array.CreateWithQuantity(quantity, [value])
+    s1: Array[List[float]] = Array.CreateWithQuantity(m, [1])
+    s2: Array[List[float]] = Array.CreateWithQuantity(km_city, [0.01])
     assert calculated1 == s1 / s2
 
 
-def testFloorDivision():
+def testFloorDivision() -> None:
     a = Array([3.5, 4.2], "m")
     b = Array([100.0, 100.0], "cm")
     assert approx((a // b).GetValues()) == [3.0, 4.0]
@@ -221,7 +224,7 @@ def testFloorDivision():
     assert approx((a // 1.0).GetValues("m")) == [3.0, 4.0]
 
 
-def testNumberOverArray():
+def testNumberOverArray() -> None:
     a = Array([2.0, 2.0], "m")
     b = Array([3.0, 3.0], "m")
     c = 1.0 / a
@@ -231,29 +234,32 @@ def testNumberOverArray():
     assert b / a == b * 1 / a == b * (1 / a)
 
 
-def testNumberInteractions(unit_database_len_time):
+def testNumberInteractions(unit_database_len_time) -> None:
     import numpy
 
     m = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 1])]))
-    s1 = Array.CreateWithQuantity(m, list(range(10)))
-    s2 = Array.CreateWithQuantity(m, [x + x for x in range(10)])
+    s1: Array[List[int]] = Array.CreateWithQuantity(m, list(range(10)))
+    s2: Array[List[int]] = Array.CreateWithQuantity(m, [x + x for x in range(10)])
     assert s1 == 0 + s1
     assert s1 == s1 + 0
     assert s2 == s1 + s1
 
-    num_arr = Array.CreateWithQuantity(m, numpy.array([x for x in range(10)]))
+    num_arr: Array[numpy.ndarray[numpy.int64]] = Array.CreateWithQuantity(
+        m, numpy.array([x for x in range(10)])
+    )
     sum_array = num_arr + s1
     assert isinstance(sum_array.values, numpy.ndarray)
 
-    sum_array2 = num_arr + numpy.array([x for x in range(10)])
+    sum_array2: Array[numpy.ndarray[numpy.int64]] = num_arr + numpy.array([x for x in range(10)])
     assert isinstance(sum_array2.values, numpy.ndarray)
 
-    tup_arr = Array.CreateWithQuantity(m, tuple([x for x in range(10)]))
+    tup_arr: Array[Tuple[int]] = Array.CreateWithQuantity(m, tuple([x for x in range(10)]))
     tup_arr = tup_arr + 1
     assert isinstance(tup_arr.values, tuple)
+    assert tup_arr.values == (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 
 
-def testNumpyConversion():
+def testNumpyConversion() -> None:
     import numpy
 
     values = numpy.array([100, 200, 300])
@@ -264,7 +270,7 @@ def testNumpyConversion():
     assert list(numpy.array([0.1, 0.2, 0.3])) == list(converted_values)
 
 
-def testNumpyMultiplicationOperation():
+def testNumpyMultiplicationOperation() -> None:
     import numpy
 
     units_array = units.Array("length", values=[100, 200, 300], unit="m")
@@ -278,13 +284,13 @@ def testNumpyMultiplicationOperation():
     assert list(units_result.GetValues("m")) == list(raw_result)
 
 
-def testNoConversion():
+def testNoConversion() -> None:
     values = [100, 150, 200]
     array = units.Array("length", values=values, unit="m")
     assert array.GetValues() is values
 
 
-def testNoConversionWhenUsingSameUnit():
+def testNoConversionWhenUsingSameUnit() -> None:
     import numpy
 
     values = numpy.array([100, 150, 200])
@@ -292,16 +298,16 @@ def testNoConversionWhenUsingSameUnit():
     assert array.GetValues("m") is values
 
 
-def testZeroDimensionalNumpyArray():
+def testZeroDimensionalNumpyArray() -> None:
     import numpy
 
-    values = numpy.array(1000.0)
+    values = numpy.array(1000.0)  # type:ignore[call-overload]
     array = units.Array(values, "m")
-    assert array.GetValues("m") == numpy.array(1000.0)
-    assert array.GetValues("km") == numpy.array(1.0)
+    assert array.GetValues("m") == numpy.array(1000.0)  # type:ignore[call-overload]
+    assert array.GetValues("km") == numpy.array(1.0)  # type:ignore[call-overload]
 
 
-def testReadOnlyQuantity():
+def testReadOnlyQuantity() -> None:
     quantity = ObtainQuantity("m", "length")
     array = units.Array(quantity, values=[1, 2, 3])
 
@@ -310,7 +316,7 @@ def testReadOnlyQuantity():
     assert approx(array.GetValues()) == [0.001, 0.002, 0.003]
 
 
-def testCopyPropertiesAndValidation(unit_database_len):
+def testCopyPropertiesAndValidation(unit_database_len) -> None:
     # Not raises exception because by default validation is False on the copy operation
     array_source = Array("flow rate", values=[-1, -2, -3], unit="m3/s")
     assert not array_source.IsValid()
@@ -319,20 +325,20 @@ def testCopyPropertiesAndValidation(unit_database_len):
     assert array_dest.values == [-1, -2, -3]
 
 
-def testDefaultValues(unit_database_len):
+def testDefaultValues(unit_database_len) -> None:
     # Not raises exception because by default validation is False on the copy operation
-    array = Array("flow rate")
+    array = Array[List[float]]("flow rate")
     assert array.values == []
 
     array = Array(ObtainQuantity("m"))
     assert array.values == []
 
     with pytest.raises(AssertionError):
-        Array(ObtainQuantity("m"), unit="m")
+        Array(ObtainQuantity("m"), unit="m")  # type:ignore[call-overload]
 
 
 class TestFromScalar:
-    def test_create_array_informing_category(self):
+    def test_create_array_informing_category(self) -> None:
         array_molar_fraction = Array.FromScalars(
             scalars=[Scalar(1, "-"), Scalar(2, "-")], category="percentage"
         )
@@ -340,19 +346,19 @@ class TestFromScalar:
         assert array_molar_fraction.unit == "-"
         assert array_molar_fraction.category == "percentage"
 
-    def test_create_array_informing_unit(self):
+    def test_create_array_informing_unit(self) -> None:
         array_in_cm = Array.FromScalars(scalars=[Scalar(1, "m"), Scalar(2, "m")], unit="cm")
         assert array_in_cm.values == [100.0, 200.0]
         assert array_in_cm.unit == "cm"
         assert array_in_cm.category == "length"
 
-    def test_create_array_from_list_of_scalar(self):
+    def test_create_array_from_list_of_scalar(self) -> None:
         array_in_m = Array.FromScalars(scalars=iter([Scalar(1, "m"), Scalar(2, "m")]))
         assert array_in_m.values == [1, 2]
         assert array_in_m.unit == "m"
         assert array_in_m.category == "length"
 
-    def test_check_empty_array(self):
+    def test_check_empty_array(self) -> None:
         assert Array.FromScalars(scalars=[]) == Array.CreateEmptyArray()
         assert Array.FromScalars(scalars=[], unit="m") == Array([], "m")
 
@@ -360,6 +366,6 @@ class TestFromScalar:
         with pytest.raises(AssertionError, match=expected_msg):
             Array.FromScalars(scalars=[], category="length")
 
-    def test_check_array_with_different_units(self):
+    def test_check_array_with_different_units(self) -> None:
         with pytest.raises(InvalidUnitError):
             Array.FromScalars(scalars=[Scalar(1, "m"), Scalar(1, "kg")])

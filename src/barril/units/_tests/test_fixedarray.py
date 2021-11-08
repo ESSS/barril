@@ -1,3 +1,5 @@
+from typing import List
+
 import pytest
 from pytest import approx
 
@@ -6,12 +8,12 @@ from barril import units
 from barril.units import InvalidUnitError, ObtainQuantity, Quantity
 
 
-def testFormatting(unit_database_start_units):
+def testFormatting(unit_database_start_units) -> None:
     point = units.FixedArray(2, "length", [(100, 150), (50, 50)], "m")
     assert "(100, 150) (50, 50) [m]" == str(point)
 
 
-def testValues(unit_database_start_units):
+def testValues(unit_database_start_units) -> None:
     with pytest.raises(ValueError):
         units.FixedArray(1, "length", [100], "m")
     point = units.FixedArray(3, "length", [100, 150, 200], "m")
@@ -44,7 +46,7 @@ def testValues(unit_database_start_units):
         setattr(point, "values", [50, 80, 90])
 
 
-def testInvalidUnits(unit_database_start_units):
+def testInvalidUnits(unit_database_start_units) -> None:
     point = units.FixedArray(2, "length", [(100, 150), (50, 50)], "m")
     try:
         point = point.CreateCopy(values=[(20, 30), (40, 50)], unit="foo")
@@ -55,7 +57,7 @@ def testInvalidUnits(unit_database_start_units):
     assert point.unit == "m"
 
 
-def testCreateWithQuantity(unit_database_start_units):
+def testCreateWithQuantity(unit_database_start_units) -> None:
     units.FixedArray.CreateWithQuantity(
         Quantity.CreateDerived(OrderedDict()), [100, 150, 200], dimension=3
     )
@@ -68,7 +70,7 @@ def testCreateWithQuantity(unit_database_start_units):
     assert a2.GetValues() == [1, 2, 3]
 
 
-def testCopy(unit_database_start_units):
+def testCopy(unit_database_start_units) -> None:
     point = units.FixedArray(3, "length", [100, 150, 200], "m")
     assert point.Copy() == point
 
@@ -86,7 +88,7 @@ def testCopy(unit_database_start_units):
     point = units.FixedArray(3, "length", [100, 150, 200], "m")
 
 
-def testEmptyArray(unit_database_start_units):
+def testEmptyArray(unit_database_start_units) -> None:
     arr = units.FixedArray.CreateEmptyArray(3)
     assert not arr.HasCategory()
     assert arr.category == ""
@@ -98,25 +100,25 @@ def testEmptyArray(unit_database_start_units):
     assert arr.unit == "m"
 
 
-def testReadOnlyQuantity(unit_database_start_units):
+def testReadOnlyQuantity(unit_database_start_units) -> None:
     quantity = ObtainQuantity("m", "length")
     array = units.FixedArray(3, quantity, values=[1, 2, 3])
     assert approx(array.GetValues("km")) == [0.001, 0.002, 0.003]
 
 
-def testDefaultValues(unit_database_start_units):
+def testDefaultValues(unit_database_start_units) -> None:
     # Not raises exception because by default validation is False on the copy operation
-    array = units.FixedArray(3, "length")
+    array: units.FixedArray[List[float]] = units.FixedArray(3, "length")
     assert array.values == [0.0, 0.0, 0.0]
 
     array = units.FixedArray(3, ObtainQuantity("m"))
     assert array.values == [0.0, 0.0, 0.0]
 
     with pytest.raises(AssertionError):
-        units.FixedArray(3, ObtainQuantity("m"), unit="m")
+        units.FixedArray(3, ObtainQuantity("m"), unit="m")  # type:ignore[call-overload]
 
 
-def testTupleCreation(unit_database_start_units):
+def testTupleCreation(unit_database_start_units) -> None:
     """
     Make sure we can use tuples as values.
     """
@@ -124,7 +126,7 @@ def testTupleCreation(unit_database_start_units):
     assert units.FixedArray(3, "length", (0.0, 200.0, 300.0), "m") == array
 
 
-def testFixedArrayPickle(unit_database_start_units):
+def testFixedArrayPickle(unit_database_start_units) -> None:
     import pickle
 
     fixed_array_1 = units.FixedArray(3, "length", values=[1, 2, 3], unit="m")
@@ -133,7 +135,7 @@ def testFixedArrayPickle(unit_database_start_units):
     assert fixed_array_1 == fixed_array_2
 
 
-def testNumberInteractions():
+def testNumberInteractions() -> None:
     # Operations on FixedArrays used to return Array instances.
     a = units.FixedArray(3, [1, 2, 3], "m")
     b = units.FixedArray(3, [0.5] * 3, "m")
@@ -147,7 +149,7 @@ def testNumberInteractions():
     assert m.GetDimension() == 3
 
 
-def testFixedArrayChangingIndex():
+def testFixedArrayChangingIndex() -> None:
     fixed_array = units.FixedArray(3, [1, 2, 3], "m")
     assert fixed_array.ChangingIndex(0, 5) == units.FixedArray(3, [5, 2, 3], "m")
     assert fixed_array.ChangingIndex(0, units.Scalar(5, "m")) == units.FixedArray(3, [5, 2, 3], "m")
@@ -173,7 +175,7 @@ def testFixedArrayChangingIndex():
     )
 
 
-def testFixedArrayIndexAsScalar():
+def testFixedArrayIndexAsScalar() -> None:
     from barril.units import Scalar
 
     fixed_array = units.FixedArray(3, "length of path", [1, 2, 3], "m")

@@ -1,15 +1,58 @@
-from ._array import Array
-from ._quantity import Quantity
+from typing import Any, overload, Union, Optional, Tuple, TYPE_CHECKING, cast, Generic
+
+from barril.units.unit_database import CategoryInfo, UnitDatabase
+
+from ._array import Array, ValuesType
+
+if TYPE_CHECKING:
+    from ._quantity import Quantity
+    from barril.units import Scalar
 
 __all__ = ["FixedArray"]
 
 
-class FixedArray(Array):
-    """Represents an Array with fixed number of elements."""
+class FixedArray(Array, Generic[ValuesType]):
+    """
+    Represents an Array with fixed number of elements.
 
-    _dimension = None
 
-    def __init__(self, dimension, category, values=None, unit=None):
+    Like ``Array``, ``FixedArray`` is a ``Generic`` subclass, parametrized by their container type:
+
+    .. code-block:: python
+
+        a = FixedArray(3, [1, 2, 3], "m")
+        reveal_type(a)
+
+    .. code-block::
+
+        note: Revealed type is "barril.units._fixedarray.FixedArray[builtins.list*[builtins.int*]]"
+    """
+
+    _dimension: Any = None
+
+    @overload
+    def __init__(self, dimension: int, category: Union[str, "Quantity"]):
+        ...
+
+    @overload
+    def __init__(self, dimension: int, values: ValuesType, unit: str):
+        ...
+
+    @overload
+    def __init__(self, dimension: int, category: str, values: ValuesType, unit: str):
+        ...
+
+    @overload
+    def __init__(self, dimension: int, category: str, unit: str):
+        ...
+
+    @overload
+    def __init__(self, dimension: int, category: "Quantity", values: ValuesType):
+        ...
+
+    def __init__(  # type:ignore[misc]
+        self, dimension: int, category: str, values: Any = None, unit: Any = None
+    ) -> None:
         """
         :param int dimension:
             The dimension for this array.
@@ -32,15 +75,21 @@ class FixedArray(Array):
 
         Array.__init__(self, category, values, unit)
 
-    def _InternalCreateWithQuantity(
-        self, quantity, values=None, unit_database=None, dimension=None, value=None
-    ):
+    def _InternalCreateWithQuantity(  # type:ignore[override]
+        self,
+        quantity: "Quantity",
+        values: Optional[ValuesType] = None,
+        unit_database: Optional[UnitDatabase] = None,
+        dimension: Optional[int] = None,
+        value: Optional[ValuesType] = None,
+    ) -> None:
         if value is not None:
             if values is not None:
                 raise ValueError("Duplicated values parameter given")
 
             values = value
 
+        assert values is not None
         if dimension is None:
             try:
                 if self._dimension is None:
@@ -66,21 +115,24 @@ class FixedArray(Array):
 
         Array._InternalCreateWithQuantity(self, quantity, values)
 
-    def CreateCopy(self, values=None, unit=None, category=None, **kwargs):
+    def CreateCopy(  # type:ignore[override]
+        self,
+        values: Optional[ValuesType] = None,
+        unit: Optional[str] = None,
+        category: Optional[str] = None,
+        **kwargs: object
+    ) -> "FixedArray":
         return Array.CreateCopy(
             self, values=values, unit=unit, category=category, dimension=self._dimension, **kwargs
         )
 
     # Values ---------------------------------------------------------------------------------------
-    def _GetDefaultValue(self, category_info, unit=None):
-        """
+    def _GetDefaultValue(
+        self, category_info: CategoryInfo, unit: Optional[str] = None
+    ) -> ValuesType:
+        return cast(ValuesType, [0.0] * self._dimension)
 
-        :param category_info:
-        :param unit:
-        """
-        return [0.0] * self._dimension
-
-    def CheckValues(self, values, dimension=None):
+    def CheckValues(self, values: ValuesType, dimension: Optional[int] = None) -> None:
         """Checks whether the dimensions consistent with the dimensions in this unit point"""
         if dimension is None:
             dimension = self.dimension
@@ -90,31 +142,34 @@ class FixedArray(Array):
             raise ValueError(msg % (dimension, len(values)))
 
     @classmethod
-    def CreateEmptyArray(cls, dimension, values=None):
+    def CreateEmptyArray(  # type:ignore[override]
+        cls, dimension: int, values: Optional[ValuesType] = None
+    ) -> "FixedArray":
         """
         Allows the creation of a array that does not have any associated category nor unit.
 
-        :rtype: Array
         :returns:
             Returns an empty array.
         """
+        from ._quantity import Quantity
+
         if values is None:
-            values = [0.0] * dimension
+            values = cast(ValuesType, [0.0] * dimension)
 
         quantity = Quantity.CreateEmpty()
         return cls.CreateWithQuantity(quantity, dimension=dimension, values=values)
 
     # Dimension ------------------------------------------------------------------------------------
-    def GetDimension(self):
+    def GetDimension(self) -> int:
         return self._dimension
 
     dimension = property(GetDimension)
 
     # Equality -------------------------------------------------------------------------------------
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         return Array.__eq__(self, other) and self.dimension == other.dimension
 
-    def __reduce__(self):
+    def __reduce__(self) -> Any:
         """
         Defining reduce so that we can pickle fixed arrays.
         """
@@ -123,7 +178,9 @@ class FixedArray(Array):
             (self._dimension, self._quantity, self.values, None),  # Unit defined in quantity
         )
 
-    def ChangingIndex(self, index, value, use_value_unit=True):
+    def ChangingIndex(
+        self, index: int, value: Union[float, "Scalar", Tuple], use_value_unit: bool = True
+    ) -> "FixedArray":
         """
         Creates a FixedArray from based on this FixedArray changing a single value based on the
         passed index.
@@ -131,22 +188,21 @@ class FixedArray(Array):
         i.e.: array.ChangingIndex(0, Scalar(1.0, 'm'))
               will create a new FixedArray where the index == 0 is changed to the passed value.
 
-        :param Scalar|float|tuple value:
+        :param value:
             The value to be used to set at the given index.
 
-        :param int index:
+        :param index:
             The index which should be changed.
 
-        :param bool use_value_unit:
+        :param use_value_unit:
             If True and a Scalar is passed, the newly created array will have the unit of the
             scalar, not of the original array, otherwise (if False) the FixedArray unit will be
             kept.
 
-        :return FixedArray:
+        :return:
             The created FixedArray.
         """
         from barril.units import Scalar
-        from barril.units import FixedArray
 
         if isinstance(value, tuple):
             scalar = Scalar(self.GetValues()[index], self.GetUnit()).CreateCopy(*value)
@@ -166,12 +222,12 @@ class FixedArray(Array):
         values[index] = scalar.GetValue(quantity.GetUnit())
         return FixedArray(self.dimension, quantity, tuple(values))
 
-    def IndexAsScalar(self, index, quantity=None):
+    def IndexAsScalar(self, index: int, quantity: Optional["Quantity"] = None) -> "Scalar":
         """
-        :param int index:
+        :param index:
             The index which should be gotten as a Scalar.
 
-        :param IQuantity quantity:
+        :param quantity:
             The quantity in which we want the Scalar (uses the FixedArray quantity
             if not passed).
 
@@ -182,4 +238,6 @@ class FixedArray(Array):
 
         if quantity is None:
             quantity = self.GetQuantity()
-        return Scalar(quantity, self.GetValues(unit=quantity.GetUnit())[index])
+        return Scalar(  # type:ignore[call-overload]
+            quantity, self.GetValues(unit=quantity.GetUnit())[index]
+        )

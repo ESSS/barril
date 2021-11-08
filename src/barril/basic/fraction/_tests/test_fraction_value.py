@@ -5,7 +5,7 @@ import pytest
 from barril.basic.fraction import Fraction, FractionValue
 
 
-def testBasicUsage():
+def testBasicUsage() -> None:
     f = FractionValue(3, Fraction(5, 3))
     assert f.number == 3
     assert f.fraction == Fraction(5, 3)
@@ -16,47 +16,47 @@ def testBasicUsage():
     assert f.fraction == Fraction(6, 5)
 
     with pytest.raises(TypeError):
-        f.SetNumber("hello")
+        f.SetNumber("hello")  # type:ignore[arg-type]
     with pytest.raises(TypeError):
-        f.SetFraction("hello")
+        f.SetFraction("hello")  # type:ignore[arg-type]
     with pytest.raises(ValueError):
-        f.SetFraction((1, 2, 3))
+        f.SetFraction((1, 2, 3))  # type:ignore[arg-type]
 
     assert FractionValue(3).GetFraction() == Fraction(0, 1)
 
 
-def testDefault():
+def testDefault() -> None:
     f = FractionValue()
     assert f.number == 0.0
     assert f.fraction == Fraction(0, 1)
 
 
-def testPartsArentNone():
+def testPartsArentNone() -> None:
     """
     FractionValue can't be initialized nor modified to have None as number or fraction part.
     """
     with pytest.raises(TypeError):
-        FractionValue(1, None)
+        FractionValue(1, None)  # type:ignore[arg-type]
     with pytest.raises(TypeError):
-        FractionValue(None, (0 / 1))
+        FractionValue(None, (0 / 1))  # type:ignore[arg-type]
     with pytest.raises(TypeError):
-        FractionValue(None, None)
+        FractionValue(None, None)  # type:ignore[arg-type]
 
     f = FractionValue(1, Fraction(0, 1))
     with pytest.raises(TypeError):
-        f.SetNumber(None)
+        f.SetNumber(None)  # type:ignore[arg-type]
     with pytest.raises(TypeError):
-        f.SetFraction(None)
+        f.SetFraction(None)  # type:ignore[arg-type]
 
 
-def testMatchFractionPart():
+def testMatchFractionPart() -> None:
     # Text Ok, should not raise error
     FractionValue.MatchFractionPart("3/4")
     with pytest.raises(ValueError):
         FractionValue.MatchFractionPart("2 3/4")
 
 
-def testStr():
+def testStr() -> None:
     f = FractionValue(3, Fraction(5, 3))
     assert str(f) == "3 5/3"
     assert repr(f) == "FractionValue(3, 5/3)"
@@ -66,7 +66,7 @@ def testStr():
     assert repr(f) == "FractionValue(3, 0/1)"
 
 
-def testEquality():
+def testEquality() -> None:
     assert FractionValue(3, Fraction(5, 3)) == FractionValue(3, Fraction(5, 3))
     assert not FractionValue(3, Fraction(5, 3)) != FractionValue(3, Fraction(5, 3))
 
@@ -79,12 +79,12 @@ def testEquality():
     assert FractionValue(10, (5, 3)) == FractionValue(10, Fraction(5, 3))
 
 
-def testFloat():
+def testFloat() -> None:
     assert float(FractionValue(3, Fraction(5, 3))) == 3 + 5 / 3.0
     assert float(FractionValue(3)) == 3.0
 
 
-def testCopy():
+def testCopy() -> None:
     f = FractionValue(3, (5, 3))
     cf = copy.copy(f)
     assert f == cf
@@ -95,14 +95,14 @@ def testCopy():
     assert f == FractionValue(3, (5, 3))
 
 
-def testComparison():
+def testComparison() -> None:
     assert FractionValue(3) < FractionValue(3, (3, 4))
     assert FractionValue(3) <= FractionValue(3, (3, 4))
     assert FractionValue(3, (3, 4)) > FractionValue(3)
     assert FractionValue(3, (3, 4)) >= FractionValue(3)
 
 
-def testCreateFromString():
+def testCreateFromString() -> None:
     """
     Allow the user enter only the fraction value
     """
@@ -126,7 +126,7 @@ def testCreateFromString():
     AssertCreateFromString("3 36/4", 3, (36, 4))
 
 
-def testCreateFromFloat():
+def testCreateFromFloat() -> None:
     """
     Allow the user enter only the fraction value
     """

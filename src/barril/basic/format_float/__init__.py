@@ -13,7 +13,7 @@ NAN = float("nan")
 NAN_STR = "-1.#IND"
 
 
-def FormatFloat(pattern, value, grouping=False, use_locale=True):
+def FormatFloat(pattern: str, value: float, grouping: bool = False, use_locale: bool = True) -> str:
     """
     Formats the value given according to the current LC_NUMERIC setting. The format follows the
     conventions of the % operator. For floating point values, the decimal point is modified if
@@ -24,24 +24,23 @@ def FormatFloat(pattern, value, grouping=False, use_locale=True):
         This function is used to format float values. There are known issues like convert unit
         from scalar where value is "0.0", it can get representation "-0.0"
 
-    :param str pattern:
+    :param pattern:
         The pattern used to format the value.
 
-    :param float value:
+    :param value:
         The value to be formated.
 
-    :param bool grouping:
+    :param grouping:
         True if the thousands separator must be used on formating the number. The locale settings
         must be explicitly set in order to make sure the thousands separator will be applied. The
         default value for thousands separator is "", so that the value formated won't have thousands
         separator.
 
-    :param bool use_locale:
+    :param use_locale:
         Use locale.format or str % operator (locale-independent output).
 
-    :rtype: str
     :returns:
-        The formated value.
+        The formatted value.
     """
     # Handling INFINITY
     # - locale.format tries to round the infinity value:
@@ -74,17 +73,16 @@ def FormatFloat(pattern, value, grouping=False, use_locale=True):
     return result
 
 
-def FloatFromString(str_value, use_locale=True):
+def FloatFromString(str_value: str, use_locale: bool = True) -> float:
     """
     Converts the given string value into a float, taking in account the current locale.
 
-    :param str str_value:
+    :param str_value:
 
-    :rtype: float
     :returns:
         The equivalent float value
 
-    :param bool use_locale:
+    :param use_locale:
         Use locale.atof or standard float conversion (default python output, locale-independent).
 
     :raises ValueError:
