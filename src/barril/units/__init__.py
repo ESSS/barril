@@ -50,41 +50,38 @@ B{Design decisions}:
 
 @see: L{definitions} for the basic interfaces defined.
 """
-
-
+from typing import Any
+from typing import Optional
+from typing import Tuple
+from typing import TYPE_CHECKING
 from weakref import WeakValueDictionary
 
-from typing import TYPE_CHECKING, Optional, Tuple, Any
-
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject  # noqa
-from ._array import Array, ValuesType  # noqa
-from .interfaces import (
-    IArray,
-    IObjectWithQuantity,
-    IQuantity,
-    IQuantity2,
-    IQuantity3,
-    IQuantity6,
-    IScalar,
-)  # noqa
+from ._array import Array
+from ._array import ValuesType
 from ._fixedarray import FixedArray  # noqa
 from ._fraction_scalar import FractionScalar  # noqa
-from ._quantity import ObtainQuantity, Quantity, ReadOnlyError  # noqa
+from ._quantity import ObtainQuantity
+from ._quantity import Quantity
+from ._quantity import ReadOnlyError
 from ._scalar import Scalar  # noqa
-from ._unit_constants import (  # noqa
-    LENGTH_QUANTITY_TYPE,
-    UNKNOWN_QUANTITY_TYPE,
-    UNKNOWN_UNIT,
-    CreateUnknwonwReadOnlyQuantity,
-)
-from .unit_database import (  # noqa
-    InvalidOperationError,
-    InvalidQuantityTypeError,
-    InvalidUnitError,
-    UnitDatabase,
-    UnitInfo,
-    UnitsError,
-)
+from ._unit_constants import CreateUnknwonwReadOnlyQuantity
+from ._unit_constants import LENGTH_QUANTITY_TYPE
+from ._unit_constants import UNKNOWN_QUANTITY_TYPE
+from ._unit_constants import UNKNOWN_UNIT
+from .interfaces import IArray
+from .interfaces import IObjectWithQuantity
+from .interfaces import IQuantity
+from .interfaces import IQuantity2
+from .interfaces import IQuantity3
+from .interfaces import IQuantity6
+from .interfaces import IScalar
+from .unit_database import InvalidOperationError
+from .unit_database import InvalidQuantityTypeError
+from .unit_database import InvalidUnitError
+from .unit_database import UnitDatabase
+from .unit_database import UnitInfo
+from .unit_database import UnitsError
 
 # Needed for Python<3.9: WeakValueDictionary doesn't support
 # the subscription operator.

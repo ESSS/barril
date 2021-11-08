@@ -4,17 +4,15 @@ from pytest import approx
 from barril import units
 from barril.basic.format_float import FormatFloat
 from barril.basic.fraction import FractionValue
-from barril.units import (
-    UNKNOWN_QUANTITY_TYPE,
-    UNKNOWN_UNIT,
-    Array,
-    FixedArray,
-    InvalidQuantityTypeError,
-    InvalidUnitError,
-    ObtainQuantity,
-    Quantity,
-    UnitsError,
-)
+from barril.units import Array
+from barril.units import FixedArray
+from barril.units import InvalidQuantityTypeError
+from barril.units import InvalidUnitError
+from barril.units import ObtainQuantity
+from barril.units import Quantity
+from barril.units import UnitsError
+from barril.units import UNKNOWN_QUANTITY_TYPE
+from barril.units import UNKNOWN_UNIT
 from barril.units.exceptions import QuantityValidationError
 from barril.units.unit_database import UnitDatabase
 

@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 """The setup script."""
-
 import io
-from setuptools import find_packages, setup
+
+from setuptools import find_packages
+from setuptools import setup
 
 with io.open("README.rst", encoding="UTF-8") as readme_file:
     readme = readme_file.read()

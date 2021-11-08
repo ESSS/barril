@@ -1,12 +1,10 @@
+from pytest import approx
+
 from barril import units
 from barril.units import ObtainQuantity
-from barril.units.posc import (
-    CreateAreaQuantityFromLengthQuantity,
-    CreateVolumeQuantityFromLengthQuantity,
-)
+from barril.units.posc import CreateAreaQuantityFromLengthQuantity
+from barril.units.posc import CreateVolumeQuantityFromLengthQuantity
 from barril.units.unit_database import UnitDatabase
-
-from pytest import approx
 
 
 def testPoscFrequency(unit_database_posc) -> None:

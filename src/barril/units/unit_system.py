@@ -1,8 +1,12 @@
-from typing import Dict, Optional, Any
+from typing import Any
+from typing import Dict
+from typing import Optional
 
 from oop_ext.foundation import callback
 from oop_ext.foundation.decorators import Implements
-from oop_ext.interface import ImplementsInterface, IsImplementation
+from oop_ext.interface import ImplementsInterface
+from oop_ext.interface import IsImplementation
+
 from .unit_system_interface import IUnitSystem
 
 

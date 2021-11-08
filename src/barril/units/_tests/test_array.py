@@ -1,10 +1,15 @@
-from typing import List, Tuple
+from collections import OrderedDict
+from typing import List
+from typing import Tuple
 
 import pytest
-from collections import OrderedDict
-from barril import units
-from barril.units import Array, InvalidUnitError, ObtainQuantity, Quantity
 from pytest import approx
+
+from barril import units
+from barril.units import Array
+from barril.units import InvalidUnitError
+from barril.units import ObtainQuantity
+from barril.units import Quantity
 from barril.units import Scalar
 
 

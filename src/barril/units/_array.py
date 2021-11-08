@@ -1,25 +1,26 @@
-from typing import (
-    Optional,
-    Iterable,
-    Sequence,
-    overload,
-    Union,
-    Any,
-    Iterator,
-    TypeVar,
-    Generic,
-    cast,
-)
+from typing import Any
+from typing import cast
+from typing import Generic
+from typing import Iterable
+from typing import Iterator
+from typing import Optional
+from typing import overload
+from typing import Sequence
+from typing import TypeVar
+from typing import Union
 
-from barril._util.types_ import IsNumber
-from barril.basic.format_float import FormatFloat
-from barril.units.unit_database import UnitDatabase, CategoryInfo
 from oop_ext.interface import ImplementsInterface
 
-from ._abstractvaluewithquantity import AbstractValueWithQuantityObject, T
+from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
+from ._abstractvaluewithquantity import T
 from ._quantity import Quantity
-from .interfaces import IArray, ValuesType
 from ._scalar import Scalar
+from .interfaces import IArray
+from .interfaces import ValuesType
+from barril._util.types_ import IsNumber
+from barril.basic.format_float import FormatFloat
+from barril.units.unit_database import CategoryInfo
+from barril.units.unit_database import UnitDatabase
 
 
 __all__ = ["Array"]

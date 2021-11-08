@@ -2,7 +2,8 @@ import copy
 
 import pytest
 
-from barril.basic.fraction import Fraction, FractionValue
+from barril.basic.fraction import Fraction
+from barril.basic.fraction import FractionValue
 
 
 def testBasicUsage() -> None:

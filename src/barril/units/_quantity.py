@@ -1,34 +1,33 @@
 """
 This module provides the implementation of an Quantity object.
 """
-
 from collections import OrderedDict
-from typing import (
-    List,
-    Optional,
-    ClassVar,
-    Dict,
-    Union,
-    Any,
-    Tuple,
-    Sequence,
-    overload,
-    NoReturn,
-    TypeVar,
-)
+from typing import Any
+from typing import ClassVar
+from typing import Dict
+from typing import List
+from typing import NoReturn
+from typing import Optional
+from typing import overload
+from typing import Sequence
+from typing import Tuple
+from typing import TypeVar
+from typing import Union
 
-from barril.units.exceptions import QuantityValidationError
-from barril.units.unit_database import (
-    InvalidUnitError,
-    UnitDatabase,
-    UnitsError,
-    FixUnitIfIsLegacy,
-    CategoryInfo,
-)
 from oop_ext.interface import ImplementsInterface
 
 from ._unit_constants import UNKNOWN_UNIT
-from .interfaces import IQuantity, IQuantity2, IQuantity3, IQuantity6, UnitExponentTuple
+from .interfaces import IQuantity
+from .interfaces import IQuantity2
+from .interfaces import IQuantity3
+from .interfaces import IQuantity6
+from .interfaces import UnitExponentTuple
+from barril.units.exceptions import QuantityValidationError
+from barril.units.unit_database import CategoryInfo
+from barril.units.unit_database import FixUnitIfIsLegacy
+from barril.units.unit_database import InvalidUnitError
+from barril.units.unit_database import UnitDatabase
+from barril.units.unit_database import UnitsError
 
 __all__ = ["Quantity", "ObtainQuantity"]
 

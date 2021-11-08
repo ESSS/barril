@@ -1,5 +1,7 @@
-from barril.units import ObtainQuantity, UnitDatabase
 import pytest
+
+from barril.units import ObtainQuantity
+from barril.units import UnitDatabase
 
 
 def testReadOnlyQuantity(unit_database_empty) -> None:

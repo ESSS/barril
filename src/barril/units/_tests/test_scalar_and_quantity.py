@@ -1,8 +1,9 @@
 from typing import List
 
+import pytest
+
 from barril.units import Scalar
 from barril.units.unit_database import UnitDatabase
-import pytest
 
 
 class _LightweightQuantity:

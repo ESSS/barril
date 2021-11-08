@@ -1,19 +1,18 @@
 """
     The 'unit' must be ascii only.
 """
+from collections import OrderedDict
 
 import pytest
-from collections import OrderedDict
-from barril import units
-from barril.units import (
-    ChangeScalars,
-    InvalidOperationError,
-    InvalidUnitError,
-    ObtainQuantity,
-    Quantity,
-    Scalar,
-)
 from pytest import approx
+
+from barril import units
+from barril.units import ChangeScalars
+from barril.units import InvalidOperationError
+from barril.units import InvalidUnitError
+from barril.units import ObtainQuantity
+from barril.units import Quantity
+from barril.units import Scalar
 
 
 def testScalarInterface(unit_database_well_length) -> None:
