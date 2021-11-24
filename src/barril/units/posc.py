@@ -290,13 +290,16 @@ def FillUnitDatabaseWithPosc(
     db.AddUnitBase("computer binary memory", "Byte", "Byte")
     db.AddUnitBase("flow coefficient", "flow rate per pressure power of 0.5 ", "(m3/s)/(Pa^0.5)")
     db.AddUnitBase("temperature per area", "degrees Celsius per square meter", "degC/m2")
-    db.AddUnitBase("force per velocity", "Newton second per meter", "Ns/m")
+    db.AddUnitBase("force per velocity", "Newton second per meter", "N.s/m")
     db.AddUnitBase("force per angle", "Newton per angle", "N/rad")
     db.AddUnitBase("force per angular velocity", "Newton second per angle", "Ns/rad")
     db.AddUnitBase("moment per angle", "Newton meter per angle", "Nm/rad")
     db.AddUnitBase("moment per angular velocity", "newton meter per angular velocity", "Nms/rad")
     db.AddUnitBase("mass temperature per mol", "kg.K/mol", "kg.K/mol")
     db.AddUnitBase("joule-thomson coefficient", "delta kelvin per pascal", "K/Pa")
+    db.AddUnitBase(
+        "force per velocity squared", "Newton second squared per meter squared", "N.s2/m2"
+    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 6.283185307, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 6.283185307, 1.0, 0.0)
     db.AddUnit("frequency", "hertz", "Hz", f_base_to_unit, f_unit_to_base, default_category=None)
@@ -12265,6 +12268,36 @@ def FillUnitDatabaseWithPosc(
         f_unit_to_base,
         default_category=None,
     )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 47.8802631216, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 47.8802631216, 1.0, 0.0)
+    db.AddUnit(
+        "force per velocity squared",
+        "Pound force second squared per foot squared",
+        "lbf.s2/ft2",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 6894.75788952, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 6894.75788952, 1.0, 0.0)
+    db.AddUnit(
+        "force per velocity squared",
+        "Pound force second squared per inch squared",
+        "lbf.s2/in2",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 9.80665, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 9.80665, 1.0, 0.0)
+    db.AddUnit(
+        "force per velocity squared",
+        "Kilogram force second squared per meter squared",
+        "kgf.s2/m2",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
     if fill_categories:
         db.AddCategory(
             "reluctance", "reluctance", override=override_categories, valid_units=["1/H"]
@@ -15605,7 +15638,7 @@ def FillUnitDatabaseWithPosc(
             "force per velocity",
             "force per velocity",
             override=override_categories,
-            valid_units=["Ns/m", "lbf.s/ft", "lbf.s/in", "kgf.s/m"],
+            valid_units=["N.s/m", "lbf.s/ft", "lbf.s/in", "kgf.s/m"],
         )
         db.AddCategory(
             "force per angle",
@@ -15683,6 +15716,12 @@ def FillUnitDatabaseWithPosc(
                 "degR/bar",
                 "degR/MPa",
             ],
+        )
+        db.AddCategory(
+            "force per velocity squared",
+            "force per velocity squared",
+            valid_units=["N.s2/m2", "lbf.s2/ft2", "lbf.s2/in2", "kgf.s2/m2"],
+            override=True,
         )
 
     return db

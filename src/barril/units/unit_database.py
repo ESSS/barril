@@ -39,13 +39,14 @@ __all__ = [
 ]
 
 
-_LEGACY_TO_CURRENT = {
+_LEGACY_TO_CURRENT: List[Tuple[str, str]] = [
     ("1000ft3", "Mcf"),
     ("1000m3", "Mm3"),
     ("M(ft3)", "MMcf"),
     ("M(m3)", "MMm3"),
     ("k(ft3)", "Mcf"),
-}
+    ("Ns/m", "N.s/m"),
+]
 
 
 def FixUnitIfIsLegacy(unit: str) -> Tuple[bool, str]:
