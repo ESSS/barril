@@ -1,12 +1,12 @@
+import pytest
 from pytest import approx
 from pytest import raises
 
 from barril.units import Scalar
+from barril.units.unit_database import _LEGACY_TO_CURRENT
 
 
-def testConvertLegacyUnit() -> None:
-    from barril.units.unit_database import _LEGACY_TO_CURRENT
-
+def testCubicFeetPerDayLegacyUnits() -> None:
     # test creating scalar using legacy representation and default category
     q = Scalar(1.0, "1000ft3/d")
     assert q.GetUnit() == "Mcf/d"
@@ -23,9 +23,14 @@ def testConvertLegacyUnit() -> None:
     assert approx(q.GetValue("M(ft3)/d")) == q.GetValue("MMcf/d")
     assert q.GetUnitName() == "million cubic feet per day"
 
-    # Test all possible legacy formats
-    for legacy, current in _LEGACY_TO_CURRENT:
-        assert Scalar(1.0, legacy).GetUnit() == current
+
+@pytest.mark.parametrize("legacy, current", _LEGACY_TO_CURRENT)
+@pytest.mark.parametrize("value", [1.0, 3.1415, 123.567])
+def testAllLegacyUnits(legacy: str, current: str, value: float) -> None:
+    test_scalar = Scalar(value, legacy)
+    assert test_scalar.GetUnit() == current
+    assert approx(test_scalar.GetValue(legacy)) == value
+    assert approx(test_scalar.GetValue(current)) == value
 
 
 def testCreateScalarUnitsError() -> None:
@@ -53,7 +58,7 @@ def testFixUnitIfIsLegacyExcept() -> None:
 
     unknown = SomeNonExpectedObject()
     is_legacy, unit = FixUnitIfIsLegacy(unknown)  # type:ignore[arg-type]
-    assert is_legacy == False
+    assert not is_legacy
     assert unit is unknown  # type:ignore[comparison-overlap]
 
 

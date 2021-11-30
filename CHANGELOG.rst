@@ -1,3 +1,9 @@
+1.13.0 (unreleased)
+-------------------
+
+* Update ``Newton second per meter`` unit from ``Ns/m`` to ``N.s/m`` to get unit display consistent with other units in the same category (support for the old unit input added).
+* Add ``force per velocity squared`` quantity (``N.s2/m2``, ``lbf.s2/ft2``, ``lbf.s2/in2``, ``kgf.s2/m2``).
+
 1.12.0 (2021-11-08)
 -------------------
 
