@@ -1,4 +1,4 @@
-1.13.0 (unreleased)
+1.13.0 (2021-11-30)
 -------------------
 
 * Update ``Newton second per meter`` unit from ``Ns/m`` to ``N.s/m`` to get unit display consistent with other units in the same category (support for the old unit input added).
