@@ -100,15 +100,15 @@ def ObtainQuantity(
             # Although passed as composing, it's a simple case
             category, (unit, _exp) = next(iter(unit.items()))  # type:ignore[assignment]
         else:
-            key = tuple(
+            key: List[Any] = [
                 (category, tuple(unit_and_exp)) for (category, unit_and_exp) in unit.items()
-            )
+            ]
             if unknown_unit_caption:
-                key += (unknown_unit_caption,)
+                key.append(unknown_unit_caption)
             try:
-                return quantities_cache[key]
+                return quantities_cache[tuple(key)]
             except KeyError:
-                quantity = quantities_cache[key] = Quantity(unit, None, unknown_unit_caption)
+                quantity = quantities_cache[tuple(key)] = Quantity(unit, None, unknown_unit_caption)
                 return quantity
 
     key = (category, unit, unknown_unit_caption)  # type:ignore[assignment]
