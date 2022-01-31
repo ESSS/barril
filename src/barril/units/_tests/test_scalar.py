@@ -328,7 +328,7 @@ def testNumberOverScalar() -> None:
 
 def testPow(unit_database_len_time) -> None:
     s = Scalar(2, "s", "Time")
-    spow = s ** 3
+    spow = s**3
     assert spow.unit == "s3"
     assert spow.value == 8
 

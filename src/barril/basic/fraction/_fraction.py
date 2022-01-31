@@ -115,9 +115,9 @@ class Fraction:
     def __pow__(self, other: Any) -> "Fraction":
         if abs(other - other) < SMALL:
             if other < 0:
-                return Fraction(self.denominator ** -other, self.numerator ** -other)
+                return Fraction(self.denominator**-other, self.numerator**-other)
             else:
-                return Fraction(self.numerator ** other, self.denominator ** other)
+                return Fraction(self.numerator**other, self.denominator**other)
         else:
             return Fraction(float(self) ** other)
 
