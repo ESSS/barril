@@ -56,15 +56,15 @@ def testOperation() -> None:
     assert q2.GetUnit() == "m3"
 
     # Check pow
-    q2 = q ** 1
+    q2 = q**1
     assert q2.GetQuantityType() == "length"
     assert q2.GetUnit() == "m"
 
-    q2 = q ** 2
+    q2 = q**2
     assert q2.GetQuantityType() == "(length) ** 2"
     assert q2.GetUnit() == "m2"
 
-    q2 = q ** 3
+    q2 = q**3
     assert q2.GetQuantityType() == "(length) ** 3"
     assert q2.GetUnit() == "m3"
 
