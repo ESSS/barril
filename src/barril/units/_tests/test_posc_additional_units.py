@@ -170,9 +170,9 @@ def testMassPerMol(db) -> None:
     gpermol_to_kgpermol = db.Convert("mass per mol", "g/mol", "kg/mol", 1000 / 1)
     kgpermol_to_gpermol = db.Convert("mass per mol", "kg/mol", "g/mol", 1)
 
-    assert approx(gpermol_to_kgpermol, 1)
-    assert approx(kgpermol_to_gpermol, 1000)
-    assert approx(db.Convert("mass per mol", "g/mol", "lb/lbmole", 1)) == 1
+    assert gpermol_to_kgpermol == 1
+    assert kgpermol_to_gpermol == 1000
+    assert db.Convert("mass per mol", "g/mol", "lb/lbmole", 1) == 1
 
 
 def testInjectivityFactor(db) -> None:
