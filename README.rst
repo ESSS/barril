@@ -18,6 +18,10 @@ Barril
 .. image:: https://img.shields.io/readthedocs/barril.svg
     :target: https://barril.readthedocs.io/en/latest/
 
+.. image:: https://sonarcloud.io/api/project_badges/measure?project=ESSS_barril&metric=alert_status
+    :target: https://sonarcloud.io/project/overview?id=ESSS_barril
+
+
 What is Barril?
 ===============
 
