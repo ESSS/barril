@@ -107,6 +107,9 @@ environment.yml
 .idea/
 .settings/
 
+# VSCode local history
+.history
+
 # mkdocs documentation
 /site
 
