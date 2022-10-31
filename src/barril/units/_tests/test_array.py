@@ -200,7 +200,7 @@ def testArrayOperations(unit_database_len_time) -> None:
     calculated1: Array[List[float]] = Array.CreateWithQuantity(quantity, [value])
 
     array = s1 * s2
-    str(array)  # just to see if it works...
+    assert str(array)
     assert calculated1 == s1 * s2
 
     quantity, value = unit_database.Sum(m, km_city, 1, 0.01)
