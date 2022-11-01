@@ -272,6 +272,7 @@ def FillUnitDatabaseWithPosc(
     db.AddUnitBase("volume per equivalent", "milliliter/milliequivalents", "mL/meq")
     db.AddUnitBase("volume per wtpercent", "m3/wtpercent", "m3/wtpercent")
     db.AddUnitBase("mass per mol", "kg/mol", "kg/mol")
+    db.AddUnitBase("mole per mass", "mol/kg", "mol/kg")
     db.AddUnitBase("viscosity per pressure", "pascal seconds per pascal", "Pa.s/Pa")
     db.AddUnitBase("stroke frequency", "strokes per minute", "spm")
     db.AddUnitBase("power per mass", "watts/kilogram", "W/kg")
@@ -12301,6 +12302,13 @@ def FillUnitDatabaseWithPosc(
     if fill_categories:
         db.AddCategory(
             "reluctance", "reluctance", override=override_categories, valid_units=["1/H"]
+        )
+        db.AddCategory(
+            "mole per mass",
+            "mole per mass",
+            override=override_categories,
+            valid_units=['mol/kg'],
+            default_unit='mol/kg',
         )
         db.AddCategory(
             "linear thermal expansion",
