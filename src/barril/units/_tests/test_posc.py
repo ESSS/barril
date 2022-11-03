@@ -125,6 +125,13 @@ def testPoscPermeability(unit_database_posc) -> None:
     assert approx(abs(u2.GetValue("D") - 1.0), 7) == 0
 
 
+def testPoscMolePerMass(unit_database_posc) -> None:
+    default = units.Scalar(1, "mol/kg")
+    assert default.GetQuantityType() == "mole per mass"
+
+    assert approx(abs(default.GetValue("mol/kg") - 1.0), 7) == 0
+
+
 def testPoscMolePerTime(unit_database_posc) -> None:
     default = units.Scalar(1, "mol/s")
     assert default.GetQuantityType() == "mole per time"
