@@ -1,7 +1,7 @@
 1.14.0 (2022-11-03)
 -------------------
 
-* Add ``mole per mass`` quantity (``mol/kg``)
+* Add ``mole per mass`` quantity (``mol/kg``).
 
 1.13.0 (2021-11-30)
 -------------------
