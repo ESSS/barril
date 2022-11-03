@@ -12307,8 +12307,8 @@ def FillUnitDatabaseWithPosc(
             "mole per mass",
             "mole per mass",
             override=override_categories,
-            valid_units=['mol/kg'],
-            default_unit='mol/kg',
+            valid_units=["mol/kg"],
+            default_unit="mol/kg",
         )
         db.AddCategory(
             "linear thermal expansion",
