@@ -47,13 +47,13 @@ class IUnitSystem(Interface, TypeCheckingSupport):
             Flag that indicates if the unit system will be read only. Default is False.
         """
 
-    def GetCaption(self) -> str:
+    def GetCaption(self) -> str:  # type:ignore[empty-body]
         """
         :returns:
             Returns a user-friendly caption.
         """
 
-    def SetCaption(self, caption: str) -> None:
+    def SetCaption(self, caption: str) -> None:  # type:ignore[empty-body]
         """
         Sets the caption of the unit system.
 
@@ -61,26 +61,29 @@ class IUnitSystem(Interface, TypeCheckingSupport):
             The caption.
         """
 
-    def GetId(self) -> Optional[str]:
+    def GetId(self) -> Optional[str]:  # type:ignore[empty-body]
         """
         :returns:
             Returns the ID of the unit system.
         """
+        ...
 
-    def GetUnitsMapping(self) -> Dict[str, str]:
+    def GetUnitsMapping(self) -> Dict[str, str]:  # type:ignore[empty-body]
         """
         :returns:
             Returns the units mapping set of the unit system.
         """
+        ...
 
-    def GetDefaultUnit(self, category: str) -> Optional[str]:
+    def GetDefaultUnit(self, category: str) -> Optional[str]:  # type:ignore[empty-body]
         """
         :returns:
             Gets the default unit for the given category. If it returns None, it should not change
             objects of that category.
         """
+        ...
 
-    def SetDefaultUnit(self, category: str, unit: str) -> None:
+    def SetDefaultUnit(self, category: str, unit: str) -> None:  # type:ignore[empty-body]
         """
         Changes the default unit for the given category.
 
@@ -90,8 +93,9 @@ class IUnitSystem(Interface, TypeCheckingSupport):
         :param unicode unit:
             The new default unit.
         """
+        ...
 
-    def IsReadOnly(self) -> bool:
+    def IsReadOnly(self) -> bool:  # type:ignore[empty-body]
         """
         Retrieves if the unit system is read-only or not.
 
@@ -115,5 +119,5 @@ class IUnitSystem(Interface, TypeCheckingSupport):
             The category to remove
         """
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Any) -> bool:  # type:ignore[empty-body]
         """eq operator"""
