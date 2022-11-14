@@ -17,13 +17,13 @@ class ICurve(Interface, TypeCheckingSupport):
     The curve is an element that has values and domain for those values.
     """
 
-    def GetImage(self) -> Array:
+    def GetImage(self) -> Array:  # type:ignore[empty-body]
         """
         :returns:
             An IArray -- which is an IObjectWithQuantity with the image for this curve
         """
 
-    def GetDomain(self) -> Array:
+    def GetDomain(self) -> Array:  # type:ignore[empty-body]
         """
         :returns:
             An {IArray} -- which is an IObjectWithQuantity with the domain for this curve

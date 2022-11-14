@@ -55,20 +55,20 @@ class IQuantity(Interface, TypeCheckingSupport):
     otherwise, a value may be meaningless).
     """
 
-    def GetCategory(self) -> str:
+    def GetCategory(self) -> str:  # type:ignore[empty-body]
         """
         :returns:
             The constant category for this quantity.
         """
 
-    def GetQuantityType(self) -> str:
+    def GetQuantityType(self) -> str:  # type:ignore[empty-body]
         """
         :returns:
             The constant name of the quantity type for this quantity.
             This method may be slow.
         """
 
-    def GetUnit(self) -> str:
+    def GetUnit(self) -> str:  # type:ignore[empty-body]
         """
         :returns:
             The unit for this quantity.
@@ -96,7 +96,7 @@ class IQuantity2(Interface, TypeCheckingSupport):
     a derived quantity.
     """
 
-    def GetComposingCategories(self) -> Union[Tuple[str, ...], str]:
+    def GetComposingCategories(self) -> Union[Tuple[str, ...], str]:  # type:ignore[empty-body]
         """
         :returns:
             A tuple with the categories used.
@@ -108,7 +108,9 @@ class IQuantity2(Interface, TypeCheckingSupport):
         .. see:: GetComposingUnits to return the actual units/exponents for the categories
         """
 
-    def GetComposingUnits(self) -> Union[Tuple[UnitExponentTuple, ...], str]:
+    def GetComposingUnits(  # type:ignore[empty-body]
+        self,
+    ) -> Union[Tuple[UnitExponentTuple, ...], str]:
         """
         :rtype: tuple(tuple(str, int)) or str
         :returns:
@@ -122,7 +124,9 @@ class IQuantity2(Interface, TypeCheckingSupport):
         .. see:: GetComposingUnitsJoiningExponents
         """
 
-    def GetComposingUnitsJoiningExponents(self) -> Tuple[UnitExponentTuple, ...]:
+    def GetComposingUnitsJoiningExponents(  # type:ignore[empty-body]
+        self,
+    ) -> Tuple[UnitExponentTuple, ...]:
         """
         :rtype: tuple(tuple(str, int))
         :returns:
@@ -132,7 +136,9 @@ class IQuantity2(Interface, TypeCheckingSupport):
         .. see:: GetComposingUnits
         """
 
-    def GetCategoryToUnitAndExps(self) -> Dict[str, List[UnitExponentTuple]]:
+    def GetCategoryToUnitAndExps(  # type:ignore[empty-body]
+        self,
+    ) -> Dict[str, List[UnitExponentTuple]]:
         """
         Return an ordered dictionary with the name of a category -> list with 2 elements:
         [unit, exp] that determines the information about categories, quantities and their
@@ -145,7 +151,7 @@ class IQuantity2(Interface, TypeCheckingSupport):
 
 
 class IQuantity3(Interface, TypeCheckingSupport):
-    def GetUnitDatabase(self) -> "UnitDatabase":
+    def GetUnitDatabase(self) -> "UnitDatabase":  # type:ignore[empty-body]
         """
         :returns:
             The UnitDatabase to which this quantity is associated.
@@ -159,7 +165,7 @@ class IQuantity6(Interface, TypeCheckingSupport):
     for the user) and additional info may be set for when an unknown unit is available.
     """
 
-    def GetUnitCaption(self) -> str:
+    def GetUnitCaption(self) -> str:  # type:ignore[empty-body]
         """
         :returns:
             The text related to this quantity that should be shown to the user.
@@ -174,7 +180,7 @@ class IQuantity6(Interface, TypeCheckingSupport):
             when unknown.
         """
 
-    def GetUnknownCaption(self) -> str:
+    def GetUnknownCaption(self) -> str:  # type:ignore[empty-body]
         """
         :rtype: str
         :returns:
@@ -187,7 +193,7 @@ class IObjectWithQuantity(Interface, TypeCheckingSupport):
     Interface provided for an object that has an associated quantity.
     """
 
-    def GetQuantity(self) -> IQuantity:
+    def GetQuantity(self) -> IQuantity:  # type:ignore[empty-body]
         """
         :returns:
             The quantity that is associated with this object.
@@ -202,7 +208,7 @@ class IScalar(IObjectWithQuantity, IQuantity):
     unit conversion.
     """
 
-    def GetValue(self, unit: Optional[str] = None) -> float:
+    def GetValue(self, unit: Optional[str] = None) -> float:  # type:ignore[empty-body]
         """
         :param unit:
             The unit we want to get the value back.
@@ -211,13 +217,13 @@ class IScalar(IObjectWithQuantity, IQuantity):
             The value stored in this scalar.
         """
 
-    def GetValueAndUnit(self) -> Tuple[float, str]:
+    def GetValueAndUnit(self) -> Tuple[float, str]:  # type:ignore[empty-body]
         """
         :returns:
             Tuple with value and current unit name.
         """
 
-    def IsValid(self) -> bool:
+    def IsValid(self) -> bool:  # type:ignore[empty-body]
         """
         :returns:
             True if the current value is valid, False otherwise.
@@ -230,7 +236,7 @@ class IArray(IObjectWithQuantity, TypeCheckingSupport):
     interface)
     """
 
-    def GetValues(self, unit: Optional[str] = None) -> "MinimalSequence":
+    def GetValues(self, unit: Optional[str] = None) -> "MinimalSequence":  # type:ignore[empty-body]
         """
         :param unit:
             This is the unit in which we want the value.
