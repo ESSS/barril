@@ -14,7 +14,6 @@ from barril.units.unit_database import UnitDatabase
 
 
 def testQuantityInit(mocker) -> None:
-
     # 1: cache it
     ObtainQuantity("m", "length")
 
