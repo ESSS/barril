@@ -284,7 +284,7 @@ class UnitDatabase(Singleton):
         )
 
         if fill_categories:
-            for (quantity_alias, quantity_type) in cls._ADDITIONAL_CATEGORY_ALIASES.items():
+            for quantity_alias, quantity_type in cls._ADDITIONAL_CATEGORY_ALIASES.items():
                 unit_database.AddCategory(quantity_alias, quantity_type)
 
         return unit_database
@@ -520,7 +520,6 @@ class UnitDatabase(Singleton):
                 default_value = 0.0
 
         else:  # the default_value is defined
-
             msg = "Error while adding category %s: default_value %f %s %f"
 
             if min_value is not None:
@@ -1445,7 +1444,6 @@ class UnitDatabase(Singleton):
 
 
 class RegisterConversion:
-
     _registered = False
 
     @classmethod

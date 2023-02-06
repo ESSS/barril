@@ -79,7 +79,6 @@ def testFormatValue() -> None:
 
 
 def testComparison() -> None:
-
     f1 = units.FractionScalar("length", value=FractionValue(10), unit="in")
     f3 = units.FractionScalar("volume", value=FractionValue(4), unit="m3")
     with pytest.raises(TypeError):

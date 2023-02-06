@@ -7,7 +7,6 @@ def AssertRTFCaption(received_representation, expected_caption):
 
 
 def testUnitRichTextRepresentations() -> None:
-
     # Some unit representation should be initially set
     expected_units_initially_set = [
         ("m3", "m<sup>3</sup>"),

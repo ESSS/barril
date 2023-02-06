@@ -469,7 +469,6 @@ class FractionValue:
 
         i = 2
         while i < 1000:
-
             L2 = int(math.floor(fractional_part))
 
             numerators.append(L2 * numerators[i - 1] + numerators[i - 2])

@@ -580,7 +580,6 @@ def testScalarCreationModes() -> None:
 
 
 def testScalarPickle(unit_database_posc) -> None:
-
     import pickle
 
     simple_scalar = Scalar("length", 10, "m")
