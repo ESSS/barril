@@ -27,6 +27,21 @@ def testMegagramPerCubicMeterToKilogramPerCubicMeter() -> None:
     assert obtained == expected
 
 
+@pytest.mark.parametrize(
+    "unit, manometric_unit, conversion",
+    [
+        ("Pa", "Pa(g)", -101225.0),
+        ("bar", "bar(g)", 98.9867),
+        ("kPa", "kPa(g)", -1.325),
+        ("kgf/cm2", "kgf/cm2(g)", 98.9667),
+    ],
+)
+def testManometricPressure(unit: str, manometric_unit: str, conversion: float) -> None:
+
+    scalar = units.Scalar("pressure", 100, unit)
+    assert scalar.GetValue(manometric_unit) == approx(conversion)
+
+
 def testDivisionError() -> None:
     unit_database = UnitDatabase.CreateDefaultSingleton()
     for category, category_info in unit_database.categories_to_quantity_types.items():
