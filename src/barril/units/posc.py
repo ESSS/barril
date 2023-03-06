@@ -1,8 +1,10 @@
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
-from barril.units.unit_database import UnaryConversionFunc, UnitDatabase
-
-from ._quantity import ObtainQuantity, Quantity
+from ._quantity import ObtainQuantity
+from ._quantity import Quantity
+from barril.units.unit_database import UnaryConversionFunc
+from barril.units.unit_database import UnitDatabase
 
 
 def MakeCustomaryToBase(a: Any, b: Any, c: Any, d: Any) -> UnaryConversionFunc:

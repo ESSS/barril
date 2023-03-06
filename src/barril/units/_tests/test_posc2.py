@@ -37,7 +37,6 @@ def testMegagramPerCubicMeterToKilogramPerCubicMeter() -> None:
     ],
 )
 def testManometricPressure(unit: str, manometric_unit: str, conversion: float) -> None:
-
     scalar = units.Scalar("pressure", 100, unit)
     assert scalar.GetValue(manometric_unit) == approx(conversion)
 
