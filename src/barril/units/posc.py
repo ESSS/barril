@@ -4949,6 +4949,16 @@ def FillUnitDatabaseWithPosc(
         f_unit_to_base,
         default_category=None,
     )
+    f_unit_to_base = MakeCustomaryToBase(101325, 98066.5, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(101325, 98066.5, 1.0, 0.0)
+    db.AddUnit(
+        "pressure",
+        "kilogram per square centimeter gauge",
+        "kgf/cm2(g)",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 1, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 1, 1.0, 0.0)
     db.AddUnit(
@@ -5257,6 +5267,17 @@ def FillUnitDatabaseWithPosc(
     f_base_to_unit = MakeBaseToCustomary(0.0, 1000, 1.0, 0.0)
     db.AddUnit(
         "pressure", "kilopascals", "kPa", f_base_to_unit, f_unit_to_base, default_category=None
+    )
+
+    f_unit_to_base = MakeCustomaryToBase(101325, 1000, 1, 0)
+    f_base_to_unit = MakeBaseToCustomary(101325, 1000, 1, 0)
+    db.AddUnit(
+        "pressure",
+        "kilopascals gauge",
+        "kPa(g)",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 1000, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 1000, 1.0, 0.0)
@@ -14663,9 +14684,11 @@ def FillUnitDatabaseWithPosc(
                 "inHg(32F)",
                 "inHg(60F)",
                 "kgf/cm2",
+                "kgf/cm2(g)",
                 "kgf/mm2",
                 "kN/m2",
                 "kPa",
+                "kPa(g)",
                 "kpsi",
                 "lbf/100ft2",
                 "lbf/ft2",
@@ -14706,9 +14729,11 @@ def FillUnitDatabaseWithPosc(
                 "inHg(32F)",
                 "inHg(60F)",
                 "kgf/cm2",
+                "kgf/cm2(g)",
                 "kgf/mm2",
                 "kN/m2",
                 "kPa",
+                "kPa(g)",
                 "kpsi",
                 "lbf/100ft2",
                 "lbf/ft2",
@@ -15746,8 +15771,9 @@ def CreateVolumeQuantityFromLengthQuantity(length_quantity: "Quantity") -> "Quan
         THe created volume quantity.
     """
 
-    from ._quantity import Quantity
     from collections import OrderedDict
+
+    from ._quantity import Quantity
 
     category = length_quantity.GetCategory()
     assert category == "length", (
@@ -15774,8 +15800,9 @@ def CreateAreaQuantityFromLengthQuantity(length_quantity: "Quantity") -> "Quanti
         THe created area quantity.
     """
 
-    from ._quantity import Quantity
     from collections import OrderedDict
+
+    from ._quantity import Quantity
 
     category = length_quantity.GetCategory()
     assert category == "length", (
