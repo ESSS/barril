@@ -482,6 +482,7 @@ def testProductivityIndex() -> None:
     assert default.GetValue("m3/kPa.d") == approx(86400000.0)
     assert default.GetValue("m3/kPa.h") == approx(3600000.0)
     assert default.GetValue("m3/psi.d") == approx(595707004.8)
+    assert default.GetValue("m3/d/kgf/cm2") == approx(8472945600.38827)
 
 
 def testThermalConductivity() -> None:

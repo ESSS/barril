@@ -6553,6 +6553,16 @@ def FillUnitDatabaseWithPosc(
         f_unit_to_base,
         default_category=None,
     )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.1802270983e-10, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.1802270983e-10, 1.0, 0.0)
+    db.AddUnit(
+        "productivity index",
+        "cubic meter per day per kilogram-force per square centimeter",
+        "m3/d/kgf/cm2",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 1, 86400, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 1, 86400, 0.0)
     db.AddUnit(
@@ -14322,6 +14332,7 @@ def FillUnitDatabaseWithPosc(
                 "m3/kPa.d",
                 "m3/kPa.h",
                 "m3/psi.d",
+                "m3/d/kgf/cm2",
             ],
         )
         db.AddCategory(
