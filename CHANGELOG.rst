@@ -1,3 +1,9 @@
+1.15.0 (2023-04-03)
+-------------------
+
+* Add ``cubic meter per day per kilogram-force per square centimeter`` (``m3/d/kgf/cm2``) unit to ``productivity index`` category.
+* Add gauge pressures units ``Pa(g)``, ``kPa(g)``, ``bar(g)``, and ``kgf/cm2(g)`` to ``pressure`` category.
+
 1.14.1 (2022-11-03)
 -------------------
 
