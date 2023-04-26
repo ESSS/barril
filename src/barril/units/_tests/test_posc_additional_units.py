@@ -174,7 +174,8 @@ def testMassPerMol(db) -> None:
     assert kgpermol_to_gpermol == 1000
     assert db.Convert("mass per mol", "g/mol", "lb/lbmole", 1) == 1
 
-@pytest.mark.parametrize('category', ['mole per mass', 'molality'])
+
+@pytest.mark.parametrize("category", ["mole per mass", "molality"])
 def testMolPerMass(db, category) -> None:
     molperg_to_molperkg = db.Convert(category, "mol/g", "mol/kg", 1.0)
     molperkg_to_molperg = db.Convert(category, "mol/kg", "mol/g", 1.0)
