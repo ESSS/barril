@@ -11155,6 +11155,21 @@ def FillUnitDatabaseWithPosc(
         f_unit_to_base,
         default_category=None,
     )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1000.0, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1000.0, 1.0, 0.0)
+    db.AddUnit(
+        "mole per mass", "mol/g", "mol/g", f_base_to_unit, f_unit_to_base, default_category=None
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1000.0, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1000.0, 1.0, 0.0)
+    db.AddUnit(
+        "mole per mass",
+        "lbmole/lb",
+        "lbmole/lb",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 0.07211, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 0.07211, 1.0, 0.0)
     db.AddUnit(
@@ -12336,6 +12351,13 @@ def FillUnitDatabaseWithPosc(
         )
         db.AddCategory(
             "mole per mass",
+            "mole per mass",
+            override=override_categories,
+            valid_units=["mol/kg"],
+            default_unit="mol/kg",
+        )
+        db.AddCategory(
+            "molality",
             "mole per mass",
             override=override_categories,
             valid_units=["mol/kg"],
