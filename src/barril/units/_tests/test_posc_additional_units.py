@@ -174,6 +174,15 @@ def testMassPerMol(db) -> None:
     assert kgpermol_to_gpermol == 1000
     assert db.Convert("mass per mol", "g/mol", "lb/lbmole", 1) == 1
 
+@pytest.mark.parametrize('category', ['mole per mass', 'molality'])
+def testMolPerMass(db, category) -> None:
+    molperg_to_molperkg = db.Convert(category, "mol/g", "mol/kg", 1.0)
+    molperkg_to_molperg = db.Convert(category, "mol/kg", "mol/g", 1.0)
+
+    assert molperg_to_molperkg == 1000
+    assert molperkg_to_molperg == 0.001
+    assert db.Convert(category, "mol/g", "lbmole/lb", 1) == 1
+
 
 def testInjectivityFactor(db) -> None:
     quantity_type = db.GetCategoryInfo("injectivity factor").quantity_type

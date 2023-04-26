@@ -1,3 +1,9 @@
+1.16.0 (2023-04-26)
+-------------------
+
+* Add more units for ``mole per mass`` quantity.
+* Define a ``molality`` category.
+
 1.15.0 (2023-04-03)
 -------------------
 
