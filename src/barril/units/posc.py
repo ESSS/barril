@@ -12353,14 +12353,14 @@ def FillUnitDatabaseWithPosc(
             "mole per mass",
             "mole per mass",
             override=override_categories,
-            valid_units=["mol/kg"],
+            valid_units=["mol/kg", "mol/g", "lbmol/lb"],
             default_unit="mol/kg",
         )
         db.AddCategory(
             "molality",
             "mole per mass",
             override=override_categories,
-            valid_units=["mol/kg"],
+            valid_units=["mol/kg", "mol/g", "lbmol/lb"],
             default_unit="mol/kg",
         )
         db.AddCategory(
