@@ -46,6 +46,24 @@ _LEGACY_TO_CURRENT: List[Tuple[str, str]] = [
     ("M(m3)", "MMm3"),
     ("k(ft3)", "Mcf"),
     ("Ns/m", "N.s/m"),
+    ("Btu/lbmole", "Btu/lbmol"),
+    ("Btu/lbmole.F", "Btu/lbmol.F"),
+    ("ft3/lbmole", "ft3/lbmol"),
+    ("lbmole", "lbmol"),
+    ("lbmole/ft3", "lbmol/ft3"),
+    ("lbmole/galUK", "lbmol/galUK"),
+    ("lbmole/galUS", "lbmol/galUS"),
+    ("lbmole/h", "lbmol/h"),
+    ("lbmole/h.ft2", "lbmol/h.ft2"),
+    ("lbmole/s", "lbmol/s"),
+    ("lbmole/s.ft2", "lbmol/s.ft2"),
+    ("lbmole/d", "lbmol/d"),
+    ("lbmole/bbl", "lbmol/bbl"),
+    ("lbmole/lbmole", "lbmol/lbmol"),
+    ("lb/lbmole", "lb/lbmol"),
+    ("lbmole/lb", "lbmol/lb"),
+    ("gmole", "gmol"),
+    ("gmole/m3", "gmol/m3"),
 ]
 
 
@@ -478,8 +496,11 @@ class UnitDatabase(Singleton):
         if valid_units is not None:
             # valid units given: check if all the given units are valid
             quantity_units = set(self.GetUnits(quantity_type))
-            for unit in valid_units:
-                if unit not in quantity_units:
+            for i, unit in enumerate(valid_units):
+                was_unit_fixed, fixed_unit = FixUnitIfIsLegacy(unit)
+                if was_unit_fixed:
+                    valid_units[i] = fixed_unit
+                if fixed_unit not in quantity_units:
                     msg = "unit %r is not valid for quantity type %r.\nQuantity units: %r"
                     raise ValueError(msg % (unit, quantity_type, sorted(quantity_units)))
 
@@ -490,6 +511,9 @@ class UnitDatabase(Singleton):
                 default_unit = valid_units[0]
         else:
             quantity_units = set(self.GetUnits(quantity_type))
+            was_unit_fixed, fixed_default_unit = FixUnitIfIsLegacy(default_unit)
+            if was_unit_fixed:
+                default_unit = fixed_default_unit
             if default_unit not in quantity_units:
                 raise ValueError(
                     "unit %r is not valid for default quantity type %r"

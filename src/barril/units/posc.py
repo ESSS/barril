@@ -1381,7 +1381,7 @@ def FillUnitDatabaseWithPosc(
     db.AddUnit(
         "molar thermodynamic energy",
         "British thermal units/pound mass mol",
-        "Btu/lbmole",
+        "Btu/lbmol",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -1401,7 +1401,7 @@ def FillUnitDatabaseWithPosc(
     db.AddUnit(
         "molar heat capacity",
         "Btus/pound mass mol deg F",
-        "Btu/lbmole.F",
+        "Btu/lbmol.F",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -3275,7 +3275,7 @@ def FillUnitDatabaseWithPosc(
     db.AddUnit(
         "molar volume",
         "cubic feet/mole (pound mass)",
-        "ft3/lbmole",
+        "ft3/lbmol",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -7919,7 +7919,7 @@ def FillUnitDatabaseWithPosc(
     db.AddUnit(
         "molar mass",
         "moles (pounds mass)",
-        "lbmole",
+        "lbmol",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -7939,7 +7939,7 @@ def FillUnitDatabaseWithPosc(
     db.AddUnit(
         "concentration of B",
         "moles (pounds mass)/cubic foot",
-        "lbmole/ft3",
+        "lbmol/ft3",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -7959,7 +7959,7 @@ def FillUnitDatabaseWithPosc(
     db.AddUnit(
         "concentration of B",
         "moles (pounds mass)/UK gallon",
-        "lbmole/galUK",
+        "lbmol/galUK",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -7979,7 +7979,7 @@ def FillUnitDatabaseWithPosc(
     db.AddUnit(
         "concentration of B",
         "moles (pounds mass)/US gallon",
-        "lbmole/galUS",
+        "lbmol/galUS",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -7999,7 +7999,7 @@ def FillUnitDatabaseWithPosc(
     db.AddUnit(
         "mole per time",
         "moles (pounds mass)/hour",
-        "lbmole/h",
+        "lbmol/h",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -8029,7 +8029,7 @@ def FillUnitDatabaseWithPosc(
     db.AddUnit(
         "mole per time per area",
         "moles (pounds mass)/hour square foot",
-        "lbmole/h.ft2",
+        "lbmol/h.ft2",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -8039,7 +8039,7 @@ def FillUnitDatabaseWithPosc(
     db.AddUnit(
         "mole per time",
         "moles (pounds mass)/second",
-        "lbmole/s",
+        "lbmol/s",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -8059,7 +8059,7 @@ def FillUnitDatabaseWithPosc(
     db.AddUnit(
         "mole per time per area",
         "moles (pounds mass)/second square foot",
-        "lbmole/s.ft2",
+        "lbmol/s.ft2",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -10763,14 +10763,14 @@ def FillUnitDatabaseWithPosc(
     f_unit_to_base = MakeCustomaryToBase(0.0, 0.001, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 0.001, 1.0, 0.0)
     db.AddUnit(
-        "molar mass", "gram mole", "gmole", f_base_to_unit, f_unit_to_base, default_category=None
+        "molar mass", "gram mole", "gmol", f_base_to_unit, f_unit_to_base, default_category=None
     )
     f_unit_to_base = MakeCustomaryToBase(0.0, 1, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 1, 1.0, 0.0)
     db.AddUnit(
         "concentration of B",
         "moles (gram)/cubic metre",
-        "gmole/m3",
+        "gmol/m3",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -10805,7 +10805,7 @@ def FillUnitDatabaseWithPosc(
     db.AddUnit(
         "mole per time",
         "moles (pounds mass)/day",
-        "lbmole/d",
+        "lbmol/d",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -10835,7 +10835,7 @@ def FillUnitDatabaseWithPosc(
     db.AddUnit(
         "concentration of B",
         "moles (pounds mass)/barrel",
-        "lbmole/bbl",
+        "lbmol/bbl",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -10875,7 +10875,7 @@ def FillUnitDatabaseWithPosc(
     db.AddUnit(
         "dimensionless",
         "pound mass mol/pound mass mol",
-        "lbmole/lbmole",
+        "lbmol/lbmol",
         f_base_to_unit,
         f_unit_to_base,
         default_category="mole per mole",
@@ -11149,8 +11149,8 @@ def FillUnitDatabaseWithPosc(
     f_base_to_unit = MakeBaseToCustomary(0.0, 0.001, 1.0, 0.0)
     db.AddUnit(
         "mass per mol",
-        "lb/lbmole",
-        "lb/lbmole",
+        "lb/lbmol",
+        "lb/lbmol",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -11164,8 +11164,8 @@ def FillUnitDatabaseWithPosc(
     f_base_to_unit = MakeBaseToCustomary(0.0, 1000.0, 1.0, 0.0)
     db.AddUnit(
         "mole per mass",
-        "lbmole/lb",
-        "lbmole/lb",
+        "lbmol/lb",
+        "lbmol/lb",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -12767,7 +12767,7 @@ def FillUnitDatabaseWithPosc(
             "mole per mole",
             "dimensionless",
             override=override_categories,
-            valid_units=["mol/mol", "kmol/kmol", "lbmole/lbmole"],
+            valid_units=["mol/mol", "kmol/kmol", "lbmol/lbmol"],
         )
         db.AddCategory(
             "multiplier", "dimensionless", override=override_categories, valid_units=["<mult>"]
@@ -13463,7 +13463,7 @@ def FillUnitDatabaseWithPosc(
             override=override_categories,
             valid_units=[
                 "J/mol",
-                "Btu/lbmole",
+                "Btu/lbmol",
                 "Btu/mol(lbm)",
                 "kcal/mol",
                 "kcal/mol(g)",
@@ -13480,7 +13480,7 @@ def FillUnitDatabaseWithPosc(
             override=override_categories,
             valid_units=[
                 "J/mol",
-                "Btu/lbmole",
+                "Btu/lbmol",
                 "Btu/mol(lbm)",
                 "kcal/mol",
                 "kcal/mol(g)",
@@ -13497,7 +13497,7 @@ def FillUnitDatabaseWithPosc(
             override=override_categories,
             valid_units=[
                 "J/mol",
-                "Btu/lbmole",
+                "Btu/lbmol",
                 "Btu/mol(lbm)",
                 "kcal/mol",
                 "kcal/mol(g)",
@@ -13514,7 +13514,7 @@ def FillUnitDatabaseWithPosc(
             override=override_categories,
             valid_units=[
                 "J/mol.K",
-                "Btu/lbmole.F",
+                "Btu/lbmol.F",
                 "Btu/mol(lbm).F",
                 "cal/mol.degC",
                 "cal/mol(g).degC",
@@ -13528,7 +13528,7 @@ def FillUnitDatabaseWithPosc(
             override=override_categories,
             valid_units=[
                 "J/mol.K",
-                "Btu/lbmole.F",
+                "Btu/lbmol.F",
                 "Btu/mol(lbm).F",
                 "cal/mol.degC",
                 "cal/mol(g).degC",
@@ -13542,7 +13542,7 @@ def FillUnitDatabaseWithPosc(
             override=override_categories,
             valid_units=[
                 "J/mol.K",
-                "Btu/lbmole.F",
+                "Btu/lbmol.F",
                 "Btu/mol(lbm).F",
                 "cal/mol.degC",
                 "cal/mol(g).degC",
@@ -14325,7 +14325,7 @@ def FillUnitDatabaseWithPosc(
                 "m3/mol",
                 "dm3/kmol",
                 "dm3/mol(kg)",
-                "ft3/lbmole",
+                "ft3/lbmol",
                 "ft3/mol(lbm)",
                 "L/mol",
                 "L/mol(g)",
@@ -14472,7 +14472,7 @@ def FillUnitDatabaseWithPosc(
                 "mmol",
                 "mol(g)",
                 "mol(kg)",
-                "lbmole",
+                "lbmol",
                 "mol(lbm)",
                 "umol",
                 "kgmol",
@@ -14482,7 +14482,7 @@ def FillUnitDatabaseWithPosc(
             "molar mass",
             "molar mass",
             override=override_categories,
-            valid_units=["lbmole", "gmole"],
+            valid_units=["lbmol", "gmol"],
         )
         db.AddCategory(
             "mole per area", "mole per area", override=override_categories, valid_units=["mol/m2"]
@@ -14494,8 +14494,8 @@ def FillUnitDatabaseWithPosc(
             valid_units=[
                 "mol/m2.s",
                 "mol(lbm)/h.ft2",
-                "lbmole/h.ft2",
-                "lbmole/s.ft2",
+                "lbmol/h.ft2",
+                "lbmol/s.ft2",
                 "mol(lbm)/s.ft2",
             ],
         )
@@ -14507,16 +14507,16 @@ def FillUnitDatabaseWithPosc(
                 "mol/m3",
                 "kmol/m3",
                 "mol(kg)/m3",
-                "lbmole/ft3",
+                "lbmol/ft3",
                 "mol(lbm)/ft3",
-                "lbmole/galUK",
+                "lbmol/galUK",
                 "mol(lbm)/galUK",
-                "lbmole/galUS",
+                "lbmol/galUS",
                 "mol(lbm)/galUS",
-                "gmole/m3",
+                "gmol/m3",
                 "mol/L",
                 "mol/cm3",
-                "lbmole/bbl",
+                "lbmol/bbl",
             ],
         )
         db.AddCategory(
@@ -14527,16 +14527,16 @@ def FillUnitDatabaseWithPosc(
                 "mol/m3",
                 "kmol/m3",
                 "mol(kg)/m3",
-                "lbmole/ft3",
+                "lbmol/ft3",
                 "mol(lbm)/ft3",
-                "lbmole/galUK",
+                "lbmol/galUK",
                 "mol(lbm)/galUK",
-                "lbmole/galUS",
+                "lbmol/galUS",
                 "mol(lbm)/galUS",
-                "gmole/m3",
+                "gmol/m3",
                 "mol/L",
                 "mol/cm3",
-                "lbmole/bbl",
+                "lbmol/bbl",
             ],
         )
         db.AddCategory(
@@ -14549,14 +14549,14 @@ def FillUnitDatabaseWithPosc(
                 "mol(kg)/h",
                 "kmol/s",
                 "mol(kg)/s",
-                "lbmole/h",
+                "lbmol/h",
                 "mol(lbm)/h",
-                "lbmole/s",
+                "lbmol/s",
                 "mol(lbm)/s",
                 "mol/h",
                 "kmol/d",
                 "mol/d",
-                "lbmole/d",
+                "lbmol/d",
             ],
         )
         db.AddCategory(
@@ -15620,7 +15620,7 @@ def FillUnitDatabaseWithPosc(
             "mass per mol",
             "mass per mol",
             override=override_categories,
-            valid_units=["g/mol", "lb/lbmole", "kg/mol"],
+            valid_units=["g/mol", "lb/lbmol", "kg/mol"],
         )
         db.AddCategory(
             "viscosity per pressure",
