@@ -1,3 +1,9 @@
+1.17.0 (2023-05-02)
+-------------------
+
+* Standardize the usage of ``lbmol``
+* Add more valid units for ``mole per mass`` category
+
 1.16.0 (2023-04-26)
 -------------------
 
