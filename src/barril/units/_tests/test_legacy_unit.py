@@ -105,29 +105,30 @@ def testUnitDatabaseGetDefaultCategory(unit_database_posc) -> None:
 
 
 def testAddCategoryWithLegacyUnit(unit_database_posc) -> None:
-    '''Try creating a category with legacy unit'''
+    """Try creating a category with legacy unit"""
     unit_database_posc.AddCategory(
-        category='molar-mass',
-        quantity_type='mass per mol',
-        valid_units=['g/mol', 'kg/mol', 'lb/lbmole'],
+        category="molar-mass",
+        quantity_type="mass per mol",
+        valid_units=["g/mol", "kg/mol", "lb/lbmole"],
         default_value=100,
         min_value=0,
         is_min_exclusive=True,
-        caption='Molar Mass',
+        caption="Molar Mass",
     )
-    valid_units = unit_database_posc.GetValidUnits('molar-mass')
-    assert sorted(valid_units) == sorted(['g/mol', 'kg/mol', 'lb/lbmol'])
+    valid_units = unit_database_posc.GetValidUnits("molar-mass")
+    assert sorted(valid_units) == sorted(["g/mol", "kg/mol", "lb/lbmol"])
+
 
 def testAddCategoryWithLegacyDefaultUnit(unit_database_posc) -> None:
-    '''Try creating a category with legacy default unit'''
+    """Try creating a category with legacy default unit"""
     unit_database_posc.AddCategory(
-        category='molar-mass',
-        quantity_type='mass per mol',
-        default_unit='lb/lbmole',
+        category="molar-mass",
+        quantity_type="mass per mol",
+        default_unit="lb/lbmole",
         default_value=100,
         min_value=0,
         is_min_exclusive=True,
-        caption='Molar Mass',
+        caption="Molar Mass",
     )
-    valid_units = unit_database_posc.GetValidUnits('molar-mass')
-    assert sorted(valid_units) == sorted(['g/mol', 'kg/mol', 'lb/lbmol'])
+    valid_units = unit_database_posc.GetValidUnits("molar-mass")
+    assert sorted(valid_units) == sorted(["g/mol", "kg/mol", "lb/lbmol"])

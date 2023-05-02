@@ -186,6 +186,7 @@ def testMolPerMass(db, category) -> None:
     valid_units = db.GetValidUnits(category)
     assert valid_units == ["mol/kg", "mol/g", "lbmol/lb"]
 
+
 def testInjectivityFactor(db) -> None:
     quantity_type = db.GetCategoryInfo("injectivity factor").quantity_type
 
