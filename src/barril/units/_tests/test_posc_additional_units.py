@@ -41,8 +41,8 @@ def testDensityGeneration(db) -> None:
 
 
 def testMolarDensity(db) -> None:
-    db.CheckQuantityTypeUnit("amount of a substance", "gmole/m3")
-    db.CheckQuantityTypeUnit("concentration of B", "gmole/m3")
+    db.CheckQuantityTypeUnit("amount of a substance", "gmol/m3")
+    db.CheckQuantityTypeUnit("concentration of B", "gmol/m3")
 
 
 def testPartsPerMillionByVolumeConcentration(db) -> None:
@@ -172,7 +172,7 @@ def testMassPerMol(db) -> None:
 
     assert gpermol_to_kgpermol == 1
     assert kgpermol_to_gpermol == 1000
-    assert db.Convert("mass per mol", "g/mol", "lb/lbmole", 1) == 1
+    assert db.Convert("mass per mol", "g/mol", "lb/lbmol", 1) == 1
 
 
 @pytest.mark.parametrize("category", ["mole per mass", "molality"])
@@ -182,7 +182,9 @@ def testMolPerMass(db, category) -> None:
 
     assert molperg_to_molperkg == 1000
     assert molperkg_to_molperg == 0.001
-    assert db.Convert(category, "mol/g", "lbmole/lb", 1) == 1
+    assert db.Convert(category, "mol/g", "lbmol/lb", 1) == 1
+    valid_units = db.GetValidUnits(category)
+    assert valid_units == ["mol/kg", "mol/g", "lbmol/lb"]
 
 
 def testInjectivityFactor(db) -> None:
