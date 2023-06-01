@@ -1,3 +1,19 @@
+1.18.0 (2023-06-01)
+-------------------
+
+* Define the categories ``forchheimer linear productivity index`` and ``forchheimer linear productivity index``.
+* Define the quantity types ``forchheimer linear productivity index`` and ``forchheimer quadratic productivity index``.
+* Add ``square pascal second/standard cubic metres`` (``Pa2.s/scm``) unit to ``forchheimer linear productivity index`` category.
+* Add ``square pascal day/standard cubic metres`` (``Pa2.d/scm``) unit to ``forchheimer linear productivity index`` category.
+* Add ``square psi day per standard cubic feet`` (``psi2.d/scf``) unit to ``forchheimer linear productivity index`` category.
+* Add ``square psi day per thousand standard cubic feet`` (``psi2.d/Mscf``) unit to ``forchheimer linear productivity index`` category.
+* Add ``square bar day per standard cubic metres`` (``bar2.d/scm``) unit to ``forchheimer linear productivity index`` category.
+* Add ``square pascal square second/square standard cubic metres`` (``Pa2.s2/scm2``) unit to ``forchheimer quadratic productivity index`` category.
+* Add ``square pascal square day/square standard cubic metres`` (``Pa2.d2/scm2``) unit to ``forchheimer quadratic productivity index`` category.
+* Add ``square psi square day per square standard cubic feet`` (``psi2.d2/scf2``) unit to ``forchheimer quadratic productivity index`` category.
+* Add ``square psi square day per thousand square standard cubic feet`` (``psi2.d2/Mscf2``) unit to ``forchheimer quadratic productivity index`` category.
+* Add ``square bar square day per square standard cubic metres`` (``bar2.d2/scm2``) unit to ``forchheimer quadratic productivity index`` category.
+
 1.17.0 (2023-05-02)
 -------------------
 
