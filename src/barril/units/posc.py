@@ -165,13 +165,13 @@ def FillUnitDatabaseWithPosc(
     db.AddUnitBase("productivity index", "cubic metres/second pascal", "m3/Pa.s")
     db.AddUnitBase(
         "forchheimer linear productivity index",
-        "square pascal/standard cubic metres per second",
-        "Pa2/scm.s",
+        "square pascal second/standard cubic metres",
+        "Pa2.s/scm",
     )
     db.AddUnitBase(
         "forchheimer quadratic productivity index",
-        "square pascal/square standard cubic metres per square second",
-        "Pa2/scm2.s2",
+        "square pascal square second/square standard cubic metres",
+        "Pa2.s2/scm2",
     )
     db.AddUnitBase("specific productivity index", "cubic metres/pascal second squared", "m3/Pa2.s2")
     db.AddUnitBase("volume flow rate", "cubic metres/second", "m3/s")
@@ -1096,62 +1096,70 @@ def FillUnitDatabaseWithPosc(
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 47537678.13183536, 2446.5755455488, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 47537678.13183536, 2446.5755455488, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 4107255390590.574957095427052896, 0.028316846592, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 4107255390590.574957095427052896, 0.028316846592, 0.0)
     db.AddUnit(
         "forchheimer linear productivity index",
-        "square psi per standard cubic feet per day",
-        "psi2/scf.d",
+        "square psi day per standard cubic feet",
+        "psi2.d/scf",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 47537678.13183536, 2446575.5455488, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 47537678.13183536, 2446575.5455488, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 4107255390590.574957095427052896, 28.316846592, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 4107255390590.574957095427052896, 28.316846592, 0.0)
     db.AddUnit(
         "forchheimer linear productivity index",
-        "square psi per thousand standard cubic feet per day",
-        "psi2/Mscf.d",
+        "square psi day per thousand standard cubic feet",
+        "psi2.d/Mscf",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 10000000000.0, 86400.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 10000000000.0, 86400.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 8.64e14, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 8.64e14, 1.0, 0.0)
     db.AddUnit(
         "forchheimer linear productivity index",
-        "square bar per standard cubic metres per day",
-        "bar2/scm.d",
+        "square bar day per standard cubic metres",
+        "bar2.d/scm",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 47537678.13183536, 5985731.90007740, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 47537678.13183536, 5985731.90007740, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(
+        0.0, 354866865747025676.29304489737021, 8.01843800914862014464e-04, 0.0
+    )
+    f_base_to_unit = MakeBaseToCustomary(
+        0.0, 354866865747025676.29304489737021, 8.01843800914862014464e-04, 0.0
+    )
     db.AddUnit(
         "forchheimer quadratic productivity index",
-        "square psi per square standard cubic feet per square day",
-        "psi2/scf2.d2",
+        "square psi square day per square standard cubic feet",
+        "psi2.d2/scf2",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 47537678.13183536, 5985731900.07740, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 47537678.13183536, 5985731900.07740, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(
+        0.0, 354866865747025676.29304489737021, 8.01843800914862014464e-01, 0.0
+    )
+    f_base_to_unit = MakeBaseToCustomary(
+        0.0, 354866865747025676.29304489737021, 8.01843800914862014464e-01, 0.0
+    )
     db.AddUnit(
         "forchheimer quadratic productivity index",
-        "square psi per thousand square standard cubic feet per square day",
-        "psi2/Mscf2.d2",
+        "square psi square day per thousand square standard cubic feet",
+        "psi2.d2/Mscf2",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
     )
-    f_unit_to_base = MakeCustomaryToBase(0.0, 10000000000.0, 7464960000.0, 0.0)
-    f_base_to_unit = MakeBaseToCustomary(0.0, 10000000000.0, 7464960000.0, 0.0)
+    f_unit_to_base = MakeCustomaryToBase(0.0, 7.46496e19, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 7.46496e19, 1.0, 0.0)
     db.AddUnit(
         "forchheimer quadratic productivity index",
-        "square bar per square standard cubic metres per square day",
-        "bar2/scm2.d2",
+        "square bar square day per square standard cubic metres",
+        "bar2.d2/scm2",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -14437,13 +14445,13 @@ def FillUnitDatabaseWithPosc(
             "forchheimer linear productivity index",
             "forchheimer linear productivity index",
             override=override_categories,
-            valid_units=["Pa2/scm.s", "psi2/scf.d", "psi2/Mscf.d", "bar2/scm.d"],
+            valid_units=["Pa2.s/scm", "psi2.d/scf", "psi2.d/Mscf", "bar2.d/scm"],
         )
         db.AddCategory(
             "forchheimer quadratic productivity index",
             "forchheimer quadratic productivity index",
             override=override_categories,
-            valid_units=["Pa2/scm2.s2", "psi2/scf2.d2", "psi2/Mscf2.d2", "bar2/scm2.d2"],
+            valid_units=["Pa2.s2/scm2", "psi2.d2/scf2", "psi2.d2/Mscf2", "bar2.d2/scm2"],
         )
         db.AddCategory(
             "volume flow rate",
