@@ -1096,6 +1096,16 @@ def FillUnitDatabaseWithPosc(
         f_unit_to_base,
         default_category=None,
     )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 8.64e4, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 8.64e4, 1.0, 0.0)
+    db.AddUnit(
+        "forchheimer linear productivity index",
+        "square pascal day per standard cubic metres",
+        "Pa2.d/scm",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 4107255390590.574957095427052896, 0.028316846592, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 4107255390590.574957095427052896, 0.028316846592, 0.0)
     db.AddUnit(
@@ -1122,6 +1132,16 @@ def FillUnitDatabaseWithPosc(
         "forchheimer linear productivity index",
         "square bar day per standard cubic metres",
         "bar2.d/scm",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 7.46496e9, 1.0, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 7.46496e9, 1.0, 0.0)
+    db.AddUnit(
+        "forchheimer quadratic productivity index",
+        "square pascal square day per standard cubic metres",
+        "Pa2.d2/scm2",
         f_base_to_unit,
         f_unit_to_base,
         default_category=None,
@@ -14445,13 +14465,19 @@ def FillUnitDatabaseWithPosc(
             "forchheimer linear productivity index",
             "forchheimer linear productivity index",
             override=override_categories,
-            valid_units=["Pa2.s/scm", "psi2.d/scf", "psi2.d/Mscf", "bar2.d/scm"],
+            valid_units=["Pa2.s/scm", "Pa2.d/scm", "psi2.d/scf", "psi2.d/Mscf", "bar2.d/scm"],
         )
         db.AddCategory(
             "forchheimer quadratic productivity index",
             "forchheimer quadratic productivity index",
             override=override_categories,
-            valid_units=["Pa2.s2/scm2", "psi2.d2/scf2", "psi2.d2/Mscf2", "bar2.d2/scm2"],
+            valid_units=[
+                "Pa2.s2/scm2",
+                "Pa2.d2/scm2",
+                "psi2.d2/scf2",
+                "psi2.d2/Mscf2",
+                "bar2.d2/scm2",
+            ],
         )
         db.AddCategory(
             "volume flow rate",

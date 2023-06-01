@@ -488,6 +488,7 @@ def testProductivityIndex() -> None:
 def testForchheimerLinearCoefficient() -> None:
     default = units.Scalar("forchheimer linear productivity index", 1, "Pa2.s/scm")
     assert default.value == 1.0
+    assert default.GetValue("Pa2.d/scm") == approx(1.1574074074074073e-05)
     assert default.GetValue("psi2.d/scf") == approx(6.89434766020926e-15)
     assert default.GetValue("psi2.d/Mscf") == approx(6.89434766020926e-12)
     assert default.GetValue("bar2.d/scm") == approx(1.1574074074074073e-15)
@@ -496,6 +497,7 @@ def testForchheimerLinearCoefficient() -> None:
 def testForchheimerQuadraticCoefficient() -> None:
     default = units.Scalar("forchheimer quadratic productivity index", 1, "Pa2.s2/scm2")
     assert default.value == 1.0
+    assert default.GetValue("Pa2.d2/scm2") == approx(1.3395919067215364e-10)
     assert default.GetValue("psi2.d2/scf2") == approx(2.259562326921988e-21)
     assert default.GetValue("psi2.d2/Mscf2") == approx(2.259562326921988e-19)
     assert default.GetValue("bar2.d2/scm2") == approx(1.3395919067215364e-20)
