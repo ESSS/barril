@@ -298,6 +298,9 @@ def FillUnitDatabaseWithPosc(
         "kilogram per cubic meter degrees Celsius",
         "kg/m3.degC",
     )
+    db.AddUnitBase(
+        "density derivative in respect to enthalpy", "square kilogram per cubic meter Joule", "kg2/m3.J"
+    )
     db.AddUnitBase("computer binary memory", "Byte", "Byte")
     db.AddUnitBase("flow coefficient", "flow rate per pressure power of 0.5 ", "(m3/s)/(Pa^0.5)")
     db.AddUnitBase("temperature per area", "degrees Celsius per square meter", "degC/m2")
@@ -15797,6 +15800,12 @@ def FillUnitDatabaseWithPosc(
             "density derivative in respect to temperature",
             override=override_categories,
             valid_units=["kg/m3.degC", "kg/m3.K"],
+        )
+        db.AddCategory(
+            "density derivative in respect to enthalpy",
+            "density derivative in respect to enthalpy",
+            override=override_categories,
+            valid_units=["kg2/m3.J"],
         )
         db.AddCategory(
             "computer binary memory",
