@@ -432,6 +432,12 @@ def testDensityDerivativePerTemperatureUnitConversion() -> None:
     assert density_derivative_per_temperature.GetValue("kg/m3.degC") == 1.0
 
 
+def testDensityDerivativePerEnthalpyUnitConversion() -> None:
+    default = units.Scalar("density derivative in respect to enthalpy", 1, "kg2/m3.J")
+    assert default.value == 1.0
+    assert default.GetValue("kg2/m3.J") == 1.0
+
+
 def testStandardVolumePerStandardVolumeSmoke() -> None:
     standard_per_standard = units.Scalar(
         "standard volume per standard volume", 1, "scm(15C)/scm(15C)"
