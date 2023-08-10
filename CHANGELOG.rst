@@ -1,8 +1,13 @@
+1.19.0 (2023-08-10)
+-------------------
+
+* Define the category and quantity type ``density derivative in respect to enthalpy``(default unit: ``kg2/m3.J``).
+
 1.18.0 (2023-06-01)
 -------------------
 
-* Define the categories ``forchheimer linear productivity index`` and ``forchheimer linear productivity index``.
-* Define the quantity types ``forchheimer linear productivity index`` and ``forchheimer quadratic productivity index``.
+* Define categories ``forchheimer linear productivity index`` and ``forchheimer linear productivity index``.
+* Define quantity types ``forchheimer linear productivity index`` and ``forchheimer quadratic productivity index``.
 * Add units to categories ``forchheimer linear productivity index`` and ``forchheimer quadratic productivity index``.
 
 1.17.0 (2023-05-02)
