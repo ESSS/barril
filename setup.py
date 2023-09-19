@@ -7,9 +7,8 @@ with open("README.rst", encoding="UTF-8") as readme_file:
 with open("CHANGELOG.rst", encoding="UTF-8") as changelog_file:
     history = changelog_file.read()
 
-requirements = ["attrs>=18.1.0", "numpy>=1.11.0", "oop-ext>=1.1"]
+requirements = ["attrs>=18.1.0", "numpy>=1.11.0", "oop-ext>=1.1", "typing_extensions"]
 extras_require = {
-    "docs": ["sphinx >= 1.4", "sphinx-autodoc-typehints", "typing_extensions"],
     "testing": [
         "codecov",
         "data-science-types",
