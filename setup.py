@@ -9,7 +9,7 @@ with open("CHANGELOG.rst", encoding="UTF-8") as changelog_file:
 
 requirements = ["attrs>=18.1.0", "numpy>=1.11.0", "oop-ext>=1.1"]
 extras_require = {
-    "docs": ["sphinx >= 1.4", "sphinx_rtd_theme", "sphinx-autodoc-typehints", "typing_extensions"],
+    "docs": ["sphinx >= 1.4", "sphinx-autodoc-typehints", "typing_extensions"],
     "testing": [
         "codecov",
         "data-science-types",
