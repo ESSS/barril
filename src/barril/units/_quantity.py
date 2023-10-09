@@ -470,7 +470,7 @@ class Quantity:
                 self.GetCategory(), self._unit, self._unknown_unit_caption
             )
 
-        return "Quantity({!r}, {!r})".format(self.GetCategory(), self._unit)
+        return f"Quantity({self.GetCategory()!r}, {self._unit!r})"
 
     def SetUnknownCaption(self, caption: str) -> NoReturn:
         raise ReadOnlyError("Quantity is now read-only.")
@@ -527,7 +527,7 @@ class Quantity:
                         ret += "1 / "
 
                 if exp != -1:
-                    ret += "({}) ** {}".format(rep, abs(exp))
+                    ret += f"({rep}) ** {abs(exp)}"
                 else:
                     ret += rep
 
