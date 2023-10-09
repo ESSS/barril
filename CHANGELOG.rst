@@ -1,3 +1,9 @@
+2.0.0 (UNRELEASED)
+------------------
+
+* Added support for Python 3.11 and 3.12.
+* Dropped support for EOL Python 3.6 and 3.7.
+
 1.19.0 (2023-08-10)
 -------------------
 
