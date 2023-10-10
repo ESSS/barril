@@ -165,7 +165,9 @@ def testCategory(unit_database_custom_conversion) -> None:
     formatted_value = FormatFloat("%g", -6e-010)
     with pytest.raises(
         QuantityValidationError,
-        match="Invalid value for My Length: %s. Must be > %s." % (formatted_value, formatted_value),
+        match="Invalid value for My Length: {}. Must be > {}.".format(
+            formatted_value, formatted_value
+        ),
     ) as exc_info:
         quantity.CheckValue(-6e-10)
     e = exc_info.value

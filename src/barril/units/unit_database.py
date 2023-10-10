@@ -451,7 +451,7 @@ class UnitDatabase(Singleton):
         if min_value is not None and max_value is not None:
             if max_value < min_value:
                 raise ValueError(
-                    "min_value (%s) must be >= than min_value (%s)" % (min_value, max_value)
+                    "min_value ({}) must be >= than min_value ({})".format(min_value, max_value)
                 )
 
         if from_category:
@@ -794,7 +794,7 @@ class UnitDatabase(Singleton):
         quantity_type_list = self.quantity_types.setdefault(quantity_type, [])
 
         if unit in [q.unit for q in quantity_type_list]:
-            raise RuntimeError("Unit already registered: %s (%s)" % (name, unit))
+            raise RuntimeError("Unit already registered: {} ({})".format(name, unit))
 
         quantity_type_list.append(info)
 
@@ -1432,7 +1432,7 @@ class UnitDatabase(Singleton):
                     unit_exp1[1] = operation_exp(exp1, exp2)  # type:ignore[index]
                 else:
                     raise RuntimeError(
-                        "This should've been covered already (%s != %s)." % (unit1, unit2)
+                        "This should've been covered already ({} != {}).".format(unit1, unit2)
                     )
 
         # unit -> expoent

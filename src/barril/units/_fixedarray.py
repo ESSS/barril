@@ -110,7 +110,7 @@ class FixedArray(Array, Generic[ValuesType]):
         elif hasattr(self, "_dimension"):
             if self._dimension is not None and dimension != self._dimension:
                 raise ValueError(
-                    "Dimension re-definition mismatch: %s != %s" % (self._dimension, dimension)
+                    "Dimension re-definition mismatch: {} != {}".format(self._dimension, dimension)
                 )
 
         if dimension < 2:

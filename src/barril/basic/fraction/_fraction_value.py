@@ -142,7 +142,7 @@ class FractionValue:
         """
         formatted = formatter("%g", self._number)
         if float(self._fraction) != 0.0:
-            formatted = "{} {}".format(formatted, self.__FormatFractionToString(formatter))
+            formatted = f"{formatted} {self.__FormatFractionToString(formatter)}"
         return formatted
 
     def __FormatFractionToString(
@@ -274,10 +274,10 @@ class FractionValue:
     )
 
     FRACTION_COMPLETE_EXPR = r"""
-        (?P<float>%s?)             # The whole number
+        (?P<float>{}?)             # The whole number
         \s*                        # space between number and fraction
-        (%s)?                      # entire fractional part is optional
-        """ % (
+        ({})?                      # entire fractional part is optional
+        """.format(
         NUMBER_EXPR,
         FRACTION_PART_EXPR,
     )
