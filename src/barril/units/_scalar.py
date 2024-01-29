@@ -75,20 +75,18 @@ class Scalar(AbstractValueWithQuantityObject):
     """
 
     @overload
-    def __init__(self, category: Quantity, value: Optional[float] = None) -> None:
-        ...
+    def __init__(self, category: Quantity, value: Optional[float] = None) -> None: ...
 
     @overload
-    def __init__(self, category: str, value: Optional[float] = None, unit: Optional[str] = None):
-        ...
+    def __init__(
+        self, category: str, value: Optional[float] = None, unit: Optional[str] = None
+    ): ...
 
     @overload
-    def __init__(self, value: float, unit: str, category: Optional[str] = None):
-        ...
+    def __init__(self, value: float, unit: str, category: Optional[str] = None): ...
 
     @overload
-    def __init__(self, value_and_unit: Tuple[float, str]):
-        ...
+    def __init__(self, value_and_unit: Tuple[float, str]): ...
 
     def __init__(  # type:ignore[misc]
         self, category: Any, value: Any = None, unit: Any = None

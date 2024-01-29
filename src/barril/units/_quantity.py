@@ -37,16 +37,14 @@ def ObtainQuantity(
     unit: str,
     category: Optional[str] = None,
     unknown_unit_caption: Optional[str] = None,
-) -> "Quantity":
-    ...
+) -> "Quantity": ...
 
 
 @overload
 def ObtainQuantity(
     unit: str,
     category: Union[Tuple[str, ...], str],
-) -> "Quantity":
-    ...
+) -> "Quantity": ...
 
 
 @overload
@@ -54,8 +52,7 @@ def ObtainQuantity(
     unit: Union[None, List[UnitExponentTuple], Dict[str, Sequence[Union[str, int]]]],
     category: Optional[str] = None,
     unknown_unit_caption: Optional[str] = None,
-) -> "Quantity":
-    ...
+) -> "Quantity": ...
 
 
 def ObtainQuantity(

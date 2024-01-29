@@ -72,20 +72,16 @@ class Array(AbstractValueWithQuantityObject, Generic[ValuesType]):
     """
 
     @overload
-    def __init__(self, category: Union[str, Quantity]):
-        ...
+    def __init__(self, category: Union[str, Quantity]): ...
 
     @overload
-    def __init__(self, values: ValuesType, unit: str, category: Optional[str] = None):
-        ...
+    def __init__(self, values: ValuesType, unit: str, category: Optional[str] = None): ...
 
     @overload
-    def __init__(self, category: str, values: ValuesType, unit: str):
-        ...
+    def __init__(self, category: str, values: ValuesType, unit: str): ...
 
     @overload
-    def __init__(self, category: Quantity, values: ValuesType):
-        ...
+    def __init__(self, category: Quantity, values: ValuesType): ...
 
     def __init__(  # type:ignore[misc]
         self, category: str, values: Any = None, unit: Any = None
@@ -343,12 +339,10 @@ class Array(AbstractValueWithQuantityObject, Generic[ValuesType]):
         return len(self.values)
 
     @overload
-    def __getitem__(self, index: int) -> Any:
-        ...
+    def __getitem__(self, index: int) -> Any: ...
 
     @overload
-    def __getitem__(self, index: slice) -> ValuesType:
-        ...
+    def __getitem__(self, index: slice) -> ValuesType: ...
 
     def __getitem__(self, index: Any) -> Any:
         return self.values[index]

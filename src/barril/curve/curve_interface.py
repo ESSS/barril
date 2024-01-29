@@ -30,12 +30,10 @@ class ICurve(Interface, TypeCheckingSupport):
         """
 
     @overload
-    def __getitem__(self, index: int) -> Tuple[float, float]:
-        ...
+    def __getitem__(self, index: int) -> Tuple[float, float]: ...
 
     @overload
-    def __getitem__(self, index: slice) -> Tuple[ValuesType, ValuesType]:
-        ...
+    def __getitem__(self, index: slice) -> Tuple[ValuesType, ValuesType]: ...
 
     def __getitem__(self, index: Union[int, slice]) -> Any:
         """
