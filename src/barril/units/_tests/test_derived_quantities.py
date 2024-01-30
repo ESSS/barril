@@ -1,6 +1,5 @@
-from collections import OrderedDict
-
 import pytest
+from collections import OrderedDict
 
 from barril.units import InvalidOperationError
 from barril.units import InvalidUnitError
@@ -88,7 +87,6 @@ def testDeepcopy(unit_database_len_time) -> None:
     # which could change if there are other threads running. The code is kept just as a
     # reference in case we have to debug such a situation again (there was a bug in odict where
     # it decreased references to None when it shouldn't and it crashed the program later on).
-
     # m = OrderedDict([('Table size', ['m', 1])])
     # import gc
     # import sys

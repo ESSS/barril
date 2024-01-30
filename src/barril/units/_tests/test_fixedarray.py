@@ -1,7 +1,7 @@
-from collections import OrderedDict
 from typing import List
 
 import pytest
+from collections import OrderedDict
 from pytest import approx
 
 from barril import units

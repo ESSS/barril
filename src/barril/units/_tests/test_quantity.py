@@ -1,14 +1,13 @@
 import pickle
+import pytest
 from collections import OrderedDict
 
-import pytest
-
-from barril.units import GetUnknownQuantity
-from barril.units import ObtainQuantity
-from barril.units import Quantity
 from barril.units import UNKNOWN_QUANTITY
 from barril.units import UNKNOWN_QUANTITY_TYPE
 from barril.units import UNKNOWN_UNIT
+from barril.units import GetUnknownQuantity
+from barril.units import ObtainQuantity
+from barril.units import Quantity
 from barril.units.unit_database import InvalidUnitError
 from barril.units.unit_database import UnitDatabase
 

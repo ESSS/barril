@@ -1,5 +1,4 @@
 import copy
-
 import pytest
 
 from barril.basic.fraction import Fraction

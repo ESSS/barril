@@ -1,6 +1,4 @@
-import weakref
-from collections import OrderedDict
-from copy import deepcopy
+from typing import TYPE_CHECKING
 from typing import Dict
 from typing import List
 from typing import Mapping
@@ -9,19 +7,21 @@ from typing import Sequence
 from typing import Set
 from typing import Tuple
 from typing import Type
-from typing import TYPE_CHECKING
 
+import weakref
+from collections import OrderedDict
+from copy import deepcopy
 from oop_ext.foundation import callback
 from oop_ext.foundation.decorators import Override
 from oop_ext.foundation.singleton import Singleton
 from oop_ext.interface import AssertImplements
 
-from .unit_database import UnitDatabase
-from .unit_system import UnitSystem
-from .unit_system_interface import IUnitSystem
 from barril.units import AbstractValueWithQuantityObject
 from barril.units import IQuantity
 
+from .unit_database import UnitDatabase
+from .unit_system import UnitSystem
+from .unit_system_interface import IUnitSystem
 
 if TYPE_CHECKING:
     from barril.units import Scalar

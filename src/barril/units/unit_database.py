@@ -1,9 +1,6 @@
-import copy
-import math
-import traceback
+from typing import TYPE_CHECKING
 from typing import Any
 from typing import Callable
-from typing import cast
 from typing import Dict
 from typing import Hashable
 from typing import Iterator
@@ -13,16 +10,18 @@ from typing import Sequence
 from typing import Set
 from typing import Tuple
 from typing import Type
-from typing import TYPE_CHECKING
 from typing import TypeVar
 from typing import Union
+from typing import cast
 
 import attr
+import copy
+import math
+import traceback
 from oop_ext.foundation.singleton import Singleton
 
 from barril._util.types_ import CheckType
 from barril.units.interfaces import UnitExponentTuple
-
 
 if TYPE_CHECKING:
     from barril.units import Quantity
@@ -989,7 +988,8 @@ class UnitDatabase(Singleton):
                     # says it's unknown, but we get a proper label for it in the UI, thus, it's a
                     # known 'unknown' quantity). So, in this case, proceed returning the unknown
                     # quantity unit information.
-                    from ._unit_constants import UNKNOWN_QUANTITY_TYPE, UNKNOWN_UNIT
+                    from ._unit_constants import UNKNOWN_QUANTITY_TYPE
+                    from ._unit_constants import UNKNOWN_UNIT
 
                     if quantity_type == UNKNOWN_QUANTITY_TYPE:
                         quantity_types = self.quantity_types[quantity_type]

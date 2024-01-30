@@ -1,7 +1,7 @@
 from typing import Any
-from typing import overload
 from typing import Tuple
 from typing import Union
+from typing import overload
 
 from oop_ext.interface import Interface
 from oop_ext.interface import TypeCheckingSupport

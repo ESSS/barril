@@ -1,7 +1,7 @@
-import weakref
 from typing import Dict
 
 import pytest
+import weakref
 
 from barril.units import Array
 from barril.units import FixedArray

@@ -1,19 +1,21 @@
-import copy
-from functools import total_ordering
+from typing import TYPE_CHECKING
 from typing import Any
 from typing import Optional
-from typing import overload
 from typing import Tuple
-from typing import TYPE_CHECKING
 from typing import Union
+from typing import overload
+
+import copy
+from functools import total_ordering
+
+from barril._util.types_ import CheckType
+from barril.basic.fraction import FractionValue
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._quantity import ObtainQuantity
 from ._quantity import Quantity
 from .unit_database import CategoryInfo
 from .unit_database import UnitDatabase
-from barril._util.types_ import CheckType
-from barril.basic.fraction import FractionValue
 
 if TYPE_CHECKING:
     from barril.units import IQuantity

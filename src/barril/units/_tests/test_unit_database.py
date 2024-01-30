@@ -4,6 +4,8 @@ from pytest import approx
 from barril import units
 from barril.basic.format_float import FormatFloat
 from barril.basic.fraction import FractionValue
+from barril.units import UNKNOWN_QUANTITY_TYPE
+from barril.units import UNKNOWN_UNIT
 from barril.units import Array
 from barril.units import FixedArray
 from barril.units import InvalidQuantityTypeError
@@ -11,8 +13,6 @@ from barril.units import InvalidUnitError
 from barril.units import ObtainQuantity
 from barril.units import Quantity
 from barril.units import UnitsError
-from barril.units import UNKNOWN_QUANTITY_TYPE
-from barril.units import UNKNOWN_UNIT
 from barril.units.exceptions import QuantityValidationError
 from barril.units.unit_database import UnitDatabase
 
@@ -352,7 +352,8 @@ def testRegisterTwoFunctionsForTheSameClass(unit_database_custom_conversion) -> 
 def testNumpyConversion(unit_database_custom_conversion) -> None:
     unit_database = unit_database_custom_conversion
 
-    from barril.units.posc import MakeBaseToCustomary, MakeCustomaryToBase
+    from barril.units.posc import MakeBaseToCustomary
+    from barril.units.posc import MakeCustomaryToBase
 
     f_unit_to_base = MakeCustomaryToBase(273.15, 1, 1, 0)
     f_base_to_unit = MakeBaseToCustomary(273.15, 1, 1, 0)

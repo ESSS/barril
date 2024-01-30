@@ -16,17 +16,18 @@ Unit: the unit itself. E.g.: m, m/s, kg
 Note: The naming conventions were gathered from posc:
     http://www.posc.org/ebiz/pefxml/patternsobjects.html http://www.posc.org/refs/poscUnits20.xml
 """
+
+from typing import TYPE_CHECKING
 from typing import Any
 from typing import Dict
 from typing import Generic
 from typing import Iterator
 from typing import List
 from typing import Optional
-from typing import overload
 from typing import Tuple
-from typing import TYPE_CHECKING
 from typing import TypeVar
 from typing import Union
+from typing import overload
 
 from oop_ext.interface import Interface
 from oop_ext.interface import TypeCheckingSupport

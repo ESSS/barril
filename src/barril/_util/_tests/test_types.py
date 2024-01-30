@@ -1,9 +1,9 @@
 import pytest
 
-from barril._util.types_ import _GetKnownNumberTypes
 from barril._util.types_ import CheckFormatString
 from barril._util.types_ import CheckType
 from barril._util.types_ import IsNumber
+from barril._util.types_ import _GetKnownNumberTypes
 
 
 def testPassing() -> None:
