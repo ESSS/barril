@@ -1,15 +1,18 @@
 """
 This module provides the implementation of an Scalar object.
 """
-from functools import total_ordering
+
 from typing import Any
-from typing import cast
 from typing import Optional
-from typing import overload
 from typing import Tuple
 from typing import Union
+from typing import cast
+from typing import overload
 
+from functools import total_ordering
 from oop_ext.interface import ImplementsInterface
+
+from barril._util.types_ import IsNumber
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._quantity import ObtainQuantity
@@ -18,7 +21,6 @@ from .interfaces import IQuantity
 from .interfaces import IScalar
 from .unit_database import CategoryInfo
 from .unit_database import UnitDatabase
-from barril._util.types_ import IsNumber
 
 __all__ = ["Scalar"]
 
@@ -75,20 +77,18 @@ class Scalar(AbstractValueWithQuantityObject):
     """
 
     @overload
-    def __init__(self, category: Quantity, value: Optional[float] = None) -> None:
-        ...
+    def __init__(self, category: Quantity, value: Optional[float] = None) -> None: ...
 
     @overload
-    def __init__(self, category: str, value: Optional[float] = None, unit: Optional[str] = None):
-        ...
+    def __init__(
+        self, category: str, value: Optional[float] = None, unit: Optional[str] = None
+    ): ...
 
     @overload
-    def __init__(self, value: float, unit: str, category: Optional[str] = None):
-        ...
+    def __init__(self, value: float, unit: str, category: Optional[str] = None): ...
 
     @overload
-    def __init__(self, value_and_unit: Tuple[float, str]):
-        ...
+    def __init__(self, value_and_unit: Tuple[float, str]): ...
 
     def __init__(  # type:ignore[misc]
         self, category: Any, value: Any = None, unit: Any = None

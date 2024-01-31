@@ -1,7 +1,7 @@
 from typing import Any
-from typing import overload
 from typing import Tuple
 from typing import Union
+from typing import overload
 
 from oop_ext.interface import Interface
 from oop_ext.interface import TypeCheckingSupport
@@ -30,12 +30,10 @@ class ICurve(Interface, TypeCheckingSupport):
         """
 
     @overload
-    def __getitem__(self, index: int) -> Tuple[float, float]:
-        ...
+    def __getitem__(self, index: int) -> Tuple[float, float]: ...
 
     @overload
-    def __getitem__(self, index: slice) -> Tuple[ValuesType, ValuesType]:
-        ...
+    def __getitem__(self, index: slice) -> Tuple[ValuesType, ValuesType]: ...
 
     def __getitem__(self, index: Union[int, slice]) -> Any:
         """

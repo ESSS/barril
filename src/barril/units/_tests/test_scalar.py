@@ -1,9 +1,9 @@
 """
     The 'unit' must be ascii only.
 """
-from collections import OrderedDict
 
 import pytest
+from collections import OrderedDict
 from pytest import approx
 
 from barril import units

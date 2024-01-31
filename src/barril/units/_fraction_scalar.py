@@ -1,19 +1,21 @@
-import copy
-from functools import total_ordering
+from typing import TYPE_CHECKING
 from typing import Any
 from typing import Optional
-from typing import overload
 from typing import Tuple
-from typing import TYPE_CHECKING
 from typing import Union
+from typing import overload
+
+import copy
+from functools import total_ordering
+
+from barril._util.types_ import CheckType
+from barril.basic.fraction import FractionValue
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._quantity import ObtainQuantity
 from ._quantity import Quantity
 from .unit_database import CategoryInfo
 from .unit_database import UnitDatabase
-from barril._util.types_ import CheckType
-from barril.basic.fraction import FractionValue
 
 if TYPE_CHECKING:
     from barril.units import IQuantity
@@ -28,26 +30,21 @@ class FractionScalar(AbstractValueWithQuantityObject):
     """
 
     @overload
-    def __init__(self, quantity: str):
-        ...
+    def __init__(self, quantity: str): ...
 
     @overload
-    def __init__(self, quantity: str, value: Union[FractionValue, float], unit: str):
-        ...
+    def __init__(self, quantity: str, value: Union[FractionValue, float], unit: str): ...
 
     @overload
-    def __init__(self, quantity: "IQuantity", value: Union[FractionValue, float]):
-        ...
+    def __init__(self, quantity: "IQuantity", value: Union[FractionValue, float]): ...
 
     @overload
-    def __init__(self, quantity: str, unit: str):
-        ...
+    def __init__(self, quantity: str, unit: str): ...
 
     @overload
     def __init__(
         self, value: Union[FractionValue, float], unit: str, category: Optional[str] = None
-    ):
-        ...
+    ): ...
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)

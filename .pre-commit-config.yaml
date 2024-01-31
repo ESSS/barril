@@ -1,6 +1,6 @@
 repos:
 -   repo: https://github.com/psf/black
-    rev: 23.12.1
+    rev: 24.1.1
     hooks:
     -   id: black
         args: [--safe, --quiet]
@@ -16,11 +16,12 @@ repos:
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
     -   id: debug-statements
--   repo: https://github.com/asottile/reorder-python-imports
-    rev: v3.12.0
+-   repo: https://github.com/pycqa/isort
+    rev: 5.13.2
     hooks:
-    -   id: reorder-python-imports
-        args: ['--application-directories=.:src', --py36-plus]
+      - id: isort
+        name: isort
+        args: ["--force-single-line", "--line-length=100", "--profile=black"]
 -   repo: local
     hooks:
     -   id: rst

@@ -1,6 +1,7 @@
 """
 Extensions to python native types.
 """
+
 from typing import Any
 from typing import Optional
 from typing import Set

@@ -30,9 +30,9 @@ def testUnitRichTextRepresentations() -> None:
     new_unit = "new_unit"
     new_unit_representation = "new<sup>unit</sup>"
 
-    UnitRichTextRepresentations.DEFAULT_UNITS_RICH_TEXT_REPRESENTATIONS[
-        new_unit
-    ] = new_unit_representation
+    UnitRichTextRepresentations.DEFAULT_UNITS_RICH_TEXT_REPRESENTATIONS[new_unit] = (
+        new_unit_representation
+    )
     AssertRTFCaption(
         UnitRichTextRepresentations.GetUnitHtmlRepresentation(new_unit), new_unit_representation
     )
@@ -40,9 +40,9 @@ def testUnitRichTextRepresentations() -> None:
     # But the user should be able to overwrite the default values with a custom representation
     new_cubic_meter_representation = "m<sub>3</sub>"
     cubic_meter_caption = "m3"
-    UnitRichTextRepresentations.DEFAULT_UNITS_RICH_TEXT_REPRESENTATIONS[
-        cubic_meter_caption
-    ] = new_cubic_meter_representation
+    UnitRichTextRepresentations.DEFAULT_UNITS_RICH_TEXT_REPRESENTATIONS[cubic_meter_caption] = (
+        new_cubic_meter_representation
+    )
 
     AssertRTFCaption(
         UnitRichTextRepresentations.GetUnitHtmlRepresentation(cubic_meter_caption),

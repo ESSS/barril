@@ -1,9 +1,9 @@
 import locale
 
-from barril.basic.format_float import FormatFloat
 from barril.basic.format_float import MINUS_INFINITY
 from barril.basic.format_float import NAN
 from barril.basic.format_float import PLUS_INFINITY
+from barril.basic.format_float import FormatFloat
 from barril.units import Scalar
 
 

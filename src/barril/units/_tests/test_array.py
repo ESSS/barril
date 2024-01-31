@@ -1,8 +1,8 @@
-from collections import OrderedDict
 from typing import List
 from typing import Tuple
 
 import pytest
+from collections import OrderedDict
 from pytest import approx
 
 from barril import units

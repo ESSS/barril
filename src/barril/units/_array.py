@@ -1,15 +1,20 @@
 from typing import Any
-from typing import cast
 from typing import Generic
 from typing import Iterable
 from typing import Iterator
 from typing import Optional
-from typing import overload
 from typing import Sequence
 from typing import TypeVar
 from typing import Union
+from typing import cast
+from typing import overload
 
 from oop_ext.interface import ImplementsInterface
+
+from barril._util.types_ import IsNumber
+from barril.basic.format_float import FormatFloat
+from barril.units.unit_database import CategoryInfo
+from barril.units.unit_database import UnitDatabase
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject
 from ._abstractvaluewithquantity import T
@@ -17,11 +22,6 @@ from ._quantity import Quantity
 from ._scalar import Scalar
 from .interfaces import IArray
 from .interfaces import ValuesType
-from barril._util.types_ import IsNumber
-from barril.basic.format_float import FormatFloat
-from barril.units.unit_database import CategoryInfo
-from barril.units.unit_database import UnitDatabase
-
 
 __all__ = ["Array"]
 
@@ -72,20 +72,16 @@ class Array(AbstractValueWithQuantityObject, Generic[ValuesType]):
     """
 
     @overload
-    def __init__(self, category: Union[str, Quantity]):
-        ...
+    def __init__(self, category: Union[str, Quantity]): ...
 
     @overload
-    def __init__(self, values: ValuesType, unit: str, category: Optional[str] = None):
-        ...
+    def __init__(self, values: ValuesType, unit: str, category: Optional[str] = None): ...
 
     @overload
-    def __init__(self, category: str, values: ValuesType, unit: str):
-        ...
+    def __init__(self, category: str, values: ValuesType, unit: str): ...
 
     @overload
-    def __init__(self, category: Quantity, values: ValuesType):
-        ...
+    def __init__(self, category: Quantity, values: ValuesType): ...
 
     def __init__(  # type:ignore[misc]
         self, category: str, values: Any = None, unit: Any = None
@@ -343,12 +339,10 @@ class Array(AbstractValueWithQuantityObject, Generic[ValuesType]):
         return len(self.values)
 
     @overload
-    def __getitem__(self, index: int) -> Any:
-        ...
+    def __getitem__(self, index: int) -> Any: ...
 
     @overload
-    def __getitem__(self, index: slice) -> ValuesType:
-        ...
+    def __getitem__(self, index: slice) -> ValuesType: ...
 
     def __getitem__(self, index: Any) -> Any:
         return self.values[index]
@@ -395,8 +389,9 @@ class Array(AbstractValueWithQuantityObject, Generic[ValuesType]):
         Actually go on and do an operation considering the data we have to transform considering
         any combination of: number, list and numpy
         """
-        from ._value_generator import _ValueGenerator
         import numpy
+
+        from ._value_generator import _ValueGenerator
 
         # get the quantities and setup the value generator properly
         if IsNumber(p1) or isinstance(p1, numpy.ndarray):

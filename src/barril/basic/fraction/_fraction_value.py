@@ -1,11 +1,12 @@
-import locale
-import math
-import re
 from typing import Any
 from typing import Callable
 from typing import Optional
 from typing import Tuple
 from typing import Union
+
+import locale
+import math
+import re
 
 from barril._util.types_ import CheckType
 from barril.basic.format_float import FloatFromString

@@ -50,10 +50,12 @@ B{Design decisions}:
 
 @see: L{definitions} for the basic interfaces defined.
 """
+
+from typing import TYPE_CHECKING
 from typing import Any
 from typing import Optional
 from typing import Tuple
-from typing import TYPE_CHECKING
+
 from weakref import WeakValueDictionary
 
 from ._abstractvaluewithquantity import AbstractValueWithQuantityObject  # noqa
@@ -65,10 +67,10 @@ from ._quantity import ObtainQuantity
 from ._quantity import Quantity
 from ._quantity import ReadOnlyError
 from ._scalar import Scalar  # noqa
-from ._unit_constants import CreateUnknwonwReadOnlyQuantity
 from ._unit_constants import LENGTH_QUANTITY_TYPE
 from ._unit_constants import UNKNOWN_QUANTITY_TYPE
 from ._unit_constants import UNKNOWN_UNIT
+from ._unit_constants import CreateUnknwonwReadOnlyQuantity
 from .interfaces import IArray
 from .interfaces import IObjectWithQuantity
 from .interfaces import IQuantity

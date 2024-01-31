@@ -106,7 +106,8 @@ def CreateUnitDatabaseLenPressure() -> units.UnitDatabase:
 
 
 def CreateUnitDatabaseCustomConversion() -> units.UnitDatabase:
-    from barril.units import UNKNOWN_QUANTITY_TYPE, UNKNOWN_UNIT
+    from barril.units import UNKNOWN_QUANTITY_TYPE
+    from barril.units import UNKNOWN_UNIT
 
     unit_database = units.UnitDatabase()
     # add some units for testing

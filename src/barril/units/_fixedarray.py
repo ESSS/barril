@@ -1,20 +1,22 @@
+from typing import TYPE_CHECKING
 from typing import Any
-from typing import cast
 from typing import Generic
 from typing import Optional
-from typing import overload
 from typing import Tuple
-from typing import TYPE_CHECKING
 from typing import Union
+from typing import cast
+from typing import overload
 
-from ._array import Array
-from ._array import ValuesType
 from barril.units.unit_database import CategoryInfo
 from barril.units.unit_database import UnitDatabase
 
+from ._array import Array
+from ._array import ValuesType
+
 if TYPE_CHECKING:
-    from ._quantity import Quantity
     from barril.units import Scalar
+
+    from ._quantity import Quantity
 
 __all__ = ["FixedArray"]
 
@@ -39,24 +41,19 @@ class FixedArray(Array, Generic[ValuesType]):
     _dimension: Any = None
 
     @overload
-    def __init__(self, dimension: int, category: Union[str, "Quantity"]):
-        ...
+    def __init__(self, dimension: int, category: Union[str, "Quantity"]): ...
 
     @overload
-    def __init__(self, dimension: int, values: ValuesType, unit: str):
-        ...
+    def __init__(self, dimension: int, values: ValuesType, unit: str): ...
 
     @overload
-    def __init__(self, dimension: int, category: str, values: ValuesType, unit: str):
-        ...
+    def __init__(self, dimension: int, category: str, values: ValuesType, unit: str): ...
 
     @overload
-    def __init__(self, dimension: int, category: str, unit: str):
-        ...
+    def __init__(self, dimension: int, category: str, unit: str): ...
 
     @overload
-    def __init__(self, dimension: int, category: "Quantity", values: ValuesType):
-        ...
+    def __init__(self, dimension: int, category: "Quantity", values: ValuesType): ...
 
     def __init__(  # type:ignore[misc]
         self, dimension: int, category: str, values: Any = None, unit: Any = None
