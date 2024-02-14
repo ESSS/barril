@@ -543,3 +543,15 @@ def testStandardVolumePerTime() -> None:
     assert default.GetValue("sm3/d") == approx(86400.0)
     assert default.GetValue("stb/d") == approx(543439.6332285661)
     assert default.GetValue("sm3/s") == approx(1.0)
+
+
+def testHenrySolubilityCoefficient() -> None:
+    default = units.Scalar("henry solubility coefficient", 1.0, "mol/m3.Pa")
+    assert default.value == 1.0
+    assert default.GetValue("mol/m3.Pa") == 1.0
+
+
+def testCrystallizationKineticRate() -> None:
+    default = units.Scalar("crystallization kinetic rate", 1.0, "mol/m2.s.Pa")
+    assert default.value == 1.0
+    assert default.GetValue("mol/m2.s.Pa") == 1.0

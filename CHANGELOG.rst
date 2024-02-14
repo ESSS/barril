@@ -3,6 +3,8 @@
 
 * Added support for Python 3.11 and 3.12.
 * Dropped support for EOL Python 3.6 and 3.7.
+* Add categorie and quantity type ``henry solubility coefficient``  (``mol/m3.Pa``)
+* Add categorie and quantity type ``crystallization kinetic rate`` (``mol/m2.s.Pa``)
 
 1.19.0 (2023-08-10)
 -------------------

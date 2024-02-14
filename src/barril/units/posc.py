@@ -317,6 +317,12 @@ def FillUnitDatabaseWithPosc(
     db.AddUnitBase(
         "force per velocity squared", "Newton second squared per meter squared", "N.s2/m2"
     )
+    db.AddUnitBase("henry solubility coefficient", "mol per cubic meter Pascal", "mol/m3.Pa")
+    db.AddUnitBase(
+        "crystallization kinetic rate",
+        "mol per square meter second Pascal",
+        "mol/m2.s.Pa",
+    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 6.283185307, 1.0, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 6.283185307, 1.0, 0.0)
     db.AddUnit("frequency", "hertz", "Hz", f_base_to_unit, f_unit_to_base, default_category=None)
@@ -15916,6 +15922,18 @@ def FillUnitDatabaseWithPosc(
             "force per velocity squared",
             valid_units=["N.s2/m2", "lbf.s2/ft2", "lbf.s2/in2", "kgf.s2/m2"],
             override=True,
+        )
+        db.AddCategory(
+            "henry solubility coefficient",
+            "henry solubility coefficient",
+            override=override_categories,
+            valid_units=["mol/m3.Pa"],
+        )
+        db.AddCategory(
+            "crystallization kinetic rate",
+            "crystallization kinetic rate",
+            override=override_categories,
+            valid_units=["mol/m2.s.Pa"],
         )
 
     return db
