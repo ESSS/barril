@@ -116,4 +116,4 @@ $ pytest
 Deploying
 ---------
 
-See `HOWTORELEASE <https://github.com/ESSS/barril/blob/master/HOWTORELEASE.rst>`_.
+See `HOWTORELEASE <https://github.com/ESSS/barril/blob/master/RELEASING.rst>`_.
