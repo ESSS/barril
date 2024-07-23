@@ -1189,7 +1189,8 @@ class UnitDatabase(Singleton):
                 return value
 
             if (
-                category_or_quantity_type.__class__ in (list, tuple)
+                category_or_quantity_type.__class__
+                in (list, tuple)  # type:ignore[comparison-overlap]
                 and len(category_or_quantity_type) == 1
             ):
                 category_or_quantity_type = category_or_quantity_type[0]
