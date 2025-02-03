@@ -1,5 +1,5 @@
 """
-    The 'unit' must be ascii only.
+The 'unit' must be ascii only.
 """
 
 import pytest
