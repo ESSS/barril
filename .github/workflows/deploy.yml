@@ -1,37 +1,58 @@
 name: deploy
 
 on:
-  push:
-    tags:
-      - "v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version'
+        required: true
+        default: '1.2.3'
 
 jobs:
 
-  deploy:
-
-    if: startsWith(github.event.ref, 'refs/tags')
-
+  package:
     runs-on: ubuntu-latest
+    # Required by attest-build-provenance-github.
+    permissions:
+      id-token: write
+      attestations: write
+    env:
+      SETUPTOOLS_SCM_PRETEND_VERSION: ${{ github.event.inputs.version }}
 
     steps:
-      - uses: actions/checkout@v5
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.10"
-      - name: Install build
-        run: |
-          python -m pip install --upgrade pip
-          pip install build
-      - name: Build package
-        run: |
-          python -m build
-      - name: Publish package to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          user: __token__
-          password: ${{ secrets.pypi_token }}
-      - name: GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: dist/*
+    - uses: actions/checkout@v5
+
+    - name: Build and Check Package
+      uses: hynek/build-and-inspect-python-package@v2.13.0
+      with:
+        attest-build-provenance-github: 'true'
+
+
+  deploy:
+    needs: package
+    runs-on: ubuntu-latest
+    environment: deploy
+    permissions:
+      id-token: write  # For PyPI trusted publishers.
+      contents: write  # For tag and release notes.
+
+    steps:
+    - uses: actions/checkout@v5
+
+    - name: Download Package
+      uses: actions/download-artifact@v5
+      with:
+        name: Packages
+        path: dist
+
+    - name: Publish package to PyPI
+      uses: pypa/gh-action-pypi-publish@v1.13.0
+      with:
+        attestations: true
+
+    - name: GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: dist/*
+        tag_name: v${{ github.event.inputs.version }}
+        target_commitish: ${{ github.sha }}
