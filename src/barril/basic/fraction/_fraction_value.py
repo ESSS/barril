@@ -33,7 +33,7 @@ class FractionValue:
     """
 
     def __init__(
-        self, number: float = 0.0, fraction: Union[Fraction, Tuple[float, float]] = (0.0, 1.0)
+        self, number: float = 0.0, fraction: Union[Fraction, tuple[float, float]] = (0.0, 1.0)
     ) -> None:
         """
         Constructor.
@@ -74,7 +74,7 @@ class FractionValue:
 
     # Fraction -------------------------------------------------------------------------------------
 
-    def SetFraction(self, fraction: Union[Fraction, Tuple[float, float]]) -> None:
+    def SetFraction(self, fraction: Union[Fraction, tuple[float, float]]) -> None:
         """
         Sets the fractional part of this object.
 

@@ -1,8 +1,8 @@
 from typing import Any
-from typing import Iterator
 from typing import Tuple
 
 import numpy
+from collections.abc import Iterator
 
 
 class _ValueGenerator:
@@ -48,7 +48,7 @@ class _ValueGenerator:
 
         return False
 
-    def __iter__(self) -> Iterator[Tuple[Any, Any]]:
+    def __iter__(self) -> Iterator[tuple[Any, Any]]:
         """
         Yield the individual values we should convert (which may mean the same number all the time
         and the value being iterated in a list). Numpy is a special case (see classdocs)

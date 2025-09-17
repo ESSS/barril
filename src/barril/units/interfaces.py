@@ -21,7 +21,6 @@ from typing import TYPE_CHECKING
 from typing import Any
 from typing import Dict
 from typing import Generic
-from typing import Iterator
 from typing import List
 from typing import Optional
 from typing import Tuple
@@ -29,6 +28,7 @@ from typing import TypeVar
 from typing import Union
 from typing import overload
 
+from collections.abc import Iterator
 from oop_ext.interface import Interface
 from oop_ext.interface import TypeCheckingSupport
 from typing_extensions import Protocol
@@ -76,7 +76,7 @@ class IQuantity(Interface, TypeCheckingSupport):
         """
 
 
-UnitExponentTuple = Tuple[str, int]
+UnitExponentTuple = tuple[str, int]
 
 
 class IQuantity2(Interface, TypeCheckingSupport):
@@ -97,7 +97,7 @@ class IQuantity2(Interface, TypeCheckingSupport):
     a derived quantity.
     """
 
-    def GetComposingCategories(self) -> Union[Tuple[str, ...], str]:  # type:ignore[empty-body]
+    def GetComposingCategories(self) -> Union[tuple[str, ...], str]:  # type:ignore[empty-body]
         """
         :returns:
             A tuple with the categories used.
@@ -111,7 +111,7 @@ class IQuantity2(Interface, TypeCheckingSupport):
 
     def GetComposingUnits(  # type:ignore[empty-body]
         self,
-    ) -> Union[Tuple[UnitExponentTuple, ...], str]:
+    ) -> Union[tuple[UnitExponentTuple, ...], str]:
         """
         :rtype: tuple(tuple(str, int)) or str
         :returns:
@@ -127,7 +127,7 @@ class IQuantity2(Interface, TypeCheckingSupport):
 
     def GetComposingUnitsJoiningExponents(  # type:ignore[empty-body]
         self,
-    ) -> Tuple[UnitExponentTuple, ...]:
+    ) -> tuple[UnitExponentTuple, ...]:
         """
         :rtype: tuple(tuple(str, int))
         :returns:
@@ -139,7 +139,7 @@ class IQuantity2(Interface, TypeCheckingSupport):
 
     def GetCategoryToUnitAndExps(  # type:ignore[empty-body]
         self,
-    ) -> Dict[str, List[UnitExponentTuple]]:
+    ) -> dict[str, list[UnitExponentTuple]]:
         """
         Return an ordered dictionary with the name of a category -> list with 2 elements:
         [unit, exp] that determines the information about categories, quantities and their
@@ -218,7 +218,7 @@ class IScalar(IObjectWithQuantity, IQuantity):
             The value stored in this scalar.
         """
 
-    def GetValueAndUnit(self) -> Tuple[float, str]:  # type:ignore[empty-body]
+    def GetValueAndUnit(self) -> tuple[float, str]:  # type:ignore[empty-body]
         """
         :returns:
             Tuple with value and current unit name.

@@ -39,7 +39,7 @@ def units_mapping_2():
 
 @pytest.fixture
 def units_mapping_3():
-    units_mapping: Dict[str, str] = {}
+    units_mapping: dict[str, str] = {}
     return units_mapping
 
 

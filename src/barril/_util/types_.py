@@ -14,7 +14,7 @@ _TRUE_FALSE_VALUES = _TRUE_VALUES + _FALSE_VALUES
 _KNOWN_NUMBER_TYPES: Any = None
 
 
-def _GetKnownNumberTypes() -> Tuple[type, ...]:
+def _GetKnownNumberTypes() -> tuple[type, ...]:
     """
     Dynamically obtain the tuple with the types considered number, including numpy.number if
     possible.
@@ -33,7 +33,7 @@ def _GetKnownNumberTypes() -> Tuple[type, ...]:
 
 
 def CheckType(
-    object_: Any, type_: Union[type, Tuple[type, ...]], message: Optional[str] = None
+    object_: Any, type_: Union[type, tuple[type, ...]], message: Optional[str] = None
 ) -> None:
     """
     Check if the given object is of the given type, raising a descriptive "TypeError" if it is
@@ -100,7 +100,7 @@ def IsNumber(v: object) -> bool:
     return isinstance(v, _KNOWN_NUMBER_TYPES)
 
 
-def MakeTuple(object_: Any) -> Tuple[Any, ...]:
+def MakeTuple(object_: Any) -> tuple[Any, ...]:
     """
     Returns the given object as a tuple, if it is not, creates one with it inside.
 

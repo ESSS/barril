@@ -66,7 +66,7 @@ class _LightweightScalar(tuple):  # Could derive from _LightweightQuantity, but 
         - The category and the unit must be valid (will not be checked at initialization)
     """
 
-    __slots__: List[str] = []
+    __slots__: list[str] = []
 
     def __new__(cls, value, unit, category):
         return tuple.__new__(cls, (value, unit, category))

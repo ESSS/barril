@@ -1,7 +1,9 @@
 2.1.0 (UNRELEASED)
 ------------------
 
-* Add new unit: "Kelvin per atm" (``K/atm``).
+* Added new unit: "Kelvin per atm" (``K/atm``).
+* Added support for Python 3.13.
+* Dropped support for Python 3.8 (EOL).
 
 2.0.1 (2024-02-15)
 ------------------

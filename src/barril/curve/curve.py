@@ -124,12 +124,12 @@ class Curve:
         return self.GetImage() == other.GetImage() and self.GetDomain() == other.GetDomain()
 
     @overload
-    def __getitem__(self, index: int) -> Tuple[float, float]: ...
+    def __getitem__(self, index: int) -> tuple[float, float]: ...
 
     @overload
-    def __getitem__(self, index: slice) -> Tuple[ValuesType, ValuesType]: ...
+    def __getitem__(self, index: slice) -> tuple[ValuesType, ValuesType]: ...
 
-    def __getitem__(self, index: Union[int, slice]) -> Tuple[Any, Any]:
+    def __getitem__(self, index: Union[int, slice]) -> tuple[Any, Any]:
         d = self.GetDomain().GetValues()[index]  # type:ignore[index]
         i = self.GetImage().GetValues()[index]  # type:ignore[index]
         return d, i

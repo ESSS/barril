@@ -2,11 +2,8 @@ from typing import TYPE_CHECKING
 from typing import Any
 from typing import Callable
 from typing import Dict
-from typing import Hashable
-from typing import Iterator
 from typing import List
 from typing import Optional
-from typing import Sequence
 from typing import Set
 from typing import Tuple
 from typing import Type
@@ -18,6 +15,9 @@ import attr
 import copy
 import math
 import traceback
+from collections.abc import Hashable
+from collections.abc import Iterator
+from collections.abc import Sequence
 from oop_ext.foundation.singleton import Singleton
 
 from barril._util.types_ import CheckType
@@ -38,7 +38,7 @@ __all__ = [
 ]
 
 
-_LEGACY_TO_CURRENT: List[Tuple[str, str]] = [
+_LEGACY_TO_CURRENT: list[tuple[str, str]] = [
     ("1000ft3", "Mcf"),
     ("1000m3", "Mm3"),
     ("M(ft3)", "MMcf"),
@@ -50,7 +50,7 @@ _LEGACY_TO_CURRENT: List[Tuple[str, str]] = [
 ]
 
 
-def FixUnitIfIsLegacy(unit: str) -> Tuple[bool, str]:
+def FixUnitIfIsLegacy(unit: str) -> tuple[bool, str]:
     fixed_unit = unit
     try:
         for legacy, current in _LEGACY_TO_CURRENT:
@@ -71,7 +71,7 @@ class InvalidQuantityTypeError(UnitsError):
     Error raised when an invalid quantity type is found
     """
 
-    def __init__(self, quantity_type: str, available: Optional[List[str]] = None):
+    def __init__(self, quantity_type: str, available: Optional[list[str]] = None):
         msg = f"Invalid quantity_type: {quantity_type}"
         if available is not None:
             msg += "\nAvailable:\n" + "\n".join(available)
@@ -88,7 +88,7 @@ class InvalidUnitError(UnitsError):
         unit: str,
         quantity_type: Optional[str] = None,
         category: Optional[str] = None,
-        valid_units: Optional[List[str]] = None,
+        valid_units: Optional[list[str]] = None,
     ):
         if quantity_type is not None:
             msg = f"Invalid unit for quantity_type {quantity_type}: {unit}"
@@ -215,8 +215,8 @@ class CategoryInfo:
 
     category: str = ""
     quantity_type: str = ""
-    valid_units: Optional[List[str]] = attr.Factory(list)  # type:ignore[assignment]
-    valid_units_set: Set[str] = attr.Factory(set)
+    valid_units: Optional[list[str]] = attr.Factory(list)  # type:ignore[assignment]
+    valid_units_set: set[str] = attr.Factory(set)
     default_unit: Optional[str] = ""
     default_value: float = 0.0
     min_value: Optional[float] = None
@@ -330,7 +330,7 @@ class UnitDatabase(Singleton):
     #
     # dict of class supported -> conversion function
     # see RegisterAdditionalConversionType
-    _additional_conversions: Dict[Type, ConversionFunc] = {}
+    _additional_conversions: dict[type, ConversionFunc] = {}
 
     def __init__(self, default_singleton: bool = False):
         """
@@ -352,18 +352,18 @@ class UnitDatabase(Singleton):
             self._database_created_from = s.getvalue()
 
         # Quantities must be cached accordingly to the current unit-database.
-        self.quantities_cache: Dict[Hashable, "Quantity"] = {}
+        self.quantities_cache: dict[Hashable, "Quantity"] = {}
 
         # Dictionary to cache whether a unit is valid in a category.
-        self._category_unit_valid: Dict[Tuple[str, str], bool] = {}
+        self._category_unit_valid: dict[tuple[str, str], bool] = {}
 
         # dict of quantity_type => list of UnitInfo (the first unit in this list is the base unit for
         # the given quantity type)
-        self.quantity_types: Dict[str, List[UnitInfo]] = {}
+        self.quantity_types: dict[str, list[UnitInfo]] = {}
 
         # dict of unit name => UnitInfo
-        self.unit_to_unit_info: Dict[str, UnitInfo] = {}
-        self.categories_to_quantity_types: Dict[str, CategoryInfo] = {}
+        self.unit_to_unit_info: dict[str, UnitInfo] = {}
+        self.categories_to_quantity_types: dict[str, CategoryInfo] = {}
 
     # ----------------------------------------------- The interfaces below all work with the category
 
@@ -386,7 +386,7 @@ class UnitDatabase(Singleton):
         self,
         category: str,
         quantity_type: Optional[str] = None,
-        valid_units: Optional[List[str]] = None,
+        valid_units: Optional[list[str]] = None,
         override: bool = False,
         default_unit: Optional[str] = None,
         default_value: Optional[float] = None,
@@ -449,9 +449,7 @@ class UnitDatabase(Singleton):
 
         if min_value is not None and max_value is not None:
             if max_value < min_value:
-                raise ValueError(
-                    "min_value ({}) must be >= than min_value ({})".format(min_value, max_value)
-                )
+                raise ValueError(f"min_value ({min_value}) must be >= than min_value ({max_value})")
 
         if from_category:
             category_info = self.GetCategoryInfo(from_category)
@@ -696,7 +694,7 @@ class UnitDatabase(Singleton):
             if not valid:
                 raise InvalidUnitError(unit, None, category)
 
-    def GetValidUnits(self, category: str) -> List[str]:
+    def GetValidUnits(self, category: str) -> list[str]:
         """
         :rtype: list(str)
         :returns:
@@ -793,7 +791,7 @@ class UnitDatabase(Singleton):
         quantity_type_list = self.quantity_types.setdefault(quantity_type, [])
 
         if unit in [q.unit for q in quantity_type_list]:
-            raise RuntimeError("Unit already registered: {} ({})".format(name, unit))
+            raise RuntimeError(f"Unit already registered: {name} ({unit})")
 
         quantity_type_list.append(info)
 
@@ -868,7 +866,7 @@ class UnitDatabase(Singleton):
         except KeyError:
             return None
 
-    def FindSimilarUnitMatches(self, unit: str) -> List[str]:
+    def FindSimilarUnitMatches(self, unit: str) -> list[str]:
         """
         This function will use heuristics to find similar units in the unit database to the
         passed unit.
@@ -896,14 +894,14 @@ class UnitDatabase(Singleton):
 
         return sorted(close_match)
 
-    def GetQuantityTypes(self) -> List[str]:
+    def GetQuantityTypes(self) -> list[str]:
         """
         :returns:
             A list of the available categories, sorted.
         """
         return sorted(self.quantity_types.keys())
 
-    def GetUnits(self, quantity_type: Optional[str] = None) -> List[str]:
+    def GetUnits(self, quantity_type: Optional[str] = None) -> list[str]:
         """
         :return:
             The units of that quantity_type (if quantity_type is given) otherwise, returns all
@@ -919,7 +917,7 @@ class UnitDatabase(Singleton):
         info = self.GetInfo(quantity_type, unit)
         return info.name
 
-    def GetUnitNames(self, quantity_type: str) -> List[str]:
+    def GetUnitNames(self, quantity_type: str) -> list[str]:
         """
         :returns:
             The user-friendly names for all the units in the given quantity_type.
@@ -1008,7 +1006,7 @@ class UnitDatabase(Singleton):
                     unit, quantity_type, valid_units=sorted([info.unit for info in quantity_types])
                 )
 
-    def GetInfos(self, quantity_type: Optional[str] = None) -> List[UnitInfo]:
+    def GetInfos(self, quantity_type: Optional[str] = None) -> list[UnitInfo]:
         """
         :returns:
             All UnitInfos from that quantity_type (if quantity_type is given), otherwise return all
@@ -1117,7 +1115,7 @@ class UnitDatabase(Singleton):
         return ret
 
     @classmethod
-    def RegisterAdditionalConversionType(cls, class_: Type, func: ConversionFunc) -> None:
+    def RegisterAdditionalConversionType(cls, class_: type, func: ConversionFunc) -> None:
         """
         This function may be used to register conversions for additional classes, not originally
         treated (e.g.: IGridFunction)
@@ -1250,7 +1248,7 @@ class UnitDatabase(Singleton):
         value1: T,
         value2: T,
         operation: Callable[[T, T], T],
-    ) -> Tuple["Quantity", T]:
+    ) -> tuple["Quantity", T]:
         """
         Given 2 quantities, do an operation that DOES NOT accept the creation of a new composed
         quantity (e.g.: sum, subtraction)
@@ -1298,33 +1296,33 @@ class UnitDatabase(Singleton):
 
     def Sum(
         self, quantity1: "Quantity", quantity2: "Quantity", value1: T, value2: T
-    ) -> Tuple["Quantity", T]:
+    ) -> tuple["Quantity", T]:
         func = lambda a, b: a + b
         return self._DoOperationWithSameQuantity(quantity1, quantity2, value1, value2, func)
 
     def Subtract(
         self, quantity1: "Quantity", quantity2: "Quantity", value1: T, value2: T
-    ) -> Tuple["Quantity", T]:
+    ) -> tuple["Quantity", T]:
         func = lambda a, b: a - b
         return self._DoOperationWithSameQuantity(quantity1, quantity2, value1, value2, func)
 
     def Divide(
         self, quantity1: "Quantity", quantity2: "Quantity", value1: T, value2: T
-    ) -> Tuple["Quantity", T]:
+    ) -> tuple["Quantity", T]:
         return self._DoOperationResultingInNewQuantity(
             quantity1, quantity2, value1, value2, lambda a, b: a - b, lambda a, b: a / b
         )
 
     def FloorDivide(
         self, quantity1: "Quantity", quantity2: "Quantity", value1: T, value2: T
-    ) -> Tuple["Quantity", T]:
+    ) -> tuple["Quantity", T]:
         return self._DoOperationResultingInNewQuantity(
             quantity1, quantity2, value1, value2, lambda a, b: a - b, lambda a, b: a // b
         )
 
     def Multiply(
         self, quantity1: "Quantity", quantity2: "Quantity", value1: T, value2: T
-    ) -> Tuple["Quantity", T]:
+    ) -> tuple["Quantity", T]:
         """
         Multiplication with different quantities.
 
@@ -1361,7 +1359,7 @@ class UnitDatabase(Singleton):
         category_to_unit_and_exp2: Any,
         value1: Any,
         value2: Any,
-    ) -> Tuple[Any, Any, Any, Any]:
+    ) -> tuple[Any, Any, Any, Any]:
         """
         Matches all the units for a given quantity type (so, if a unit 'm' is found, if
         a 'cm' is later found, convert it to 'm' -- as well as it's composing value).
@@ -1369,7 +1367,7 @@ class UnitDatabase(Singleton):
         :rtype: the dicts passed with the quantity types matched to the same units and the corresponding
         values converted to match those changes.
         """
-        quantity_types_found_to_used_unit: Dict[Any, Any] = {}
+        quantity_types_found_to_used_unit: dict[Any, Any] = {}
 
         # 1st thing is putting the same unit for a given quantity type (both sides)
         for c in (category_to_unit_and_exp1, category_to_unit_and_exp2):
@@ -1432,12 +1430,10 @@ class UnitDatabase(Singleton):
                 if unit1 == unit2:
                     unit_exp1[1] = operation_exp(exp1, exp2)  # type:ignore[index]
                 else:
-                    raise RuntimeError(
-                        "This should've been covered already ({} != {}).".format(unit1, unit2)
-                    )
+                    raise RuntimeError(f"This should've been covered already ({unit1} != {unit2}).")
 
         # unit -> expoent
-        only_units_expoents: Dict[Any, Any] = {}
+        only_units_expoents: dict[Any, Any] = {}
         for c, (unit, exp) in list(category_to_unit_and_exp1.items()):
             existing = only_units_expoents.get(unit, 0)
             only_units_expoents[unit] = existing + exp
