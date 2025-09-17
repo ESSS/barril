@@ -1,4 +1,4 @@
-2.1.0 (2025-09-17)
+2.1.0 (UNRELEASED)
 ------------------
 
 * Add new unit: "Kelvin per atm" (``K/atm``).
