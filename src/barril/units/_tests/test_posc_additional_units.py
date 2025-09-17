@@ -366,3 +366,14 @@ def testPerMicrometre(db) -> None:
     assert approx(per_inch.GetValue()) == 25400
     assert per_metre == units.Scalar("per length", 10**6, "1/m")
     assert per_inch == units.Scalar("per length", 25400.0, "1/in")
+
+
+def testKelvinPerAtm() -> None:
+    from barril.units import Scalar
+
+    value = Scalar(1, 'K/atm')
+
+    assert all([
+        value.GetValue('K/Pa') == 101325,
+        value.GetValue('K/bar') == 1.01325
+    ])

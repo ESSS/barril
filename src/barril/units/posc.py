@@ -12235,6 +12235,16 @@ def FillUnitDatabaseWithPosc(
         f_unit_to_base,
         default_category=None,
     )
+    f_unit_to_base = MakeCustomaryToBase(0.0, 1.0, 9.869232667160129e-06, 0.0)
+    f_base_to_unit = MakeBaseToCustomary(0.0, 1.0, 9.869232667160129e-06, 0.0)
+    db.AddUnit(
+        "joule-thomson coefficient",
+        "delta kelvin per atm",
+        "K/atm",
+        f_base_to_unit,
+        f_unit_to_base,
+        default_category=None,
+    )
     f_unit_to_base = MakeCustomaryToBase(0.0, 1.0, 1.0e-6, 0.0)
     f_base_to_unit = MakeBaseToCustomary(0.0, 1.0, 1.0e-6, 0.0)
     db.AddUnit(
@@ -15906,6 +15916,7 @@ def FillUnitDatabaseWithPosc(
                 "K/Pa",
                 "K/bar",
                 "K/MPa",
+                "K/atm",
                 "degC/Pa",
                 "degC/bar",
                 "degC/MPa",
