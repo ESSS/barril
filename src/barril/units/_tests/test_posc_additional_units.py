@@ -371,9 +371,6 @@ def testPerMicrometre(db) -> None:
 def testKelvinPerAtm() -> None:
     from barril.units import Scalar
 
-    value = Scalar(1, 'K/atm')
+    value = Scalar(1, "K/atm")
 
-    assert all([
-        value.GetValue('K/Pa') == 101325,
-        value.GetValue('K/bar') == 1.01325
-    ])
+    assert all([value.GetValue("K/Pa") == 101325, value.GetValue("K/bar") == 1.01325])
