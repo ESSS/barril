@@ -1,7 +1,7 @@
 from typing import Any
-from typing import Iterator
 from typing import Optional
 
+from collections.abc import Iterator
 from fractions import Fraction as StdFraction
 from functools import total_ordering
 

@@ -29,7 +29,7 @@ class _SimpleScalar:
         self._value = value
 
 
-_quantities_cache: Dict[Tuple[str, str], "_SimpleQuantity"] = {}
+_quantities_cache: dict[tuple[str, str], "_SimpleQuantity"] = {}
 
 
 def _ObtainQuantity(unit, category=None):

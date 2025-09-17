@@ -1,15 +1,15 @@
 from typing import TYPE_CHECKING
 from typing import Dict
 from typing import List
-from typing import Mapping
 from typing import Optional
-from typing import Sequence
 from typing import Set
 from typing import Tuple
 from typing import Type
 
 import weakref
 from collections import OrderedDict
+from collections.abc import Mapping
+from collections.abc import Sequence
 from copy import deepcopy
 from oop_ext.foundation import callback
 from oop_ext.foundation.decorators import Override
@@ -43,7 +43,7 @@ class InvalidTemplateError(RuntimeError):
     match the given template
     """
 
-    def __init__(self, invalid_unit_system_ids: Optional[List[Optional[str]]] = None):
+    def __init__(self, invalid_unit_system_ids: Optional[list[Optional[str]]] = None):
         """
         :param invalid_unit_system_ids:
             The ids of the unit system that do not match a given template
@@ -63,7 +63,7 @@ class UnitSystemCategoriesError(KeyError):
     template.
     """
 
-    def __init__(self, default_categories: List[str], current_categories: List[str]):
+    def __init__(self, default_categories: list[str], current_categories: list[str]):
         msg = "Error creating new unit system. The default categories are %s but %s were defined."
         KeyError.__init__(self, msg % (default_categories, current_categories))
 
@@ -102,7 +102,7 @@ class UnitSystemManager(Singleton):
 
     def __init__(self) -> None:
         # list with objects with a unit associated with it.
-        self._object_refs: Set[_IdentityWrap] = set()
+        self._object_refs: set[_IdentityWrap] = set()
 
         # someone would want to listen to changes in the current unit system
         self.on_current = callback.Callback1[IUnitSystem]()
@@ -120,7 +120,7 @@ class UnitSystemManager(Singleton):
         self._unit_system_template: Optional[IUnitSystem] = None
 
         # default unit system class.
-        self._default_unit_system_class: Type[IUnitSystem] = UnitSystem
+        self._default_unit_system_class: type[IUnitSystem] = UnitSystem
 
         # This unit system is returned when no current unit system is selected
         self.__null_unit_system = UnitSystem(
@@ -132,7 +132,7 @@ class UnitSystemManager(Singleton):
         self.on_current.UnregisterAll()
         self.on_unit_changed.UnregisterAll()
 
-    def SetDefaultUnitSystemClass(self, class_: Type[IUnitSystem]) -> None:
+    def SetDefaultUnitSystemClass(self, class_: type[IUnitSystem]) -> None:
         """
         Set the default unit system class.
 
@@ -142,7 +142,7 @@ class UnitSystemManager(Singleton):
         AssertImplements(class_, IUnitSystem)
         self._default_unit_system_class = class_
 
-    def SetTemplateUnitSystemByUnitsMapping(self, units_mapping: Dict[str, str]) -> None:
+    def SetTemplateUnitSystemByUnitsMapping(self, units_mapping: dict[str, str]) -> None:
         """
         Set the unit system template based on the given units mapping.
 
@@ -184,7 +184,7 @@ class UnitSystemManager(Singleton):
         return self._unit_system_template
 
     def _CheckUnitSystemMapping(
-        self, units_mapping: Dict[str, str], required_categories: List[str]
+        self, units_mapping: dict[str, str], required_categories: list[str]
     ) -> bool:
         """
         Checks if the given units mapping have a default unit for all required categories
@@ -206,7 +206,7 @@ class UnitSystemManager(Singleton):
         self,
         id: str,
         caption: str,
-        units_mapping: Optional[Dict[str, str]] = None,
+        units_mapping: Optional[dict[str, str]] = None,
         read_only: bool = False,
     ) -> IUnitSystem:
         """
@@ -308,7 +308,7 @@ class UnitSystemManager(Singleton):
             else:
                 self.SetCurrent(None)
 
-    def GetUnitSystems(self) -> Dict[str, IUnitSystem]:
+    def GetUnitSystems(self) -> dict[str, IUnitSystem]:
         """
         :returns:
             The dict containing all the registered unit systems indexed by their ids.
@@ -431,7 +431,7 @@ class UnitSystemManager(Singleton):
 
     def ConvertToCurrent(
         self, category: str, unit: str, value: float, unit_database: Optional[UnitDatabase] = None
-    ) -> Tuple[float, str]:
+    ) -> tuple[float, str]:
         """
         Converts the given value from the given unit to the default unit of the current unit system.
         If there is no current unit system, no conversion is performed.

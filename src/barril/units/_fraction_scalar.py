@@ -110,7 +110,7 @@ class FractionScalar(AbstractValueWithQuantityObject):
 
         return value
 
-    def GetValueAndUnit(self) -> Tuple[FractionValue, str]:
+    def GetValueAndUnit(self) -> tuple[FractionValue, str]:
         return self.GetValue(), self.GetUnit()
 
     @classmethod

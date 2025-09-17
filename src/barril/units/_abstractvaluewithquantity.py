@@ -163,7 +163,7 @@ class AbstractValueWithQuantityObject:
         """
         return self._quantity.GetUnitName()
 
-    def GetValidUnits(self) -> List[str]:
+    def GetValidUnits(self) -> list[str]:
         """
         :rtype: list(str)
         :returns:
@@ -178,7 +178,7 @@ class AbstractValueWithQuantityObject:
         return valid_units
 
     @classmethod
-    def CreateWithQuantity(cls: Type[T], quantity: Quantity, *args: object, **kwargs: object) -> T:
+    def CreateWithQuantity(cls: type[T], quantity: Quantity, *args: object, **kwargs: object) -> T:
         """
         This is a secondary interface for creating the object with an existing quantity.
 

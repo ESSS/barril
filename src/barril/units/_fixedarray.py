@@ -107,7 +107,7 @@ class FixedArray(Array, Generic[ValuesType]):
         elif hasattr(self, "_dimension"):
             if self._dimension is not None and dimension != self._dimension:
                 raise ValueError(
-                    "Dimension re-definition mismatch: {} != {}".format(self._dimension, dimension)
+                    f"Dimension re-definition mismatch: {self._dimension} != {dimension}"
                 )
 
         if dimension < 2:
@@ -125,7 +125,7 @@ class FixedArray(Array, Generic[ValuesType]):
         values: Optional[ValuesType] = None,
         unit: Optional[str] = None,
         category: Optional[str] = None,
-        **kwargs: object
+        **kwargs: object,
     ) -> "FixedArray":
         return Array.CreateCopy(
             self, values=values, unit=unit, category=category, dimension=self._dimension, **kwargs
@@ -184,7 +184,7 @@ class FixedArray(Array, Generic[ValuesType]):
         )
 
     def ChangingIndex(
-        self, index: int, value: Union[float, "Scalar", Tuple], use_value_unit: bool = True
+        self, index: int, value: Union[float, "Scalar", tuple], use_value_unit: bool = True
     ) -> "FixedArray":
         """
         Creates a FixedArray from based on this FixedArray changing a single value based on the

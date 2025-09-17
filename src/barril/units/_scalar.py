@@ -88,7 +88,7 @@ class Scalar(AbstractValueWithQuantityObject):
     def __init__(self, value: float, unit: str, category: Optional[str] = None): ...
 
     @overload
-    def __init__(self, value_and_unit: Tuple[float, str]): ...
+    def __init__(self, value_and_unit: tuple[float, str]): ...
 
     def __init__(  # type:ignore[misc]
         self, category: Any, value: Any = None, unit: Any = None
@@ -166,7 +166,7 @@ class Scalar(AbstractValueWithQuantityObject):
 
         return value
 
-    def GetValueAndUnit(self) -> Tuple[float, str]:
+    def GetValueAndUnit(self) -> tuple[float, str]:
         return self._value, self.GetUnit()
 
     def CheckValidity(self) -> None:

@@ -23,7 +23,7 @@ class IUnitSystem(Interface, TypeCheckingSupport):
     )
 
     def __init__(
-        self, id: str, caption: str, units_mapping: Dict[str, str], read_only: bool = False
+        self, id: str, caption: str, units_mapping: dict[str, str], read_only: bool = False
     ) -> None:
         """
         :param id:
@@ -68,7 +68,7 @@ class IUnitSystem(Interface, TypeCheckingSupport):
         """
         ...
 
-    def GetUnitsMapping(self) -> Dict[str, str]:  # type:ignore[empty-body]
+    def GetUnitsMapping(self) -> dict[str, str]:  # type:ignore[empty-body]
         """
         :returns:
             Returns the units mapping set of the unit system.

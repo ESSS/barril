@@ -162,7 +162,7 @@ def testGetValues() -> None:
     assert isinstance(array2.GetValues("degC"), tuple)
     assert array2[1] == 100
 
-    array3 = units.Array[List[float]]("temperature", values=[], unit="degC")
+    array3 = units.Array[list[float]]("temperature", values=[], unit="degC")
     assert isinstance(array3.GetValues("degC"), list)
 
 
@@ -186,8 +186,8 @@ def testArrayOperations(unit_database_len_time) -> None:
     m = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 1])]))
     km_city = Quantity.CreateDerived(OrderedDict([("City size", ["km", 1])]))
 
-    s1: Array[List[float]] = Array.CreateWithQuantity(m, [1])
-    s2: Array[List[float]] = Array.CreateWithQuantity(km_city, [0.01])
+    s1: Array[list[float]] = Array.CreateWithQuantity(m, [1])
+    s2: Array[list[float]] = Array.CreateWithQuantity(km_city, [0.01])
     initial1 = s1.GetQuantity().GetComposingUnits()
     initial2 = s2.GetQuantity().GetComposingUnits()
     # Check that they doesn't raise ComposedUnitError
@@ -197,7 +197,7 @@ def testArrayOperations(unit_database_len_time) -> None:
     quantity, value = unit_database.Multiply(m, km_city, 1, 0.01)
     assert initial1 == s1.GetQuantity().GetComposingUnits()
     assert initial2 == s2.GetQuantity().GetComposingUnits()
-    calculated1: Array[List[float]] = Array.CreateWithQuantity(quantity, [value])
+    calculated1: Array[list[float]] = Array.CreateWithQuantity(quantity, [value])
 
     array = s1 * s2
     assert str(array)
@@ -215,9 +215,9 @@ def testDivision(unit_database_len_time) -> None:
     m = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 1])]))
     km_city = Quantity.CreateDerived(OrderedDict([("City size", ["km", 1])]))
     quantity, value = unit_database.Divide(m, km_city, 1, 0.01)
-    calculated1: Array[List[float]] = Array.CreateWithQuantity(quantity, [value])
-    s1: Array[List[float]] = Array.CreateWithQuantity(m, [1])
-    s2: Array[List[float]] = Array.CreateWithQuantity(km_city, [0.01])
+    calculated1: Array[list[float]] = Array.CreateWithQuantity(quantity, [value])
+    s1: Array[list[float]] = Array.CreateWithQuantity(m, [1])
+    s2: Array[list[float]] = Array.CreateWithQuantity(km_city, [0.01])
     assert calculated1 == s1 / s2
 
 
@@ -243,8 +243,8 @@ def testNumberInteractions(unit_database_len_time) -> None:
     import numpy
 
     m = Quantity.CreateDerived(OrderedDict([("Table size", ["m", 1])]))
-    s1: Array[List[int]] = Array.CreateWithQuantity(m, list(range(10)))
-    s2: Array[List[int]] = Array.CreateWithQuantity(m, [x + x for x in range(10)])
+    s1: Array[list[int]] = Array.CreateWithQuantity(m, list(range(10)))
+    s2: Array[list[int]] = Array.CreateWithQuantity(m, [x + x for x in range(10)])
     assert s1 == 0 + s1
     assert s1 == s1 + 0
     assert s2 == s1 + s1
@@ -258,7 +258,7 @@ def testNumberInteractions(unit_database_len_time) -> None:
     sum_array2: Array[numpy.ndarray[numpy.int64]] = num_arr + numpy.array([x for x in range(10)])
     assert isinstance(sum_array2.values, numpy.ndarray)
 
-    tup_arr: Array[Tuple[int]] = Array.CreateWithQuantity(m, tuple([x for x in range(10)]))
+    tup_arr: Array[tuple[int]] = Array.CreateWithQuantity(m, tuple([x for x in range(10)]))
     tup_arr = tup_arr + 1
     assert isinstance(tup_arr.values, tuple)
     assert tup_arr.values == (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
@@ -332,7 +332,7 @@ def testCopyPropertiesAndValidation(unit_database_len) -> None:
 
 def testDefaultValues(unit_database_len) -> None:
     # Not raises exception because by default validation is False on the copy operation
-    array = Array[List[float]]("flow rate")
+    array = Array[list[float]]("flow rate")
     assert array.values == []
 
     array = Array(ObtainQuantity("m"))

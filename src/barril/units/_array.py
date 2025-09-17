@@ -1,14 +1,14 @@
 from typing import Any
 from typing import Generic
-from typing import Iterable
-from typing import Iterator
 from typing import Optional
-from typing import Sequence
 from typing import TypeVar
 from typing import Union
 from typing import cast
 from typing import overload
 
+from collections.abc import Iterable
+from collections.abc import Iterator
+from collections.abc import Sequence
 from oop_ext.interface import ImplementsInterface
 
 from barril._util.types_ import IsNumber

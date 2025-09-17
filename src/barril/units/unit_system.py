@@ -22,7 +22,7 @@ class UnitSystem:
         self,
         id: Optional[str],
         caption: str,
-        units_mapping: Dict[str, str],
+        units_mapping: dict[str, str],
         read_only: bool = False,
     ) -> None:
         self._id = id
@@ -44,7 +44,7 @@ class UnitSystem:
         self._caption = caption
 
     @Implements(IUnitSystem.GetUnitsMapping)
-    def GetUnitsMapping(self) -> Dict[str, str]:
+    def GetUnitsMapping(self) -> dict[str, str]:
         return self._units_mapping
 
     @Implements(IUnitSystem.IsReadOnly)

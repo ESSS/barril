@@ -110,7 +110,7 @@ def testReadOnlyQuantity(unit_database_start_units) -> None:
 
 def testDefaultValues(unit_database_start_units) -> None:
     # Not raises exception because by default validation is False on the copy operation
-    array: units.FixedArray[List[float]] = units.FixedArray(3, "length")
+    array: units.FixedArray[list[float]] = units.FixedArray(3, "length")
     assert array.values == [0.0, 0.0, 0.0]
 
     array = units.FixedArray(3, ObtainQuantity("m"))

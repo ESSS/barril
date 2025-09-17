@@ -133,7 +133,7 @@ def GetUnknownQuantity(unknown_caption: Optional[str] = None) -> Quantity:
     return UNKNOWN_QUANTITY
 
 
-def ChangeScalars(owner: object, **scalars: Tuple[Any, Any]) -> None:
+def ChangeScalars(owner: object, **scalars: tuple[Any, Any]) -> None:
     """
     Change the given set of scalars for the owner
 

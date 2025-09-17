@@ -1,6 +1,5 @@
-from typing import Iterator
-
 import pytest
+from collections.abc import Iterator
 
 from barril import units
 

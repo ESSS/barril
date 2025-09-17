@@ -8,13 +8,13 @@ from typing import Dict
 from typing import List
 from typing import NoReturn
 from typing import Optional
-from typing import Sequence
 from typing import Tuple
 from typing import TypeVar
 from typing import Union
 from typing import overload
 
 from collections import OrderedDict
+from collections.abc import Sequence
 from oop_ext.interface import ImplementsInterface
 
 from barril.units.exceptions import QuantityValidationError
@@ -45,21 +45,21 @@ def ObtainQuantity(
 @overload
 def ObtainQuantity(
     unit: str,
-    category: Union[Tuple[str, ...], str],
+    category: Union[tuple[str, ...], str],
 ) -> "Quantity": ...
 
 
 @overload
 def ObtainQuantity(
-    unit: Union[None, List[UnitExponentTuple], Dict[str, Sequence[Union[str, int]]]],
+    unit: Union[None, list[UnitExponentTuple], dict[str, Sequence[Union[str, int]]]],
     category: Optional[str] = None,
     unknown_unit_caption: Optional[str] = None,
 ) -> "Quantity": ...
 
 
 def ObtainQuantity(
-    unit: Union[str, None, List[UnitExponentTuple], Dict[str, Sequence[Union[str, int]]]],
-    category: Optional[Union[Tuple[str, ...], str]] = None,
+    unit: Union[str, None, list[UnitExponentTuple], dict[str, Sequence[Union[str, int]]]],
+    category: Optional[Union[tuple[str, ...], str]] = None,
     unknown_unit_caption: Optional[str] = None,
 ) -> "Quantity":
     """
@@ -99,7 +99,7 @@ def ObtainQuantity(
             # Although passed as composing, it's a simple case
             category, (unit, _exp) = next(iter(unit.items()))  # type:ignore[assignment]
         else:
-            key: List[Any] = [
+            key: list[Any] = [
                 (category, tuple(unit_and_exp)) for (category, unit_and_exp) in unit.items()
             ]
             if unknown_unit_caption:
@@ -190,7 +190,7 @@ class Quantity:
     @classmethod
     def CreateDerived(
         cls,
-        category_to_unit_and_exps: Dict[str, Sequence[Union[str, int]]],
+        category_to_unit_and_exps: dict[str, Sequence[Union[str, int]]],
         unknown_unit_caption: Optional[str] = None,
     ) -> "Quantity":
         """
@@ -205,7 +205,7 @@ class Quantity:
     @classmethod
     def _CreateDerived(
         cls,
-        category_to_unit_and_exps: Dict[str, Sequence[Union[str, int]]],
+        category_to_unit_and_exps: dict[str, Sequence[Union[str, int]]],
         validate_category_and_units: bool = True,
         unknown_unit_caption: Optional[str] = None,
     ) -> "Quantity":
@@ -280,7 +280,7 @@ class Quantity:
         "_configured",
     ]
 
-    _category_to_unit_and_exps: Dict[str, Sequence[Union[str, int]]]
+    _category_to_unit_and_exps: dict[str, Sequence[Union[str, int]]]
     _unknown_unit_caption: Optional[str]
     _category_info: CategoryInfo
 
@@ -305,7 +305,7 @@ class Quantity:
         """
         return self
 
-    def __reduce__(self) -> Union[str, Tuple[Any, ...]]:
+    def __reduce__(self) -> Union[str, tuple[Any, ...]]:
         """
         Used in pickle protocol
 
@@ -314,7 +314,7 @@ class Quantity:
             Used during the pickle so that we can restore it as the same instance it was before
             (i.e.: don't create a new instance).
         """
-        lst: List[Any] = list(
+        lst: list[Any] = list(
             (category, unit_and_exp)
             for (category, unit_and_exp) in self._category_to_unit_and_exps.items()
         )
@@ -425,7 +425,7 @@ class Quantity:
         self._composing_categories = category
 
     def MakeCopy(
-        self, category_to_unit_and_exps: Optional[Dict[str, Sequence[Union[str, int]]]] = None
+        self, category_to_unit_and_exps: Optional[dict[str, Sequence[Union[str, int]]]] = None
     ) -> "Quantity":
         """
         Creates a new copy of this instance
@@ -446,7 +446,7 @@ class Quantity:
         return ret
 
     def CreateCopyInstance(
-        self, category_to_unit_and_exps: Optional[Dict[str, Sequence[Union[str, int]]]] = None
+        self, category_to_unit_and_exps: Optional[dict[str, Sequence[Union[str, int]]]] = None
     ) -> "Quantity":
         """
         Creates a copy of this quantity with a new category/unit.
@@ -599,7 +599,7 @@ class Quantity:
 
         return self._MakeStr(list(repr_and_exp.items()))
 
-    def GetValidUnits(self) -> List[str]:
+    def GetValidUnits(self) -> list[str]:
         """
         Shortcut for getting the valid units
 
@@ -772,17 +772,17 @@ class Quantity:
     def GetUnitDatabase(self) -> UnitDatabase:
         return self._unit_database
 
-    def GetCategoryToUnitAndExps(self) -> Dict[str, Sequence[Union[str, int]]]:
+    def GetCategoryToUnitAndExps(self) -> dict[str, Sequence[Union[str, int]]]:
         return self._category_to_unit_and_exps
 
-    def GetComposingCategories(self) -> Union[Tuple[str, ...], str]:
+    def GetComposingCategories(self) -> Union[tuple[str, ...], str]:
         return self._composing_categories
 
-    def GetComposingUnits(self) -> Union[Tuple[UnitExponentTuple, ...], str]:
+    def GetComposingUnits(self) -> Union[tuple[UnitExponentTuple, ...], str]:
         return self._composing_units  # type:ignore[return-value]
 
-    def GetComposingUnitsJoiningExponents(self) -> Tuple[UnitExponentTuple, ...]:
-        self._composing_units_joining_exponents: Tuple[UnitExponentTuple, ...]
+    def GetComposingUnitsJoiningExponents(self) -> tuple[UnitExponentTuple, ...]:
+        self._composing_units_joining_exponents: tuple[UnitExponentTuple, ...]
         try:
             return self._composing_units_joining_exponents
         except AttributeError:
@@ -794,8 +794,8 @@ class Quantity:
         return self._composing_units_joining_exponents
 
     def GetCategoryToUnitAndExpsCopy(
-        self, unit_and_exps: Optional[Dict[str, Sequence[Union[str, int]]]] = None
-    ) -> Dict[str, Sequence[Union[str, int]]]:
+        self, unit_and_exps: Optional[dict[str, Sequence[Union[str, int]]]] = None
+    ) -> dict[str, Sequence[Union[str, int]]]:
         """
         Same as Quantity.GetCategoryToUnitAndExps but returns a copy instead of the internal
         instance.
