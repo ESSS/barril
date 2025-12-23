@@ -1,7 +1,7 @@
 2.2.0
 -----
 
-*UNRELEASED*
+*2025-12-23*
 
 * Add category ``slip coefficient``  (default unit: ``m3/Pa.s``).
 * Add category ``fluid mobility``  (default unit: ``s/m2``).
