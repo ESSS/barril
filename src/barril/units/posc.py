@@ -215,6 +215,7 @@ def FillUnitDatabaseWithPosc(
     db.AddUnitBase("time", "second", "s")
     db.AddUnitBase("conductivity", "siemens/metre", "S/m")
     db.AddUnitBase("time per length", "seconds/metre", "s/m")
+    db.AddUnitBase("time per area", "seconds/square metre", "s/m2")
     db.AddUnitBase("time per volume", "seconds/cubic metre", "s/m3")
     db.AddUnitBase("standard volume", "standard cubic metres at 15 deg Celsius", "scm(15C)")
     db.AddUnitBase(
@@ -14478,6 +14479,28 @@ def FillUnitDatabaseWithPosc(
             ],
         )
         db.AddCategory(
+            "slip coefficient",
+            "productivity index",
+            override=override_categories,
+            valid_units=[
+                "m3/Pa.s",
+                "Mcf/psi.d",
+                "ft3/psi.d",
+                "bbl/d.psi",
+                "bbl/kPa.d",
+                "bbl/psi.d",
+                "L/bar.min",
+                "m3/bar.d",
+                "m3/bar.h",
+                "m3/bar.min",
+                "m3/d.kPa",
+                "m3/kPa.d",
+                "m3/kPa.h",
+                "m3/psi.d",
+                "m3/d/kgf/cm2",
+            ],
+        )
+        db.AddCategory(
             "specific productivity index",
             "specific productivity index",
             override=override_categories,
@@ -15162,6 +15185,18 @@ def FillUnitDatabaseWithPosc(
                 "us/ft",
                 "us/m",
             ],
+        )
+        db.AddCategory(
+            "time per area",
+            "time per area",
+            override=override_categories,
+            valid_units=["s/m2"],
+        )
+        db.AddCategory(
+            "fluid mobility",
+            "time per area",
+            override=override_categories,
+            valid_units=["s/m2"],
         )
         db.AddCategory(
             "time per volume",

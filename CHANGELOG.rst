@@ -1,5 +1,16 @@
-2.1.0 (UNRELEASED)
-------------------
+2.2.0
+-----
+
+*UNRELEASED*
+
+* Add category ``slip coefficient``  (default unit: ``m3/Pa.s``).
+* Add category ``fluid mobility``  (default unit: ``s/m2``).
+* Add category and quantity type ``time per per area``  (``s/m2``).
+
+2.1.0
+-----
+
+*2025-09-17*
 
 * Added new unit: "Kelvin per atm" (``K/atm``).
 * Added support for Python 3.13.
