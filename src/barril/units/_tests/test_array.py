@@ -1,6 +1,3 @@
-from typing import List
-from typing import Tuple
-
 import pytest
 from collections import OrderedDict
 from pytest import approx
@@ -19,6 +16,16 @@ def testEmptyArray() -> None:
 
     arr = arr.CreateCopy(category="temperature", unit="degC")
     assert arr.HasCategory()
+
+    array: Array = Array([], "m") * 2
+    assert array.GetValues() == []
+    assert array.category == "length"
+    assert array.unit == "m"
+
+    array = 2 * Array([], "m")
+    assert array.GetValues() == []
+    assert array.category == "length"
+    assert array.unit == "m"
 
 
 def testValues() -> None:

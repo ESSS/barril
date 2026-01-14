@@ -424,6 +424,12 @@ class Array(AbstractValueWithQuantityObject, Generic[ValuesType]):
                 q, v = operation_func(q1, q2, v0, v1)
                 result.append(v)
 
+            # When there are no values to iterate, `q` would end up being undefined.
+            if not result:
+                q = Quantity.CreateDerived(
+                    q1.GetCategoryToUnitAndExps() | q2.GetCategoryToUnitAndExps()
+                )
+
             if values_iteration.IsTuple():
                 result = tuple(result)  # type:ignore[assignment]
             return self.__class__.CreateWithQuantity(q, result)  # type:ignore[return-value]
