@@ -1,7 +1,7 @@
 2.2.1
 -------------------
 
-*2026-01-14*
+*2026-01-16*
 
 * Fixed ``UnboundLocalError`` bug when performing multiplication in an empty array.
 
