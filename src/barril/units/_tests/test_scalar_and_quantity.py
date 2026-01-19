@@ -81,7 +81,7 @@ class _LightweightScalar(tuple):  # Could derive from _LightweightQuantity, but 
         return (self[0], self[1])
 
     def IsValid(self):
-        return self.CheckValue(self[0])  # type:ignore[attr-defined]
+        return self.CheckValue(self[0])  # type: ignore[attr-defined]
 
     def GetCategory(self):
         return self[2]

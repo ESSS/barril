@@ -113,7 +113,7 @@ class FractionValue:
         """
         from barril.basic.format_float import FormatFloat
 
-        return self.__FormatToString(FormatFloat)  # type:ignore[arg-type]
+        return self.__FormatToString(FormatFloat)  # type: ignore[arg-type]
 
     def GetLocalizedFraction(self) -> str:
         """
@@ -123,7 +123,7 @@ class FractionValue:
         """
         from barril.basic.format_float import FormatFloat
 
-        return self.__FormatFractionToString(FormatFloat)  # type:ignore[arg-type]
+        return self.__FormatFractionToString(FormatFloat)  # type: ignore[arg-type]
 
     def __str__(self) -> str:
         """
@@ -263,16 +263,13 @@ class FractionValue:
         [-+]?\d+(?:(\.|\,)\d+)     # number, float, accepting "." or ",".
     """
 
-    FRACTION_PART_EXPR = (
-        r"""
+    FRACTION_PART_EXPR = r"""
         (?:
         (?P<numerator>%s?)         # numerator
         \s*/\s*                    # '/' no matter if exist spaces
         (?P<denominator>\d+)       # only integers
         )?
-    """
-        % NUMBER_EXPR
-    )
+    """ % NUMBER_EXPR
 
     FRACTION_COMPLETE_EXPR = r"""
         (?P<float>{}?)             # The whole number

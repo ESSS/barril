@@ -86,7 +86,7 @@ class FractionScalar(AbstractValueWithQuantityObject):
     # Value ----------------------------------------------------------------------------------------
     def GetAbstractValue(
         self, unit: Optional[str] = None
-    ) -> FractionValue:  # type:ignore[override]
+    ) -> FractionValue:  # type: ignore[override]
         """
         :param unit:
         """

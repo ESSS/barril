@@ -90,7 +90,7 @@ class Scalar(AbstractValueWithQuantityObject):
     @overload
     def __init__(self, value_and_unit: tuple[float, str]): ...
 
-    def __init__(  # type:ignore[misc]
+    def __init__(  # type: ignore[misc]
         self, category: Any, value: Any = None, unit: Any = None
     ) -> None:
         if category.__class__ is tuple:
@@ -284,7 +284,7 @@ class Scalar(AbstractValueWithQuantityObject):
             and self._quantity == other._quantity
         )
 
-    def __hash__(self) -> int:  # type:ignore[override]
+    def __hash__(self) -> int:  # type: ignore[override]
         return hash((self._value, self._quantity))
 
     def __lt__(self, other: Any) -> bool:

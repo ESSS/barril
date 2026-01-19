@@ -130,8 +130,8 @@ class Curve:
     def __getitem__(self, index: slice) -> tuple[ValuesType, ValuesType]: ...
 
     def __getitem__(self, index: Union[int, slice]) -> tuple[Any, Any]:
-        d = self.GetDomain().GetValues()[index]  # type:ignore[index]
-        i = self.GetImage().GetValues()[index]  # type:ignore[index]
+        d = self.GetDomain().GetValues()[index]  # type: ignore[index]
+        i = self.GetImage().GetValues()[index]  # type: ignore[index]
         return d, i
 
     def __repr__(self) -> str:
@@ -139,12 +139,12 @@ class Curve:
         domain = self.GetDomain()
 
         xy = []
-        for i, (x, y) in enumerate(zip(image, domain)):  # type:ignore[call-overload]
+        for i, (x, y) in enumerate(zip(image, domain)):  # type: ignore[call-overload]
             if i > 20:
                 xy.append(" ... ")
                 break
             xy.append(f"({x}, {y})")
 
         return "Curve({}, {})[{}]".format(
-            image.unit, domain.unit, " ".join(xy)  # type:ignore[attr-defined]
+            image.unit, domain.unit, " ".join(xy)  # type: ignore[attr-defined]
         )

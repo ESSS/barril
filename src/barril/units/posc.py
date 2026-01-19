@@ -24,11 +24,11 @@ def MakeCustomaryToBase(a: Any, b: Any, c: Any, d: Any) -> UnaryConversionFunc:
     def ret(x: Any) -> Any:
         return (a + b * x) / (c + d * x)
 
-    ret.__a__ = a  # type:ignore[attr-defined]
-    ret.__b__ = b  # type:ignore[attr-defined]
-    ret.__c__ = c  # type:ignore[attr-defined]
-    ret.__d__ = d  # type:ignore[attr-defined]
-    ret.__has_conversion__ = True  # type:ignore[attr-defined]
+    ret.__a__ = a  # type: ignore[attr-defined]
+    ret.__b__ = b  # type: ignore[attr-defined]
+    ret.__c__ = c  # type: ignore[attr-defined]
+    ret.__d__ = d  # type: ignore[attr-defined]
+    ret.__has_conversion__ = True  # type: ignore[attr-defined]
 
     return ret
 
@@ -50,11 +50,11 @@ def MakeBaseToCustomary(a: Any, b: Any, c: Any, d: Any) -> UnaryConversionFunc:
     def ret(y: Any) -> Any:
         return (a - c * y) / (d * y - b)
 
-    ret.__a__ = a  # type:ignore[attr-defined]
-    ret.__b__ = b  # type:ignore[attr-defined]
-    ret.__c__ = c  # type:ignore[attr-defined]
-    ret.__d__ = d  # type:ignore[attr-defined]
-    ret.__has_conversion__ = True  # type:ignore[attr-defined]
+    ret.__a__ = a  # type: ignore[attr-defined]
+    ret.__b__ = b  # type: ignore[attr-defined]
+    ret.__c__ = c  # type: ignore[attr-defined]
+    ret.__d__ = d  # type: ignore[attr-defined]
+    ret.__has_conversion__ = True  # type: ignore[attr-defined]
 
     return ret
 

@@ -16,11 +16,11 @@ def testBasicUsage() -> None:
     assert f.fraction == Fraction(6, 5)
 
     with pytest.raises(TypeError):
-        f.SetNumber("hello")  # type:ignore[arg-type]
+        f.SetNumber("hello")  # type: ignore[arg-type]
     with pytest.raises(TypeError):
-        f.SetFraction("hello")  # type:ignore[arg-type]
+        f.SetFraction("hello")  # type: ignore[arg-type]
     with pytest.raises(ValueError):
-        f.SetFraction((1, 2, 3))  # type:ignore[arg-type]
+        f.SetFraction((1, 2, 3))  # type: ignore[arg-type]
 
     assert FractionValue(3).GetFraction() == Fraction(0, 1)
 
@@ -36,17 +36,17 @@ def testPartsArentNone() -> None:
     FractionValue can't be initialized nor modified to have None as number or fraction part.
     """
     with pytest.raises(TypeError):
-        FractionValue(1, None)  # type:ignore[arg-type]
+        FractionValue(1, None)  # type: ignore[arg-type]
     with pytest.raises(TypeError):
-        FractionValue(None, (0 / 1))  # type:ignore[arg-type]
+        FractionValue(None, (0 / 1))  # type: ignore[arg-type]
     with pytest.raises(TypeError):
-        FractionValue(None, None)  # type:ignore[arg-type]
+        FractionValue(None, None)  # type: ignore[arg-type]
 
     f = FractionValue(1, Fraction(0, 1))
     with pytest.raises(TypeError):
-        f.SetNumber(None)  # type:ignore[arg-type]
+        f.SetNumber(None)  # type: ignore[arg-type]
     with pytest.raises(TypeError):
-        f.SetFraction(None)  # type:ignore[arg-type]
+        f.SetFraction(None)  # type: ignore[arg-type]
 
 
 def testMatchFractionPart() -> None:

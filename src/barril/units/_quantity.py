@@ -95,9 +95,9 @@ def ObtainQuantity(
 
     if isinstance(unit, dict):
         assert category is None
-        if len(unit) == 1 and next(iter(unit.values()))[1] == 1:  # type:ignore[comparison-overlap]
+        if len(unit) == 1 and next(iter(unit.values()))[1] == 1:  # type: ignore[comparison-overlap]
             # Although passed as composing, it's a simple case
-            category, (unit, _exp) = next(iter(unit.items()))  # type:ignore[assignment]
+            category, (unit, _exp) = next(iter(unit.items()))  # type: ignore[assignment]
         else:
             key: list[Any] = [
                 (category, tuple(unit_and_exp)) for (category, unit_and_exp) in unit.items()
@@ -110,7 +110,7 @@ def ObtainQuantity(
                 quantity = quantities_cache[tuple(key)] = Quantity(unit, None, unknown_unit_caption)
                 return quantity
 
-    key = (category, unit, unknown_unit_caption)  # type:ignore[assignment]
+    key = (category, unit, unknown_unit_caption)  # type: ignore[assignment]
     try:
         return quantities_cache[key]
     except KeyError:
@@ -379,7 +379,7 @@ class Quantity:
                 (unit, exp) for _category, (unit, exp) in self._category_to_unit_and_exps.items()
             )
             self._composing_categories = tuple(self._category_to_unit_and_exps.keys())
-            self._category_info = None  # type:ignore[assignment]
+            self._category_info = None  # type: ignore[assignment]
             return
 
         self._is_derived = False
@@ -413,7 +413,7 @@ class Quantity:
         # an operation.
         category_to_unit_and_exps = OrderedDict()
         category_to_unit_and_exps[category] = [unit, 1]
-        self._category_to_unit_and_exps = category_to_unit_and_exps  # type:ignore[assignment]
+        self._category_to_unit_and_exps = category_to_unit_and_exps  # type: ignore[assignment]
 
         self._category = category
         self._quantity_type = unit_database.GetCategoryQuantityType(category)
@@ -749,7 +749,7 @@ class Quantity:
             # convert value to check limit
             if unit != category_info.default_unit:
                 value = self.ConvertScalarValue(
-                    value, category_info.default_unit  # type:ignore[arg-type]
+                    value, category_info.default_unit  # type: ignore[arg-type]
                 )
 
             if category_info.min_value is not None:
@@ -779,7 +779,7 @@ class Quantity:
         return self._composing_categories
 
     def GetComposingUnits(self) -> Union[tuple[UnitExponentTuple, ...], str]:
-        return self._composing_units  # type:ignore[return-value]
+        return self._composing_units  # type: ignore[return-value]
 
     def GetComposingUnitsJoiningExponents(self) -> tuple[UnitExponentTuple, ...]:
         self._composing_units_joining_exponents: tuple[UnitExponentTuple, ...]
@@ -818,7 +818,7 @@ class Quantity:
                 (category, tuple(unit_and_exp))
                 for (category, unit_and_exp) in self._category_to_unit_and_exps.items()
             )
-            lst.append(self._unknown_unit_caption)  # type:ignore[arg-type]
+            lst.append(self._unknown_unit_caption)  # type: ignore[arg-type]
             self._hash = hash(tuple(lst))
         return self._hash
 
