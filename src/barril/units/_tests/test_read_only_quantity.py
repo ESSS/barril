@@ -13,7 +13,7 @@ def testReadOnlyQuantity(unit_database_empty) -> None:
 
     read_only_quantity = ObtainQuantity("m", "length")
     with pytest.raises(AttributeError):
-        read_only_quantity.SetUnit("cm")  # type:ignore[attr-defined]
+        read_only_quantity.SetUnit("cm")  # type: ignore[attr-defined]
 
     # When creating a copy of a read only quantity we'll make it not read only anymore!
     copy = read_only_quantity.MakeCopy()

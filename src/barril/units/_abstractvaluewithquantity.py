@@ -59,7 +59,7 @@ class AbstractValueWithQuantityObject:
                 # Support for creating a scalar as:
                 # Scalar(10, 'm')
                 # Scalar(10, 'm', 'length')
-                value, unit, category = category, value, unit  # type:ignore[assignment]
+                value, unit, category = category, value, unit  # type: ignore[assignment]
 
             if value is None or unit is None:
                 if value is None:
@@ -75,7 +75,7 @@ class AbstractValueWithQuantityObject:
                         unit is not None
                     ), "If category and value are given, the unit must be specified too."
 
-            quantity = ObtainQuantity(unit, category)  # type:ignore[arg-type, assignment]
+            quantity = ObtainQuantity(unit, category)  # type: ignore[arg-type, assignment]
 
         self._quantity = quantity
         self._InternalCreateWithQuantity(quantity, value, unit_database)
@@ -192,9 +192,9 @@ class AbstractValueWithQuantityObject:
         class Stub:
             pass
 
-        stub = Stub()  # type:ignore[assignment]
-        stub.__class__ = cls  # type:ignore[assignment]
-        stub._InternalCreateWithQuantity(quantity, *args, **kwargs)  # type:ignore[attr-defined]
+        stub = Stub()  # type: ignore[assignment]
+        stub.__class__ = cls  # type: ignore[assignment]
+        stub._InternalCreateWithQuantity(quantity, *args, **kwargs)  # type: ignore[attr-defined]
         return cast(T, stub)
 
     # Copy -----------------------------------------------------------------------------------------

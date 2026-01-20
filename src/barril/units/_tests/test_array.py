@@ -313,10 +313,10 @@ def testNoConversionWhenUsingSameUnit() -> None:
 def testZeroDimensionalNumpyArray() -> None:
     import numpy
 
-    values = numpy.array(1000.0)  # type:ignore[call-overload]
+    values = numpy.array(1000.0)  # type: ignore[call-overload]
     array = units.Array(values, "m")
-    assert array.GetValues("m") == numpy.array(1000.0)  # type:ignore[call-overload]
-    assert array.GetValues("km") == numpy.array(1.0)  # type:ignore[call-overload]
+    assert array.GetValues("m") == numpy.array(1000.0)  # type: ignore[call-overload]
+    assert array.GetValues("km") == numpy.array(1.0)  # type: ignore[call-overload]
 
 
 def testReadOnlyQuantity() -> None:
@@ -346,7 +346,7 @@ def testDefaultValues(unit_database_len) -> None:
     assert array.values == []
 
     with pytest.raises(AssertionError):
-        Array(ObtainQuantity("m"), unit="m")  # type:ignore[call-overload]
+        Array(ObtainQuantity("m"), unit="m")  # type: ignore[call-overload]
 
 
 class TestFromScalar:

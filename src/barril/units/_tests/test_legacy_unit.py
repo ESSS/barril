@@ -57,9 +57,9 @@ def testFixUnitIfIsLegacyExcept() -> None:
         pass
 
     unknown = SomeNonExpectedObject()
-    is_legacy, unit = FixUnitIfIsLegacy(unknown)  # type:ignore[arg-type]
+    is_legacy, unit = FixUnitIfIsLegacy(unknown)  # type: ignore[arg-type]
     assert not is_legacy
-    assert unit is unknown  # type:ignore[comparison-overlap]
+    assert unit is unknown  # type: ignore[comparison-overlap]
 
 
 def testUnitDatabaseConvert(unit_database_posc) -> None:

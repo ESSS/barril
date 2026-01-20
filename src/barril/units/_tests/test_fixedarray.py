@@ -117,7 +117,7 @@ def testDefaultValues(unit_database_start_units) -> None:
     assert array.values == [0.0, 0.0, 0.0]
 
     with pytest.raises(AssertionError):
-        units.FixedArray(3, ObtainQuantity("m"), unit="m")  # type:ignore[call-overload]
+        units.FixedArray(3, ObtainQuantity("m"), unit="m")  # type: ignore[call-overload]
 
 
 def testTupleCreation(unit_database_start_units) -> None:

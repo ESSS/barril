@@ -83,12 +83,12 @@ class Array(AbstractValueWithQuantityObject, Generic[ValuesType]):
     @overload
     def __init__(self, category: Quantity, values: ValuesType): ...
 
-    def __init__(  # type:ignore[misc]
+    def __init__(  # type: ignore[misc]
         self, category: str, values: Any = None, unit: Any = None
     ) -> None:
         super().__init__(category, value=values, unit=unit)
 
-    def _InternalCreateWithQuantity(  # type:ignore[override]
+    def _InternalCreateWithQuantity(  # type: ignore[override]
         self,
         quantity: Quantity,
         values: Optional[ValuesType] = None,
@@ -113,7 +113,7 @@ class Array(AbstractValueWithQuantityObject, Generic[ValuesType]):
         """
         self.ValidateValues(self._value, self._quantity)
 
-    def CreateCopy(  # type:ignore[override]
+    def CreateCopy(  # type: ignore[override]
         self: SelfT,
         values: Optional[ValuesType] = None,
         unit: Optional[str] = None,
@@ -146,7 +146,7 @@ class Array(AbstractValueWithQuantityObject, Generic[ValuesType]):
             Convert = self._quantity.Convert
             for elem in values:
                 result.append(tuple(Convert(v, unit) for v in elem))
-            return type(values)(result)  # type:ignore[call-arg, arg-type]
+            return type(values)(result)  # type: ignore[call-arg, arg-type]
 
         else:
             return self._quantity.Convert(values, unit)
@@ -276,10 +276,10 @@ class Array(AbstractValueWithQuantityObject, Generic[ValuesType]):
                 return cls.CreateEmptyArray()
             elif category is None:
                 category = UnitDatabase.GetSingleton().GetDefaultCategory(unit)
-                return cls(values=[], unit=unit, category=category)  # type:ignore[arg-type]
+                return cls(values=[], unit=unit, category=category)  # type: ignore[arg-type]
             else:
                 assert unit is None
-                return cls(  # type:ignore[call-overload]
+                return cls(  # type: ignore[call-overload]
                     values=[], unit=unit, category=category
                 )  # This actually will raise an exception
 
@@ -416,7 +416,7 @@ class Array(AbstractValueWithQuantityObject, Generic[ValuesType]):
         if values_iteration.IsNumpy():
             v0, v1 = next(iter(values_iteration))
             q, v = operation_func(q1, q2, v0, v1)
-            return self.__class__.CreateWithQuantity(q, v)  # type:ignore[return-value]
+            return self.__class__.CreateWithQuantity(q, v)  # type: ignore[return-value]
         else:
             # not numpy: create a new structure to hold the values
             result = []
@@ -431,5 +431,5 @@ class Array(AbstractValueWithQuantityObject, Generic[ValuesType]):
                 )
 
             if values_iteration.IsTuple():
-                result = tuple(result)  # type:ignore[assignment]
-            return self.__class__.CreateWithQuantity(q, result)  # type:ignore[return-value]
+                result = tuple(result)  # type: ignore[assignment]
+            return self.__class__.CreateWithQuantity(q, result)  # type: ignore[return-value]

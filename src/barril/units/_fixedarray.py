@@ -55,7 +55,7 @@ class FixedArray(Array, Generic[ValuesType]):
     @overload
     def __init__(self, dimension: int, category: "Quantity", values: ValuesType): ...
 
-    def __init__(  # type:ignore[misc]
+    def __init__(  # type: ignore[misc]
         self, dimension: int, category: str, values: Any = None, unit: Any = None
     ) -> None:
         """
@@ -80,7 +80,7 @@ class FixedArray(Array, Generic[ValuesType]):
 
         Array.__init__(self, category, values, unit)
 
-    def _InternalCreateWithQuantity(  # type:ignore[override]
+    def _InternalCreateWithQuantity(  # type: ignore[override]
         self,
         quantity: "Quantity",
         values: Optional[ValuesType] = None,
@@ -120,7 +120,7 @@ class FixedArray(Array, Generic[ValuesType]):
 
         Array._InternalCreateWithQuantity(self, quantity, values)
 
-    def CreateCopy(  # type:ignore[override]
+    def CreateCopy(  # type: ignore[override]
         self,
         values: Optional[ValuesType] = None,
         unit: Optional[str] = None,
@@ -147,7 +147,7 @@ class FixedArray(Array, Generic[ValuesType]):
             raise ValueError(msg % (dimension, len(values)))
 
     @classmethod
-    def CreateEmptyArray(  # type:ignore[override]
+    def CreateEmptyArray(  # type: ignore[override]
         cls, dimension: int, values: Optional[ValuesType] = None
     ) -> "FixedArray":
         """
@@ -243,6 +243,6 @@ class FixedArray(Array, Generic[ValuesType]):
 
         if quantity is None:
             quantity = self.GetQuantity()
-        return Scalar(  # type:ignore[call-overload]
+        return Scalar(  # type: ignore[call-overload]
             quantity, self.GetValues(unit=quantity.GetUnit())[index]
         )

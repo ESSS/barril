@@ -181,10 +181,10 @@ class UnitInfo:
 
         # If not identified, that means that they do have conversions associated
         if not hasattr(tobase_func, "__has_conversion__"):
-            tobase_func.__has_conversion__ = True  # type:ignore[attr-defined]
+            tobase_func.__has_conversion__ = True  # type: ignore[attr-defined]
 
         if not hasattr(frombase_func, "__has_conversion__"):
-            frombase_func.__has_conversion__ = True  # type:ignore[attr-defined]
+            frombase_func.__has_conversion__ = True  # type: ignore[attr-defined]
 
         self.name = name
         self.unit = unit
@@ -215,7 +215,7 @@ class CategoryInfo:
 
     category: str = ""
     quantity_type: str = ""
-    valid_units: Optional[list[str]] = attr.Factory(list)  # type:ignore[assignment]
+    valid_units: Optional[list[str]] = attr.Factory(list)  # type: ignore[assignment]
     valid_units_set: set[str] = attr.Factory(set)
     default_unit: Optional[str] = ""
     default_value: float = 0.0
@@ -805,7 +805,7 @@ class UnitDatabase(Singleton):
         def identity(x: Any) -> Any:
             return x
 
-        identity.__has_conversion__ = False  # type:ignore[attr-defined]
+        identity.__has_conversion__ = False  # type: ignore[attr-defined]
         self.AddUnit(quantity_type, name, unit, identity, identity)
         # move the base info to the first position
         # (that's a convention: the base is always in the first position)
@@ -1188,7 +1188,7 @@ class UnitDatabase(Singleton):
 
             if (
                 category_or_quantity_type.__class__
-                in (list, tuple)  # type:ignore[comparison-overlap]
+                in (list, tuple)  # type: ignore[comparison-overlap]
                 and len(category_or_quantity_type) == 1
             ):
                 category_or_quantity_type = category_or_quantity_type[0]
@@ -1426,9 +1426,9 @@ class UnitDatabase(Singleton):
                 category_to_unit_and_exp1[category2] = [unit2, operation_exp(exp1, exp2)]
             else:
                 unit_exp1 = category_to_unit_and_exp1[category2]
-                unit1, exp1 = unit_exp1  # type:ignore[assignment]
+                unit1, exp1 = unit_exp1  # type: ignore[assignment]
                 if unit1 == unit2:
-                    unit_exp1[1] = operation_exp(exp1, exp2)  # type:ignore[index]
+                    unit_exp1[1] = operation_exp(exp1, exp2)  # type: ignore[index]
                 else:
                     raise RuntimeError(f"This should've been covered already ({unit1} != {unit2}).")
 

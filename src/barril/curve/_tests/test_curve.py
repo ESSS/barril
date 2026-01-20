@@ -44,14 +44,14 @@ def testCurves(unit_database) -> None:
     domain10 = Array("time", values=numpy.array(list(range(10)), dtype=numpy.int32), unit="s")
 
     with pytest.raises(ValueError):
-        Curve(values10, domain9)  # type:ignore[arg-type]
+        Curve(values10, domain9)  # type: ignore[arg-type]
 
-    c = Curve(values10, domain10)  # type:ignore[arg-type]
+    c = Curve(values10, domain10)  # type: ignore[arg-type]
 
     with pytest.raises(ValueError):
-        c.SetDomain(domain9)  # type:ignore[arg-type]
+        c.SetDomain(domain9)  # type: ignore[arg-type]
     with pytest.raises(ValueError):
-        c.SetImage(values9)  # type:ignore[arg-type]
+        c.SetImage(values9)  # type: ignore[arg-type]
 
 
 def testSlice(unit_database) -> None:
@@ -73,13 +73,13 @@ def testSlice(unit_database) -> None:
 def testCurveRepr(unit_database) -> None:
     q1 = ObtainQuantity("m", "length")
     q2 = ObtainQuantity("d", "time")
-    curve = Curve(Array(q1, []), Array(q2, []))  # type:ignore[arg-type]
+    curve = Curve(Array(q1, []), Array(q2, []))  # type: ignore[arg-type]
     assert "Curve(m, d)[]" == repr(curve)
 
-    curve = Curve(Array(q1, list(range(3))), Array(q2, list(range(3))))  # type:ignore[arg-type]
+    curve = Curve(Array(q1, list(range(3))), Array(q2, list(range(3))))  # type: ignore[arg-type]
     assert "Curve(m, d)[(0, 0) (1, 1) (2, 2)]" == repr(curve)
 
-    curve = Curve(Array(q1, list(range(100))), Array(q2, list(range(100))))  # type:ignore[arg-type]
+    curve = Curve(Array(q1, list(range(100))), Array(q2, list(range(100))))  # type: ignore[arg-type]
     expected = (
         "Curve(m, d)[(0, 0) (1, 1) (2, 2) (3, 3) (4, 4) (5, 5) "
         "(6, 6) (7, 7) (8, 8) (9, 9) (10, 10) (11, 11) "
