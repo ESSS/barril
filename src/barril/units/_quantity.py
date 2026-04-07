@@ -356,6 +356,8 @@ class Quantity:
         else:
             self._unknown_unit_caption = ""
 
+        self._composing_categories: str | tuple[Any, ...]
+
         if category.__class__ is OrderedDict:
             assert unit is None
             self._category_to_unit_and_exps = category
